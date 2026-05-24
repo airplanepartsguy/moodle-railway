@@ -33,7 +33,7 @@ require_once(__DIR__ . '/../content/glossary.php');
 
 // Bump the suffix here (and in the entrypoint marker docs) when adding new
 // bootstrap steps that should run on existing sites.
-$marker = $CFG->dataroot . '/.twu-bootstrapped-v32';
+$marker = $CFG->dataroot . '/.twu-bootstrapped-v33';
 $force  = in_array('--force', $argv ?? [], true);
 if (file_exists($marker) && !$force) {
     cli_writeln("[twu] already bootstrapped (marker present at $marker). Pass --force to re-run.");
@@ -1595,8 +1595,28 @@ function twu_ensure_customcert(stdClass $course): ?int {
     global $DB, $CFG;
     require_once($CFG->dirroot . '/mod/customcert/locallib.php');
 
-    $certname = 'Certificate of Completion';
-    $intro = '<p>Your TurbineWorks University Certificate of Completion will be available here once you have finished all required activities in this module. The certificate is a branded PDF with a unique verification serial and may be used as audit evidence of training completion.</p>';
+    $ismaster_pre = (!empty($course->idnumber) && $course->idnumber === 'TWF4-FINAL');
+    if ($ismaster_pre) {
+        $certname = 'Master Certification — ASA-100 Initial Training';
+        $intro = '<p>The TurbineWorks University <strong>Master Certification</strong> in ASA-100 Initial Training. Issued automatically upon passing the cumulative final exam. Distinct from the per-module Certificates of Completion; this is the capstone credential.</p><p>The PDF carries a unique verification code and the public verification URL. Auditors and customer quality teams can verify authenticity in real time at that URL.</p>';
+        // If a previous deploy created a standard "Certificate of Completion"
+        // here, rename it in place so the master cert layout takes effect.
+        $oldcert = $DB->get_record_sql(
+            "SELECT cc.id FROM {customcert} cc
+               JOIN {course_modules} cm ON cm.instance = cc.id
+               JOIN {modules} m ON m.id = cm.module AND m.name = 'customcert'
+              WHERE cm.course = :courseid AND cc.name = 'Certificate of Completion'",
+            ['courseid' => $course->id]
+        );
+        if ($oldcert) {
+            $DB->set_field('customcert', 'name', $certname, ['id' => $oldcert->id]);
+            $DB->set_field('customcert', 'intro', $intro, ['id' => $oldcert->id]);
+            cli_writeln("[twu]   renamed standard cert -> master cert in final exam course");
+        }
+    } else {
+        $certname = 'Certificate of Completion';
+        $intro = '<p>Your TurbineWorks University Certificate of Completion will be available here once you have finished all required activities in this module. The certificate is a branded PDF with a unique verification serial and may be used as audit evidence of training completion.</p>';
+    }
 
     // Idempotency: skip if a customcert with this name already exists in the course.
     $existing = $DB->get_record_sql(
@@ -1674,21 +1694,75 @@ function twu_ensure_customcert(stdClass $course): ?int {
     // Wipe any pre-existing elements so re-runs converge to the current layout.
     $DB->delete_records('customcert_elements', ['pageid' => $page->id]);
 
-    // Branded layout (A4 landscape, all positions in mm, refpoint=1 = top-center).
+    // Determine if this is the cumulative-exam course → use the Master
+    // variant of the cert layout (different wording, gold border, larger
+    // recipient line).
+    $ismaster = (!empty($course->idnumber) && $course->idnumber === 'TWF4-FINAL');
+
     $now = time();
-    $elements = [
-        ['element' => 'text',        'name' => 'Header',       'data' => json_encode(['text' => 'TurbineWorks University']),                              'font' => 'helveticab', 'fontsize' => 30, 'colour' => '#0d2240', 'posx' => 148, 'posy' => 30,  'width' => 250, 'alignment' => 'C', 'refpoint' => 1, 'sequence' => 1],
-        ['element' => 'text',        'name' => 'Subtitle',     'data' => json_encode(['text' => 'Certificate of Completion']),                            'font' => 'helvetica',  'fontsize' => 18, 'colour' => '#ffc800', 'posx' => 148, 'posy' => 50,  'width' => 250, 'alignment' => 'C', 'refpoint' => 1, 'sequence' => 2],
-        ['element' => 'text',        'name' => 'GoldBar',      'data' => json_encode(['text' => '_____________________________________________']),         'font' => 'helvetica',  'fontsize' => 16, 'colour' => '#ffc800', 'posx' => 148, 'posy' => 62,  'width' => 250, 'alignment' => 'C', 'refpoint' => 1, 'sequence' => 3],
-        ['element' => 'text',        'name' => 'IntroLine',    'data' => json_encode(['text' => 'This is to certify that']),                              'font' => 'helvetica',  'fontsize' => 14, 'colour' => '#333333', 'posx' => 148, 'posy' => 80,  'width' => 250, 'alignment' => 'C', 'refpoint' => 1, 'sequence' => 4],
-        ['element' => 'studentname', 'name' => 'Recipient',    'data' => '',                                                                              'font' => 'helveticab', 'fontsize' => 26, 'colour' => '#0d2240', 'posx' => 148, 'posy' => 95,  'width' => 250, 'alignment' => 'C', 'refpoint' => 1, 'sequence' => 5],
-        ['element' => 'text',        'name' => 'CompletedLine','data' => json_encode(['text' => 'has successfully completed the ASA-100 training module']), 'font' => 'helvetica',  'fontsize' => 14, 'colour' => '#333333', 'posx' => 148, 'posy' => 120, 'width' => 250, 'alignment' => 'C', 'refpoint' => 1, 'sequence' => 6],
-        ['element' => 'coursename',  'name' => 'CourseName',   'data' => '',                                                                              'font' => 'helveticab', 'fontsize' => 18, 'colour' => '#0d2240', 'posx' => 148, 'posy' => 135, 'width' => 270, 'alignment' => 'C', 'refpoint' => 1, 'sequence' => 7],
-        ['element' => 'text',        'name' => 'On',           'data' => json_encode(['text' => 'on']),                                                   'font' => 'helvetica',  'fontsize' => 12, 'colour' => '#666666', 'posx' => 148, 'posy' => 155, 'width' => 250, 'alignment' => 'C', 'refpoint' => 1, 'sequence' => 8],
-        ['element' => 'date',        'name' => 'Date',         'data' => json_encode(['dateitem' => -1, 'dateformat' => 'F j, Y']),                       'font' => 'helveticab', 'fontsize' => 14, 'colour' => '#0d2240', 'posx' => 148, 'posy' => 165, 'width' => 250, 'alignment' => 'C', 'refpoint' => 1, 'sequence' => 9],
-        ['element' => 'text',        'name' => 'VerifyLabel',  'data' => json_encode(['text' => 'Verification Code:']),                                   'font' => 'helvetica',  'fontsize' => 10, 'colour' => '#999999', 'posx' => 148, 'posy' => 188, 'width' => 250, 'alignment' => 'C', 'refpoint' => 1, 'sequence' => 10],
-        ['element' => 'code',        'name' => 'VerifyCode',   'data' => '',                                                                              'font' => 'courier',    'fontsize' => 12, 'colour' => '#0d2240', 'posx' => 148, 'posy' => 195, 'width' => 250, 'alignment' => 'C', 'refpoint' => 1, 'sequence' => 11],
-    ];
+    if ($ismaster) {
+        // Master cert: distinct from per-module cert. Gold border, larger
+        // recipient line, "MASTER CERTIFICATION" wording.
+        $elements = [
+            // Gold border around the whole page
+            ['element' => 'border', 'name' => 'GoldBorder', 'data' => json_encode(['width' => 4]), 'font' => 'helvetica', 'fontsize' => 12, 'colour' => '#ffc800', 'posx' => 0, 'posy' => 0, 'width' => 297, 'alignment' => 'L', 'refpoint' => 0, 'sequence' => 0],
+            ['element' => 'text', 'name' => 'Header',    'data' => json_encode(['text' => 'TurbineWorks University']),                                         'font' => 'helveticab', 'fontsize' => 32, 'colour' => '#0d2240', 'posx' => 148, 'posy' => 22, 'width' => 270, 'alignment' => 'C', 'refpoint' => 1, 'sequence' => 1],
+            ['element' => 'text', 'name' => 'Subtitle',  'data' => json_encode(['text' => 'MASTER CERTIFICATION']),                                            'font' => 'helveticab', 'fontsize' => 22, 'colour' => '#ffc800', 'posx' => 148, 'posy' => 42, 'width' => 270, 'alignment' => 'C', 'refpoint' => 1, 'sequence' => 2],
+            ['element' => 'text', 'name' => 'Subhead',   'data' => json_encode(['text' => 'ASA-100 Initial Training — Cumulative Certification']),             'font' => 'helvetica',  'fontsize' => 14, 'colour' => '#444444', 'posx' => 148, 'posy' => 58, 'width' => 270, 'alignment' => 'C', 'refpoint' => 1, 'sequence' => 3],
+            ['element' => 'text', 'name' => 'GoldBar',   'data' => json_encode(['text' => '_____________________________________________']),                   'font' => 'helvetica',  'fontsize' => 16, 'colour' => '#ffc800', 'posx' => 148, 'posy' => 68, 'width' => 270, 'alignment' => 'C', 'refpoint' => 1, 'sequence' => 4],
+            ['element' => 'text', 'name' => 'IntroLine', 'data' => json_encode(['text' => 'This certifies that']),                                             'font' => 'helvetica',  'fontsize' => 14, 'colour' => '#333333', 'posx' => 148, 'posy' => 82, 'width' => 270, 'alignment' => 'C', 'refpoint' => 1, 'sequence' => 5],
+            ['element' => 'studentname', 'name' => 'Recipient', 'data' => '',                                                                                  'font' => 'helveticab', 'fontsize' => 32, 'colour' => '#0d2240', 'posx' => 148, 'posy' => 95, 'width' => 270, 'alignment' => 'C', 'refpoint' => 1, 'sequence' => 6],
+            ['element' => 'text', 'name' => 'BodyLine1', 'data' => json_encode(['text' => 'has successfully completed all eight TWF-4 Initial Training modules']), 'font' => 'helvetica', 'fontsize' => 13, 'colour' => '#333333', 'posx' => 148, 'posy' => 128, 'width' => 270, 'alignment' => 'C', 'refpoint' => 1, 'sequence' => 7],
+            ['element' => 'text', 'name' => 'BodyLine2', 'data' => json_encode(['text' => 'and passed the cumulative final exam at TurbineWorks University.']),'font' => 'helvetica', 'fontsize' => 13, 'colour' => '#333333', 'posx' => 148, 'posy' => 138, 'width' => 270, 'alignment' => 'C', 'refpoint' => 1, 'sequence' => 8],
+            ['element' => 'text', 'name' => 'OnLabel',   'data' => json_encode(['text' => 'Issued']),                                                          'font' => 'helvetica',  'fontsize' => 11, 'colour' => '#666666', 'posx' => 148, 'posy' => 153, 'width' => 270, 'alignment' => 'C', 'refpoint' => 1, 'sequence' => 9],
+            ['element' => 'date', 'name' => 'Date',      'data' => json_encode(['dateitem' => -1, 'dateformat' => 'F j, Y']),                                  'font' => 'helveticab', 'fontsize' => 14, 'colour' => '#0d2240', 'posx' => 148, 'posy' => 162, 'width' => 270, 'alignment' => 'C', 'refpoint' => 1, 'sequence' => 10],
+            ['element' => 'text', 'name' => 'Validity',  'data' => json_encode(['text' => 'Valid for 180 days per TurbineWorks recurring training policy.']),  'font' => 'helvetica',  'fontsize' => 9, 'colour' => '#999999', 'posx' => 148, 'posy' => 174, 'width' => 270, 'alignment' => 'C', 'refpoint' => 1, 'sequence' => 11],
+            ['element' => 'text', 'name' => 'VerifyLabel', 'data' => json_encode(['text' => 'Verify this certificate at: ' . (defined('CFG') ? $GLOBALS['CFG']->wwwroot : 'https://learn.turbineworks.com') . '/local/twu/verify.php']), 'font' => 'helvetica', 'fontsize' => 9, 'colour' => '#999999', 'posx' => 148, 'posy' => 188, 'width' => 270, 'alignment' => 'C', 'refpoint' => 1, 'sequence' => 12],
+            ['element' => 'text', 'name' => 'CodeLabel', 'data' => json_encode(['text' => 'Code:']),                                                           'font' => 'helvetica',  'fontsize' => 10, 'colour' => '#999999', 'posx' => 130, 'posy' => 196, 'width' => 50, 'alignment' => 'R', 'refpoint' => 0, 'sequence' => 13],
+            ['element' => 'code', 'name' => 'VerifyCode','data' => '',                                                                                         'font' => 'courier',    'fontsize' => 13, 'colour' => '#0d2240', 'posx' => 165, 'posy' => 196, 'width' => 80, 'alignment' => 'L', 'refpoint' => 0, 'sequence' => 14],
+        ];
+    } else {
+        // Standard per-module cert layout.
+        $verifyurl = (isset($GLOBALS['CFG']) ? $GLOBALS['CFG']->wwwroot : 'https://learn.turbineworks.com') . '/local/twu/verify.php';
+        $elements = [
+            ['element' => 'text',        'name' => 'Header',       'data' => json_encode(['text' => 'TurbineWorks University']),                              'font' => 'helveticab', 'fontsize' => 30, 'colour' => '#0d2240', 'posx' => 148, 'posy' => 28, 'width' => 250, 'alignment' => 'C', 'refpoint' => 1, 'sequence' => 1],
+            ['element' => 'text',        'name' => 'Subtitle',     'data' => json_encode(['text' => 'Certificate of Completion']),                            'font' => 'helvetica',  'fontsize' => 18, 'colour' => '#ffc800', 'posx' => 148, 'posy' => 48, 'width' => 250, 'alignment' => 'C', 'refpoint' => 1, 'sequence' => 2],
+            ['element' => 'text',        'name' => 'GoldBar',      'data' => json_encode(['text' => '_____________________________________________']),         'font' => 'helvetica',  'fontsize' => 16, 'colour' => '#ffc800', 'posx' => 148, 'posy' => 60, 'width' => 250, 'alignment' => 'C', 'refpoint' => 1, 'sequence' => 3],
+            ['element' => 'text',        'name' => 'IntroLine',    'data' => json_encode(['text' => 'This is to certify that']),                              'font' => 'helvetica',  'fontsize' => 14, 'colour' => '#333333', 'posx' => 148, 'posy' => 78, 'width' => 250, 'alignment' => 'C', 'refpoint' => 1, 'sequence' => 4],
+            ['element' => 'studentname', 'name' => 'Recipient',    'data' => '',                                                                              'font' => 'helveticab', 'fontsize' => 26, 'colour' => '#0d2240', 'posx' => 148, 'posy' => 92, 'width' => 250, 'alignment' => 'C', 'refpoint' => 1, 'sequence' => 5],
+            ['element' => 'text',        'name' => 'CompletedLine','data' => json_encode(['text' => 'has successfully completed the ASA-100 training module']), 'font' => 'helvetica',  'fontsize' => 14, 'colour' => '#333333', 'posx' => 148, 'posy' => 118, 'width' => 250, 'alignment' => 'C', 'refpoint' => 1, 'sequence' => 6],
+            ['element' => 'coursename',  'name' => 'CourseName',   'data' => '',                                                                              'font' => 'helveticab', 'fontsize' => 18, 'colour' => '#0d2240', 'posx' => 148, 'posy' => 133, 'width' => 270, 'alignment' => 'C', 'refpoint' => 1, 'sequence' => 7],
+            ['element' => 'text',        'name' => 'On',           'data' => json_encode(['text' => 'on']),                                                   'font' => 'helvetica',  'fontsize' => 12, 'colour' => '#666666', 'posx' => 148, 'posy' => 153, 'width' => 250, 'alignment' => 'C', 'refpoint' => 1, 'sequence' => 8],
+            ['element' => 'date',        'name' => 'Date',         'data' => json_encode(['dateitem' => -1, 'dateformat' => 'F j, Y']),                       'font' => 'helveticab', 'fontsize' => 14, 'colour' => '#0d2240', 'posx' => 148, 'posy' => 163, 'width' => 250, 'alignment' => 'C', 'refpoint' => 1, 'sequence' => 9],
+            ['element' => 'text',        'name' => 'Validity',     'data' => json_encode(['text' => 'Valid for 180 days per TurbineWorks recurring training policy.']), 'font' => 'helvetica', 'fontsize' => 9, 'colour' => '#999999', 'posx' => 148, 'posy' => 177, 'width' => 250, 'alignment' => 'C', 'refpoint' => 1, 'sequence' => 10],
+            ['element' => 'text',        'name' => 'VerifyLabel',  'data' => json_encode(['text' => 'Verify this certificate at: ' . $verifyurl]),            'font' => 'helvetica',  'fontsize' => 9, 'colour' => '#999999', 'posx' => 148, 'posy' => 186, 'width' => 250, 'alignment' => 'C', 'refpoint' => 1, 'sequence' => 11],
+            ['element' => 'text',        'name' => 'CodeLabel',    'data' => json_encode(['text' => 'Code:']),                                                'font' => 'helvetica',  'fontsize' => 10, 'colour' => '#999999', 'posx' => 130, 'posy' => 195, 'width' => 50, 'alignment' => 'R', 'refpoint' => 0, 'sequence' => 12],
+            ['element' => 'code',        'name' => 'VerifyCode',   'data' => '',                                                                              'font' => 'courier',    'fontsize' => 12, 'colour' => '#0d2240', 'posx' => 165, 'posy' => 195, 'width' => 80, 'alignment' => 'L', 'refpoint' => 0, 'sequence' => 13],
+        ];
+    }
+
+    // Probe for the optional QR code element type (provided by the
+    // customcertelement_qrcode plugin if installed). Adds a QR linking to
+    // the verification page for instant phone-scan verification by auditors.
+    // If the plugin is not installed, this is silently skipped.
+    if (is_dir($CFG->dirroot . '/mod/customcert/element/qrcode')) {
+        $verifyurl = $CFG->wwwroot . '/local/twu/verify.php';
+        $elements[] = [
+            'element'   => 'qrcode',
+            'name'      => 'VerifyQR',
+            'data'      => json_encode(['url' => $verifyurl, 'includecode' => 1]),
+            'font'      => 'helvetica',
+            'fontsize'  => 10,
+            'colour'    => '#000000',
+            'posx'      => $ismaster ? 260 : 260,
+            'posy'      => $ismaster ? 165 : 158,
+            'width'     => 30,
+            'alignment' => 'L',
+            'refpoint'  => 0,
+            'sequence'  => 99,
+        ];
+    }
+
     foreach ($elements as $el) {
         $record = (object)$el;
         $record->pageid = $page->id;
@@ -1697,7 +1771,8 @@ function twu_ensure_customcert(stdClass $course): ?int {
         $DB->insert_record('customcert_elements', $record);
     }
 
-    cli_writeln("[twu]   created customcert for course $course->id (cmid={$cm->coursemodule}, " . count($elements) . " elements)");
+    $label = $ismaster ? 'MASTER cert' : 'cert';
+    cli_writeln("[twu]   created $label for course $course->id (cmid={$cm->coursemodule}, " . count($elements) . " elements)");
     return (int)$cm->coursemodule;
 }
 

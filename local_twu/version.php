@@ -4,8 +4,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2026052403;
+$plugin->version   = 2026052404;
 $plugin->requires  = 2024100100; // Moodle 4.5 LTS
 $plugin->component = 'local_twu';
 $plugin->maturity  = MATURITY_STABLE;
-$plugin->release   = '1.2.0'; // adds profile fields, custom roles, reports, video embeds
+$plugin->release   = '1.3.0'; // adds rich public cert verification page, master cert variant

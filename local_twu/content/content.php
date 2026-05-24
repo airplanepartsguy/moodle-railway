@@ -10387,7 +10387,7 @@ function local_twu_get_reference_library(): array {
 <ol>
   <li>Open the certificate PDF</li>
   <li>Locate the Verification Code (printed below the date on the certificate)</li>
-  <li>Visit the public verification page: <code>/mod/customcert/verify_certificate.php</code> on this site (typically <code>https://learn.turbineworks.com/mod/customcert/verify_certificate.php</code>)</li>
+  <li>Visit the public verification page: <code>/local/twu/verify.php</code> on this site (typically <code>https://learn.turbineworks.com/local/twu/verify.php</code>)</li>
   <li>Enter the Verification Code in the form and submit</li>
   <li>The page returns the certificate details: recipient name, course name, completion date, and validity status</li>
 </ol>
