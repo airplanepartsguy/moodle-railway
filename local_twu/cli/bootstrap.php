@@ -35,7 +35,7 @@ require_once(__DIR__ . '/../content/glossary.php');
 
 // Bump the suffix here (and in the entrypoint marker docs) when adding new
 // bootstrap steps that should run on existing sites.
-$marker = $CFG->dataroot . '/.twu-bootstrapped-v33';
+$marker = $CFG->dataroot . '/.twu-bootstrapped-v34';
 $force  = in_array('--force', $argv ?? [], true);
 if (file_exists($marker) && !$force) {
     cli_writeln("[twu] already bootstrapped (marker present at $marker). Pass --force to re-run.");
@@ -302,6 +302,9 @@ $cohort_dgd_signer = twu_ensure_cohort(
 //   Trainer    — can edit/create course content. Course-level (not site-wide).
 //   Auditor    — read-only across the whole site; intended for ASA inspector
 //                or external auditor accounts during an audit visit.
+//
+// Wrapped in try/catch so a Moodle API change or capability-mismatch issue
+// here does not kill subsequent lesson-seeding sections.
 function twu_ensure_role(string $shortname, string $name, string $description,
                          int $archetype, array $contexts, array $capabilities): int {
     global $DB;
@@ -327,6 +330,7 @@ function twu_ensure_role(string $shortname, string $name, string $description,
     return $roleid;
 }
 
+try {
 // QA Manager — site-wide oversight of training records and grading.
 twu_ensure_role(
     'twu_qa_manager',
@@ -442,6 +446,9 @@ twu_ensure_role(
 );
 
 cli_writeln("[twu] custom roles ensured: QA Manager, Trainer, Auditor");
+} catch (Throwable $e) {
+    cli_writeln("[twu] WARN custom-roles section failed: " . $e->getMessage() . " — continuing.");
+}
 
 // ---------------------------------------------------------------------------
 // 4a. Custom user profile fields — TurbineWorks-specific HR / compliance data
@@ -491,6 +498,7 @@ function twu_ensure_profile_field(array $field): void {
     }
 }
 
+try {
 $twcatid = twu_ensure_profile_category('TurbineWorks Employee Information', 10);
 
 twu_ensure_profile_field([
@@ -575,6 +583,9 @@ twu_ensure_profile_field([
     'description' => '<p>Optional: external ASA-issued training-completion identifier, once TurbineWorks is accredited and ASA issues a training-program identifier.</p>',
 ]);
 cli_writeln("[twu] custom profile fields ensured (9 fields across TurbineWorks Employee Information category)");
+} catch (Throwable $e) {
+    cli_writeln("[twu] WARN profile-fields section failed: " . $e->getMessage() . " — continuing.");
+}
 
 // ---------------------------------------------------------------------------
 // 4b. Cohort sync — auto-enrol cohort members into their courses
@@ -605,6 +616,7 @@ function twu_ensure_cohort_sync(stdClass $course, int $cohortid, int $roleid = 5
     ]);
 }
 
+try {
 // Wire All Employees → every Initial Training course
 foreach ($createdcourses as $idnumber => $course) {
     twu_ensure_cohort_sync($course, $cohort_all);
@@ -618,6 +630,9 @@ foreach ($createdcourses as $idnumber => $course) {
     twu_ensure_cohort_sync($course, $cohort_initial);
 }
 cli_writeln("[twu] cohort sync: Initial Trainees → 8 Initial Training courses");
+} catch (Throwable $e) {
+    cli_writeln("[twu] WARN cohort-sync section failed: " . $e->getMessage() . " — continuing.");
+}
 
 // ---------------------------------------------------------------------------
 // 5. Site-wide defaults useful for compliance training
@@ -1320,6 +1335,7 @@ foreach ($createdcourses as $idnumber => $course) {
 // the per-module quiz creation above.
 cli_writeln("[twu] creating cumulative final exam in TWF4-FINAL");
 
+try {
 // Add an intro Page so the course has a visible "About the exam" entry
 // before the actual quiz. Acts as documentation when the quiz is gated.
 twu_ensure_page_lesson(
@@ -1367,6 +1383,9 @@ cli_writeln("[twu] final exam section gated behind $gated module quiz completion
 
 // Issue a master cert on the final exam course.
 twu_ensure_customcert($finalcourse);
+} catch (Throwable $e) {
+    cli_writeln("[twu] WARN cumulative-exam wiring failed: " . $e->getMessage() . " — continuing.");
+}
 
 // ---------------------------------------------------------------------------
 // 5e2b. Practical Assignments — competency assessment (online text response)
@@ -2054,26 +2073,30 @@ foreach (local_twu_get_engine_parts_courses() as $coursedata) {
 // Cohort sync — role-based auto-enrolment into supplemental courses
 // Engine-model + technical courses → QA and Management (deep product knowledge
 // required for inspection and commercial decisions).
-foreach ($enginecourses as $shortname => $course) {
-    twu_ensure_cohort_sync($course, $cohort_qa);
-    twu_ensure_cohort_sync($course, $cohort_management);
-}
-if (!empty($enginecourses)) {
-    cli_writeln("[twu] cohort sync: QA + Management → " . count($enginecourses) . " engine/technical courses");
-}
-
-// Operations courses (AS9120, Customer Relations, Export Control) →
-// Management (always) and QA (always). Export Control specifically also →
-// Shipping/Receiving cohort.
-foreach ($opscourses as $shortname => $course) {
-    twu_ensure_cohort_sync($course, $cohort_qa);
-    twu_ensure_cohort_sync($course, $cohort_management);
-    if ($shortname === 'TWU-OPS-INTSHIP') {
-        twu_ensure_cohort_sync($course, $cohort_shipping);
+try {
+    foreach ($enginecourses as $shortname => $course) {
+        twu_ensure_cohort_sync($course, $cohort_qa);
+        twu_ensure_cohort_sync($course, $cohort_management);
     }
-}
-if (!empty($opscourses)) {
-    cli_writeln("[twu] cohort sync: QA + Management → " . count($opscourses) . " operations courses");
+    if (!empty($enginecourses)) {
+        cli_writeln("[twu] cohort sync: QA + Management → " . count($enginecourses) . " engine/technical courses");
+    }
+
+    // Operations courses (AS9120, Customer Relations, Export Control) →
+    // Management (always) and QA (always). Export Control specifically also →
+    // Shipping/Receiving cohort.
+    foreach ($opscourses as $shortname => $course) {
+        twu_ensure_cohort_sync($course, $cohort_qa);
+        twu_ensure_cohort_sync($course, $cohort_management);
+        if ($shortname === 'TWU-OPS-INTSHIP') {
+            twu_ensure_cohort_sync($course, $cohort_shipping);
+        }
+    }
+    if (!empty($opscourses)) {
+        cli_writeln("[twu] cohort sync: QA + Management → " . count($opscourses) . " operations courses");
+    }
+} catch (Throwable $e) {
+    cli_writeln("[twu] WARN engine/ops cohort sync failed: " . $e->getMessage() . " — continuing.");
 }
 
 // ---------------------------------------------------------------------------
@@ -2494,6 +2517,7 @@ function twu_ensure_demo_user(string $username, string $firstname, string $lastn
 // Make the All Employees cohort id available to the helper without re-querying.
 $GLOBALS['twu_cohort_all'] = $cohort_all;
 
+try {
 twu_ensure_demo_user(
     'demo.warehouse',
     'Demo',
@@ -2528,6 +2552,9 @@ twu_ensure_demo_user(
 );
 
 cli_writeln("[twu] 4 demo template users created (suspended; in role + All Employees cohorts)");
+} catch (Throwable $e) {
+    cli_writeln("[twu] WARN demo users section failed: " . $e->getMessage() . " — continuing.");
+}
 
 // ---------------------------------------------------------------------------
 // 6b2. Site calendar events — recurring compliance and training milestones
@@ -2577,6 +2604,7 @@ function twu_ensure_site_event(string $name, string $description, int $timestart
 
 // Calendar events: management review (quarterly), audit prep (annual),
 // recurring training reminders, ASA accreditation milestones.
+try {
 $now = time();
 $thisyear = (int)date('Y');
 $year = $thisyear;
@@ -2640,6 +2668,9 @@ foreach ([$semi1, $semi2] as $ts) {
 }
 
 cli_writeln("[twu] site calendar events ensured (management reviews, hazmat/DGR checks, recurring windows)");
+} catch (Throwable $e) {
+    cli_writeln("[twu] WARN site calendar events failed: " . $e->getMessage() . " — continuing.");
+}
 
 // ---------------------------------------------------------------------------
 // 6c. Course completion criteria — every tracked activity must be completed
@@ -2722,6 +2753,7 @@ function twu_ensure_course_completion_criteria(stdClass $course): int {
     return $added;
 }
 
+try {
 // Apply to every course we created in this bootstrap, including the final
 // exam course.
 $alltargetcourses = array_merge(
@@ -2735,6 +2767,9 @@ foreach ($alltargetcourses as $course) {
     $totalcriteria += twu_ensure_course_completion_criteria($course);
 }
 cli_writeln("[twu] course completion criteria: $totalcriteria activity-criterion rows across " . count($alltargetcourses) . " courses");
+} catch (Throwable $e) {
+    cli_writeln("[twu] WARN course completion criteria failed: " . $e->getMessage() . " — continuing.");
+}
 
 // ---------------------------------------------------------------------------
 // 6d. Certificate availability — gate cert behind completion of all lessons + quiz
@@ -2792,12 +2827,16 @@ function twu_ensure_cert_availability(stdClass $course): void {
     }
 }
 
+try {
 foreach ($createdcourses as $idnumber => $course) {
     twu_ensure_cert_availability($course);
 }
 // Gate the master cert on the final exam course too.
 twu_ensure_cert_availability($finalcourse);
 cli_writeln("[twu] certificate availability: gated behind completion of all lessons + quiz in " . (count($createdcourses) + 1) . " Initial Training courses");
+} catch (Throwable $e) {
+    cli_writeln("[twu] WARN cert availability gating failed: " . $e->getMessage() . " — continuing.");
+}
 
 // ---------------------------------------------------------------------------
 // 6e. Welcome HTML blocks on each Initial Training course page
@@ -2887,6 +2926,7 @@ $welcome_blocks = [
     ],
 ];
 
+try {
 foreach ($createdcourses as $idnumber => $course) {
     if (!isset($welcome_blocks[$idnumber])) {
         continue;
@@ -2908,14 +2948,21 @@ foreach ($createdcourses as $idnumber => $course) {
     twu_ensure_course_html_block($course, $w['title'], $html, 'side-post', -10);
 }
 cli_writeln("[twu] welcome HTML blocks added to " . count($createdcourses) . " Initial Training courses");
+} catch (Throwable $e) {
+    cli_writeln("[twu] WARN welcome blocks failed: " . $e->getMessage() . " — continuing.");
+}
 
 // Rebuild course cache for all touched courses so completion / availability /
 // cohort-sync changes are visible immediately rather than after the next
 // nightly cron rebuild.
+try {
 foreach ($alltargetcourses as $course) {
     rebuild_course_cache($course->id, true);
 }
 cli_writeln("[twu] rebuilt course cache for " . count($alltargetcourses) . " courses");
+} catch (Throwable $e) {
+    cli_writeln("[twu] WARN course cache rebuild failed: " . $e->getMessage() . " — continuing.");
+}
 
 // ---------------------------------------------------------------------------
 // 7. Mark done
