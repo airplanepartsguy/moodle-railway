@@ -25,7 +25,7 @@ require_once(__DIR__ . '/../content/content.php');
 
 // Bump the suffix here (and in the entrypoint marker docs) when adding new
 // bootstrap steps that should run on existing sites.
-$marker = $CFG->dataroot . '/.twu-bootstrapped-v8';
+$marker = $CFG->dataroot . '/.twu-bootstrapped-v9';
 $force  = in_array('--force', $argv ?? [], true);
 if (file_exists($marker) && !$force) {
     cli_writeln("[twu] already bootstrapped (marker present at $marker). Pass --force to re-run.");
@@ -391,31 +391,56 @@ if ($preferredtheme === 'snap') {
     set_config('coursefootertoggle', 1, 'theme_snap');
     set_config('cover_image_alttext', 'TurbineWorks University', 'theme_snap');
 
-    // Snap uses its own logo upload mechanism — same approach as Moove.
+    // Snap logo: belt-and-suspenders.
+    // Upload to BOTH core_admin (site-wide) AND theme_snap (theme-specific)
+    // logo + favicon fileareas. Different parts of Snap render from different
+    // sources; uploading to all four guarantees the logo shows up in the
+    // header, login page, and browser tab.
     $logosrc = $CFG->dirroot . '/local/twu/assets/logo.png';
+    $favsrc  = $CFG->dirroot . '/local/twu/assets/favicon.png';
     if (file_exists($logosrc)) {
         $fs = get_file_storage();
         $syscontext = context_system::instance();
-        foreach (['logo', 'favicon'] as $filearea) {
-            $fs->delete_area_files($syscontext->id, 'theme_snap', $filearea);
+        $uploads = [
+            // [component, filearea, source-file, target-filename]
+            ['core_admin', 'logo',       $logosrc, 'logo.png'],
+            ['core_admin', 'favicon',    $favsrc,  'favicon.png'],
+            ['theme_snap', 'logo',       $logosrc, 'logo.png'],
+            ['theme_snap', 'favicon',    $favsrc,  'favicon.png'],
+            ['theme_snap', 'loginlogo',  $logosrc, 'logo.png'],
+            ['theme_snap', 'loginheaderlogo', $logosrc, 'logo.png'],
+        ];
+        foreach ($uploads as [$component, $filearea, $src, $filename]) {
+            if (!file_exists($src)) {
+                continue;
+            }
+            $fs->delete_area_files($syscontext->id, $component, $filearea);
             try {
                 $fs->create_file_from_pathname([
                     'contextid' => $syscontext->id,
-                    'component' => 'theme_snap',
+                    'component' => $component,
                     'filearea'  => $filearea,
                     'itemid'    => 0,
                     'filepath'  => '/',
-                    'filename'  => 'logo.png',
-                ], $logosrc);
-                cli_writeln("[twu] uploaded logo.png to theme_snap/$filearea");
+                    'filename'  => $filename,
+                ], $src);
+                cli_writeln("[twu] uploaded $filename to $component/$filearea");
             } catch (Exception $e) {
-                cli_writeln("[twu] could not upload Snap logo to $filearea: " . $e->getMessage());
+                cli_writeln("[twu] could not upload to $component/$filearea: " . $e->getMessage());
             }
         }
+    } else {
+        cli_writeln("[twu] no logo file at $logosrc; skipping all logo uploads");
     }
 
+    // Force Snap to render the logo (some Snap versions gate this).
+    set_config('logodisplay', 1, 'theme_snap');
+
+    // Bump theme revision so browsers re-fetch theme assets immediately.
+    set_config('themerev', time(), 'core');
+
     theme_reset_all_caches();
-    cli_writeln("[twu] purged theme caches (Snap active)");
+    cli_writeln("[twu] purged theme caches and bumped themerev (Snap active)");
 }
 
 // Keep the Moove configuration block below intact — it's a no-op when Snap is
