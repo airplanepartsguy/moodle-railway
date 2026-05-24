@@ -8106,287 +8106,1080 @@ function local_twu_module_7_lessons(): array {
     return [
         [
             'name'  => 'Lesson 7.1 — ESD Physics: What Static Discharge Actually Does',
-            'intro' => '<p>Why a spark you cannot feel can destroy electronics you cannot see being damaged.</p>',
+            'intro' => '<p>The physics of electrostatic discharge — why a spark you cannot feel can destroy electronics you cannot see being damaged.</p>',
             'content' => <<<'HTML'
-<h3>ESD Physics: The Invisible Threat</h3>
-<p>You walk across a carpet, touch a doorknob, and get a small shock. That spark you felt was around 3,000 to 5,000 volts. The human body can detect electrostatic discharge starting at around 3,000 V. You can <em>hear</em> a discharge at around 5,000 V and <em>see</em> one at around 8,000 V.</p>
-<p>A modern aviation electronic component can be permanently damaged by a discharge as low as <strong>100 volts</strong>. You cannot feel, hear, or see it happen. The component continues to look identical. It may even continue to function — until it fails in service.</p>
+<h3>ESD Physics: The Invisible Threat to Aviation Electronics</h3>
 
-<h4>How static electricity builds</h4>
-<p>Static charge builds when two surfaces are brought into contact and separated (triboelectric charging). Different materials gain or lose electrons in the process. Walking across a synthetic carpet, sliding out of a chair, removing a part from plastic packaging — all of these generate static.</p>
-<p>Once charged, a person or object holds the charge until it has a path to discharge — typically by touching something at a different potential.</p>
+<h4>The everyday experience and the industrial problem</h4>
+<p>You walk across a carpet in a dry room, reach for a metal doorknob, and feel a sharp shock as your finger nears it. You may even see the spark in dim light. That discharge was somewhere between 3,000 and 5,000 volts. It did not hurt — there was almost no current behind it — but you felt it. The threshold for human perception of electrostatic discharge begins around 3,000 V. You can <em>hear</em> a discharge around 5,000 V. You can <em>see</em> one in normal lighting around 8,000 V. Below 3,000 V, you are completely unaware that any discharge occurred.</p>
+<p>This human-perception baseline is the fundamental problem in electronics handling. A modern aviation electronic component can be permanently damaged by a discharge as low as <strong>100 volts</strong>. The most sensitive classes of integrated circuits can be damaged at <strong>30 volts</strong>. You cannot feel a 100 V discharge. You cannot feel a 1,000 V discharge. You may not even feel a 2,500 V discharge if conditions are right. Yet every one of those events can destroy a part you are holding.</p>
+<p>The visible difference between an ESD-damaged component and an undamaged one is usually zero. The component looks identical. The packaging looks identical. The functional test at receiving may pass. The aircraft installation may succeed. The part may operate normally for hours, days, or months before failing. This combination — invisible damage, invisible failure mechanism, delayed manifestation — is what makes ESD the most insidious failure mode in distribution.</p>
 
-<h4>ESD damage mechanisms</h4>
-<p>An ESD event damages electronic components in three ways:</p>
+<h4>Where the charge comes from: triboelectric generation</h4>
+<p>Static electricity is generated whenever two surfaces of different materials come into contact and then separate. As the materials touch, electrons move from one to the other (one material has greater affinity for electrons than the other). When the surfaces separate, the electron transfer is "locked in" — one surface now has excess electrons (negative charge), the other has a deficit (positive charge). This is <strong>triboelectric charging</strong>.</p>
+<p>The amount of charge generated depends on:</p>
 <ul>
-  <li><strong>Catastrophic failure</strong> — junction melting, oxide breakdown, metal trace vaporization. Component dies immediately. (Easiest to detect — it doesn't work.)</li>
-  <li><strong>Latent damage</strong> — partial damage that the component can survive for hours or weeks but that eventually causes failure. (Hardest to detect — works at receiving inspection, fails six months later in an aircraft.)</li>
-  <li><strong>Parametric drift</strong> — damage that shifts the component's operating characteristics outside specification without outright failure. May or may not cause aircraft-level problems.</li>
+  <li><strong>Materials involved</strong> — the further apart on the triboelectric series, the more charge transfer. The triboelectric series ranks materials by their electron affinity. Human skin, glass, and human hair are at the strongly positive (electron-losing) end. Teflon, silicone rubber, and PVC are at the strongly negative (electron-gaining) end.</li>
+  <li><strong>Contact area</strong> — more contact area means more charge transfer.</li>
+  <li><strong>Speed of separation</strong> — faster separation prevents recombination of charges, leaving more net charge.</li>
+  <li><strong>Surface conditions</strong> — clean dry surfaces generate more charge than contaminated or moist ones.</li>
+  <li><strong>Humidity</strong> — at low relative humidity, surfaces hold charge longer. At high humidity, a thin water film on surfaces conducts charge away as it is being generated. This is why ESD problems are dramatically worse in winter (heated dry air) and in low-humidity climates.</li>
 </ul>
-<p>Latent damage is the killer. A turbine engine control unit fried by an ungrounded technician at TurbineWorks may pass all functional tests, ship to the customer, install on an engine, and fail two months later at altitude.</p>
-
-<h4>ESD sensitivity classifications</h4>
-<p>Electronic parts are classified by their susceptibility threshold. Common scales:</p>
+<p>Real-world charge generation values (typical, depending on humidity):</p>
 <ul>
-  <li>Class 0: damaged below 250 V (most sensitive — modern small-geometry semiconductors)</li>
-  <li>Class 1A: 250-500 V</li>
-  <li>Class 1B: 500-1,000 V</li>
-  <li>Class 1C: 1,000-2,000 V</li>
-  <li>Class 2: 2,000-4,000 V</li>
-  <li>Class 3A: 4,000-8,000 V</li>
-  <li>Class 3B: above 8,000 V (least sensitive)</li>
+  <li>Walking across vinyl floor: 250 V at 60% RH, 12,000 V at 10% RH</li>
+  <li>Walking across carpet: 1,500 V at 60% RH, 35,000 V at 10% RH</li>
+  <li>Sliding out of a vinyl chair: 1,500 V at 60% RH, 18,000 V at 10% RH</li>
+  <li>Picking up a polyethylene bag: 1,200 V at 60% RH, 20,000 V at 10% RH</li>
+  <li>Removing tape from a roll: 5,000 V at 60% RH, 25,000 V at 10% RH</li>
+  <li>Opening a vinyl envelope: 600 V at 60% RH, 7,000 V at 10% RH</li>
 </ul>
-<p>Modern aviation electronics are often Class 0 or Class 1. A discharge you cannot feel can destroy them.</p>
+<p>Every one of these everyday actions generates charge well above the damage threshold of modern aviation electronics. The actions are unavoidable in a normal work environment. The only way to prevent ESD damage is to manage the charge through engineered controls — grounding, dissipative materials, ionization, humidity control.</p>
 
-<h4>Why aviation has an extra problem</h4>
-<p>Aviation electronics are often:</p>
+<h4>Body capacitance and the discharge event</h4>
+<p>A human body can be modeled electrically as a capacitor with about 100 pF (picofarads) of capacitance to ground. When the body acquires charge through triboelectric generation, it stores that charge as voltage. The voltage on a charged body is related to the charge by V = Q/C; for a body capacitance of 100 pF, accumulating just 0.1 microcoulombs of charge produces 1,000 V.</p>
+<p>When the charged body touches a grounded conductor (or vice versa), the stored charge flows from body to ground (or to the conductor, which then disposes of it). The flow happens in tens of nanoseconds. The peak current can be tens of amperes. The energy delivered is small (typically microjoules to millijoules), but concentrated in a vanishingly small time and into a very small area.</p>
+<p>An electronic component contacted during this discharge experiences the full voltage and a substantial current pulse across its sensitive structures. Semiconductor junctions and gate oxides are nanometers thick. A 1,000 V discharge across a 10-nm gate oxide produces an electric field of 100 megavolts per centimeter — far beyond the breakdown strength of any material. The oxide is destroyed instantaneously.</p>
+
+<h4>Three damage mechanisms</h4>
+<p>ESD damages electronic components in three distinct ways. Understanding the differences explains why ESD is so hard to detect and why latent damage is the most dangerous form.</p>
+<ol>
+  <li><strong>Catastrophic failure.</strong> The component is destroyed instantly. Junction melting, oxide breakdown, metal trace vaporization, bond wire fusion. The component no longer functions. This is the easiest type of damage to detect — the component does not work, and downstream functional testing catches it. Counterintuitively, catastrophic failure is the <em>least</em> dangerous type of ESD damage because it does not ship.</li>
+  <li><strong>Latent damage.</strong> The component is partially damaged but still functions. The damage may be a partially-cracked oxide, a weakened metal trace, a partially-degraded junction. The component passes initial functional testing because the remaining undamaged portion still operates. Over time — under thermal cycling, electrical stress, mechanical vibration, or simple aging — the partial damage extends and the component eventually fails. The interval between ESD event and ultimate failure can be hours, weeks, months, or years. Latent damage is the most dangerous type because it is invisible at receiving inspection, invisible at outgoing inspection, invisible at installation, and only manifests in service.</li>
+  <li><strong>Parametric drift.</strong> The component still functions but its electrical characteristics are altered. A transistor's threshold voltage shifts. A resistor's value changes by a few percent. A capacitor's leakage increases. The component may still meet specification, or may be just out of specification but pass loose functional tests. In a tolerant circuit, parametric drift may never cause a problem. In a tightly designed circuit (which aviation electronics often are), it can cause intermittent failures, reduced margins, increased susceptibility to other stresses, or accelerated long-term aging.</li>
+</ol>
+<p>Latent damage is the central problem for distributors. A turbine engine control unit damaged by an ungrounded technician at TurbineWorks may pass receiving inspection, pass outgoing inspection, ship to a customer, install on an engine, run for 200 hours, and then fail at altitude on a revenue flight. The customer's failure analysis lab eventually traces the failure to ESD damage. The damage occurred at TurbineWorks but the failure occurred at the customer — and the failure may cost millions of dollars (an aborted flight, an unscheduled engine removal, a customer-aircraft-on-ground situation, a damaged commercial relationship).</p>
+
+<h4>ESD sensitivity classifications and the three test models</h4>
+<p>Electronic components are classified by their ESD susceptibility under three standard test models, each representing a different real-world discharge scenario.</p>
+
+<p><strong>Human Body Model (HBM).</strong> Simulates a charged human discharging into a grounded component. Uses a 100 pF capacitor discharged through a 1,500-ohm resistor (representing body resistance). HBM is the most-cited model for personnel-handling protection.</p>
+<table border="1" cellpadding="6" cellspacing="0">
+  <tr><th>HBM Class</th><th>Voltage Range</th><th>Typical Examples</th></tr>
+  <tr><td>Class 0</td><td>&lt; 250 V</td><td>Modern small-geometry semiconductors, RF MOSFETs, ultra-sensitive ICs</td></tr>
+  <tr><td>Class 1A</td><td>250–500 V</td><td>Many modern integrated circuits, sensitive analog devices</td></tr>
+  <tr><td>Class 1B</td><td>500–1,000 V</td><td>Standard ICs, some power semiconductors</td></tr>
+  <tr><td>Class 1C</td><td>1,000–2,000 V</td><td>Robust ICs, larger-geometry components</td></tr>
+  <tr><td>Class 2</td><td>2,000–4,000 V</td><td>General-purpose components</td></tr>
+  <tr><td>Class 3A</td><td>4,000–8,000 V</td><td>Robust discretes, some passives</td></tr>
+  <tr><td>Class 3B</td><td>&gt; 8,000 V</td><td>Heavy-duty components, large-geometry power devices</td></tr>
+</table>
+
+<p><strong>Machine Model (MM).</strong> Simulates a charged metallic object (tool, fixture, automated handler) discharging into a component. Uses a 200 pF capacitor with no series resistance (zero ohms, representing the low impedance of metal-to-metal contact). MM produces faster, higher-peak-current discharges than HBM. A component may be HBM Class 2 but MM Class 0 if its damage mode is sensitive to peak current.</p>
+
+<p><strong>Charged Device Model (CDM).</strong> Simulates the component itself becoming charged (typically by triboelectric contact with packaging) and then discharging when one of its pins touches a grounded conductor. CDM is the fastest discharge of the three — a few nanoseconds duration with very high peak currents. CDM is particularly important for high-pin-count components where pins may individually experience high-current pulses. CDM sensitivities below 500 V are common in modern devices.</p>
+
+<p>The practical takeaway: an aviation electronic component may be rated to one HBM class but have a different MM or CDM class. The damage mechanisms differ. An ESD program designed for HBM (focused on personnel grounding) does not necessarily protect against CDM (which is mostly about charged-component handling). A complete program addresses all three.</p>
+
+<h4>Why aviation electronics are especially exposed</h4>
+<p>Aviation electronics have four characteristics that combine to create heightened ESD risk in a distributor's environment:</p>
+<ol>
+  <li><strong>Mission-critical role.</strong> A consumer electronic that fails is annoying. An aviation electronic that fails can cause loss of control, loss of flight, loss of life. The consequences of latent damage are categorically more severe.</li>
+  <li><strong>Small geometry.</strong> Modern FADECs, ECUs, sensors, and avionics use semiconductor processes with feature sizes in the tens of nanometers. Smaller features mean thinner oxides, smaller junctions, and lower ESD thresholds. Aviation electronics produced today are typically HBM Class 1 or Class 0 — among the most sensitive devices in any industry.</li>
+  <li><strong>Long handling chain.</strong> A part may pass through manufacturer assembly, manufacturer test, manufacturer warehouse, distributor receiving, distributor warehouse, distributor outgoing, freight forwarder, customs, customer receiving, customer kit-up, technician installation, aircraft test, and into service. Each touch is a potential ESD event. If any of those handlers is ungrounded with a charged body, the part can be damaged at any point.</li>
+  <li><strong>Long storage and shipment cycles.</strong> Aviation parts sit in distributor inventory for months or years. They may be opened for inspection, photographed, re-packaged, transferred, and re-inspected. Each handling event is a discrete ESD risk. Cumulative exposure through a long inventory life is much higher than for a part shipped from manufacturer to user in days.</li>
+</ol>
+
+<h4>Realistic ESD failure scenarios in aviation distribution</h4>
+<p>Real failure case patterns industry has documented (anonymized):</p>
 <ul>
-  <li>Small geometry (high sensitivity)</li>
-  <li>Mission-critical (failure consequences are serious)</li>
-  <li>Stored and handled for extended periods in a distributor's warehouse</li>
-  <li>Exposed to many handling events between manufacture and installation</li>
+  <li><strong>The fall service-bulletin returns.</strong> A line of avionics receivers shows higher-than-expected failure rates in the first year after a distributor began handling them. Failure analysis identifies ESD damage to input-stage MOSFETs. Investigation finds the distributor's receiving area is on synthetic carpet, with no personnel grounding. Receivers are opened for serialization, marked, and re-packaged — exposing the input pins. The carpet generated 15,000 V on operators in winter humidity. Roughly 2% of the year's shipments were damaged at receiving. Detection lag: 8 months from first damaged shipment to first failure report.</li>
+  <li><strong>The recalibrated sensor batch.</strong> A batch of engine sensors is opened for visual inspection at a distributor. The technician wears no wrist strap. Sensors are removed from anti-static foam, examined under a magnifier lamp, and replaced. Three months later, an installation customer reports that 4 of 12 sensors from that batch failed bench test before installation. The remaining 8 are returned. Failure analysis: latent oxide damage in the sensor signal-conditioning IC. Source attributed to distributor handling.</li>
+  <li><strong>The FADEC field returns.</strong> A FADEC unit ships to a customer who installs it on a corporate-jet engine. Two months and 130 hours later, the FADEC begins reporting intermittent sensor errors. Engine swap, FADEC return, bench test confirms it is faulty. Failure analysis: catastrophic damage to a single input pin's protection circuit, plus latent damage to two adjacent pins. Pattern is consistent with a charged-device discharge during distributor handling — likely when the unit was removed from anti-static bag for an inspection step.</li>
 </ul>
-<p>Each handling event without ESD protection is an opportunity for damage. The cumulative risk through a distributor's chain is significant.</p>
+<p>None of these failures were detected at the distributor. Each one was attributed back to the distributor only after lab failure analysis at the customer. Each one represented a real cost to the distributor — replacement, return-shipping, customer relationship damage, and (in regulated industries) audit-finding risk.</p>
 
-<h4>What this means for TurbineWorks</h4>
-<p>Any electronic part handled at TurbineWorks needs ESD-safe handling from the moment its packaging is opened until it is repackaged. The cost of an ESD program is small; the cost of a single latent-damage failure on an aircraft is enormous.</p>
+<h4>The cumulative-handling problem</h4>
+<p>An aviation electronic component might be handled 12 to 20 times between manufacture and installation: factory test, factory pack, factory ship, distributor receive, distributor inspect, distributor store, distributor pick, distributor inspect, distributor pack, distributor ship, freight handling, customs handling, customer receive, customer inspect, customer store, customer kit, technician unpack, technician install. If each handling has a 1% chance of damage (a generous figure for a well-controlled environment), the cumulative damage probability over 15 handlings is 14%. If each handling has a 0.1% chance of damage (a tighter environment), the cumulative probability over 15 handlings is 1.5%.</p>
+<p>The distributor in the middle of this chain bears outsized responsibility because the distributor handles the part multiple times (receive, inspect, store, pick, pack, ship — six handlings minimum). The distributor's ESD program quality has disproportionate effect on the part's eventual quality at installation.</p>
+
+<h4>The economic case for ESD discipline</h4>
+<p>The cost of running an ESD-controlled area is modest:</p>
+<ul>
+  <li>ESD mats and grounding hardware for a workbench: a few hundred dollars</li>
+  <li>Wrist straps and verification testers: a few hundred dollars annually</li>
+  <li>Conductive flooring or ESD floor mats: a few thousand dollars per area, lasting many years</li>
+  <li>Personnel training: covered under the existing training program</li>
+  <li>Periodic verification: a few hours per month</li>
+</ul>
+<p>The cost of a single latent-damage failure on an aircraft can include:</p>
+<ul>
+  <li>Replacement of the failed component (thousands to tens of thousands of dollars)</li>
+  <li>Engine removal and replacement (hundreds of thousands of dollars in some cases)</li>
+  <li>Aircraft on ground time (tens of thousands per day for commercial aircraft)</li>
+  <li>Failure analysis and root cause investigation (tens of thousands of dollars)</li>
+  <li>FAA reporting if the failure has airworthiness implications</li>
+  <li>Customer relationship damage and potential supplier-disqualification</li>
+  <li>Audit findings and potential accreditation impact</li>
+  <li>Liability exposure if the failure caused or contributed to an aircraft incident</li>
+</ul>
+<p>The ESD program is not a cost — it is insurance against costs that are orders of magnitude larger.</p>
+
+<h4>Common misconceptions about ESD</h4>
+<ul>
+  <li>"I would feel the static if it were a problem." False. The threshold for human perception is 30 times higher than the threshold for damaging modern electronics.</li>
+  <li>"The part still works, so it must be fine." False. Latent damage allows the part to work until it doesn't. Functional test does not catch most latent damage.</li>
+  <li>"The packaging will protect it." Partly false. ESD-safe packaging protects the part inside the bag, but the moment you open the bag outside a controlled environment, protection ends.</li>
+  <li>"It's only sensitive electronics — mechanical parts don't care." Mostly true, but the exception matters. Some mechanical-looking parts contain electronics (sensors, valves with integrated electronics, smart bearings).</li>
+  <li>"I don't generate static — I don't notice it." Personal perception of static is unreliable. Charge generation depends on materials, humidity, and motion; it happens whether you notice or not.</li>
+  <li>"The wrist strap is uncomfortable, I'll skip it just for this one part." This is the most common pathway to damage. One ungrounded handling is enough.</li>
+  <li>"It's summer, humidity is high, I don't need to worry." Indoor humidity is often much lower than outdoor humidity, especially in air-conditioned environments. Verify with a hygrometer.</li>
+  <li>"This isn't ESD-sensitive — there's no warning label." Some parts arrive without proper ESD labeling. Verify with documentation; default to protected handling when unclear.</li>
+</ul>
+
+<h4>What this means for daily work at TurbineWorks</h4>
+<p>Every employee who handles parts has a role in ESD prevention:</p>
+<ul>
+  <li>Identify ESD-sensitive parts at receiving (Module 7 Lesson 3 details the criteria)</li>
+  <li>Move ESD-sensitive parts only inside the ESD Protected Area</li>
+  <li>Use personnel grounding (wrist strap or foot grounders) when handling</li>
+  <li>Keep ESD-sensitive parts in ESD-safe packaging whenever they are outside the EPA</li>
+  <li>Verify packaging integrity before storing or shipping</li>
+  <li>Report any uncertainty about ESD status to the QA Manager rather than guessing</li>
+</ul>
+<p>The discipline is small acts repeated consistently. The consequence of skipping the discipline is invisible at the time and severe much later. This is why ESD training matters, why ESD verification matters, and why ESD audit findings are taken so seriously by recognized accreditors.</p>
+
+<h4>Self-check questions</h4>
+<ol>
+  <li>Why is the threshold for ESD damage in modern electronics far below the threshold for human perception of static?</li>
+  <li>Describe the three damage mechanisms (catastrophic, latent, parametric). Which is the most dangerous for distribution, and why?</li>
+  <li>What is the difference between HBM, MM, and CDM test models? Why does an ESD program need to address all three?</li>
+  <li>Approximately how much voltage is generated by walking across a carpet at 10% relative humidity? How does that compare to the damage threshold of a Class 1A component?</li>
+  <li>Why does aviation distribution have a higher cumulative ESD risk than a single manufacturer-to-user shipment?</li>
+  <li>Explain why "the part still works at receiving" is not evidence that the part is undamaged.</li>
+  <li>What is the body capacitance approximation, and how does it relate the charge accumulated on a person to the voltage on their body?</li>
+  <li>List four everyday actions that generate static charge above the damage threshold of typical aviation electronics.</li>
+</ol>
+
+<h4>References</h4>
+<ul>
+  <li>ANSI/ESD S20.20 — Electrostatic Discharge Control Program (via <a href="https://www.esda.org/" target="_blank" rel="noopener">esda.org</a>)</li>
+  <li>ANSI/ESDA/JEDEC JS-001 — HBM Test Method</li>
+  <li>ANSI/ESDA/JEDEC JS-002 — CDM Test Method</li>
+  <li>ESD ADV1.0 — ESD Fundamentals</li>
+  <li>MIL-HDBK-263 — ESD Control Handbook for Protection of Electrical and Electronic Parts</li>
+  <li>ASA ESD Best Practices Document</li>
+</ul>
 HTML
         ],
         [
             'name'  => 'Lesson 7.2 — ANSI/ESD S20.20 Program Elements',
-            'intro' => '<p>The industry-standard ESD control program TurbineWorks operates under.</p>',
+            'intro' => '<p>The industry-standard ESD control program TurbineWorks operates under — every required element, why each exists, and what the auditor verifies.</p>',
             'content' => <<<'HTML'
-<h3>ANSI/ESD S20.20 Program Elements</h3>
-<p>The standard for an ESD control program in industry is <strong>ANSI/ESD S20.20</strong>, published by the Electrostatic Discharge Association. The ASA ESD Best Practices document references S20.20 as the technical standard. TurbineWorks' ESD program is structured to conform to S20.20.</p>
+<h3>ANSI/ESD S20.20: The Industry-Standard ESD Control Program</h3>
 
-<h4>Program scope</h4>
-<p>S20.20 covers protection of ESD-sensitive items from:</p>
-<ul>
-  <li>Charged person contact (direct discharge from a person to a part)</li>
-  <li>Charged object contact (discharge from a charged tool, fixture, or surface)</li>
-  <li>Field-induced charging (a part picks up charge from a nearby charged object)</li>
-</ul>
-<p>The program threshold is typically 100 V — anything below this is considered safe for most ESD-sensitive items.</p>
+<h4>What S20.20 is and why it exists</h4>
+<p><strong>ANSI/ESD S20.20</strong> is the consensus standard for ESD control programs in industry. It is developed and maintained by the <strong>Electrostatic Discharge Association (ESDA)</strong>, accredited as an American National Standards Institute (ANSI) standards developer. The current version, ANSI/ESD S20.20-2021 (with revisions and clarifications since), supersedes earlier versions dating to 1999.</p>
+<p>The standard's origin traces to the 1970s and 1980s, when the rapid shrinking of integrated-circuit feature sizes made ESD damage a major reliability problem in electronics manufacturing. Pre-S20.20 ESD programs varied widely company by company; some were rigorous, many were ad-hoc. By the late 1990s, an industry consensus had formed that a standardized program structure would benefit suppliers, customers, and auditors. S20.20 codified that consensus.</p>
+<p>S20.20 is the technical standard that the ASA ESD Best Practices document references. ASA accreditation auditors look for S20.20 conformance (or equivalent) when reviewing a distributor's ESD program. TurbineWorks' ESD program is structured to conform to S20.20.</p>
+<p>Conformance to S20.20 is voluntary in most industries (defense contractors with specific contractual obligations may be required to conform; commercial aviation distributors generally adopt it because customers and accreditors expect it). For TurbineWorks, S20.20 conformance is the path to ASA accreditation and to credibility with customers.</p>
 
-<h4>Required program elements</h4>
+<h4>Program scope: what S20.20 protects against</h4>
+<p>S20.20 protects ESD-sensitive items from three distinct ESD threats:</p>
 <ol>
-  <li><strong>ESD Control Program Plan</strong> — the written document describing how the company implements the program. This is the equivalent of a QAM for ESD.</li>
-  <li><strong>Training</strong> — ESD training for everyone who handles ESDS items. Initial training and periodic refresher.</li>
-  <li><strong>ESD Protected Areas (EPAs)</strong> — designated areas where ESDS items can be handled. Outside the EPA, items must remain in ESD-safe packaging.</li>
-  <li><strong>Personnel grounding</strong> — wrist straps for seated work, foot grounders or ESD-safe footwear for standing work.</li>
-  <li><strong>Surface grounding</strong> — work surfaces, floors, and equipment in the EPA are grounded.</li>
-  <li><strong>Ionization</strong> — for areas where ungrounded objects (some insulators) cannot be eliminated, ionizers neutralize their charge.</li>
-  <li><strong>Packaging</strong> — ESD-safe packaging required outside the EPA.</li>
-  <li><strong>Marking</strong> — ESDS items and EPAs marked clearly.</li>
-  <li><strong>Compliance verification</strong> — regular testing of wrist straps, floors, work surfaces, ionizers.</li>
+  <li><strong>Charged personnel discharge (HBM threat).</strong> A person accumulates triboelectric charge through normal motion, then discharges it through their hand into a part. Personnel grounding (wrist straps, foot grounders, ESD smocks) addresses this.</li>
+  <li><strong>Charged object discharge (MM threat).</strong> A tool, fixture, work surface, or other conductive object accumulates charge (typically by triboelectric contact with insulating materials) and then discharges it through metal-to-metal contact with a part. Surface grounding, dissipative work surfaces, and conductive tool requirements address this.</li>
+  <li><strong>Field-induced charging (CDM threat).</strong> A part is influenced by a strong electrostatic field from a nearby charged object (without direct contact). When the part is subsequently grounded through a pin, the induced charge discharges, damaging the part. Ionization and elimination of uncontrolled insulators in the EPA address this.</li>
+</ol>
+<p>S20.20's threshold for "ESD-safe" handling is generally <strong>100 volts HBM</strong>. Components rated above this threshold are assumed adequately protected by a conforming S20.20 program. Components with thresholds below 100 V (Class 0 devices, some modern semiconductors) require enhanced controls beyond the standard S20.20 baseline — sometimes called "S20.20+" or "tailored program" provisions in the standard.</p>
+
+<h4>The eight required program elements (in detail)</h4>
+
+<p><strong>1. ESD Control Program Plan</strong></p>
+<p>The written document describing how the company implements ESD control. This is the foundational program element — without a written plan, there is no auditable program. The Plan covers:</p>
+<ul>
+  <li>Scope (which areas, which items, which personnel)</li>
+  <li>Responsibilities (program manager, area coordinators, operators, QA)</li>
+  <li>Personnel grounding requirements</li>
+  <li>EPA design and verification</li>
+  <li>Packaging requirements</li>
+  <li>Training requirements</li>
+  <li>Compliance verification schedules and methods</li>
+  <li>Records retention</li>
+  <li>Document control (revision history, approval)</li>
+  <li>Procedures for excursions (what to do when verification fails)</li>
+  <li>Procedures for handling Class 0 devices if applicable</li>
+</ul>
+<p>The Plan is a controlled document — version-controlled, approved by management, distributed to relevant personnel. It is reviewed at intervals (typically annually) and updated when conditions change. At TurbineWorks this Plan is referenced from the QAM and lives in the document control register.</p>
+
+<p><strong>2. Training</strong></p>
+<p>Every person who handles ESD-sensitive items receives ESD training before they begin handling. Training covers:</p>
+<ul>
+  <li>ESD physics — how charge accumulates and discharges (covered in Lesson 7.1)</li>
+  <li>Damage mechanisms — catastrophic, latent, parametric</li>
+  <li>Identification of ESD-sensitive items (covered in Lesson 7.3)</li>
+  <li>Personnel grounding procedures (Lesson 7.4)</li>
+  <li>Work area procedures — what to do, what not to do</li>
+  <li>Packaging requirements (Lesson 7.5)</li>
+  <li>Verification testing procedures</li>
+  <li>Reporting requirements when problems are identified</li>
+</ul>
+<p>Initial training is required before independent handling. Recurring training (annual at minimum, or per the company's training schedule) keeps the program current. At TurbineWorks, the 6-month recurring training cadence applies to ESD as it does to other safety-critical topics.</p>
+<p>Training records are retained — who was trained, on what, by whom, when, and the result (pass / fail of any knowledge check). These records are reviewed at S20.20 audits.</p>
+
+<p><strong>3. Compliance Verification Plan</strong></p>
+<p>The schedule of testing that verifies the ESD program continues to function. The Plan specifies:</p>
+<ul>
+  <li>What is tested (wrist straps, foot grounders, work surfaces, floor, ionizers, packaging samples)</li>
+  <li>How it is tested (test method per ESD TR53 or equivalent)</li>
+  <li>How often (daily, monthly, quarterly, annually — varies by item)</li>
+  <li>Acceptance criteria (resistance ranges, decay times, balance limits)</li>
+  <li>Who does the testing</li>
+  <li>What records are kept</li>
+  <li>What action is taken when a test fails</li>
+</ul>
+
+<p><strong>4. Personnel Grounding</strong></p>
+<p>Every person inside an EPA, handling ESD-sensitive items, is grounded to the EPA common point ground via one of the approved methods:</p>
+<ul>
+  <li><strong>Wrist strap</strong> — for seated work. Skin contact, conductive band, coil cord with 1 megohm series resistor, snap-connected to EPA ground.</li>
+  <li><strong>Foot grounders (heel-straps)</strong> — for standing or moving work. Two grounders (both feet). Conductive path from skin or foot through grounder to ESD-safe floor.</li>
+  <li><strong>ESD-safe footwear</strong> — conductive or dissipative shoes meeting ESD STM9.1. Both feet must be in ESD-safe footwear. Footwear is tested before each use.</li>
+</ul>
+<p>The standard's required grounding impedance is below 35 megohms (typical wrist strap path is around 1 megohm; typical foot-grounder + floor path is 1-10 megohms when conditions are correct).</p>
+<p>Lesson 7.4 details personnel grounding.</p>
+
+<p><strong>5. EPA Requirements (the protected zone)</strong></p>
+<p>The ESD Protected Area is the bounded space where ESD-sensitive items are handled. Within the EPA, all the ESD control elements operate together. Outside the EPA, ESD-sensitive items must be in ESD-safe packaging that provides equivalent protection.</p>
+<p>EPA design elements:</p>
+<ul>
+  <li>Marked boundary (floor tape, signage, often warning signs at entry)</li>
+  <li>ESD-safe flooring (conductive or dissipative, tested resistance)</li>
+  <li>Grounded work surfaces (dissipative work mats connected to common point ground)</li>
+  <li>Wrist strap stations or other personnel grounding at every work position</li>
+  <li>Common Point Ground (CPG) — a single ground point in the EPA to which all conductive surfaces, mats, and wrist straps connect, tied to building ground via tested low-impedance path</li>
+  <li>Removal of all uncontrolled insulators (no Styrofoam, no untreated plastic bags, no synthetic carpet, no unshielded fluorescent fixtures)</li>
+  <li>Ionizers in areas where uncontrolled insulators cannot be eliminated</li>
+  <li>Humidity control (typically 40–60% RH; below 30% RH triggers enhanced controls)</li>
+</ul>
+<p>The EPA boundary is taken seriously. An ESD-sensitive item must not be opened outside the EPA. A part removed from its protective packaging while still outside the EPA boundary is exposed; even a few seconds of exposure can be enough to damage a Class 0 device.</p>
+
+<p><strong>6. Packaging</strong></p>
+<p>Outside the EPA, ESD-sensitive items must be in ESD-safe packaging that prevents:</p>
+<ul>
+  <li>Triboelectric charge accumulation on the item</li>
+  <li>Discharge into the item from external sources</li>
+  <li>Field-induced charging when adjacent to charged objects</li>
+</ul>
+<p>Different protection levels exist (low-charging dissipative bags for low-sensitivity items; metallized shielded bags for moderate sensitivity; conductive bags for high sensitivity). Lesson 7.5 covers packaging types in depth.</p>
+<p>Packaging is tested at intervals to verify it still meets specification. Old bags lose their dissipative coating; old foam shed conductive carbon. Pack-and-forget does not work for ESD packaging.</p>
+
+<p><strong>7. Marking</strong></p>
+<p>ESD-sensitive items, packaging, and EPAs are marked clearly so that personnel can identify them at a glance:</p>
+<ul>
+  <li><strong>ESDS items and packaging</strong> — yellow triangle with black border containing a black hand-with-line symbol (the standard ESD susceptibility symbol per ANSI/ESD S8.1)</li>
+  <li><strong>ESD-protective packaging</strong> — black triangle with diagonal line through it (the "protective" version of the symbol)</li>
+  <li><strong>EPA boundaries</strong> — floor markings, perimeter tape, warning signs at entries identifying the area as an EPA</li>
+  <li><strong>ESD-safe tools and equipment</strong> — labeled "ESD safe" so operators know which to use within the EPA</li>
+</ul>
+<p>Marking is a small element but high leverage — clear marking prevents most of the unintentional violations that audits find (operators handling unmarked items as if they were not ESD-sensitive, or carrying ESD-sensitive items outside the EPA because they did not realize what they were holding).</p>
+
+<p><strong>8. Compliance Verification (the verification system)</strong></p>
+<p>Routine verification testing confirms that the program continues to function. The verification activities and their typical frequencies:</p>
+<table border="1" cellpadding="6" cellspacing="0">
+  <tr><th>Element</th><th>Test</th><th>Frequency</th><th>Acceptance Criteria</th></tr>
+  <tr><td>Wrist strap</td><td>Continuity check on operator at start of shift</td><td>Daily, or continuous monitor</td><td>0.75–35 megohms typical</td></tr>
+  <tr><td>Foot grounders / footwear</td><td>Personnel grounding test at entry to EPA</td><td>Daily / each entry</td><td>&lt; 35 megohms via wearer to ground</td></tr>
+  <tr><td>Work surface</td><td>Surface resistance to ground</td><td>Annually (more often if heavy use)</td><td>10⁶–10⁹ ohms typical (dissipative)</td></tr>
+  <tr><td>Floor</td><td>Resistance to ground</td><td>Annually (per S20.20 or program-defined)</td><td>&lt; 10⁹ ohms with footwear, point-to-point per spec</td></tr>
+  <tr><td>Common point ground</td><td>Resistance to building earth</td><td>Annually</td><td>&lt; 2.0 ohms typical</td></tr>
+  <tr><td>Ionizer (if used)</td><td>Balance, decay time</td><td>Quarterly to annually depending on type</td><td>±35 V balance, &lt; 20-second decay typical</td></tr>
+  <tr><td>Humidity</td><td>Continuous monitoring</td><td>Continuous, recorded</td><td>Per program spec, typically 30–60% RH</td></tr>
+  <tr><td>Training</td><td>Records audit</td><td>Annual / at hiring</td><td>All handlers current within retraining interval</td></tr>
+</table>
+<p>Test records are retained. The records prove the program is operating, not just documented. An auditor reads the records before deciding whether to spot-test live.</p>
+
+<h4>The role of test method standards: ESD TR53 and others</h4>
+<p>S20.20 specifies what to test and at what frequency. The actual test methods are in separate ESD standards. Key test method documents:</p>
+<ul>
+  <li><strong>ESD TR53</strong> — Compliance Verification of ESD Protective Equipment and Materials. The technical guide for how to perform the verification tests S20.20 requires.</li>
+  <li><strong>ANSI/ESD STM3.1</strong> — Ionization. Test methods for ionizers.</li>
+  <li><strong>ANSI/ESD STM4.1, STM4.2</strong> — Worksurfaces. Resistance and discharge test methods.</li>
+  <li><strong>ANSI/ESD STM7.1</strong> — Floor materials. Resistance test methods.</li>
+  <li><strong>ANSI/ESD STM97.1, STM97.2</strong> — Personnel grounding. Test methods for foot grounders and combined footwear / floor systems.</li>
+  <li><strong>ANSI/ESD STM2.1</strong> — Wrist strap testing.</li>
+  <li><strong>ANSI/ESD S8.1</strong> — ESD Awareness Symbols.</li>
+</ul>
+<p>The verification testing the company performs follows these standards. A test that "checks the wrist strap" is not equivalent to a test that conforms to STM2.1. For audit credibility, tests should be conducted per the relevant standard.</p>
+
+<h4>Compliance Verification: what happens when a test fails</h4>
+<p>The program is designed to detect failures, but the detection only matters if there is a response. The Compliance Verification Plan defines the response process:</p>
+<ol>
+  <li><strong>Stop and contain.</strong> Stop handling of ESD-sensitive items in the affected area until the issue is corrected.</li>
+  <li><strong>Identify what was at risk.</strong> What was being handled when the failure occurred? When did the last successful verification occur? Any items handled in between may be suspect.</li>
+  <li><strong>Correct the cause.</strong> Replace the failed component (wrist strap, ground cord, ESD mat, ionizer). Fix the failure mode (clean the floor, repair grounding wire).</li>
+  <li><strong>Re-verify.</strong> Test the corrected element. Document the test result.</li>
+  <li><strong>Document the incident.</strong> Record what failed, when, what action was taken. The records show the program responded to a failure rather than ignoring it.</li>
+  <li><strong>Assess affected inventory.</strong> If items were potentially exposed during the failure window, the QA Manager assesses whether to re-test those items, quarantine them, or notify customers if any have shipped.</li>
+</ol>
+<p>The response process is itself part of S20.20 conformance. An auditor who sees a failure-without-response is more concerned than an auditor who sees a failure-with-documented-response.</p>
+
+<h4>Roles and responsibilities</h4>
+<p>S20.20 expects roles to be assigned and documented:</p>
+<ul>
+  <li><strong>ESD Program Manager.</strong> Overall responsibility for the program. Often the QA Manager in a small organization like TurbineWorks. Approves the Plan, owns Plan revisions, accountable to management for program performance.</li>
+  <li><strong>ESD Coordinator (per area).</strong> Day-to-day operation of the EPA. Conducts verifications, maintains records, handles small issues. In a small organization, the same person may be Program Manager and Coordinator for the single EPA.</li>
+  <li><strong>Operators.</strong> Personnel who handle ESD-sensitive items. Follow procedures, perform daily personal verifications (wrist strap test), report issues.</li>
+  <li><strong>Quality Assurance.</strong> Independent review of program operation. Verifies through audit that records, training, and verification are current. Reviews incident response. Reports to management.</li>
+  <li><strong>Management.</strong> Authorizes the program, allocates resources, reviews program performance during management review, supports the program publicly. Without management commitment, the program drifts.</li>
+</ul>
+
+<h4>Common audit findings and how to avoid them</h4>
+<p>The most common ANSI/ESD S20.20 audit findings, drawn from industry experience:</p>
+<ol>
+  <li><strong>Wrist straps in use but not tested.</strong> Operator wears a strap but the verification log shows no test for that day, or the wrist-strap tester is broken. Avoid by including the strap test in the shift start routine and verifying the tester monthly.</li>
+  <li><strong>ESDS items handled outside the marked EPA.</strong> A part is removed from packaging at a desk that is not part of the EPA — common when receiving inspection or kit-up is done at a non-EPA bench. Avoid by clear marking and operator training; consider expanding the EPA to cover all handling locations.</li>
+  <li><strong>Unmarked ESDS items in storage.</strong> A part lacks ESD marking, so the operator who picks it doesn't know it needs protection. Avoid by marking at receiving — if the supplier didn't mark, TurbineWorks adds the marking.</li>
+  <li><strong>Floor grounding broken.</strong> A small repair patch of standard tile replaced a damaged tile; the patch is insulating. Or a vinyl coating was applied that breaks the conductivity. Avoid by including the area floor in periodic resistance testing and approving all repair materials before use.</li>
+  <li><strong>ESD-safe packaging reused beyond useful life.</strong> An old metallized bag is reused; its conductive coating has degraded. Avoid by labeling bags with date received and replacing per the program schedule.</li>
+  <li><strong>Foot-grounder testing not performed.</strong> Operators wear grounders but do not test them daily. Avoid by placing the personnel ground tester at the EPA entry where it cannot be bypassed.</li>
+  <li><strong>Common Point Ground inadequate.</strong> The CPG is connected to a paint-covered metal structure rather than a tested low-impedance earth point. Avoid by verifying CPG resistance to earth annually and after any building electrical changes.</li>
+  <li><strong>Training records gap.</strong> A new employee began handling before training completed. Avoid by gating EPA access on training completion.</li>
+  <li><strong>Compliance verification records gap.</strong> Daily wrist-strap log has missing days. Even if testing was done, the missing records are a finding. Avoid by making the log easy to use and reviewing weekly to catch gaps before they accumulate.</li>
+  <li><strong>Insulators uncontrolled in the EPA.</strong> A Styrofoam cup on a desk inside the EPA. A plastic shopping bag from lunch. A synthetic-fabric jacket left on a chair. These uncontrolled insulators can carry kilovolts of charge into the EPA. Avoid by training, signage at entry, and supervisor walk-throughs.</li>
 </ol>
 
-<h4>The ESD Protected Area (EPA)</h4>
-<p>The EPA is the protected zone where ESDS items can be handled. Key features:</p>
+<h4>The "tailored program" provision for sensitive devices</h4>
+<p>S20.20 has a baseline assumption that the program protects against HBM &gt; 100 V, CDM &gt; 200 V, and MM thresholds appropriate to the items handled. For Class 0 items (HBM &lt; 250 V) or particularly sensitive CDM-rated devices, the baseline may be insufficient. S20.20 allows for a tailored program with enhanced controls:</p>
 <ul>
-  <li>Boundary clearly marked (floor tape, signage)</li>
-  <li>ESD-safe flooring (conductive or dissipative)</li>
-  <li>Grounded work surfaces (ESD mats connected to common ground point)</li>
-  <li>Wrist strap stations at every seated position</li>
-  <li>Foot grounders or ESD shoes required if standing work</li>
-  <li>Common ground point connected to building ground via tested low-impedance path</li>
-  <li>No insulators that cannot be controlled (no styrofoam, no plastic bags except ESD-safe, no synthetic carpet)</li>
-  <li>Humidity controlled (low humidity dramatically increases static charging — typical EPA target 40-60% RH)</li>
+  <li>Tighter humidity control</li>
+  <li>More frequent verification</li>
+  <li>Enhanced personnel grounding (continuous-monitor wrist straps)</li>
+  <li>Additional ionization</li>
+  <li>Reduced handling exposure (kit-up procedures that minimize bag-open time)</li>
+  <li>Operator certification beyond baseline training</li>
+</ul>
+<p>For TurbineWorks today, the baseline program is appropriate. As the inventory adds increasing-sensitivity FADECs and ECUs, the program may need tailored enhancements.</p>
+
+<h4>S20.20 conformance vs S20.20 certification</h4>
+<p>A subtle distinction worth understanding:</p>
+<ul>
+  <li><strong>Conformance</strong> — the company's program meets S20.20 requirements. Self-declared or customer-audited. Most companies operate at this level. This is what TurbineWorks targets for ASA accreditation purposes.</li>
+  <li><strong>Certification</strong> — a third-party registrar audits the program against S20.20 and issues a formal certification (analogous to ISO 9001 certification). Less common but valuable when customers contractually require it. Costs additional money and audit effort.</li>
+</ul>
+<p>For ASA accreditation purposes, demonstrable conformance is sufficient. Certification is an option if a customer requires it. Decision deferred unless customer-driven.</p>
+
+<h4>The relationship between S20.20 and ASA accreditation</h4>
+<p>ASA-100 does not by itself require S20.20 conformance — but the ASA ESD Best Practices document references S20.20 as the technical standard, and the ASA accreditation auditor will assess the ESD program against S20.20 principles. A distributor that handles electronics without an S20.20-conforming program will receive a finding. A distributor with an S20.20-conforming program demonstrates the necessary ESD discipline.</p>
+<p>For TurbineWorks: building the ESD program to S20.20 conformance is the path to passing the ASA accreditation audit and protecting the engine-electronic inventory the business handles.</p>
+
+<h4>Self-check questions</h4>
+<ol>
+  <li>What is the difference between S20.20 conformance and S20.20 certification, and which does TurbineWorks need for ASA accreditation?</li>
+  <li>List the eight required program elements of S20.20.</li>
+  <li>What is the typical baseline protection level for S20.20, and what threshold defines a Class 0 device requiring enhanced controls?</li>
+  <li>What is the Common Point Ground, and why is its impedance to earth so important?</li>
+  <li>What action does the Compliance Verification Plan require when a verification test fails?</li>
+  <li>Name three test method standards that S20.20 references for actually performing the verification tests.</li>
+  <li>What are the three ESD threats S20.20 explicitly addresses?</li>
+  <li>List at least five common audit findings and explain how each could be prevented.</li>
+</ol>
+
+<h4>References</h4>
+<ul>
+  <li><strong>ANSI/ESD S20.20</strong> — Electrostatic Discharge Control Program (latest revision via <a href="https://www.esda.org/" target="_blank" rel="noopener">esda.org</a>)</li>
+  <li>ESD TR53 — Compliance Verification of ESD Protective Equipment and Materials</li>
+  <li>ANSI/ESD S8.1 — ESD Awareness Symbols</li>
+  <li>ANSI/ESD STM-series — individual test method standards</li>
+  <li>ASA ESD Best Practices document</li>
 </ul>
 
-<h4>Verification testing</h4>
-<p>S20.20 requires routine verification:</p>
-<ul>
-  <li>Wrist straps tested daily (continuous-monitor systems automatic; manual testers require recorded checks)</li>
-  <li>Foot grounders / shoes tested daily by personnel using a verification station</li>
-  <li>Work surface and floor grounding tested at defined intervals</li>
-  <li>Ionizer balance and decay times tested</li>
-</ul>
-<p>Verification records are part of the quality records and are reviewed during audits.</p>
-
-<h4>Marking</h4>
-<p>ESDS items: yellow/black ESD susceptibility symbol on packaging. EPAs: boundary signage and floor marking. Tools and equipment in the EPA: identified as ESD-safe.</p>
-
-<h4>Common findings at audits</h4>
-<ul>
-  <li>Wrist straps in use but not tested for the day</li>
-  <li>ESDS items handled outside the marked EPA</li>
-  <li>Unmarked ESDS items in storage (operator can't tell which need protection)</li>
-  <li>Floor grounding broken (carpet patch, vinyl tile installed without conductivity)</li>
-  <li>ESD-safe packaging reused beyond its useful life (loses conductivity over time)</li>
-</ul>
-
-<p><em>[TurbineWorks Procedure Reference: insert TurbineWorks ESD Control Program Plan and EPA layout here.]</em></p>
+<p><em>[TurbineWorks Procedure Reference: TurbineWorks ESD Control Program Plan and EPA layout — controlled document in the QAM document register.]</em></p>
 HTML
         ],
         [
             'name'  => 'Lesson 7.3 — Identifying ESD-Sensitive Aviation Parts',
-            'intro' => '<p>Which parts at TurbineWorks need ESD-safe handling.</p>',
+            'intro' => '<p>Which parts at TurbineWorks need ESD-safe handling — including the surprising categories of "mechanical-looking" parts with embedded electronics.</p>',
             'content' => <<<'HTML'
-<h3>Identifying ESD-Sensitive Aviation Parts</h3>
-<p>Not every aviation part is ESD-sensitive. The category is electronic and electromagnetic components. Knowing which parts need ESD protection prevents over-protecting (which is just extra work) and under-protecting (which damages parts).</p>
+<h3>Identifying ESD-Sensitive Aviation Parts: The Decision Process</h3>
+
+<h4>Why identification matters as much as protection</h4>
+<p>An ESD control program protects parts that are identified as ESD-sensitive. If a part is not identified as ESD-sensitive, the protection program does not reach it. Over-identification is wasteful (every part handled in the EPA, longer cycle times); under-identification is dangerous (parts damaged because protection was not applied). The discipline at TurbineWorks is to identify every ESD-sensitive part accurately at receiving and mark it so that all subsequent handlers understand the protection level required.</p>
+<p>The challenge: modern aviation parts increasingly contain embedded electronics that are not immediately visible. A part that looks mechanical may have an electronic position sensor inside; a part that looks like a simple bearing may have an integrated vibration-monitoring unit. Identification is not always obvious from looking at the part.</p>
+
+<h4>The two-question framework for identification</h4>
+<p>For any part received, the answer to two questions determines ESD handling:</p>
+<ol>
+  <li><strong>Does the part contain any electronic content?</strong> Active semiconductors (ICs, transistors, MOSFETs), passive electronic components in functional roles (capacitors, inductors near electronics), printed circuit boards, sensors with electronic outputs, memory devices, programmable logic. If yes, the part is potentially ESD-sensitive.</li>
+  <li><strong>Has the manufacturer designated the part as ESD-sensitive (or classified it)?</strong> The manufacturer documentation, ESD marking on packaging, or 8130-3 notes specify the sensitivity. If marked ESD-sensitive, ESD handling applies.</li>
+</ol>
+<p>If both answers are yes, the part is ESD-sensitive and gets full S20.20 treatment. If electronic content is present but no manufacturer designation exists, default to ESD-sensitive handling until clarified — this is the safer error.</p>
 
 <h4>Clearly ESD-sensitive categories</h4>
+
+<p><strong>Engine control electronics.</strong> The category with the highest concentration of ESD risk at TurbineWorks.</p>
 <ul>
-  <li>FADEC (Full-Authority Digital Engine Control) units</li>
-  <li>EEC (Electronic Engine Control) units</li>
-  <li>Engine sensors with electronic outputs (EGT thermocouples to the engine control, vibration sensors, position sensors)</li>
-  <li>Igniter electronic exciters</li>
-  <li>Fuel control electronic interfaces</li>
-  <li>Engine condition monitoring units</li>
-  <li>Any printed circuit board, populated or bare</li>
-  <li>Any discrete semiconductor (ICs, transistors, MOSFETs, diodes in some packaging)</li>
-  <li>Connectors with integrated electronics</li>
-  <li>Memory devices, programmable logic devices</li>
+  <li><strong>FADEC (Full Authority Digital Engine Control)</strong> — the primary engine controller on modern turbofan engines (CFM56, V2500, GE90, GEnx, LEAP, PW1000G, Trent series). FADECs are complex computer systems with multiple processors, programmable memory, dozens of input and output channels. Class 1 or Class 0 internally. The unit itself is contained in a sealed housing but its connector pins are exposed when uncapped. Always ESDS.</li>
+  <li><strong>EEC (Electronic Engine Control)</strong> — earlier generation of digital engine control. Same considerations as FADEC.</li>
+  <li><strong>ECU (Engine Control Unit)</strong> — generic term for engine computer; ESDS.</li>
+  <li><strong>HMU (Hydromechanical Unit) electronic interface</strong> — the HMU itself is largely mechanical but has electronic position-feedback and control interfaces that are ESDS.</li>
+  <li><strong>Engine condition-monitoring unit (ECMU)</strong> — collects sensor data, processes, and reports to FADEC and aircraft systems. ESDS.</li>
 </ul>
 
-<h4>Categories that may surprise you</h4>
+<p><strong>Engine sensors with electronic outputs.</strong></p>
 <ul>
-  <li><strong>Some bearings</strong> — bearings with magnetic-impulse instrumentation built in</li>
-  <li><strong>Some valves</strong> — solenoid valves with associated control electronics in the same housing</li>
-  <li><strong>Some hydraulic units</strong> — with integrated electronic position feedback</li>
-  <li><strong>Some "mechanical" parts</strong> with embedded RFID tags or electronic ID</li>
+  <li><strong>Vibration sensors</strong> — accelerometers, often with charge-amplifier electronics integrated; ESDS.</li>
+  <li><strong>Speed sensors</strong> — variable-reluctance pickups (often not particularly ESDS) and hall-effect sensors with integrated electronics (ESDS).</li>
+  <li><strong>Position sensors</strong> — LVDTs, resolvers with integrated signal conditioning, ESDS.</li>
+  <li><strong>Temperature sensors</strong> — thermocouples themselves are mechanical (not ESDS), but interface boxes that condition thermocouple signals are ESDS. EGT probes feeding directly to FADEC inputs are typically not ESDS at the probe; the FADEC's input circuit is.</li>
+  <li><strong>Pressure sensors</strong> — piezoresistive or capacitive with integrated electronics; ESDS.</li>
+  <li><strong>Strain gauges with conditioning electronics</strong> — ESDS.</li>
 </ul>
-<p>If a part has any electronic content, default to ESD-safe handling unless documentation says otherwise.</p>
 
-<h4>How to know</h4>
+<p><strong>Ignition electronics.</strong></p>
 <ul>
-  <li>Manufacturer's documentation should specify ESD class</li>
-  <li>OEM packaging will have ESD marking if ESD-sensitive (yellow/black triangle with hand symbol)</li>
-  <li>Packing list or 8130-3 may note ESD requirements</li>
-  <li>When in doubt, treat as ESD-sensitive (no harm done; failure to protect is the harm)</li>
+  <li><strong>Igniter exciter boxes</strong> — generate the high-voltage pulse to fire the igniter plug. The high-voltage transformer and switching electronics inside are ESDS. The igniter plug itself (just a sparkplug) is not.</li>
 </ul>
+
+<p><strong>Other electronics.</strong></p>
+<ul>
+  <li><strong>Printed circuit boards (PCBs)</strong>, populated or bare, in any aviation function</li>
+  <li><strong>Discrete semiconductors</strong> — ICs, transistors, MOSFETs, IGBTs, sensitive diodes</li>
+  <li><strong>Memory devices</strong> — EEPROMs, flash memory cards used in aviation systems</li>
+  <li><strong>Programmable logic devices</strong> — FPGAs, CPLDs</li>
+  <li><strong>Avionics modules</strong> — full or partial LRUs (line replaceable units) with electronic content</li>
+</ul>
+
+<h4>Surprising categories: "mechanical-looking" parts with embedded electronics</h4>
+
+<p>These are the high-risk identification failures because the visual appearance does not suggest electronic content. Operators may not realize the part contains anything electronic and handle it as a routine mechanical item.</p>
+
+<ul>
+  <li><strong>Instrumented bearings.</strong> Bearings with integrated speed pickups, vibration accelerometers, or temperature probes. Appear visually identical to standard bearings except for an electrical connector. Used in some modern engine and APU applications. ESDS at the electronics; the bearing itself is mechanical.</li>
+  <li><strong>Smart valves.</strong> Solenoid valves with integrated electronic position feedback, electronic actuator control, or built-in fault diagnostics. Common in fuel-control and bleed-air systems. The valve body is mechanical; the electronics are ESDS.</li>
+  <li><strong>Servo valves with electronic feedback.</strong> Used in actuators and engine controls. The valve is mostly mechanical; integrated LVDTs and signal conditioning are ESDS.</li>
+  <li><strong>Electric motors with integrated controllers.</strong> Brushless DC motors with integrated speed control electronics — the motor windings are not ESDS, but the controller in the same housing is.</li>
+  <li><strong>Hydraulic units with position-feedback transducers.</strong> The hydraulic actuator body is mechanical; integrated LVDT or RVDT position sensors and their conditioning are ESDS.</li>
+  <li><strong>Parts with embedded RFID tags or electronic identification.</strong> Some modern engine parts (LLPs in particular) carry electronic ID for traceability. The ID chip is ESDS.</li>
+  <li><strong>Heaters with embedded temperature sensing.</strong> An anti-ice heater with integrated thermocouple or thermistor — the heater itself is robust; the sensing element and its interface may be ESDS.</li>
+  <li><strong>Starters and starter-generators with integrated electronics.</strong> Modern variable-speed starter generators have integrated power electronics; ESDS.</li>
+  <li><strong>Fuel nozzles and metering valves with electronic position feedback.</strong></li>
+  <li><strong>Bleed valves with electronic actuator control and feedback.</strong></li>
+  <li><strong>Smart connectors.</strong> Some aviation connectors have integrated electronics for line-replaceable-module identification, embedded EEPROMs for configuration data, or RFID elements.</li>
+</ul>
+
+<p>The pattern: if a part has any electrical connector beyond simple power (more than two wires, signal-level conductors, low-voltage), assume it has internal electronics and treat as ESDS until verified.</p>
+
+<h4>The default-to-ESDS principle</h4>
+<p>When in doubt, treat as ESDS. The cost of unnecessary ESD-safe handling for a single part is a few minutes of operator time and the cost of an ESD bag. The cost of damaging a single ESDS part by handling it without protection can range from a few thousand dollars (replacement) to hundreds of thousands of dollars (engine removal, aircraft on ground, failure analysis). The asymmetry is large and one-sided. Default to protection.</p>
+
+<h4>Sources of information for identification</h4>
+
+<ol>
+  <li><strong>Manufacturer documentation.</strong> Component Maintenance Manuals (CMM), Engine Manuals, Service Bulletins. Modern manuals include ESD precautions and sensitivity classifications. Older equipment may not have explicit classifications; assume sensitivity for any part with electronics.</li>
+  <li><strong>OEM packaging.</strong> ESD-sensitive parts ship in ESD-protective packaging marked with the yellow ESD warning triangle (per ANSI/ESD S8.1). If the packaging is ESD-marked, the part inside is ESDS. The absence of marking is not evidence of non-sensitivity — only evidence that the supplier did not mark it.</li>
+  <li><strong>Packing slip or shipping documents.</strong> Some suppliers note ESD requirements on the packing slip or in handling instructions. Read these.</li>
+  <li><strong>FAA Form 8130-3 or EASA Form 1.</strong> May include handling notes. Check the remarks block.</li>
+  <li><strong>OEM Service Bulletins or Service Letters.</strong> Occasionally a part that was not originally marked ESDS is subsequently designated as such following field failure investigation. Stay current with applicable bulletins.</li>
+  <li><strong>Part number patterns.</strong> Within an OEM's catalog, certain part-number ranges correspond to electronic LRUs. Operators learn these patterns over time.</li>
+  <li><strong>The QA Manager's judgment.</strong> When ambiguity exists, the QA Manager makes the determination — and the decision is documented for future reference.</li>
+</ol>
 
 <h4>Categories typically NOT ESD-sensitive</h4>
+
+<p>For completeness, the categories where ESD-safe handling is not required (because there is no significant electronic content):</p>
 <ul>
-  <li>Purely mechanical parts (gears, shafts, blades, disks, springs, fasteners)</li>
-  <li>Hydraulic and pneumatic components without electronic content</li>
-  <li>Structural components</li>
-  <li>Fluid lines, hoses, seals, gaskets</li>
-  <li>Tooling and ground support equipment</li>
+  <li><strong>Purely mechanical parts</strong> — gears, shafts, blades, vanes, disks, springs, fasteners, bolts, screws, nuts, washers</li>
+  <li><strong>Bearings without integrated instrumentation</strong> — standard ball, roller, tapered roller, and journal bearings</li>
+  <li><strong>Castings, forgings, and machined components without electronics</strong> — engine cases, gear cases, brackets</li>
+  <li><strong>Hydraulic and pneumatic components without electronic content</strong> — pumps without integrated electronics, valves with mechanical operators only, manifolds, fittings</li>
+  <li><strong>Tubing, hoses, ducts, and fluid system components</strong></li>
+  <li><strong>Seals, gaskets, O-rings</strong></li>
+  <li><strong>Filters</strong> (fuel, oil, hydraulic)</li>
+  <li><strong>Insulation blankets and acoustic liners</strong></li>
+  <li><strong>Structural components</strong> — frames, skins, ribs, stringers</li>
+  <li><strong>Tooling and ground support equipment</strong> without electronic content</li>
+  <li><strong>Consumables</strong> — lubricants, cleaners, paints</li>
 </ul>
 
-<h4>Marking at receiving</h4>
-<p>When an ESD-sensitive part is received, the TurbineWorks tag should note "ESDS" so the warehouse and shipping personnel know it requires ESD-safe handling for all subsequent operations.</p>
+<h4>The receiving identification workflow at TurbineWorks</h4>
 
-<h4>What can go wrong if you don't know</h4>
-<p>An ungrounded technician opens packaging on what looks like a sensor (and may be — but with an integrated electronic interface). Handles it for a few minutes at a non-ESD-safe bench. Repackages and re-stocks. The part shows no visible damage. Ships to a customer two months later. Installs on an engine. Fails six months after that, at altitude, causing an in-flight engine control issue.</p>
-<p>This sequence has happened in industry. The corrective-action investigation may or may not identify TurbineWorks as the source of the damage. Even if it does not, the failure is on an aircraft TurbineWorks supplied.</p>
+<p>When a part is received, the inspector follows this process to identify ESD status:</p>
+
+<ol>
+  <li><strong>Visual check of packaging.</strong> Is there an ESD warning symbol on the outer or inner packaging? Is the inner bag a metallized (silver) shielded bag, a pink antistatic bag, or a black conductive bag? Any of these is an indicator the part is ESDS.</li>
+  <li><strong>Documentation check.</strong> Does the 8130-3, EASA Form 1, packing slip, or accompanying paperwork mention ESD precautions, ESD class, or specific handling instructions?</li>
+  <li><strong>Part type assessment.</strong> Based on the part description and part number, is this a category that is typically ESDS (engine control, electronic sensor, ignition exciter, PCB, etc.)?</li>
+  <li><strong>Connector inspection.</strong> If the part has an electrical connector beyond two-wire power, suspect electronics inside.</li>
+  <li><strong>Default if uncertain.</strong> Treat as ESDS until the QA Manager makes a determination.</li>
+  <li><strong>Mark the TurbineWorks tag.</strong> The internal tag attached to the part during receiving has an ESDS notation (typically a checkbox or a stamp) if the part is ESD-sensitive. Subsequent handlers reference this tag.</li>
+  <li><strong>Record in inventory system.</strong> The inventory record carries an ESDS flag so that picks and warehouse moves can be routed to ESD-controlled handling areas.</li>
+</ol>
+
+<h4>Marking and labeling</h4>
+
+<p>The TurbineWorks identification system uses three layers:</p>
+<ol>
+  <li><strong>Part packaging.</strong> The original ESD-safe packaging (or replacement ESD-safe packaging if the original was damaged or replaced) is marked with the ESD susceptibility symbol. The packaging is not removed in storage.</li>
+  <li><strong>Part tag / internal record.</strong> The internal tag attached at receiving indicates ESDS status.</li>
+  <li><strong>Inventory record.</strong> The electronic inventory system carries an ESDS flag for each ESDS part number.</li>
+</ol>
+
+<p>When all three layers carry the marking, operators downstream of receiving have multiple cues that this part needs ESD-safe handling. A failure in one layer is caught by the others.</p>
+
+<h4>Cross-checking and the "trust but verify" principle</h4>
+
+<p>The inspector at receiving relies on supplier marking, but does not fully trust it. Common situations where supplier marking is wrong or missing:</p>
+<ul>
+  <li><strong>The supplier shipped in ESD-safe packaging but did not mark the outer carton.</strong> Operator sees an unmarked outer carton, opens it outside the EPA, then encounters the ESD-marked inner bag — too late.</li>
+  <li><strong>The supplier shipped in non-ESD packaging.</strong> The part is ESDS by part-number lookup, but the supplier did not pack it correctly. The part may already be damaged at receipt. Document the discrepancy as a supplier quality issue and assess whether to accept, quarantine, or reject.</li>
+  <li><strong>The marking is degraded or unreadable.</strong> Old labels fade; printing wears off. Verify against part-number records.</li>
+  <li><strong>A part has been re-packaged in transit and the original marking is lost.</strong> Verify against records.</li>
+</ul>
+
+<p>The inspector's role is not just to read the marking but to verify the marking is correct for the part — by cross-checking against TurbineWorks' own part-master records and the supplier's documentation.</p>
+
+<h4>The cost of misidentification: a worked scenario</h4>
+
+<p>Consider a fuel-metering valve with integrated electronic position feedback. The valve body is large and mechanical-looking; the electronic feedback is via a small connector on the side. The inspector sees a "valve," treats it as a routine mechanical part, opens the packaging outside the EPA at a regular bench, photographs it, re-bags it in standard antistatic packaging (not ESD-rated), and stores it in the general warehouse.</p>
+
+<p>Three months later, the valve ships to a customer. The customer installs it on a fuel-control system on a test engine. The integrated position feedback works for the first 40 hours of engine operation, then begins drifting (parametric drift from latent ESD damage). The engine controller flags the fault, the engine is taken out of service, the valve is removed and returned.</p>
+
+<p>The customer's failure-analysis lab cuts the valve open, finds the position-feedback electronics, and determines the damage is consistent with an ESD event. The customer notifies TurbineWorks. TurbineWorks investigates — receives an industry-quality finding from the customer, must initiate corrective action, must consider notification to other customers who may have received parts from the same supplier batch handled the same way.</p>
+
+<p>The cost to TurbineWorks:</p>
+<ul>
+  <li>Replacement valve, freight, customer credit (direct cost)</li>
+  <li>Customer relationship damage (reduced future orders, slower payment terms)</li>
+  <li>Investigation time, document corrective action (internal cost)</li>
+  <li>Potential audit finding at the next ASA audit (accreditation cost)</li>
+  <li>Potential need to revisit and re-handle other parts that may have been handled the same way</li>
+</ul>
+
+<p>All of this from one identification error at receiving.</p>
+
+<h4>What to do when a new part type is received for the first time</h4>
+
+<p>The first time TurbineWorks receives a part it has never received before, the identification decision is made by the QA Manager (or the Inspector under QA Manager supervision). The decision is documented in the part-master record. Subsequent receipts of the same part follow the previously-recorded determination.</p>
+
+<p>The first-time process:</p>
+<ol>
+  <li>Visual review of packaging and documentation</li>
+  <li>Reference to OEM documentation if available (CMM, IPC, Engine Manual)</li>
+  <li>Reference to supplier documentation</li>
+  <li>Part-number research — has another distributor or OEM published an ESD designation?</li>
+  <li>If electronic content is present, default to ESDS</li>
+  <li>If clearly mechanical only, designate non-ESDS</li>
+  <li>If uncertain, default to ESDS and seek OEM clarification before re-designating</li>
+  <li>Record the decision in the part-master</li>
+</ol>
+
+<h4>Self-check questions</h4>
+<ol>
+  <li>What are the two questions in the identification framework, and what do you do if you cannot answer either with certainty?</li>
+  <li>Name five categories of aviation parts that are clearly ESD-sensitive.</li>
+  <li>Name five categories of aviation parts that look mechanical but may be ESD-sensitive due to embedded electronics.</li>
+  <li>What is the default action when ESD status cannot be determined? Why?</li>
+  <li>List four sources of information you use to determine ESD status at receiving.</li>
+  <li>Why does TurbineWorks add its own ESDS tag rather than relying solely on supplier marking?</li>
+  <li>Describe a realistic scenario where misidentification of an ESDS part at receiving leads to a customer failure months later.</li>
+  <li>What is the process when TurbineWorks receives a new part type for the first time?</li>
+</ol>
+
+<h4>References</h4>
+<ul>
+  <li>ANSI/ESD S20.20 — ESD Control Program Standard</li>
+  <li>ANSI/ESD S8.1 — ESD Awareness Symbols</li>
+  <li>ASA ESD Best Practices Document</li>
+  <li>OEM Component Maintenance Manuals (CMM) and Engine Manuals (EM)</li>
+  <li>FAA Form 8130-3 remarks block</li>
+</ul>
+
+<p><em>[TurbineWorks Procedure Reference: TurbineWorks ESD Identification Procedure (within QAM) and Part Master ESDS designation register.]</em></p>
 HTML
         ],
         [
             'name'  => 'Lesson 7.4 — Personnel Grounding: Wrist Straps and Foot Grounders',
-            'intro' => '<p>How a person becomes ESD-safe.</p>',
+            'intro' => '<p>How a person becomes ESD-safe — the engineering of the human-to-ground path, the daily verification ritual, and the discipline that prevents the most common ESD failures.</p>',
             'content' => <<<'HTML'
-<h3>Personnel Grounding</h3>
-<p>The single biggest ESD risk is the person handling the part. People accumulate static charge constantly — every step on a non-conductive floor, every motion in clothing. The role of personnel grounding is to drain that charge continuously to ground, so the person and the part are at the same potential when they make contact.</p>
+<h3>Personnel Grounding: The Core of ESD Protection</h3>
 
-<h4>Wrist straps (seated work)</h4>
-<p>A wrist strap is a conductive band worn on the wrist, connected via a coiled cord to a grounded point (ESD work surface or dedicated ground point). The wrist strap has a built-in 1 megohm resistor — high enough to limit current through the wearer in case of accidental contact with energized equipment, low enough to drain static charge.</p>
-<p>Wrist strap requirements:</p>
+<h4>Why personnel grounding is the highest-leverage control</h4>
+<p>The single largest source of ESD damage in distribution is the person handling the part. People accumulate triboelectric charge through every step on a floor, every motion in a chair, every shrug of a sleeve. Within seconds of sitting down at a work surface, a person who is not grounded can be at multiple kilovolts relative to the work surface. The first contact between that person's hand and an ESD-sensitive part discharges through the part — at speeds and currents that can destroy the part instantaneously, or damage it subtly enough that the damage is not detected until weeks later.</p>
+<p>Personnel grounding solves this by providing a continuous low-impedance path from the person's body to the EPA common ground. As charge accumulates on the person, it drains to ground continuously. The person's body voltage stays near zero relative to the work surface. When the person touches the part, there is no voltage difference, and no discharge.</p>
+<p>The grounding path is engineered for two competing constraints: it must drain static charge effectively (suggesting low impedance), but it must also protect the wearer from electric shock in the event the wearer accidentally touches an energized circuit (suggesting high impedance to limit fault current). The compromise is a typical 1 megohm series resistor in the wrist strap path — low enough to drain static at slow charge accumulation rates, high enough to limit current through a person to safe levels (below 5 milliamps even at typical line voltages).</p>
+
+<h4>Wrist straps: construction and operation</h4>
+
+<p>A wrist strap consists of:</p>
 <ul>
-  <li>Worn in continuous skin contact (not over clothing)</li>
-  <li>Connected to the EPA common ground point</li>
-  <li>Tested daily before use (continuity check)</li>
-  <li>Replaced when damaged or when daily test fails</li>
-  <li>Coil cord checked for damage</li>
+  <li><strong>The wristband</strong> — a flexible band worn around the wrist. The inside of the band has a conductive layer (typically a conductive yarn or thin metallic foil) that contacts the wearer's skin. Bands come in fabric, elastic, or metal/elastic styles. The band is adjustable to ensure firm skin contact.</li>
+  <li><strong>The snap connector</strong> — a metal stud on the band that mates with the coil cord's terminating snap. Standardized 4 mm snap is most common.</li>
+  <li><strong>The coil cord</strong> — a coiled flexible cable, typically 1.5 to 2 meters extended length, connecting the wristband to the workstation ground point. The cord contains a stranded conductor and a 1 megohm series resistor (built into the snap or the cord terminus).</li>
+  <li><strong>The ground termination</strong> — alligator clip, banana plug, or wired connection to the ESD work surface mat or the EPA Common Point Ground.</li>
 </ul>
 
-<h4>Daily testing</h4>
-<p>The wrist strap is tested at the start of each shift using a wrist-strap tester. The test verifies the entire path: wearer's skin → strap → coil cord → tester ground. A pass result is recorded. A fail means the strap or cord is replaced before any ESDS handling.</p>
-<p>Continuous-monitor systems replace daily testing with real-time monitoring — the system alerts immediately if the wrist strap loses ground continuity during work.</p>
+<p>Operating principle: the wearer's body has electrical contact through the band's conductive surface, through the snap, through the coil cord and its 1 megohm resistor, to ground. Any charge accumulating on the wearer drains through this path at a controlled rate. The 1 megohm resistor prevents the wearer from becoming a shock victim if the cord accidentally contacts an energized conductor — but allows static charges (which involve tiny currents at relatively low voltage compared to mains) to drain freely.</p>
 
-<h4>Foot grounders (standing work)</h4>
-<p>When standing work prevents wrist-strap use, foot grounders provide an alternative. A foot grounder is a heel-strap or shoe cover that conducts charge through the wearer's shoe to ESD-safe flooring.</p>
-<p>Foot grounder requirements:</p>
+<h4>Wrist strap requirements (S20.20)</h4>
+
+<ol>
+  <li><strong>Skin contact.</strong> The conductive surface of the band must contact bare skin. Worn over a sleeve, a watch band, a sweatband, or a long-sleeve shirt cuff — the conductivity is broken and the wrist strap is non-functional. Operators who can't have direct skin contact (due to skin sensitivity to the band material) must use alternative bands designed for that situation.</li>
+  <li><strong>Snug fit.</strong> The band must not be loose. A loose band that moves on the skin breaks intermittent contact, and the wearer may build charge during the breaks.</li>
+  <li><strong>Cord connected to ground.</strong> Snap engaged with the wristband, opposite end connected to the EPA common ground point (typically via the ESD work surface or a dedicated ground connection).</li>
+  <li><strong>Tested daily (at minimum).</strong> Before any ESD-sensitive handling for the day, the strap-cord-wearer assembly is tested for continuity. Test record kept.</li>
+  <li><strong>Replaced when damaged.</strong> Frayed cords, cracked snaps, worn bands — replaced before continuing work.</li>
+</ol>
+
+<h4>The daily wrist-strap test</h4>
+
+<p>The single most common ESD audit finding is "wrist strap in use but daily test record missing or failed." The test is simple, fast, and essential. The test ritual:</p>
+
+<ol>
+  <li>Operator puts on the wristband, ensures snug skin contact.</li>
+  <li>Operator plugs the coil cord into the personnel ground tester (a small bench-top device with a momentary contact pad).</li>
+  <li>Operator presses the pad with the hand opposite the strap arm — completing the test circuit from one hand, through the body, through the strap arm, through the strap and cord, to the tester.</li>
+  <li>Tester displays pass or fail. Acceptance range typically 0.75 megohms to 35 megohms (the wrist-strap impedance plus body resistance).</li>
+  <li>Operator records pass/fail in the daily log (or the tester logs automatically).</li>
+  <li>On fail: try a new strap, try a new cord, retest. If still fails, escalate to ESD coordinator. Operator does not enter the EPA for ESDS handling until a passing test is recorded.</li>
+</ol>
+
+<p>The test takes 5 seconds. The record takes 5 seconds. Skipping it because "I tested it yesterday" or "the strap looked fine" is the most common path to an audit finding. The test exists because straps and cords fail unpredictably — a hairline break in the conductor, a damaged snap, a band that has lost its conductivity. The strap that worked yesterday may not work today.</p>
+
+<h4>Continuous-monitor wrist strap systems</h4>
+
+<p>An alternative to daily-test wrist straps: continuous-monitor systems. The wristband plugs into a workstation-mounted monitor that continuously verifies the path through the wearer. Two-wire systems use one conductor for the path and one for a return; four-wire systems use separate paths for monitoring and grounding.</p>
+
+<p>The continuous monitor alerts (visual or audible alarm) immediately if:</p>
 <ul>
-  <li>Both feet have foot grounders (a single grounder is not adequate)</li>
-  <li>Foot grounder makes contact between shoe sole and conductor inside shoe touching the foot</li>
-  <li>Tested at start of shift using a personnel grounding tester</li>
-  <li>Worn over an ESD-safe floor (ineffective on insulating flooring)</li>
+  <li>The wristband loses skin contact</li>
+  <li>The cord disconnects</li>
+  <li>The path impedance moves outside the acceptable range</li>
+  <li>The ground reference is lost</li>
 </ul>
+
+<p>Continuous-monitor systems eliminate the daily-test discipline (the monitor does the job) and catch intermittent failures during work — failures the daily test would not catch. They are more expensive (several hundred dollars per workstation vs the dozens of dollars per wrist strap and shared tester for daily-test), and they require operator training to respond appropriately to alarms.</p>
+
+<p>For TurbineWorks: in a single-EPA operation with limited workstations, the simpler daily-test approach is appropriate. As the operation scales, continuous-monitor at high-volume workstations (the receiving inspection bench, the test bench) is justifiable for the additional reliability.</p>
+
+<h4>Foot grounders: when wrist straps don't fit</h4>
+
+<p>Not all work is seated. Warehouse moves, kit-up at standing benches, ESD-controlled inspection at standing podiums — wrist straps with their fixed-position cords are impractical. Foot grounders provide an alternative grounding path through the operator's footwear to an ESD-safe floor.</p>
+
+<p>Foot grounder construction:</p>
+<ul>
+  <li><strong>The heel-strap</strong> — a fabric or elastic strap that wraps around the shoe's heel and arch</li>
+  <li><strong>The conductor</strong> — a conductive ribbon or fiber that extends from the strap up under the wearer's sock or directly to skin contact inside the shoe</li>
+  <li><strong>The contact patch</strong> — at the heel of the shoe, the strap makes electrical contact with the floor</li>
+  <li><strong>The series resistor</strong> — often 1 megohm built into the strap, for the same shock-protection reason as wrist straps</li>
+</ul>
+
+<p>Operating principle: the wearer's body is electrically connected through the conductive ribbon to the heel strap to the floor. If the floor is conductive or dissipative (which an EPA floor must be), the body drains to ground continuously as the wearer moves around. Standing still works; walking works. The wearer's footwear must permit electrical contact between the strap conductor and the wearer's foot or sock.</p>
+
+<h4>Foot grounder requirements</h4>
+
+<ol>
+  <li><strong>Both feet.</strong> A grounder on one foot is not adequate — if that foot is off the ground or on a non-conductive surface for a moment, the wearer is floating. Both feet have grounders so that at least one is always in contact with the floor.</li>
+  <li><strong>Worn over ESD-safe flooring.</strong> Foot grounders on a standard tile or carpet floor do nothing — the floor doesn't conduct. Foot grounders require a conductive or dissipative floor.</li>
+  <li><strong>Conductive path to wearer.</strong> The conductor must reach the wearer's skin or sock. A strap installed outside the shoe with no path inside is useless. Visual inspection at issue confirms the path.</li>
+  <li><strong>Tested at start of shift.</strong> Same logic as wrist-strap testing — verify the path is intact before relying on it.</li>
+  <li><strong>Replaced when worn.</strong> Heel straps wear out. Cracked conductors, loose elastic, worn contact patches — replace.</li>
+</ol>
 
 <h4>ESD-safe footwear</h4>
-<p>Alternative to foot grounders: shoes constructed with conductive or dissipative soles. Less hassle than foot grounders, but more expensive and requires verification that the shoes still meet spec (they wear out).</p>
 
-<h4>Clothing</h4>
-<p>Standard clothing can be a static problem. Synthetic fabrics (polyester, nylon) generate substantial charge from body movement. ESD-safe smocks or lab coats made of conductive-thread material are worn over street clothing in the EPA.</p>
-<p>The smock isolates the EPA from the clothing's static. The smock itself is connected to the wearer's grounding (via wrist strap snap or skin contact) so it remains at ground potential.</p>
+<p>Alternative to foot grounders: shoes constructed with conductive or dissipative soles, sometimes with integrated conductors inside the shoe contacting the wearer's foot. ESD-safe shoes per ANSI/ESD STM9.1.</p>
 
-<h4>What employees should not do</h4>
+<p>Pros: no separate grounder to install and remove. Faster to put on at shift start.</p>
+<p>Cons: more expensive than foot grounders. Wear over time — the conductive sole loses conductivity as it wears and as it accumulates contamination. Requires individual verification per shift just like foot grounders. Wearer's foot must contact the conductive path inside the shoe (special socks may be needed).</p>
+
+<p>For TurbineWorks: foot grounders provide flexibility (any operator can use any pair). ESD-safe shoes are appropriate when an operator is in the EPA full-time and the convenience justifies the per-pair cost.</p>
+
+<h4>The personnel ground tester at the EPA entry</h4>
+
+<p>The most effective placement for the personnel ground tester is at the EPA entry. The workflow:</p>
+
+<ol>
+  <li>Operator approaches the EPA</li>
+  <li>Puts on wrist strap or foot grounders / ESD shoes before crossing the boundary</li>
+  <li>Tests at the tester at the entry</li>
+  <li>Records pass</li>
+  <li>Crosses the boundary into the EPA</li>
+  <li>At end of shift, reverses</li>
+</ol>
+
+<p>Tester placement at the entry makes the test difficult to skip — there is no path into the EPA that does not pass the tester. Tester placement elsewhere makes the test easier to forget, and audit findings follow.</p>
+
+<h4>Clothing and triboelectric generation from fabric</h4>
+
+<p>The wearer's clothing matters more than most people realize. Synthetic fabrics (polyester, nylon, acrylic) are aggressive triboelectric chargers — every movement generates charge through clothing-on-clothing or clothing-on-skin friction. A fully-grounded operator with a synthetic fleece can still field-charge a nearby ESDS part because the fleece itself is at high voltage even though the operator's body is at ground.</p>
+
+<p>The control: ESD-safe smocks or lab coats. Construction is woven fabric with conductive threads (typically carbon-fiber or stainless-steel fiber) interwoven through the fabric. The conductive threads connect to the wearer's grounding (typically via the smock's button-snap to the wrist-strap snap, or via skin contact) — keeping the smock at ground potential even as the wearer moves.</p>
+
+<p>Smock requirements:</p>
 <ul>
-  <li>Wear a wrist strap and then take it off during work to do something else briefly (the unstrapped period is unprotected)</li>
-  <li>Wear a foot grounder under only one foot</li>
-  <li>Adjust the wrist-strap band to not actually contact skin (defeats the ground path)</li>
-  <li>Skip the daily test because "it worked yesterday"</li>
-  <li>Wear synthetic clothing without an ESD-safe smock in the EPA</li>
+  <li>Worn over street clothing (covering down to the elbows at minimum, ideally past the wrist; covering the torso and at least the lap)</li>
+  <li>Buttoned/zipped closed (an open smock exposes street clothing to nearby ESDS parts)</li>
+  <li>Connected to wearer's grounding (via the snap on the cuff)</li>
+  <li>Cleaned per manufacturer instructions (washing affects the conductive fibers; institutional laundering is required)</li>
+  <li>Verified at intervals — smocks lose conductivity over time and use</li>
 </ul>
 
-<h4>What an auditor checks</h4>
+<p>For TurbineWorks: smocks are typical for full-time EPA workers. Visiting operators (warehouse personnel making a brief delivery to the EPA, for example) may be exempt if they do not directly handle ESDS items.</p>
+
+<h4>Common mistakes and how to avoid them</h4>
+
 <ul>
-  <li>Wrist strap test log — current?</li>
-  <li>Personnel in the EPA visibly grounded?</li>
-  <li>Foot grounder/shoe verification log?</li>
-  <li>ESD smocks in use?</li>
-  <li>Spot-test a wrist strap in real time</li>
+  <li><strong>Wearing the wrist strap "for show" without skin contact.</strong> Operator slides the band onto their wrist over a long-sleeve shirt cuff or watch band. Visually grounded but electrically isolated. The daily test will catch this (or should). Train operators to verify skin contact every time.</li>
+  <li><strong>Wearing a wrist strap and then removing it briefly during work.</strong> "I just need to step over to the shelf — I'll put it back on when I sit down." The unstrapped period is unprotected. If any ESDS part is in the EPA, the operator's brief unstrapped trip can damage it. Train: enter the EPA grounded, stay grounded until leaving.</li>
+  <li><strong>Single foot grounder.</strong> Operator wears one foot grounder because the other is broken. The unprotected foot defeats the system. Replace both grounders.</li>
+  <li><strong>Foot grounders on insulating floor.</strong> Operator outside the EPA, on standard tile, wearing foot grounders. The grounders are useless on a non-conductive floor — the operator is floating. Train operators that grounders work only on the EPA floor.</li>
+  <li><strong>Skipping the daily test "because the strap is new."</strong> A new strap can have a manufacturing defect. Test daily regardless.</li>
+  <li><strong>Skipping the daily test for time.</strong> Five seconds. Make it a non-negotiable.</li>
+  <li><strong>Wearing synthetic clothing without a smock.</strong> Operator is grounded but the synthetic fleece is at kilovolts. Field-couples charge into nearby ESDS parts. Train: smock on before EPA entry.</li>
+  <li><strong>Adjusting the band to be looser for comfort.</strong> Loose bands have intermittent skin contact and may fail the test even though the wearer thinks they're grounded. Train: snug fit, not painful but firm.</li>
+  <li><strong>Using a wrist strap with a damaged cord and not noticing.</strong> Daily test catches this — or should. If the test passes intermittently, the cord may be partially broken. Replace at first sign of trouble.</li>
+  <li><strong>Eating or drinking at the workstation.</strong> Crumbs and liquids on the ESD mat degrade its surface conductivity. Train: no food in the EPA.</li>
 </ul>
+
+<h4>The "leaving the EPA" reverse discipline</h4>
+
+<p>Operators leaving the EPA must:</p>
+<ul>
+  <li>Re-bag any ESDS items they were working on (back into ESD-safe packaging before the items leave the EPA)</li>
+  <li>Remove and store wrist strap (or remove foot grounders) at the EPA exit</li>
+  <li>Move ESD-safe smock to the smock rack (or leave on if returning soon)</li>
+</ul>
+
+<p>The reverse discipline matters because ESDS items left exposed on the work surface when the operator steps away are subject to:</p>
+<ul>
+  <li>Other personnel passing by who may not be grounded (visitors, cleaners, supervisors)</li>
+  <li>Settled charge from above (in dry conditions, charge can accumulate on a flat surface from the air over time)</li>
+  <li>Field-induction from nearby insulators that may move into proximity</li>
+</ul>
+
+<h4>What the auditor verifies</h4>
+
+<p>An ANSI/ESD S20.20 audit (or an ASA audit covering ESD) will examine personnel grounding in detail:</p>
+<ol>
+  <li><strong>Live observation</strong> — operators in the EPA visibly wearing wrist straps or foot grounders, smocks in place</li>
+  <li><strong>Test logs</strong> — daily test records current, gaps explained</li>
+  <li><strong>Live test</strong> — auditor may ask an operator to perform the daily test on the spot</li>
+  <li><strong>Visual inspection of equipment</strong> — wrist straps and cords in good condition, no frayed cords, no broken snaps</li>
+  <li><strong>Tester verification</strong> — the personnel ground tester itself is calibrated and functional</li>
+  <li><strong>Training records</strong> — operators have completed ESD training including personnel grounding</li>
+  <li><strong>Smocks in use</strong> — ESD-safe smocks worn over street clothing, properly closed and connected</li>
+  <li><strong>Insulator control</strong> — no synthetic outerwear, no untreated plastics, no Styrofoam in the EPA</li>
+</ol>
+
+<p>The auditor expects a culture in which personnel grounding is automatic, not exceptional. Operators who hesitate when asked about the daily test, or who say "well, normally I'd test it but today is special," signal a program that has drifted from the written procedure.</p>
+
+<h4>The role of the operator vs the role of the program</h4>
+
+<p>The personnel grounding system is engineered, but it relies on the operator to engage with it correctly. The program provides:</p>
+<ul>
+  <li>The equipment (straps, grounders, smocks, testers)</li>
+  <li>The procedures (daily test, smock-on-entry, items-back-in-bag-on-exit)</li>
+  <li>The training (what to do, why)</li>
+  <li>The verification (auditors and supervisors checking)</li>
+</ul>
+
+<p>The operator provides:</p>
+<ul>
+  <li>The daily test, every day, no shortcuts</li>
+  <li>The discipline of stay-grounded-while-in-the-EPA</li>
+  <li>The visual verification of equipment condition</li>
+  <li>The escalation when something doesn't work right</li>
+</ul>
+
+<p>A well-engineered program with disengaged operators fails. A modestly-engineered program with engaged operators usually succeeds. The discipline is the multiplier.</p>
+
+<h4>Self-check questions</h4>
+
+<ol>
+  <li>Why does the wrist strap include a 1 megohm series resistor?</li>
+  <li>What is the acceptance range for the daily wrist-strap test, and why is it not "zero ohms"?</li>
+  <li>Why must foot grounders be worn on both feet?</li>
+  <li>What is the difference between a daily-test wrist strap and a continuous-monitor wrist strap? When would you choose each?</li>
+  <li>Why does ESD-safe footwear require special socks or a contact path inside the shoe?</li>
+  <li>Explain why standard synthetic clothing is a problem in the EPA even when the wearer is properly grounded.</li>
+  <li>What is the rationale for placing the personnel ground tester at the EPA entry rather than at individual workstations?</li>
+  <li>Describe what should happen when an operator's wrist-strap daily test fails.</li>
+  <li>List five common operator mistakes that defeat personnel grounding, and the discipline that prevents each.</li>
+  <li>What does the auditor expect to find when reviewing personnel grounding at TurbineWorks?</li>
+</ol>
+
+<h4>References</h4>
+<ul>
+  <li>ANSI/ESD S20.20 — ESD Control Program Standard (personnel grounding requirements)</li>
+  <li>ANSI/ESD STM2.1 — Wrist Straps</li>
+  <li>ANSI/ESD STM97.1 / STM97.2 — Personnel grounding (foot grounders, combined system)</li>
+  <li>ANSI/ESD STM9.1 — Footwear: Electrical Resistance</li>
+  <li>ESD TR53 — Compliance Verification methods</li>
+</ul>
+
+<p><em>[TurbineWorks Procedure Reference: TurbineWorks Personnel Grounding Procedure (within ESD Control Program Plan); daily verification log; equipment replacement records.]</em></p>
 HTML
         ],
         [
             'name'  => 'Lesson 7.5 — Workstation Grounding, Ionizers, and ESD-Safe Packaging',
-            'intro' => '<p>The environment around the part: surfaces, air, and packaging.</p>',
+            'intro' => '<p>The environment around the part — surfaces, air, and packaging. The engineered controls that make the EPA function as a system.</p>',
             'content' => <<<'HTML'
-<h3>Workstation Grounding and Packaging</h3>
+<h3>Workstation Grounding, Ionization, and ESD-Safe Packaging: The Engineered Environment</h3>
 
-<h4>ESD work surfaces</h4>
-<p>The work surface where ESD-sensitive parts are placed must be dissipative — capable of draining charge to ground at a controlled rate (typical surface resistance 10^6 to 10^9 ohms; not so conductive that a charged part discharges quickly into the mat, not so insulating that the mat itself holds charge).</p>
-<p>The work surface is connected via a grounding wire to the EPA common ground point. The same wrist strap snap socket is typically on the mat.</p>
-<p>Verification: surface resistance tested at intervals (typically annually, more often if heavy use). Records retained.</p>
+<h4>The EPA as a system of redundant controls</h4>
+<p>Personnel grounding is the primary defense against ESD. The remaining elements of the EPA — work surfaces, flooring, ionization, packaging, humidity — form a system of redundant controls that catch the failures the primary defense will inevitably miss. An operator briefly forgets to test the wrist strap one morning; the work surface and floor still drain charge. A small insulator (a foam coffee cup left on the workbench) accumulates charge; the ionizer neutralizes it before it field-couples into a nearby part. The system is layered, and the layers protect each other.</p>
+<p>Each control has its own engineering, its own verification regime, and its own failure modes. Understanding each in detail allows the program manager and the operator to recognize when the system is functioning and when a layer has degraded.</p>
 
-<h4>Flooring</h4>
-<p>EPA flooring is conductive or dissipative — typically conductive vinyl, conductive tile, ESD epoxy coating, or interlocking ESD floor mats. Standard carpet, ceramic tile, and vinyl composition tile are all insulators and do not qualify.</p>
-<p>The flooring is connected to building ground via tested low-impedance path. Floor resistance is measured at installation and at intervals to verify continued performance.</p>
+<h4>ESD work surfaces: the dissipative path under the part</h4>
 
-<h4>Ionizers</h4>
-<p>Some objects in an EPA cannot be made conductive — chip packaging, tool handles, some plastics. These objects can carry charge that field-couples into ESDS parts even without contact. Ionizers solve this by injecting ions into the air, which neutralize charge on nearby objects.</p>
-<p>Ionizer requirements:</p>
+<p>The work surface is the most-touched ESD control in the EPA. Parts are placed on it. Tools are placed on it. The operator's hands rest on it. The work surface bridges the operator (grounded via wrist strap) and the part (which may carry residual charge from its packaging).</p>
+
+<p><strong>Construction.</strong> An ESD work surface is typically an ESD mat — a multi-layer rubber, vinyl, or composite mat with controlled surface conductivity. The top layer is dissipative (resistance 10⁶ to 10⁹ ohms per ANSI/ESD S4.1). The bottom layer is conductive, providing a low-resistance path to ground. The mat may be field-installed (rolled onto an existing workbench) or built into the workbench itself.</p>
+
+<p><strong>The dissipative range matters.</strong> Why not just make the mat conductive (low resistance)? A purely conductive mat would discharge a charged part instantaneously when the part touches it — a fast discharge that itself can damage the part (high peak current). A purely insulating mat would not drain charge at all. The dissipative range (10⁶ to 10⁹ ohms) drains charge at a controlled rate, fast enough to keep the part safe, slow enough that the discharge current is small. The intermediate impedance is the engineered compromise.</p>
+
+<p><strong>Connection to ground.</strong> The work surface is connected to the EPA Common Point Ground (CPG) via a wired connection — typically with a snap or banana plug that is purposely a "soft connection" so that wear-and-tear or impact does not disconnect the path silently. Often the same socket carries the wrist-strap connection point, simplifying the workstation.</p>
+
+<p><strong>Verification.</strong> Surface resistance is measured at installation and periodically thereafter (typically annually, or more often if the surface is heavily used). Test methods per ANSI/ESD STM4.1 and STM4.2 — a probe at one location measures resistance to ground; a second test measures resistance from point to point on the surface. Both must be within range. The mat that fails verification is replaced.</p>
+
+<p><strong>Common failure modes.</strong></p>
 <ul>
-  <li>Positioned so the ionized air reaches the work area</li>
-  <li>Balanced — equal positive and negative ions, so it doesn't itself charge objects to a non-zero potential</li>
-  <li>Balance and decay time tested at intervals</li>
-  <li>Maintained (filters cleaned, emitter points cleaned)</li>
+  <li><strong>Contamination.</strong> Oil, dirt, or chemical contamination on the surface raises its resistance over time. Some contamination is removable with appropriate cleaners; some is permanent.</li>
+  <li><strong>Wear.</strong> Heavy abrasion wears through the dissipative top layer to the conductive bottom — creating localized "hot spots" where the surface is conductive rather than dissipative.</li>
+  <li><strong>Ground disconnect.</strong> The ground wire becomes detached, the snap is broken, the connector corrodes. The surface is no longer grounded.</li>
+  <li><strong>Incorrect cleaning.</strong> Some cleaning chemicals damage the dissipative coating. Use mat-manufacturer-approved cleaners only.</li>
 </ul>
 
-<h4>ESD-safe packaging</h4>
-<p>Outside the EPA, ESDS items must be in ESD-safe packaging. Common packaging types:</p>
+<h4>EPA Flooring</h4>
+
+<p>The floor is the largest single conductive surface in the EPA. It provides:</p>
 <ul>
-  <li><strong>Pink poly</strong> — pink antistatic polyethylene. Dissipative. Prevents charge buildup from triboelectric effects but does not shield from external fields. Used for low-sensitivity items.</li>
-  <li><strong>Metallized (silver) shielded bags</strong> — multi-layer with metallized layer. Provides Faraday cage shielding against external fields. Standard for moderate-sensitivity items.</li>
-  <li><strong>Conductive (black) bags</strong> — high-conductivity polymer. Best protection for highly sensitive items.</li>
-  <li><strong>Anti-static foam</strong> — pink or black foam with controlled conductivity. Used for cushioning inside packaging.</li>
-  <li><strong>ESD-safe corrugated boxes</strong> — for outer packaging, often labeled.</li>
+  <li>The path for foot-grounder personnel grounding</li>
+  <li>A controlled drain for charge accumulated by carts, chairs, and other movable items</li>
+  <li>The reference plane that the work-surface ground ties to (electrically — typically through the building ground rather than directly)</li>
 </ul>
-<p>Regular cardboard, regular plastic bubble wrap, regular foam — all of these are insulators and can damage ESDS parts. Visible difference is the labeling: ESD-safe packaging is marked with the ESD symbol.</p>
 
-<h4>Packaging integrity</h4>
-<p>ESD-safe bags are not single-use indefinitely. Repeated handling abrades the antistatic coating; the bag loses its dissipative property. Visibly damaged bags are replaced. Bags older than a defined age (per manufacturer spec) are replaced.</p>
-
-<h4>Humidity</h4>
-<p>Humidity dramatically affects ESD. At 10% relative humidity, walking across a carpet can generate 35,000 V. At 65% RH, the same walk generates around 1,500 V. Most EPAs target 40-60% RH.</p>
-<p>Humidity is monitored and recorded. If the EPA drops below the minimum (typically 30% RH), enhanced controls are needed: more frequent grounding verification, possibly suspending ESDS handling.</p>
-
-<h4>Putting it together</h4>
-<p>A correctly-configured EPA allows ESDS handling without damage:</p>
+<p><strong>Acceptable floor types.</strong></p>
 <ul>
-  <li>Operator grounded (wrist strap or foot grounders + ESD floor)</li>
-  <li>Work surface grounded</li>
-  <li>Tools dissipative</li>
-  <li>Ionization for residual insulators</li>
-  <li>Humidity controlled</li>
-  <li>ESDS item in ESD-safe packaging until in the EPA</li>
-  <li>ESDS item re-bagged in ESD-safe packaging before leaving the EPA</li>
+  <li><strong>Conductive vinyl flooring.</strong> Specifically manufactured ESD vinyl with carbon-loaded composition. Resistance typically 10⁶ to 10⁹ ohms when measured properly. Long lifespan; common in production EPAs.</li>
+  <li><strong>Conductive tile.</strong> Static-dissipative or conductive composition tile. Available in various sizes and patterns. Lifespan depends on use intensity.</li>
+  <li><strong>ESD epoxy coating.</strong> Applied over a concrete subfloor with a conductive grounding grid embedded. Continuous (no seams), relatively low-cost per square foot, good for industrial environments.</li>
+  <li><strong>Interlocking ESD floor mats.</strong> Modular squares with integrated conductive layers. Easy to install, easy to replace damaged sections. Good for small EPAs or when modifying existing space.</li>
+  <li><strong>Carpet — specifically ESD carpet only.</strong> Most carpet is the worst possible ESD floor. ESD-specific carpet exists (with conductive yarns woven through) but is uncommon outside specialized cleanrooms.</li>
 </ul>
-<p>Break any of these links and the protection breaks.</p>
+
+<p><strong>Unacceptable floor types.</strong></p>
+<ul>
+  <li>Standard carpet (synthetic fibers, no conductive treatment)</li>
+  <li>Standard vinyl composition tile (VCT)</li>
+  <li>Standard ceramic tile</li>
+  <li>Standard concrete (without ESD coating; concrete by itself is moderately conductive only when freshly poured or kept damp — not reliably ESD-safe)</li>
+  <li>Wood</li>
+  <li>Polished or sealed concrete with non-conductive sealer</li>
+</ul>
+
+<p><strong>Connection to building ground.</strong> The floor is connected to building ground through embedded copper grounding strips (in epoxy floors), through conductive adhesives in tile installations, and through tested low-impedance paths to the building electrical ground.</p>
+
+<p><strong>Verification.</strong> Floor resistance is tested at installation and at intervals thereafter. Test methods per ANSI/ESD STM7.1. Point-to-ground resistance is measured at multiple locations; point-to-point resistance is measured between distant points on the floor. Both must be within range.</p>
+
+<p><strong>Common failure modes.</strong></p>
+<ul>
+  <li><strong>Repair with non-ESD material.</strong> A damaged tile is replaced with standard tile. The replacement does not conduct. Audit finding follows.</li>
+  <li><strong>Floor wax or sealer applied.</strong> Cleaning crew waxes the floor for shine. The wax is an insulator. The conductive floor becomes an insulating floor under a wax layer.</li>
+  <li><strong>Worn through to subfloor.</strong> Heavy traffic wears through to non-conductive concrete or substrate.</li>
+  <li><strong>Spilled and dried fluids.</strong> An insulating film on the surface raises resistance.</li>
+  <li><strong>Lost ground connection.</strong> The embedded grounding strip is broken (often during building modifications); the floor is no longer connected to ground.</li>
+</ul>
+
+<h4>Common Point Ground (CPG)</h4>
+
+<p>All conductive surfaces in the EPA (work mats, floor, wrist-strap stations, equipment chassis grounds, ionizer chassis grounds, shelving with conductive surfaces, ESD-safe carts) connect to a single ground reference: the Common Point Ground. The CPG is a labeled, accessible terminal in the EPA (often a brass bar or copper plate mounted at a fixed location) tied to the building's electrical ground via a low-impedance wired connection.</p>
+
+<p><strong>Why a common point?</strong> If different surfaces ground to different points (one mat grounds through one outlet, another mat through a different outlet, a chassis grounds through its power cord), small voltage differences between those ground points can drive currents through ESDS items inadvertently. The CPG ensures all conductive surfaces are at the same electrical reference.</p>
+
+<p><strong>Connection to building ground.</strong> The CPG is connected to the building's earthing electrode (often the main building ground rod or the building's grounded electrical system) via a dedicated low-impedance conductor. Acceptable impedance is typically below 2 ohms (depending on standard and program tailoring). The path is tested at installation, after any electrical system modifications, and at periodic intervals.</p>
+
+<p><strong>Why not just use the AC ground in each outlet?</strong> AC ground integrity varies — a marginal ground connection in an outlet may pass safety inspection but be inadequate for ESD purposes (where milliohm-level differences across the building can matter). A dedicated CPG with a verified low-impedance path eliminates this variability.</p>
+
+<h4>Ionization: neutralizing what cannot be grounded</h4>
+
+<p>Not everything in the EPA can be made conductive. Some essential objects are insulators by nature:</p>
+<ul>
+  <li>Component packaging (chip carriers, tape-and-reel)</li>
+  <li>Tool handles (insulated for shock safety, not for ESD)</li>
+  <li>Plastic enclosures of measuring instruments</li>
+  <li>The body of the ESDS part itself (the case may be insulating plastic over electronic content)</li>
+</ul>
+
+<p>These insulators accumulate triboelectric charge through normal handling. Even though they are not touched directly to ESDS parts (which would discharge), they can field-couple charge into ESDS parts through the air. A 5,000 V insulator a few centimeters from a Class 1 component will induce damage-level voltages on the component's pins.</p>
+
+<p><strong>Ionizers solve this</strong> by injecting positively and negatively charged ions into the air. The ions are attracted to charged objects (negative ions to positive charges, positive ions to negative charges), neutralizing them through controlled recombination. A properly tuned ionizer can reduce a 5,000 V insulator to near zero in 5 to 20 seconds (the "decay time").</p>
+
+<p><strong>Ionizer types.</strong></p>
+<ul>
+  <li><strong>Bench-top fan ionizers.</strong> A small fan with corona-discharge emitter points generating ions. Aimed at the work area; typical coverage 30 to 60 cm. Used at individual workstations.</li>
+  <li><strong>Overhead ionizers.</strong> Mounted above the work area, larger coverage. Used for benches with multiple workstations or for kit-up areas.</li>
+  <li><strong>Ionizing air guns.</strong> Hand-held, directed at specific objects. Used for cleaning packaging before opening.</li>
+  <li><strong>Room ionization.</strong> Large overhead units covering an entire EPA. Used for large open production areas. Less common in distribution-scale operations.</li>
+</ul>
+
+<p><strong>Ionizer requirements.</strong></p>
+<ol>
+  <li><strong>Coverage.</strong> The ionized air must reach the work area. An ionizer aimed wrong, blocked by obstructions, or too far away is ineffective.</li>
+  <li><strong>Balance.</strong> The ionizer must produce equal positive and negative ions. An unbalanced ionizer can itself charge objects to a non-zero potential (e.g., a positively-biased ionizer leaves nearby objects negatively charged). Balance tested with an ESD STM3.1 charged-plate analyzer; typical acceptance ±35 V.</li>
+  <li><strong>Decay time.</strong> The time for the ionizer to neutralize a known-charged plate. Tested at installation and periodically. Typical acceptance: less than 20 seconds at the work area distance.</li>
+  <li><strong>Maintenance.</strong> Emitter points accumulate contamination and erode over time. Cleaning per manufacturer instructions (often a soft brush or cotton swab; replacement when worn). Filters cleaned. Fan inspected.</li>
+  <li><strong>Verification.</strong> Balance and decay tested at intervals (quarterly typical, annually at minimum). Test results recorded.</li>
+</ol>
+
+<p><strong>When ionization matters most.</strong></p>
+<ul>
+  <li>Operations where uncontrolled insulators are present (component packaging that cannot be eliminated)</li>
+  <li>Class 0 / highly sensitive components</li>
+  <li>Low-humidity environments (where insulators hold charge much longer)</li>
+  <li>High-throughput operations where the operator cannot pause to manually discharge each insulator</li>
+</ul>
+
+<p><strong>When ionization is not needed.</strong> If the EPA has been engineered to eliminate uncontrolled insulators (all packaging is ESD-safe, all tools are dissipative, all surfaces are dissipative), and the items handled are not Class 0, ionization may be unnecessary. Simpler EPAs (such as a small inspection station handling moderate-sensitivity items only) often skip ionization without compromising the program.</p>
+
+<h4>ESD-safe packaging: the protection outside the EPA</h4>
+
+<p>Inside the EPA, items can be handled with the operator-grounding, surface-grounding, and ionization controls protecting them. Outside the EPA, those protections do not exist. Packaging is what protects items in storage, in transit, and during movement between EPAs.</p>
+
+<p><strong>Three classes of ESD packaging</strong> (per ANSI/ESD S541):</p>
+
+<table border="1" cellpadding="6" cellspacing="0">
+  <tr><th>Class</th><th>Function</th><th>Typical Examples</th><th>When Used</th></tr>
+  <tr>
+    <td>Low-charging / antistatic (dissipative)</td>
+    <td>Prevents the packaging itself from triboelectric-charging the item inside</td>
+    <td>Pink polyethylene bags, pink antistatic foam</td>
+    <td>Low-sensitivity items, inner packaging where shielding is provided externally</td>
+  </tr>
+  <tr>
+    <td>Shielding (Faraday cage)</td>
+    <td>Prevents external electrostatic fields from reaching the item; also prevents discharge from charged objects touching the bag</td>
+    <td>Metallized (silver) shielded bags with multi-layer construction (typically: polyester outer / dissipative inner / metallized middle layer)</td>
+    <td>Standard for moderate-sensitivity items; default choice for most aviation electronics</td>
+  </tr>
+  <tr>
+    <td>Conductive (high-protection)</td>
+    <td>Strong shielding, very low triboelectric charging, best protection</td>
+    <td>Conductive (carbon-loaded black) bags; conductive trays and totes</td>
+    <td>Class 0 / highly sensitive items, repeated-handling environments</td>
+  </tr>
+</table>
+
+<p><strong>Other ESD packaging materials.</strong></p>
+<ul>
+  <li><strong>Anti-static foam (pink).</strong> Cushioning material with controlled conductivity. Used inside outer packaging.</li>
+  <li><strong>Conductive foam (black).</strong> Higher conductivity than pink. Used for component leads insertion and for highest-sensitivity items.</li>
+  <li><strong>Cup-and-cover / clamshell containers.</strong> Reusable conductive or dissipative containers. Lower environmental impact than single-use bags for repeated handling.</li>
+  <li><strong>Conductive corrugated boxes.</strong> Outer carton material treated with conductive coating or constructed from conductive paperboard. Often labeled "ESD-safe" on the outside.</li>
+  <li><strong>Tape and reel materials.</strong> For loose components: dissipative or conductive tape, conductive reels.</li>
+</ul>
+
+<p><strong>What ESD-safe packaging is NOT.</strong></p>
+<ul>
+  <li>Regular polyethylene plastic bags (charge-generating, not shielding)</li>
+  <li>Regular bubble wrap (insulator)</li>
+  <li>Regular foam peanuts (highly insulating, especially Styrofoam)</li>
+  <li>Newspaper or printed paper (mildly conductive but unreliable; ink can be a contaminant)</li>
+  <li>Cardboard cartons not specifically rated as ESD-safe</li>
+</ul>
+
+<p><strong>The visible difference.</strong> ESD-safe packaging is marked with the ANSI/ESD S8.1 protective symbol (a black triangle with a diagonal line) and/or the awareness symbol (yellow triangle with hand). Unmarked packaging should not be assumed ESD-safe regardless of color or appearance.</p>
+
+<p><strong>The pink-bag misunderstanding.</strong> Pink polyethylene bags ("pink poly") look like regular plastic but have antistatic additives. They prevent the bag itself from generating triboelectric charge against the item inside — but they do not shield against external fields. A pink-poly-bagged item placed next to a charged insulator can still be field-damaged. Pink poly is acceptable as inner-bag-only for some applications; shielded bags are required when standalone protection is needed.</p>
+
+<h4>Packaging life and replacement</h4>
+
+<p>ESD-safe packaging is not single-use indefinitely. The antistatic and shielding properties degrade over time and use:</p>
+<ul>
+  <li><strong>Pink poly bags:</strong> antistatic additive migrates to the surface and is gradually lost. Effective life typically 6 to 12 months.</li>
+  <li><strong>Metallized shielded bags:</strong> the metallized layer can be abraded, punctured, or fatigued. Effective life depends on handling — a stored bag may last years; a bag opened and re-sealed repeatedly may last weeks.</li>
+  <li><strong>Conductive bags:</strong> similar to shielded bags but generally more robust.</li>
+  <li><strong>ESD foam:</strong> conductive carbon loading migrates and can be abraded. Visibly worn or damaged foam is replaced.</li>
+</ul>
+
+<p>Operational discipline: packaging that is visibly damaged is replaced. Packaging that is past its dated shelf life is replaced. Packaging that has been opened and re-sealed multiple times is evaluated for replacement. Reusing degraded packaging is one of the silent ways an ESD program fails.</p>
+
+<h4>Humidity control</h4>
+
+<p>Humidity has a dramatic effect on charge generation and retention. At low humidity, surfaces hold charge longer; triboelectric generation is more aggressive. At higher humidity, a thin water film on surfaces conducts charge away.</p>
+
+<p>Quantitative effects (typical):</p>
+<ul>
+  <li>Walking across a synthetic carpet at 10% RH: 35,000 V generated</li>
+  <li>Same walk at 65% RH: 1,500 V generated</li>
+  <li>Sliding out of a vinyl chair at 10% RH: 18,000 V generated</li>
+  <li>Same at 65% RH: 1,500 V generated</li>
+</ul>
+
+<p>Most EPAs target 40 to 60% RH. The lower limit (typically 30%) is the program-defined "warning threshold" below which enhanced controls apply. The upper limit (typically 70%) is the practical limit before condensation and other moisture problems begin.</p>
+
+<p><strong>Humidity monitoring.</strong> Continuous monitoring with chart recorders or electronic loggers. Records reviewed at intervals. Excursions outside the program range trigger response:</p>
+<ul>
+  <li>Below 30% RH: enhanced grounding verification (test wrist straps mid-shift), reduced handling of highest-sensitivity items, possibly suspending Class 0 handling until humidity is restored</li>
+  <li>Above 70% RH: monitor for moisture damage to packaging and parts; address HVAC issue</li>
+</ul>
+
+<p><strong>Why humidity control alone is not sufficient.</strong> A common (and wrong) belief is that maintaining moderate humidity makes ESD controls less important. False. Even at 60% RH, an ungrounded operator can build up several hundred volts — enough to damage Class 0 components. Humidity reduces the magnitude of the problem but does not eliminate it. Personnel grounding, surface grounding, and packaging are still required.</p>
+
+<h4>The EPA as a system: putting the pieces together</h4>
+
+<p>A correctly configured EPA combines all the elements:</p>
+<ol>
+  <li><strong>Boundary.</strong> Marked with floor tape, signage. Operators trained on the boundary. Items not opened outside the boundary.</li>
+  <li><strong>Floor.</strong> Conductive or dissipative, tied to CPG via verified low-impedance path. Tested periodically.</li>
+  <li><strong>Work surfaces.</strong> Dissipative mats, tied to CPG. Tested periodically.</li>
+  <li><strong>Common Point Ground.</strong> Single ground reference, tied to building ground at low impedance.</li>
+  <li><strong>Personnel grounding.</strong> Wrist straps and/or foot grounders. Daily tested. Records kept.</li>
+  <li><strong>ESD-safe smocks.</strong> Worn over street clothes by personnel handling ESDS items.</li>
+  <li><strong>Ionization.</strong> Where needed for uncontrolled insulators or Class 0 sensitivity. Balanced and decay-tested.</li>
+  <li><strong>Humidity.</strong> Monitored continuously, controlled to program range.</li>
+  <li><strong>ESD-safe packaging.</strong> All ESDS items in ESD-safe packaging when outside the EPA. Packaging life managed.</li>
+  <li><strong>Insulator control.</strong> No uncontrolled insulators in the EPA — no Styrofoam, no untreated plastics, no synthetic outerwear without smocks, no plastic shopping bags.</li>
+  <li><strong>Tool control.</strong> Tools used in the EPA are dissipative or conductive (rated tools, not standard tools).</li>
+  <li><strong>Training and verification.</strong> Operators trained, daily verifications performed, periodic comprehensive verifications performed, records kept.</li>
+</ol>
+
+<p>Break any one of these elements and the rest can still protect — that is the value of layered controls. Break two or three and the protection is gone. The program manager's role is to verify all layers are functioning, not just the most-visible one (personnel grounding).</p>
+
+<h4>Audit-ready ESD documentation</h4>
+
+<p>An ASA accreditation audit (or any quality audit examining ESD) will look for:</p>
+<ul>
+  <li>The ESD Control Program Plan — current revision, approved, distributed</li>
+  <li>Daily personnel grounding test logs — current</li>
+  <li>Periodic verification records (work surface, floor, ionizer, CPG) — current</li>
+  <li>Training records — all handlers current</li>
+  <li>Equipment maintenance records (ionizer cleaning, mat replacements)</li>
+  <li>Incident records (failures, responses, corrective actions)</li>
+  <li>Packaging stock records (showing rotation of older bags)</li>
+  <li>Procedures for ESD identification, EPA entry/exit, item handling, packaging selection</li>
+</ul>
+
+<p>The records demonstrate the program operates, not just exists. Records gaps are findings; well-maintained records demonstrate program health.</p>
+
+<h4>Self-check questions</h4>
+
+<ol>
+  <li>Why does an ESD work surface have a dissipative resistance range rather than being purely conductive?</li>
+  <li>What is the Common Point Ground, and why does the EPA need a single ground reference rather than letting each item ground independently?</li>
+  <li>Describe how ionization works. When is ionization required, and when can an EPA function without it?</li>
+  <li>What is the difference in protection between pink poly bags, metallized shielded bags, and conductive bags? Give an aviation-application example for each.</li>
+  <li>How does humidity affect ESD risk? Why is humidity control alone not sufficient?</li>
+  <li>List three failure modes of ESD work surfaces and three failure modes of EPA flooring.</li>
+  <li>Why does ESD-safe packaging have a finite useful life rather than being reusable indefinitely?</li>
+  <li>What are the three test parameters for an ionizer (balance, decay time, coverage), and what is the typical acceptance criterion for each?</li>
+  <li>What does the auditor look for when verifying an EPA is operating to S20.20?</li>
+  <li>Explain what is meant by "layered controls" and why a single missing control does not necessarily collapse the program.</li>
+</ol>
+
+<h4>References</h4>
+<ul>
+  <li>ANSI/ESD S20.20 — ESD Control Program Standard</li>
+  <li>ANSI/ESD S541 — Packaging Materials for ESD-Sensitive Items</li>
+  <li>ANSI/ESD STM4.1 / STM4.2 — Worksurface resistance test methods</li>
+  <li>ANSI/ESD STM7.1 — Floor materials test methods</li>
+  <li>ANSI/ESD STM3.1 — Ionization test methods (charged plate analyzer)</li>
+  <li>ANSI/ESD S8.1 — ESD Awareness Symbols</li>
+  <li>ESD TR53 — Compliance Verification</li>
+</ul>
+
+<p><em>[TurbineWorks Procedure Reference: TurbineWorks EPA layout drawing, surface and floor verification log, ionizer maintenance log, packaging inventory and rotation schedule.]</em></p>
 HTML
         ],
         [
