@@ -11394,7 +11394,368 @@ HTML
 HTML
         ],
         [
-            'name'  => 'Lesson 6 — CFM56 Module Summary',
+            'name'  => 'Lesson 6 — Practical Operations: Aircraft, Parts, Cheat Sheets',
+            'intro' => '<p>The day-to-day operational reference — aircraft applications, common part types, accessory crossover, teardown patterns, differences between sub-variants, and the cheat sheets every CFM56 distributor employee needs at hand.</p>',
+            'content' => <<<'HTML'
+<h3>CFM56 Practical Operations: The Working Reference</h3>
+
+<h4>How to use this lesson</h4>
+<p>The previous lessons covered history, architecture, LLPs, ADs, and market structure. This lesson is the working reference: aircraft applications, common parts that move in the market, accessory cross-variant compatibility, teardown patterns, sub-variant differences, and quick-reference cheat sheets. Bookmark this page — these are the lookups you will perform daily.</p>
+
+<h4>Aircraft application cheat sheet</h4>
+
+<p><strong>Which engine on which airframe</strong> — the fast lookup:</p>
+
+<table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse; width:100%;">
+  <tr style="background:#0d2240; color:#fff;">
+    <th>Airframe</th><th>Engine Variant</th><th>Engine Count</th><th>Typical Operator Profile</th>
+  </tr>
+  <tr><td>Boeing 737-300/-400/-500 (Classic)</td><td>CFM56-3 (3B1, 3B2, 3C1)</td><td>2</td><td>Cargo conversion fleets, regional ops, Africa/S. America passenger</td></tr>
+  <tr><td>Boeing 737-600 NG</td><td>CFM56-7B18 / -7B20</td><td>2</td><td>Limited production; mostly retired</td></tr>
+  <tr><td>Boeing 737-700 NG</td><td>CFM56-7B20 / -7B22</td><td>2</td><td>Southwest (largest operator), many U.S./Canadian carriers</td></tr>
+  <tr><td>Boeing 737-800 NG</td><td>CFM56-7B24 / -7B26 / -7B27</td><td>2</td><td>Most-produced 737NG; Ryanair, American, United, Delta etc.</td></tr>
+  <tr><td>Boeing 737-900 / -900ER NG</td><td>CFM56-7B26 / -7B27</td><td>2</td><td>Alaska, United, Delta</td></tr>
+  <tr><td>Boeing 737 BBJ (corporate)</td><td>CFM56-7B26 / -7B27</td><td>2</td><td>VIP, government</td></tr>
+  <tr><td>Boeing P-8 Poseidon (MPA)</td><td>CFM56-7B27A (mil)</td><td>2</td><td>U.S. Navy, RAF, RAAF, others</td></tr>
+  <tr><td>Boeing C-40 Clipper</td><td>CFM56-7B27</td><td>2</td><td>U.S. Navy / USMC transport</td></tr>
+  <tr><td>Airbus A319ceo</td><td>CFM56-5B5/P, -5B6/P, -5B7/P</td><td>2</td><td>Many operators globally</td></tr>
+  <tr><td>Airbus A320ceo</td><td>CFM56-5B4/P, -5B4/2P</td><td>2</td><td>Largest CFM56-5B segment</td></tr>
+  <tr><td>Airbus A321ceo</td><td>CFM56-5B1/P, -5B2/P, -5B3/P</td><td>2</td><td>Higher-thrust A320 family</td></tr>
+  <tr><td>Airbus A340-200/-300</td><td>CFM56-5C2 / -5C3 / -5C4</td><td>4</td><td>Largely retired; some VIP/cargo</td></tr>
+  <tr><td>Boeing/McD DC-8 Super 70</td><td>CFM56-2C1</td><td>4</td><td>Mostly retired; some cargo</td></tr>
+  <tr><td>Boeing KC-135R Stratotanker</td><td>CFM56-2B1 (F108-CF-100 mil)</td><td>4</td><td>USAF, ANG, AFRC</td></tr>
+  <tr><td>Boeing E-3 Sentry AWACS</td><td>CFM56-2A2 (F108-CF-100 mil)</td><td>4</td><td>USAF, NATO, France, UK, Japan</td></tr>
+  <tr><td>Boeing E-6 Mercury TACAMO</td><td>CFM56-2A2</td><td>4</td><td>U.S. Navy</td></tr>
+  <tr><td>Boeing E-8 Joint STARS</td><td>CFM56-2B1</td><td>4</td><td>USAF (retiring)</td></tr>
+  <tr><td>KE-3A (Saudi tanker)</td><td>CFM56-2</td><td>4</td><td>Royal Saudi Air Force</td></tr>
+  <tr><td>Airbus A310 (some)</td><td>CF6-80 — NOT CFM56</td><td>2</td><td>Don't confuse</td></tr>
+</table>
+
+<p><strong>Important — common confusions:</strong></p>
+<ul>
+  <li>737 MAX uses LEAP-1B, NOT CFM56. Don't confuse 737 MAX parts with 737 NG parts.</li>
+  <li>A320neo uses LEAP-1A or PW1100G, NOT CFM56-5B.</li>
+  <li>A330 uses CF6-80E1 or PW4000 or Trent 700, NOT CFM56.</li>
+  <li>757 uses RB211-535 or PW2037, NOT CFM56.</li>
+  <li>767 uses CF6-80 or PW4000, NOT CFM56.</li>
+  <li>A340-500/-600 (longer A340 variants) use Trent 500, NOT CFM56-5C.</li>
+</ul>
+
+<h4>The parts categories that actually move</h4>
+
+<p>Not all CFM56 parts trade equally. Volume and dollar value distribute very unevenly. Here is what TurbineWorks actually transacts day to day:</p>
+
+<p><strong>Tier 1: High-volume consumables (every shop visit consumes these)</strong></p>
+<ul>
+  <li>Fuel nozzles (20 per engine, ~$2k–$5k each new; PMA available)</li>
+  <li>Igniter plugs (2 per engine)</li>
+  <li>Combustor liners (often replaced at heavy shop visit)</li>
+  <li>HPT NGVs (nozzle guide vanes — first stage HPT stator)</li>
+  <li>HPT blades (often replaced as a set; PMA available)</li>
+  <li>Seals and gaskets (hundreds per engine)</li>
+  <li>O-rings, packings, and elastomeric seals</li>
+  <li>Bearings (multiple per engine; main bearings are highest value)</li>
+  <li>Various fittings, brackets, clamps</li>
+</ul>
+
+<p><strong>Tier 2: Repairable rotables (overhauled and reused)</strong></p>
+<ul>
+  <li>HPT blade sets (cast in superalloy; recoated/repaired)</li>
+  <li>HPC blade sets and vane sets</li>
+  <li>HPT shroud segments</li>
+  <li>Combustor liner (some are repairable; some replaced)</li>
+  <li>Fan blades (CFM56-7B fan blades; subject to recurrent AD inspection)</li>
+  <li>VSV actuators and bell cranks</li>
+  <li>Bleed valves (5th, 9th stage etc.)</li>
+</ul>
+
+<p><strong>Tier 3: LLPs (the big-ticket rotables)</strong></p>
+<ul>
+  <li>HPT disk (highest value individual LLP)</li>
+  <li>HPC disks (stages 3-9 each separately LLP)</li>
+  <li>LPT disks (4 stages, each LLP)</li>
+  <li>Fan disk</li>
+  <li>Booster disks (or drum)</li>
+  <li>HP shaft</li>
+  <li>LP shaft (rear portion)</li>
+</ul>
+
+<p><strong>Tier 4: AGB-mounted LRUs (line replaceable units)</strong></p>
+<ul>
+  <li>HMU (Hydromechanical Unit) / FMU (Fuel Metering Unit)</li>
+  <li>Engine-driven fuel pump (high-pressure)</li>
+  <li>Engine-driven oil pumps (main and scavenge)</li>
+  <li>FADEC (EEC) — Electronic Engine Control unit</li>
+  <li>Igniter exciter box</li>
+  <li>Engine sensors (EGT thermocouples, P30/T30 sensors, vibration accelerometers, oil debris monitors)</li>
+  <li>Bleed air valves (start, ECS)</li>
+</ul>
+
+<p><strong>Tier 5: Modules (when whole modules trade)</strong></p>
+<ul>
+  <li>HPT module (highest value)</li>
+  <li>HPC module</li>
+  <li>LPT module</li>
+  <li>Combustor module</li>
+  <li>Fan/booster module</li>
+  <li>AGB module</li>
+</ul>
+
+<h4>Fuel pump and accessory cross-variant cheat sheet</h4>
+
+<p>Accessory-section LRUs (AGB-driven) have some cross-variant compatibility because the AGB and HMU/FMU designs share heritage across CFM56 variants. <strong>But never assume — always verify per IPC.</strong> Approximate compatibility patterns:</p>
+
+<table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse;">
+  <tr style="background:#0d2240; color:#fff;">
+    <th>Accessory</th><th>Generally Common</th><th>Variant-Specific</th>
+  </tr>
+  <tr>
+    <td>HMU (older variants) / FMU (FADEC variants)</td>
+    <td>Within sub-variant family; same FADEC software class</td>
+    <td>HMU on -2/-3 differs from FMU on -5B/-7B (different fuel control architecture)</td>
+  </tr>
+  <tr>
+    <td>Engine-driven fuel pump (HP)</td>
+    <td>Some common across -5B and -7B</td>
+    <td>-3 fuel pump is different (smaller flow)</td>
+  </tr>
+  <tr>
+    <td>Main oil pump</td>
+    <td>Often common across -5B and -7B</td>
+    <td>Older variants different</td>
+  </tr>
+  <tr>
+    <td>Scavenge oil pump</td>
+    <td>Often common across -5B and -7B</td>
+    <td>Older variants different</td>
+  </tr>
+  <tr>
+    <td>FADEC / EEC box</td>
+    <td>Software-keyed to specific sub-variant; identical hardware may not be cross-applicable due to certified software</td>
+    <td>Each sub-variant has its certified software load</td>
+  </tr>
+  <tr>
+    <td>Igniter exciter box</td>
+    <td>Some commonality across variants</td>
+    <td>Pin-out and mounting may differ</td>
+  </tr>
+  <tr>
+    <td>Fuel nozzles</td>
+    <td>Variant-family within build standard</td>
+    <td>Pre-TI vs post-TI -7B nozzles differ; -5B and -7B differ</td>
+  </tr>
+  <tr>
+    <td>HPT blades</td>
+    <td>Within sub-variant build standard</td>
+    <td>HPT blades for -7B26 are NOT for -7B27; pre-TI vs post-TI different</td>
+  </tr>
+  <tr>
+    <td>HPT NGVs</td>
+    <td>Within sub-variant build standard</td>
+    <td>Same precision required</td>
+  </tr>
+  <tr>
+    <td>Bleed valves</td>
+    <td>Some common across -5B and -7B</td>
+    <td>Earlier variants different</td>
+  </tr>
+  <tr>
+    <td>Fan blades</td>
+    <td>NEVER cross-variant</td>
+    <td>Each variant has its own fan disk + blade set</td>
+  </tr>
+</table>
+
+<p><strong>The rule:</strong> structural and gas-path components are variant-and-sub-variant-specific. Accessory-section components have some commonality but must be verified per IPC. Software-defined components (FADEC) are sub-variant-specific even when hardware is common.</p>
+
+<h4>Engine teardown: what an engine yields</h4>
+
+<p>When TurbineWorks (or a USM broker) purchases a retired CFM56 engine for parts harvest, the teardown yields a specific distribution of value:</p>
+
+<p><strong>Approximate value distribution from a CFM56-7B teardown:</strong></p>
+<ul>
+  <li><strong>LLPs (disks, shafts):</strong> 40–55% of total parts value (depends on cycles remaining)</li>
+  <li><strong>HPT module rotables (blades, NGVs, shrouds):</strong> 10–15%</li>
+  <li><strong>HPC rotables (blades, vanes):</strong> 5–10%</li>
+  <li><strong>Combustor module parts (liners, nozzles, exciter):</strong> 5–8%</li>
+  <li><strong>LPT rotables (blades):</strong> 3–6%</li>
+  <li><strong>Fan blades:</strong> 3–8% (subject to AD inspection status)</li>
+  <li><strong>AGB-mounted LRUs (HMU, pumps, FADEC, igniter exciter):</strong> 5–10%</li>
+  <li><strong>Bearings:</strong> 2–4%</li>
+  <li><strong>Externals (harnesses, sensors, valves, brackets):</strong> 3–5%</li>
+  <li><strong>Consumables (seals, gaskets, fittings):</strong> 2–4%</li>
+</ul>
+
+<p>The percentages add to approximately 100%. The actual split for any specific engine depends on cycles remaining on LLPs (the biggest variable), build standard, and condition findings.</p>
+
+<p><strong>Teardown workflow at TurbineWorks scale:</strong></p>
+<ol>
+  <li>Acquire engine. Receive engine and complete records package.</li>
+  <li>Initial inspection. Visual condition, ESM compliance, documentation completeness, LLP cycle status, AD compliance status.</li>
+  <li>Module-level decision. Sell intact modules where market value exceeds breakdown value; break down modules where component value exceeds intact value.</li>
+  <li>Component-level breakdown. By authorized organization (or by TurbineWorks if accredited and capable). Each component receives an 8130-3 release.</li>
+  <li>Inventory. Each component enters TurbineWorks inventory with its full traceability and AD/SB status.</li>
+  <li>Disposition. Components offered for sale; non-saleable items either to scrap (with mutilation per AC 21-38) or to lower-value secondary uses.</li>
+</ol>
+
+<p>The teardown decision is essentially: "Is this engine worth more whole, as modules, or as components?" The answer changes by variant, by cycles remaining, by current market demand, and by the records quality.</p>
+
+<h4>Sub-variant differences that matter operationally</h4>
+
+<p><strong>CFM56-7B26 vs CFM56-7B27.</strong> The two most-common -7B sub-variants. Differences:</p>
+<ul>
+  <li><strong>Thrust rating.</strong> -7B26 is 26,300 lbf; -7B27 is 27,300 lbf. Same airframe family (-800/-900) but different installations.</li>
+  <li><strong>HPT blade design.</strong> Optimized for the specific thrust. Not interchangeable.</li>
+  <li><strong>HPT NGV cooling.</strong> Different cooling configuration for the higher-thrust -7B27.</li>
+  <li><strong>FADEC software.</strong> Each sub-variant has certified software. Cannot run -7B27 software on a -7B26 (and vice versa).</li>
+  <li><strong>Fuel control.</strong> Same FMU hardware in many cases but software calibration differs.</li>
+  <li><strong>Module compatibility.</strong> HPT modules in particular are NOT cross-interchangeable. Fan modules are also variant-specific. Some other modules can be cross-applied with appropriate documentation but always verify per IPC.</li>
+</ul>
+
+<p><strong>Pre-Tech Insertion (pre-TI) vs Tech Insertion (TI) CFM56-7B.</strong> The 2007 TI rollout introduced new combustor, new HPT cooling, new HPC stages. Effects:</p>
+<ul>
+  <li>Combustor liner P/N changed (longer-life)</li>
+  <li>HPT blade P/N changed</li>
+  <li>Some HPC blade/vane P/Ns changed</li>
+  <li>Engine ESN (engine serial number) ranges identify pre-TI vs TI engines</li>
+  <li>Mixing pre-TI and TI parts within one engine generally not approved; build standard must be consistent</li>
+</ul>
+
+<p><strong>CFM56-5B/P vs CFM56-5B/2P vs CFM56-5B/3 (etc.).</strong> The /P suffix indicates "Performance" variant — different turbine cooling, fuel scheduling, etc. The number after the / indicates thrust rating within the family. Not interchangeable across these suffixes.</p>
+
+<h4>Common shop visit consumables checklist</h4>
+
+<p>What an MRO consumes during a typical CFM56-7B shop visit (heavy shop visit / performance restoration):</p>
+
+<ul>
+  <li><strong>Fuel nozzles</strong> — typically replace all 20</li>
+  <li><strong>Igniter plugs</strong> — replace both</li>
+  <li><strong>Combustor liner</strong> — repair or replace inner and outer</li>
+  <li><strong>HPT blades</strong> — typically replace set (depends on condition)</li>
+  <li><strong>HPT NGVs</strong> — typically replace</li>
+  <li><strong>HPT shroud segments</strong> — replace at heavy visit</li>
+  <li><strong>Various seals</strong> — all bearing compartment seals replaced</li>
+  <li><strong>Various gaskets</strong> — engine-flange gaskets replaced</li>
+  <li><strong>Bearings</strong> — replaced or upgraded per shop findings</li>
+  <li><strong>HPC blade/vane repair or replacement</strong> — per stage condition</li>
+  <li><strong>LPT blade refurbishment</strong></li>
+  <li><strong>O-rings throughout</strong> — wholesale replacement</li>
+</ul>
+
+<p>An MRO shop visit kit (the consumable parts kit) for a CFM56-7B heavy shop visit runs $300,000–$1,000,000+ depending on scope. This is a major part of the shop visit cost and where parts distributors play.</p>
+
+<h4>Engine acquisition checklist</h4>
+
+<p>Before TurbineWorks acquires a CFM56 engine for teardown or resale, key items to verify:</p>
+
+<ol>
+  <li><strong>Engine model and ESN (engine serial number).</strong> Match to records.</li>
+  <li><strong>Build standard.</strong> What configuration is the engine in? Pre-TI, TI, current PIP? SB compliance list.</li>
+  <li><strong>LLP cycle status.</strong> Cycles remaining on each LLP. Records complete? Back-to-birth supportable?</li>
+  <li><strong>AD compliance.</strong> All applicable ADs complied with? Any open ADs?</li>
+  <li><strong>Last shop visit date and scope.</strong> When was the last heavy shop visit, where, and what scope?</li>
+  <li><strong>Operator history.</strong> Who operated this engine? Reputation of the operator's maintenance program?</li>
+  <li><strong>Removal cause.</strong> Why was this engine taken out of service? Scheduled overhaul, AD compliance, opportunistic, or response to fault?</li>
+  <li><strong>Records package.</strong> Engine logs, LLP records, shop visit records, last BSI report (if available).</li>
+  <li><strong>Physical condition.</strong> External visual inspection, packaging, no obvious damage. Borescope inspection if possible.</li>
+  <li><strong>Customs and import documentation.</strong> If imported.</li>
+</ol>
+
+<p>An engine that fails any of these checks may still be acquired but at discount. An engine with multiple failures or fundamental documentation gaps is high-risk inventory.</p>
+
+<h4>Differences between operators (customer profiles)</h4>
+
+<p>Different customer profiles have different requirements:</p>
+
+<table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse;">
+  <tr style="background:#0d2240; color:#fff;">
+    <th>Customer Type</th><th>Quality Bar</th><th>PMA Acceptance</th><th>Typical Priority</th>
+  </tr>
+  <tr><td>Major U.S. airline (Southwest, Delta, etc.)</td><td>High — quality-driven</td><td>Selective by category</td><td>Reliability, supplier reputation</td></tr>
+  <tr><td>Major international airline (Lufthansa, Emirates)</td><td>High</td><td>Selective</td><td>OEM where critical, PMA where acceptable</td></tr>
+  <tr><td>Cargo operator</td><td>Practical</td><td>Often more accepting</td><td>Cost, availability</td></tr>
+  <tr><td>Low-cost carrier (Ryanair)</td><td>Practical</td><td>Often accepting</td><td>Cost, availability</td></tr>
+  <tr><td>Leasing company (AerCap, etc.)</td><td>Very high — protecting asset value</td><td>Restrictive — often OEM only on key rotables</td><td>Documentation completeness</td></tr>
+  <tr><td>MRO (StandardAero, MTU, etc.)</td><td>High — own quality systems</td><td>Per customer specification</td><td>Availability and certification</td></tr>
+  <tr><td>Military (USAF, USN)</td><td>Specific — DLA and DCAA requirements</td><td>Limited; military source-controlled</td><td>Specification compliance</td></tr>
+  <tr><td>Regional / developing-market airlines</td><td>Variable</td><td>Variable; sometimes accepting</td><td>Cost</td></tr>
+</table>
+
+<h4>The "what's it worth" mental model</h4>
+
+<p>When evaluating a CFM56 part offered for sale or as inventory:</p>
+
+<ol>
+  <li><strong>What is the part?</strong> Specific P/N, sub-variant applicability.</li>
+  <li><strong>What is the cycles status?</strong> CSN for LLPs; condition status for non-LLP rotables.</li>
+  <li><strong>What is the build standard?</strong> Pre-TI, TI, current.</li>
+  <li><strong>What is the AD compliance status?</strong> Up to date or open?</li>
+  <li><strong>What is the documentation quality?</strong> Complete back-to-birth or gaps?</li>
+  <li><strong>What is the demand cycle?</strong> Surging shop visits, stable, declining?</li>
+  <li><strong>Who is the customer?</strong> What customer profile is this targeted for?</li>
+  <li><strong>What is the competitive pricing?</strong> What else is on the market for similar specification?</li>
+</ol>
+
+<p>Each factor multiplies into the value. A complete answer to all eight factors lets the QA Manager and the commercial team set price (for sale) or budget (for purchase).</p>
+
+<h4>Quick reference: the CFM56 vocabulary distributor employees should know</h4>
+
+<table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse;">
+  <tr style="background:#0d2240; color:#fff;">
+    <th>Term</th><th>Definition</th>
+  </tr>
+  <tr><td>ESN</td><td>Engine Serial Number — unique per engine</td></tr>
+  <tr><td>ESM</td><td>Engine Shop Manual — controlled OEM publication</td></tr>
+  <tr><td>IPC</td><td>Illustrated Parts Catalog — parts identification reference</td></tr>
+  <tr><td>EM</td><td>Engine Manual — operational reference</td></tr>
+  <tr><td>CMM</td><td>Component Maintenance Manual — for individual LRUs</td></tr>
+  <tr><td>TI</td><td>Tech Insertion — 2007 CFM build standard upgrade</td></tr>
+  <tr><td>PIP</td><td>Performance Improvement Package — subsequent build upgrades</td></tr>
+  <tr><td>LLP</td><td>Life Limited Part — life-tracked rotating component</td></tr>
+  <tr><td>LRU</td><td>Line Replaceable Unit — accessory replaceable in service</td></tr>
+  <tr><td>HMU</td><td>Hydromechanical Unit — fuel control (pre-FADEC variants)</td></tr>
+  <tr><td>FMU</td><td>Fuel Metering Unit — fuel control (FADEC variants)</td></tr>
+  <tr><td>FADEC</td><td>Full Authority Digital Engine Control</td></tr>
+  <tr><td>EEC</td><td>Electronic Engine Control — synonym for FADEC</td></tr>
+  <tr><td>AGB</td><td>Accessory Gearbox</td></tr>
+  <tr><td>TGB</td><td>Transfer Gearbox</td></tr>
+  <tr><td>HPC</td><td>High-Pressure Compressor</td></tr>
+  <tr><td>HPT</td><td>High-Pressure Turbine</td></tr>
+  <tr><td>LPT</td><td>Low-Pressure Turbine</td></tr>
+  <tr><td>NGV</td><td>Nozzle Guide Vane (HPT first-stage stator)</td></tr>
+  <tr><td>VSV</td><td>Variable Stator Vane (HPC variable vanes)</td></tr>
+  <tr><td>EGT</td><td>Exhaust Gas Temperature</td></tr>
+  <tr><td>N1</td><td>Low-pressure spool speed (% of redline)</td></tr>
+  <tr><td>N2</td><td>High-pressure spool speed</td></tr>
+  <tr><td>TSN / CSN</td><td>Time / Cycles Since New</td></tr>
+  <tr><td>TSO / CSO</td><td>Time / Cycles Since Overhaul</td></tr>
+  <tr><td>OH</td><td>Overhaul</td></tr>
+  <tr><td>QEC</td><td>Quick Engine Change kit — installation hardware between engine and aircraft</td></tr>
+  <tr><td>BSI</td><td>Borescope Inspection</td></tr>
+  <tr><td>USM</td><td>Used Serviceable Material</td></tr>
+  <tr><td>PMA</td><td>Parts Manufacturer Approval — FAA-certified non-OEM parts</td></tr>
+  <tr><td>SB</td><td>Service Bulletin</td></tr>
+  <tr><td>AD</td><td>Airworthiness Directive (mandatory)</td></tr>
+  <tr><td>EAD</td><td>Emergency Airworthiness Directive</td></tr>
+  <tr><td>SL</td><td>Service Letter</td></tr>
+</table>
+
+<h4>Self-check questions</h4>
+<ol>
+  <li>What engine variant is on a 737-800? On a 737 MAX? Why is the distinction important?</li>
+  <li>Why do MRO shop visits typically replace all 20 fuel nozzles even when some look serviceable?</li>
+  <li>List the typical value distribution from a CFM56-7B engine teardown. Which categories are highest value?</li>
+  <li>What are the key operational differences between CFM56-7B26 and CFM56-7B27?</li>
+  <li>Why are fan blades NEVER cross-variant interchangeable?</li>
+  <li>How does pre-Tech-Insertion vs Tech-Insertion configuration affect parts compatibility?</li>
+  <li>What documentation must accompany a complete CFM56 engine being acquired for teardown?</li>
+  <li>How do different customer profiles (major airline vs leasing company vs cargo operator) drive different parts requirements?</li>
+  <li>List 10 acronyms a CFM56 parts distributor employee should know.</li>
+</ol>
+HTML
+        ],
+        [
+            'name'  => 'Lesson 7 — CFM56 Module Summary',
             'intro' => '<p>CFM56 deep-dive recap.</p>',
             'content' => '<h3>CFM56 Course Summary</h3>
 
