@@ -7074,238 +7074,995 @@ function local_twu_module_6_lessons(): array {
     return [
         [
             'name'  => 'Lesson 6.1 — The Origin of AC 00-56',
-            'intro' => '<p>How FAA arrived at industry-managed accreditation as the model for distributor oversight.</p>',
+            'intro' => '<p>How the FAA arrived at industry-managed accreditation as the model for distributor oversight. Historical context, the safety incidents that drove the decision, the policy alternatives the FAA evaluated, and the implications of choosing voluntary industry accreditation.</p>',
             'content' => <<<'HTML'
 <h3>The Origin of FAA AC 00-56</h3>
-<p>Module 3 introduced AC 00-56 as the framework that ASA-100 implements. Module 6 is the deep dive on the AC itself, why it exists, and what it actually requires.</p>
 
-<h4>The problem in the 1980s-1990s</h4>
-<p>The U.S. civil aviation parts supply chain was largely unregulated. Anyone could open as a parts broker. Documentation was paper-based and easily falsified. The FAA's own resources could not realistically inspect every broker, every distributor, every after-market reseller.</p>
-<p>Counterfeit and unapproved parts entered the supply chain through brokers who either did not inspect documentation rigorously or actively participated in fraud. Several high-profile incidents (NTSB-investigated accidents traced to counterfeit or improperly-sourced parts) made it clear the supply chain needed structured oversight.</p>
+<p>Module 3 introduced AC 00-56 as the framework that ASA-100 implements. Module 6 is the deep dive — the historical and policy context, the section-by-section content of the AC itself, how requirements cascade through the document hierarchy down to TurbineWorks daily work, and what happens when accreditation is at risk.</p>
 
-<h4>The FAA's solution: industry accreditation</h4>
-<p>Rather than create a new FAA enforcement bureaucracy to inspect every distributor (politically and budgetarily impractical), the FAA recognized that industry associations had the resources and expertise to do this work. The FAA's role would be to:</p>
+<p>This module is the longest in the Initial Training program per TWF-4 (2 hours of training time). The length reflects the foundational nature of the material: every other ASA-100 procedure traces back to a specific requirement in AC 00-56. Employees who understand the framework can adapt to changes, articulate the basis for procedures to auditors, and recognize when something is out of alignment with the regulatory structure.</p>
+
+<h4>The aviation supply-chain problem in the 1980s-1990s</h4>
+
+<p>The U.S. civil aviation parts supply chain in the 1980s was largely unregulated at the distribution level. Manufacturers were FAA-certified (under 14 CFR Part 21). Repair stations were FAA-certified (under Part 145). Aircraft operators were certified (under Parts 121, 135, 91 as applicable). But the parts brokers, distributors, and surplus dealers who connected manufacturers to operators were essentially unregulated. Anyone could open a parts brokerage. There were no minimum quality requirements. There were no audit programs. There was no industry-wide standard for documentation.</p>
+
+<p>The consequences emerged through specific incidents that drew NTSB and FAA attention:</p>
+
+<h5>The Partnair Convair 580 crash (1989)</h5>
+
+<p>A Norwegian-operated Convair 580 broke up in flight over the North Sea, killing all 55 on board. Investigation determined that bolts holding the vertical stabilizer to the fuselage had failed. The bolts were traced to a U.S. parts broker. The broker had supplied bolts that were marked with aerospace specifications but had been produced by an unauthorized manufacturer — counterfeit parts, in modern terminology, but the regulatory category did not yet formally exist.</p>
+
+<p>The investigation drew international attention to U.S. parts distribution practices. How had counterfeit bolts entered the supply chain? Why had no party in the distribution chain detected them? What FAA mechanisms could have prevented this?</p>
+
+<h5>Repeated NTSB findings through the 1990s</h5>
+
+<p>Multiple subsequent NTSB investigations into U.S. accidents and incidents identified parts-source problems as contributing factors. Patterns emerged:</p>
+
 <ul>
-  <li>Recognize accreditation organizations that meet defined criteria</li>
-  <li>Monitor those organizations' performance</li>
-  <li>Maintain the public list of recognized organizations so customers know which accreditations to trust</li>
+  <li>Parts traced to brokers who had no quality system documentation</li>
+  <li>Documentation that had been falsified, photocopied, or fabricated</li>
+  <li>Scrapped parts that had been diverted from operator scrap piles and re-sold</li>
+  <li>Unauthorized manufacturers producing parts and selling them with fabricated paperwork</li>
 </ul>
-<p>This is the model that became <strong>FAA Advisory Circular 00-56</strong>, first issued in 1996 and revised several times since. The current revision is 00-56B.</p>
+
+<p>The pattern wasn\'t isolated — it was systemic. The supply chain had structural integrity gaps that produced recurring failures.</p>
+
+<h5>FAA SUP Program Office findings</h5>
+
+<p>The FAA established a Suspected Unapproved Parts program in the early 1990s, in part to catalog and respond to the emerging pattern. Within a few years, the SUP Program was receiving hundreds of reports per year. Even allowing for false alarms and reporting bias, the volume indicated a real problem.</p>
+
+<p>The SUP reports clustered around specific distributors and specific part types. The data suggested that some operators in the distribution chain were systematic sources of fraudulent parts, while others were victims who passed parts through without detecting the fraud upstream.</p>
+
+<h5>Congressional attention</h5>
+
+<p>Aviation safety hearings in the early 1990s raised the unapproved parts issue. Congressional concern translated into pressure on the FAA to take action. The FAA was given the policy mandate to address the distribution-side gap — but with limited budget and political constraints on creating new regulatory bureaucracy.</p>
+
+<h4>The policy alternatives the FAA evaluated</h4>
+
+<p>The FAA had several theoretical approaches to closing the distribution-side gap. Each had advantages and disadvantages:</p>
+
+<h5>Option 1 — Direct FAA regulation of distributors</h5>
+
+<p>Create a new FAR (analogous to Part 145 for repair stations) requiring all distributors to be FAA-certified. Establish FAA inspectors to audit distributors. Build the enforcement infrastructure.</p>
+
+<p>Advantages: clear FAA authority, uniform standards, direct enforcement.</p>
+
+<p>Disadvantages:</p>
+<ul>
+  <li>Requires Administrative Procedure Act rulemaking (notice and comment, multi-year process)</li>
+  <li>Requires Congressional appropriation for FAA inspectors (FAA budget was constrained)</li>
+  <li>Politically difficult — significant industry opposition to new regulatory burden</li>
+  <li>Operationally impractical at scale — hundreds of distributors nationwide, FAA inspector resources couldn\'t cover them all on a meaningful cadence</li>
+</ul>
+
+<h5>Option 2 — Industry self-regulation without FAA involvement</h5>
+
+<p>Let industry associations create voluntary quality standards. Operators and MROs decide which standards to trust. FAA stays out of the distribution-side oversight entirely.</p>
+
+<p>Advantages: minimal FAA resource commitment, industry-led.</p>
+
+<p>Disadvantages:</p>
+<ul>
+  <li>No FAA imprimatur — operators have no authoritative reference for which industry standards are credible</li>
+  <li>Risk of weak standards — industry might tolerate lax accreditation to avoid burdening members</li>
+  <li>Difficult to enforce — without FAA recognition, what authority does an accreditation organization have?</li>
+</ul>
+
+<h5>Option 3 — Recognized industry accreditation under FAA framework</h5>
+
+<p>Industry associations create accreditation programs. The FAA reviews each program against published criteria and recognizes those that meet the criteria. The FAA monitors the accreditation organizations. The framework is voluntary at the distributor level but tied to FAA recognition at the AO level.</p>
+
+<p>Advantages:</p>
+<ul>
+  <li>Industry handles the audit work at industry expense</li>
+  <li>FAA validates the AOs but doesn\'t need to inspect every distributor</li>
+  <li>Recognized accreditation carries FAA authority, supporting market-based enforcement</li>
+  <li>Standards can evolve with industry knowledge, faster than FAR rulemaking</li>
+  <li>Multiple AOs can coexist, allowing competition and specialization</li>
+</ul>
+
+<p>Disadvantages:</p>
+<ul>
+  <li>Voluntary at distributor level — relies on market pressure for adoption</li>
+  <li>FAA must monitor AOs themselves, adding a layer of oversight</li>
+  <li>Risk of "lowest common denominator" if recognized AOs compete on leniency</li>
+</ul>
+
+<h5>The choice</h5>
+
+<p>The FAA chose Option 3. AC 00-56 was published in 1996 as the framework for recognized industry accreditation. The choice reflected practical constraints (budget, political feasibility, time-to-implementation) combined with the recognition that industry had the expertise and could move faster than regulatory rulemaking.</p>
+
+<p>The framework has worked. Major airlines and MROs require accreditation. Insurance carriers price accreditation into liability coverage. The market has done the enforcement work the FAA hoped it would do. Voluntary in regulation; effectively mandatory in market terms.</p>
 
 <h4>Why "Advisory" not regulatory</h4>
-<p>AC 00-56 is an Advisory Circular, not a regulation. The FAA cannot legally <em>require</em> a distributor to be accredited — there is no FAR mandating it. But the FAA can <em>recognize</em> accreditation as evidence of supply-chain integrity, and customers (airlines, MROs, government) can require accreditation as a contractual condition.</p>
-<p>In practice, this voluntary structure has worked because the market enforces it. Major airlines will not buy from unaccredited distributors. The Department of Defense requires accreditation under DFARS clauses. The FAA's "recommendation" effectively functions as a market requirement.</p>
+
+<p>An Advisory Circular is FAA guidance, not law. Specifically:</p>
+
+<ul>
+  <li>ACs are not codified in 14 CFR — they\'re separate FAA documents</li>
+  <li>ACs do not carry penalties for non-compliance — the FAA cannot fine a distributor for not being accredited</li>
+  <li>ACs represent FAA-accepted means of compliance — they explain how to satisfy regulatory expectations but don\'t themselves create new requirements</li>
+  <li>ACs can be revised faster than regulations — no rulemaking process required</li>
+</ul>
+
+<p>The "Advisory" designation matters because it preserves the voluntary nature of the framework. The FAA cannot legally require a distributor to be accredited. But the FAA can recognize accreditation, and customers can require it.</p>
 
 <h4>What AC 00-56 does NOT do</h4>
+
 <ul>
-  <li>Does not define a quality standard itself (that is the accreditation organization's job — ASA wrote ASA-100)</li>
-  <li>Does not perform audits (the accreditation organization audits its members)</li>
-  <li>Does not have enforcement authority over distributors (that comes through the accreditation contract)</li>
-  <li>Does not certify individual employees or parts</li>
+  <li><strong>Does not define a quality standard itself.</strong> That is the accreditation organization\'s job. ASA wrote ASA-100; SAE/IAQG wrote AS9120. AC 00-56 sets the framework for what those standards must address.</li>
+  <li><strong>Does not perform audits.</strong> The accreditation organization audits its members. The FAA audits the AO, not the distributors directly.</li>
+  <li><strong>Does not have direct enforcement authority over distributors.</strong> If a distributor violates ASA-100, ASA takes action (warning, conditional accreditation, suspension, withdrawal). The FAA doesn\'t fine the distributor.</li>
+  <li><strong>Does not certify individual employees or parts.</strong> Receiving inspectors are designated by their employer per the QAM, not certified by the FAA. Parts conformance is the manufacturer\'s 8130-3, not an FAA per-part certification.</li>
 </ul>
 
 <h4>What AC 00-56 DOES do</h4>
+
 <ul>
-  <li>Defines what an accreditation organization must require of its members (the floor — ASA-100 exceeds this in many areas)</li>
-  <li>Defines what audit procedures the accreditation organization must use</li>
-  <li>Defines how the FAA monitors and re-evaluates accreditation organizations</li>
-  <li>Maintains the public list of FAA-recognized accreditation organizations</li>
+  <li><strong>Defines what an accreditation organization must require of its members.</strong> This is the floor — ASA-100 exceeds this floor in most areas.</li>
+  <li><strong>Defines what audit procedures the AO must use.</strong> Minimum audit cadence, audit content, auditor qualifications.</li>
+  <li><strong>Defines how the FAA monitors and re-evaluates AOs.</strong> Periodic FAA review of each recognized AO, with potential withdrawal of recognition.</li>
+  <li><strong>Maintains the public list of FAA-recognized AOs.</strong> Appendix 1 of the AC is the authoritative list.</li>
+  <li><strong>Establishes the recognition process</strong> for new AOs seeking FAA recognition.</li>
 </ul>
 
-<h4>Why every TurbineWorks employee needs to know this</h4>
-<p>Auditors ask "what regulation requires this procedure?" The honest answer for ASA-100 procedures is: no FAR directly requires it. ASA-100 requires it because TurbineWorks chose to be accredited to ASA-100. ASA-100 was written to meet AC 00-56 because ASA chose to be FAA-recognized.</p>
-<p>The chain of authority is: <em>customer requirement → ASA-100 accreditation → ASA-100 standard → AC 00-56 framework</em>. Knowing this chain lets employees explain to an auditor (or to themselves) why the procedures matter.</p>
+<h4>Why every TurbineWorks employee needs to understand this</h4>
+
+<p>Auditors ask "what regulation requires this procedure?" The honest answer for ASA-100 procedures is: <em>no FAR directly requires it</em>. ASA-100 requires it because TurbineWorks chose to be accredited to ASA-100. ASA-100 was written to meet AC 00-56 because ASA chose to be FAA-recognized.</p>
+
+<p>The chain of authority is:</p>
+
+<ol>
+  <li>Customer requirement (airline, MRO, OEM, government) requires accredited supplier</li>
+  <li>TurbineWorks pursues ASA-100 accreditation to meet customer requirements</li>
+  <li>ASA-100 standard defines specific procedures</li>
+  <li>ASA-100 was written to meet AC 00-56 framework requirements</li>
+  <li>AC 00-56 was published by the FAA in response to documented supply-chain integrity problems</li>
+  <li>The problems trace to historical incidents (Partnair Convair 580 and others) that drove regulatory attention</li>
+</ol>
+
+<p>An employee who understands this chain can answer auditor questions confidently. An employee who doesn\'t understand it can only say "because someone told me to" — which auditors recognize as evidence the quality culture hasn\'t taken root.</p>
+
+<h4>Key takeaways</h4>
+
+<ul>
+  <li>AC 00-56 was created in response to documented supply-chain integrity failures in the 1980s and 1990s</li>
+  <li>The FAA chose industry-led accreditation over direct regulation for budgetary, political, and practical reasons</li>
+  <li>The voluntary framework works because market mechanisms (customer requirements, insurance, contract terms) effectively make accreditation mandatory</li>
+  <li>The chain of authority runs: incidents → FAA framework → AO standards → distributor procedures → daily work</li>
+  <li>Understanding this chain is foundational to the rest of Module 6 and to credible audit responses</li>
+</ul>
+
+<h4>References</h4>
+
+<ul>
+  <li><strong>FAA AC 00-56B</strong> — current revision; full text on faa.gov</li>
+  <li><strong>NTSB investigation reports</strong> from the 1989-1995 period documenting parts-source incidents</li>
+  <li><strong>FAA SUP Program</strong> — historical reports and annual statistics</li>
+</ul>
+
+<h4>Self-check</h4>
+
+<ol>
+  <li>What was the Partnair Convair 580 incident and why does it matter to AC 00-56\'s origin?</li>
+  <li>What three options did the FAA evaluate for closing the distribution-side regulatory gap?</li>
+  <li>Why did the FAA choose recognized industry accreditation over direct regulation?</li>
+  <li>What is the difference between an Advisory Circular and a Federal Aviation Regulation in terms of legal force?</li>
+  <li>What does AC 00-56 do, and what does it NOT do?</li>
+  <li>How does the "voluntary" framework function as effectively mandatory through market mechanisms?</li>
+  <li>What is the 6-level chain of authority from incidents through to daily work?</li>
+  <li>Why is understanding this chain foundational to credible audit responses?</li>
+</ol>
 HTML
         ],
         [
             'name'  => 'Lesson 6.2 — Section-by-Section Walkthrough of AC 00-56B',
-            'intro' => '<p>What each major section of the AC actually says.</p>',
+            'intro' => '<p>What each major section of the AC actually says, in detail. The contents of AC 00-56B walked through systematically so personnel can understand specific requirements when they come up in audits or in operational decisions.</p>',
             'content' => <<<'HTML'
 <h3>AC 00-56B Section-by-Section</h3>
-<p>This lesson walks through the major sections of AC 00-56B. Read the full AC at the link in the Reference Library — this lesson highlights what's most important.</p>
 
-<h4>Section 1: Purpose</h4>
-<p>Establishes the AC as guidance for industry accreditation of aircraft parts distributors. States the AC is voluntary but FAA-recognized.</p>
+<p>Lesson 6.1 covered the why and how of AC 00-56. This lesson covers the what — the actual content of the AC, section by section. The substance of AC 00-56 is more detailed than Module 3 indicated. Understanding the structure lets you find specific requirements when needed and lets you understand auditor questions in context.</p>
 
-<h4>Section 2: Background</h4>
-<p>The history that motivated the AC — concerns about unapproved parts entering the supply chain through inadequately-controlled distributors.</p>
+<p>Read the full AC at <a href="https://www.faa.gov/regulations_policies/advisory_circulars/" target="_blank" rel="noopener">faa.gov</a> for the authoritative current text. This lesson highlights what\'s most operationally relevant.</p>
 
-<h4>Section 3: Definitions</h4>
-<p>Key terms: Accreditation Organization (AO), accredited distributor, eligible part, quality system. The definitions establish what the AC's terms of art mean.</p>
+<h4>Section 1 — Purpose</h4>
 
-<h4>Section 4: Accreditation Organization Requirements</h4>
-<p>The substantive heart of the AC. To be FAA-recognized, an accreditation organization (like ASA) must:</p>
+<p>Establishes the AC as guidance for industry accreditation of aircraft parts distributors. States that the program is voluntary and that the FAA recognizes accreditation organizations meeting the AC\'s criteria.</p>
+
+<p>The Purpose section establishes the scope: the AC applies to distributors of aircraft parts intended for use on type-certificated aircraft. It does NOT apply to:</p>
 <ul>
-  <li>Publish a written quality standard (ASA-100)</li>
-  <li>Have qualified auditors with documented competency</li>
-  <li>Have an audit program covering all relevant aspects of distributor operations</li>
-  <li>Have a corrective-action follow-up process</li>
-  <li>Maintain accreditation records</li>
-  <li>Have a procedure for handling complaints about accredited distributors</li>
-  <li>Have a procedure for de-accrediting distributors that fail to maintain compliance</li>
+  <li>Manufacturers (governed by 14 CFR Part 21 directly)</li>
+  <li>Repair stations (governed by Part 145)</li>
+  <li>Operators (governed by Parts 91, 121, 135)</li>
+  <li>Non-aviation parts distribution</li>
 </ul>
 
-<h4>Section 5: Distributor Quality System Elements</h4>
-<p>The AC specifies the minimum elements a distributor's quality system must address (the floor — actual standards like ASA-100 require much more):</p>
+<p>The Purpose section also disclaims what the AC does not do. The AC does not create new regulatory requirements; it provides a recognition framework for industry programs.</p>
+
+<h4>Section 2 — Background</h4>
+
+<p>The history motivating the AC. Documents the concerns about unapproved parts entering the supply chain through inadequately-controlled distributors, references the FAA SUP Program, references specific historical incidents in some revisions.</p>
+
+<p>This section is important for audit context because it establishes why the framework exists. An auditor or FAA inspector who challenges the rationale for any AC 00-56 requirement can be referred to Section 2.</p>
+
+<h4>Section 3 — Definitions</h4>
+
+<p>Key terms defined for use throughout the AC:</p>
+
 <ul>
-  <li>Receiving inspection</li>
-  <li>Documentation control</li>
-  <li>Identification and traceability</li>
-  <li>Storage and handling</li>
-  <li>Records</li>
-  <li>Personnel training</li>
-  <li>Internal audits</li>
-  <li>Corrective action</li>
-  <li>Management review</li>
+  <li><strong>Accreditation Organization (AO).</strong> An entity that has been recognized by the FAA as meeting the requirements of AC 00-56 for accrediting distributors against a published standard.</li>
+  <li><strong>Accredited distributor.</strong> A distributor that has been accredited by an FAA-recognized AO against the AO\'s published standard.</li>
+  <li><strong>Eligible part.</strong> A part that meets the requirements of 14 CFR §21.502 — appropriate type design conformance, condition for safe operation, and approved production authority.</li>
+  <li><strong>Quality system.</strong> The organizational structure, responsibilities, procedures, processes, and resources for implementing quality management.</li>
+  <li><strong>Recognition.</strong> The FAA\'s formal acknowledgment that an AO meets the requirements of AC 00-56.</li>
+  <li><strong>Withdrawal of recognition.</strong> The FAA\'s removal of recognition from an AO that fails to maintain compliance with AC 00-56.</li>
 </ul>
-<p>These map roughly to ASA-100 sections — ASA-100 §6 is receiving inspection, §7 is storage and handling, §8 is records, etc.</p>
 
-<h4>Section 6: Audit Procedures</h4>
-<p>Defines minimum audit cadence, audit content, and audit reporting. Initial accreditation requires an on-site audit. Recurring audits are at intervals not to exceed 3 years.</p>
+<p>Definitions matter at audits. An auditor using a term in a specific way is referring to the AC definition; an employee responding with a casual or alternative meaning may sound incompetent.</p>
 
-<h4>Section 7: FAA Oversight</h4>
-<p>Defines how the FAA monitors accreditation organizations themselves. The FAA reviews each AO periodically, may conduct surveillance audits at accredited distributors, and may withdraw recognition of an AO that fails to maintain its program.</p>
+<h4>Section 4 — Accreditation Organization Requirements</h4>
 
-<h4>Section 8: List of Recognized Accreditation Organizations</h4>
-<p>Maintained as Appendix 1, periodically updated. Lists every currently-recognized AO. As of recent revisions, ASA is on this list. So is the FAA-recognized program operated by IAQG (which audits AS9120).</p>
+<p>The substantive heart of the AC. To be FAA-recognized, an accreditation organization must demonstrate it meets each of the following:</p>
+
+<h5>Published quality standard</h5>
+
+<p>The AO must publish a written quality standard against which it accredits members. ASA\'s standard is ASA-100. The standard must address all elements required in Section 5 (distributor quality system elements) at a minimum, and may exceed those minimums.</p>
+
+<h5>Qualified auditors</h5>
+
+<p>The AO must have qualified auditors with documented competency standards. Auditors must be trained, must demonstrate technical knowledge of the standard and of distributor operations, and must operate independently of the distributors they audit.</p>
+
+<h5>Audit program</h5>
+
+<p>The AO must operate an audit program covering all relevant aspects of distributor operations. The program must include initial accreditation audits, recurring audits, and provisions for surveillance audits between recurring cycles.</p>
+
+<h5>Corrective-action follow-up process</h5>
+
+<p>The AO must have a documented corrective-action process. When the AO\'s auditor identifies non-conformances during an audit, the AO must verify the distributor implements corrective action and that the corrective action is effective.</p>
+
+<h5>Accreditation records</h5>
+
+<p>The AO must maintain records of all accreditation activities — audits performed, findings, corrective actions, accreditation decisions, complaints, surveillance activities. These records must be retained for defined periods.</p>
+
+<h5>Complaint handling</h5>
+
+<p>The AO must have a documented procedure for handling complaints about accredited distributors. Customers or other parties can complain to the AO; the AO must investigate and take appropriate action.</p>
+
+<h5>De-accreditation procedures</h5>
+
+<p>The AO must have documented procedures for de-accrediting distributors that fail to maintain compliance. This includes suspension procedures (typically a defined period to correct issues), withdrawal procedures (more permanent removal of accreditation), and the criteria triggering each action.</p>
+
+<h5>Financial independence</h5>
+
+<p>The AO must be financially independent of the distributors it accredits. The AO cannot be owned or controlled by accredited distributors in ways that create conflicts of interest. The AO\'s fees must be the same for similarly-situated distributors regardless of relationship.</p>
+
+<h5>Public transparency</h5>
+
+<p>The AO must operate transparently — the list of accredited distributors must be public. Customers must be able to verify a distributor\'s accreditation status without paying or registering. Suspensions and withdrawals must also be visible.</p>
+
+<h4>Section 5 — Distributor Quality System Elements</h4>
+
+<p>The AC specifies the minimum elements a distributor\'s quality system must address. These are the topics ASA-100 (and other recognized standards) must cover at a minimum. Actual standards typically exceed these minimums substantially.</p>
+
+<p>The required elements:</p>
+
+<h5>Receiving Inspection</h5>
+
+<p>The distributor must have a documented receiving inspection procedure for incoming parts. The procedure must address documentation verification, physical inspection, and disposition. Personnel performing receiving inspection must be qualified.</p>
+
+<p>This is implemented in ASA-100 §6 (Receiving Inspection). TurbineWorks satisfies this through the procedures covered in Module 2.</p>
+
+<h5>Documentation Control</h5>
+
+<p>The distributor must maintain documents (procedures, work instructions, forms) under controlled revision. Personnel must work from current revisions. Obsolete revisions must be retrieved or marked.</p>
+
+<p>This is covered in Module 5 Lesson 5.5 (Document Control).</p>
+
+<h5>Identification and Traceability</h5>
+
+<p>Parts must be identified throughout distributor custody. Traceability documentation must be maintained linking parts to their source and tracking them through to customer shipment. For life-limited parts, traceability must include cycle history.</p>
+
+<p>Module 5 Lesson 5.3 (LLP Back-to-Birth) covers this for the most demanding case.</p>
+
+<h5>Storage and Handling</h5>
+
+<p>Parts must be stored under conditions that preserve their integrity. Environmental controls (temperature, humidity, ESD, light) must be appropriate to the part type. Segregation must prevent mixing of serviceable, non-conforming, and scrap parts.</p>
+
+<p>Module 4 (entire module) covers Storage and Handling.</p>
+
+<h5>Records</h5>
+
+<p>The distributor must create and retain records of quality system activities. Retention periods must be defined. Records must be retrievable on demand for audit.</p>
+
+<p>Module 5 (entire module) covers Recordkeeping.</p>
+
+<h5>Personnel Training</h5>
+
+<p>Personnel must be trained for their roles. Training must include initial training and recurring training. Training records must be maintained per person.</p>
+
+<p>Module 3 Lesson 3.4 covers role requirements and training. This very training program (TurbineWorks University) is part of how TurbineWorks satisfies the training requirement.</p>
+
+<h5>Internal Audits</h5>
+
+<p>The distributor must conduct internal audits of its own quality system. Audit cadence must be defined (typically annually). Findings must be addressed through corrective action.</p>
+
+<h5>Corrective Action</h5>
+
+<p>The distributor must have a documented corrective-action process. Non-conformances trigger investigation, root cause analysis, corrective action implementation, and effectiveness verification.</p>
+
+<p>Referenced throughout the training program — the NCR (Non-Conformance Report) system is the implementation.</p>
+
+<h5>Management Review</h5>
+
+<p>Senior management must periodically review the quality system\'s effectiveness. The review must include performance data, audit findings, customer feedback, and resource needs.</p>
+
+<h5>Supplier Qualification</h5>
+
+<p>The distributor must qualify suppliers before accepting parts from them. Supplier performance must be monitored. The Approved-Supplier List must be maintained.</p>
+
+<p>Module 2 Lesson 2.2 covers supplier qualification at receiving; the QA Manager owns the ASL maintenance.</p>
+
+<h5>Customer Complaint Handling</h5>
+
+<p>The distributor must accept and investigate customer complaints. Complaints must enter the corrective-action system. Customers must be notified of resolution.</p>
+
+<h4>Section 6 — Audit Procedures</h4>
+
+<p>Defines minimum audit cadence, content, and reporting requirements for the AOs.</p>
+
+<h5>Initial accreditation audit</h5>
+
+<p>Required for accreditation grant. Must be on-site. Must cover all Section 5 elements. Must include personnel interviews, records review, and observation of operations.</p>
+
+<h5>Recurring audit cycle</h5>
+
+<p>Maximum interval between full audits: 3 years. AOs may choose shorter cycles. The recurring audit is functionally equivalent to the initial audit but is informed by the distributor\'s history with the AO.</p>
+
+<h5>Surveillance audits</h5>
+
+<p>AOs may conduct surveillance audits at any time during the accreditation period. Surveillance audits are typically narrower (focused on specific concerns) and may be unannounced or short-notice.</p>
+
+<h5>Audit content requirements</h5>
+
+<ul>
+  <li>Document review — the QAM and supporting procedures</li>
+  <li>Personnel interviews — at multiple levels</li>
+  <li>Records review — sample-based</li>
+  <li>Observation of actual operations — receiving inspection, storage, shipping in real time</li>
+  <li>Facility walkthrough</li>
+  <li>Sample part traceability verification — pick random parts, trace through the records chain</li>
+</ul>
+
+<h5>Audit reporting</h5>
+
+<p>The AO must provide written audit reports to the distributor. The reports document findings, observations, and required corrective actions. Findings must be categorized (Major / Minor / Observation, as covered in Module 3 Lesson 3.3).</p>
+
+<h4>Section 7 — FAA Oversight</h4>
+
+<p>How the FAA monitors the AOs themselves. The framework is layered:</p>
+
+<ul>
+  <li>The AO audits the distributors</li>
+  <li>The FAA audits the AO</li>
+</ul>
+
+<p>Specific FAA oversight activities:</p>
+
+<h5>Periodic FAA review of each AO</h5>
+
+<p>Typically every 2-3 years. The FAA reviews the AO\'s program structure, audit practices, decision-making, and records. The review confirms the AO continues to meet AC 00-56 requirements.</p>
+
+<h5>FAA surveillance audits</h5>
+
+<p>The FAA may directly conduct surveillance audits at accredited distributors. This is rare but real. When it happens, the FAA inspector follows the same audit principles as the AO but reports back to FAA leadership, not to the AO.</p>
+
+<h5>FAA review of accreditation withdrawals</h5>
+
+<p>When an AO suspends or withdraws a distributor\'s accreditation, the FAA may review the decision to ensure the AO is applying its standards consistently.</p>
+
+<h5>Withdrawal of FAA recognition</h5>
+
+<p>The FAA can withdraw recognition of an AO that fails to maintain its program. Withdrawal would have substantial consequences — the AO\'s accreditations would no longer carry FAA standing, and accredited distributors would need to migrate to other recognized AOs.</p>
+
+<p>This authority keeps the AOs honest. An AO with lax audit practices risks FAA scrutiny that could end its recognition.</p>
+
+<h4>Section 8 — List of Recognized Accreditation Organizations</h4>
+
+<p>Maintained as Appendix 1, periodically updated. The current list (always verify against the FAA-published current version) includes:</p>
+
+<ul>
+  <li>Aviation Suppliers Association (ASA) — operating ASA-100</li>
+  <li>Various AS9100/AS9120 registrars recognized under IAQG arrangements</li>
+  <li>Other industry-specific programs as the FAA has recognized them over time</li>
+</ul>
+
+<p>The list is the authoritative source for which accreditations carry FAA recognition. Customers verifying a distributor\'s accreditation should reference both the distributor\'s certificate AND the AO\'s recognition status.</p>
 
 <h4>Appendices</h4>
+
 <ul>
-  <li>Appendix 1: Recognized AO list</li>
-  <li>Appendix 2: Procedure for an AO to apply for FAA recognition</li>
-  <li>Appendix 3: Definitions and references</li>
+  <li><strong>Appendix 1:</strong> Recognized AO list (the authoritative current list)</li>
+  <li><strong>Appendix 2:</strong> Procedure for an AO to apply for FAA recognition (covers what an industry organization needs to submit and demonstrate to obtain recognition)</li>
+  <li><strong>Appendix 3:</strong> Additional definitions and cross-references</li>
 </ul>
 
-<h4>What changed in 00-56B vs. earlier revisions</h4>
-<p>00-56B (current revision) tightened audit procedures, added more explicit counterfeit-parts provisions, and updated cross-references to current FAA regulations. Check the current FAA publication for the official text.</p>
+<h4>What changed in revision B vs prior revisions</h4>
+
+<p>AC 00-56 has been revised several times. Key changes in revision B versus the original 1996 publication and revision A:</p>
+
+<ul>
+  <li>Tightened audit procedures with more specific minimum requirements</li>
+  <li>Added explicit counterfeit-parts provisions in response to the electronic counterfeit problem (the issue had grown since the AC\'s original publication)</li>
+  <li>Updated cross-references to current FAA regulations (the FARs evolve over time)</li>
+  <li>Clarified accreditation withdrawal and reinstatement procedures</li>
+  <li>Updated definitions to align with current industry terminology</li>
+  <li>Expanded the FAA oversight section, reflecting the FAA\'s increased focus on AO performance</li>
+</ul>
+
+<p>Each revision reflects FAA learning from the operating experience of the framework. The framework will continue to evolve.</p>
+
+<h4>Where to find the current AC</h4>
+
+<p>The current AC 00-56 is published on the FAA website at <a href="https://www.faa.gov/regulations_policies/advisory_circulars/" target="_blank" rel="noopener">faa.gov/regulations_policies/advisory_circulars</a>. Search for "00-56" to find the current revision. The PDF is publicly available and downloadable. TurbineWorks personnel responsible for QMS work should be familiar with the current revision.</p>
+
+<h4>References</h4>
+
+<ul>
+  <li><strong>FAA AC 00-56B</strong> — current revision, full text on faa.gov</li>
+  <li><strong>FAA Order 8120.16</strong> — FAA internal guidance on implementing AC 00-56 (FAA-internal but publicly available)</li>
+  <li><strong>14 CFR §21.502</strong> — referenced definition of "eligible part"</li>
+</ul>
+
+<h4>Self-check</h4>
+
+<ol>
+  <li>What does Section 1 (Purpose) establish about the scope of AC 00-56?</li>
+  <li>What 9 requirements does an Accreditation Organization need to meet under Section 4?</li>
+  <li>What 11 distributor quality-system elements must Section 5-compliant standards address?</li>
+  <li>What is the maximum interval between full audits under Section 6?</li>
+  <li>How does the FAA oversee the AOs themselves under Section 7?</li>
+  <li>What is the practical consequence of FAA withdrawing recognition of an AO?</li>
+  <li>What changed in revision B compared to earlier revisions?</li>
+  <li>Where is the current AC available for reference?</li>
+</ol>
 HTML
         ],
         [
             'name'  => 'Lesson 6.3 — Mapping AC 00-56 to ASA-100 to TurbineWorks QAM',
-            'intro' => '<p>How requirements flow down through the document hierarchy.</p>',
+            'intro' => '<p>How requirements flow down through the document hierarchy and become daily operational practice. The mapping that turns the framework into actual TurbineWorks procedures, and the discipline that maintains the connection as documents evolve.</p>',
             'content' => <<<'HTML'
 <h3>Requirements Flow-Down</h3>
-<p>Every TurbineWorks procedure traces back through ASA-100 to AC 00-56. This lesson maps the flow.</p>
+
+<p>Every TurbineWorks procedure exists for a reason. Trace any procedure back through the document hierarchy and you reach a specific AC 00-56 requirement that the procedure ultimately satisfies. This traceability is what makes the quality system coherent rather than arbitrary. It is also what an audit verifies — the auditor asks "why does this procedure exist?" and expects an answer that connects through the document chain.</p>
+
+<p>This lesson maps the flow-down systematically. The mapping is not unique to TurbineWorks; every accredited distributor has the same general flow with their own specific QAM and procedures. Understanding the mapping is foundational to credible audit responses and to recognizing when a procedural change is needed.</p>
 
 <h4>The flow-down diagram</h4>
+
+<p>The requirements cascade from the highest level (FAA) down to specific employee work:</p>
+
 <pre>
 FAA AC 00-56B
-   │
-   ├── "Distributor must perform receiving inspection"
-   │      │
-   │      ▼
-   │   ASA-100 §6 — detailed receiving inspection requirements
-   │      │
-   │      ▼
-   │   TurbineWorks QAM Receiving Inspection Procedure
-   │      │
-   │      ▼
-   │   Day-to-day inspector activity, documented on TWF-XX forms
-   │
-   ├── "Distributor must maintain records"
-   │      │
-   │      ▼
-   │   ASA-100 §8 — specific record types, retention periods
-   │      │
-   │      ▼
-   │   TurbineWorks QAM Records Retention Schedule
-   │
-   ├── "Distributor must train personnel"
-   │      │
-   │      ▼
-   │   ASA-100 (training requirements throughout)
-   │      │
-   │      ▼
-   │   TurbineWorks Training Program (TWU + TWF-4 records)
-   │
-   └── (... and so on for every requirement)
+  └─ Defines accreditation framework and minimum elements
+       │
+       ▼
+ASA (Aviation Suppliers Association)
+  └─ FAA-recognized AO under AC 00-56
+  └─ Publishes ASA-100 standard meeting AC 00-56 requirements
+  └─ Audits TurbineWorks against ASA-100
+       │
+       ▼
+ASA-100 Standard
+  └─ Specific quality system requirements for distributors
+  └─ Sections covering receiving (§6), storage (§7), records (§8), etc.
+       │
+       ▼
+TurbineWorks Quality Assurance Manual (QAM)
+  └─ Top-level company document
+  └─ Describes how TurbineWorks complies with ASA-100
+  └─ References specific TWP-XX procedures
+       │
+       ▼
+TurbineWorks Procedures (TWP-XX series)
+  └─ Process-level documents (Receiving, Storage, Shipping, etc.)
+  └─ Reference TWF-XX forms
+       │
+       ▼
+Work Instructions
+  └─ Task-level step-by-step
+       │
+       ▼
+TWF-XX Forms (records templates)
+  └─ Capture evidence of work performed
+       │
+       ▼
+Completed Records
+  └─ Filled-in forms, signatures, dates
+  └─ Audit evidence
 </pre>
 
-<h4>Why this matters in an audit</h4>
-<p>When an auditor questions a procedure, the answer always starts with the requirement and works down:</p>
-<p><em>"This procedure exists because ASA-100 §6.3 requires verification of the 8130-3 form. ASA-100 was written to satisfy AC 00-56B Section 5, which requires distributor receiving inspection. The specific steps in this procedure are in TurbineWorks QAM section X.Y."</em></p>
-<p>That answer demonstrates understanding of the regulatory chain. Compare to: <em>"We do it because the QA Manager said to."</em> The first answer passes audit scrutiny; the second invites deeper questions about whether the company actually understands its quality system.</p>
+<h4>Detailed flow-down examples</h4>
 
-<h4>Where AC 00-56 is silent</h4>
-<p>AC 00-56 sets minimums. ASA-100 typically exceeds them. For example:</p>
-<ul>
-  <li>AC 00-56 requires receiving inspection; ASA-100 specifies exactly what must be inspected</li>
-  <li>AC 00-56 requires record retention; ASA-100 specifies 7 years for most records</li>
-  <li>AC 00-56 requires training; ASA-100 requires both initial and recurring</li>
-</ul>
-<p>TurbineWorks operates to ASA-100, which means TurbineWorks exceeds AC 00-56 minimums in most areas. This is the intended design — AC 00-56 is the floor, not the ceiling.</p>
+<p>Concrete examples of how specific operational practices trace back through the hierarchy:</p>
+
+<h5>Example 1 — Verifying the 8130-3 at receiving inspection</h5>
+
+<ol>
+  <li><strong>AC 00-56 Section 5</strong> requires distributor quality systems to address receiving inspection</li>
+  <li><strong>ASA-100 §6</strong> details receiving inspection requirements including documentation verification</li>
+  <li><strong>TurbineWorks QAM Section X.Y</strong> describes the TurbineWorks receiving inspection process and references the procedure</li>
+  <li><strong>TWP-06 Receiving Inspection Procedure</strong> specifies the step-by-step receiving inspection workflow including 8130-3 verification</li>
+  <li><strong>Work instruction for 8130-3 verification</strong> details the block-by-block check including the FAA database lookup for Block 15</li>
+  <li><strong>TWF-06 Receiving Inspection Record</strong> is the form on which the inspector records that the 8130-3 was verified</li>
+  <li><strong>Completed TWF-06 records</strong> are the audit evidence that the verification occurred</li>
+</ol>
+
+<p>An auditor asking "why do you check Block 15 in the FAA database?" gets the answer: "Because TWP-06 step 5 requires it, which implements ASA-100 §6.3 documentation verification requirements, which implement AC 00-56 Section 5 receiving inspection requirements."</p>
+
+<h5>Example 2 — Retaining records for 7 years</h5>
+
+<ol>
+  <li><strong>AC 00-56 Section 5</strong> requires distributor quality systems to maintain records</li>
+  <li><strong>ASA-100 §8</strong> specifies retention requirements including the typical 7-year baseline</li>
+  <li><strong>TurbineWorks QAM Section Z</strong> references the Records Retention Schedule</li>
+  <li><strong>TurbineWorks Records Retention Schedule</strong> lists specific record categories and retention periods</li>
+  <li><strong>TWP-XX Records Management Procedure</strong> describes filing, retrieval, and disposal</li>
+  <li><strong>Records disposal log</strong> documents that records aged past retention were disposed of per schedule</li>
+</ol>
+
+<p>An auditor asking "why do you keep these records for 7 years?" gets the chain answer.</p>
+
+<h5>Example 3 — Performing periodic recurring training</h5>
+
+<ol>
+  <li><strong>AC 00-56 Section 5</strong> requires personnel training</li>
+  <li><strong>ASA-100 training requirements</strong> specify initial and recurring training</li>
+  <li><strong>TurbineWorks QAM training section</strong> establishes the training program structure</li>
+  <li><strong>TurbineWorks training procedure</strong> defines the 6-month recurring cadence</li>
+  <li><strong>TurbineWorks University Moodle deployment</strong> delivers the training content</li>
+  <li><strong>Per-employee training records</strong> (in the Moodle system, exportable to TWF-4-equivalent) document completion</li>
+</ol>
+
+<p>An auditor reviewing training records can confirm that initial training was completed, that recurring training is happening on schedule, and that the records exist to prove both.</p>
+
+<h5>Example 4 — Mutilating an unsalvageable part</h5>
+
+<ol>
+  <li><strong>AC 00-56 Section 5</strong> requires identification and traceability of parts, implying that scrapped parts must be controlled</li>
+  <li><strong>ASA-100</strong> references <strong>FAA AC 21-38</strong> for mutilation methods</li>
+  <li><strong>AC 21-38</strong> defines acceptable mutilation methods and documentation</li>
+  <li><strong>TurbineWorks QAM</strong> references the mutilation procedure</li>
+  <li><strong>TWP-XX Mutilation Procedure</strong> specifies approved methods per part category, witness requirements, documentation</li>
+  <li><strong>Mutilation record (form)</strong> captures evidence of destruction</li>
+  <li><strong>Completed mutilation records</strong> are the audit evidence</li>
+</ol>
+
+<p>This example shows that AC 00-56 sometimes references other FAA documents (like AC 21-38) for specific implementation details. The flow-down may pass through multiple levels of FAA documents before reaching ASA-100.</p>
+
+<h4>Why this mapping matters operationally</h4>
+
+<p>The mapping matters for several practical reasons:</p>
+
+<h5>Audit credibility</h5>
+
+<p>An auditor questioning a procedure gets a chain-of-authority answer. "We do this because [specific procedure] requires it, which implements [ASA-100 section], which satisfies [AC 00-56 requirement]." This response demonstrates that the organization understands its quality system. Contrast with "we do it because the QA Manager said to" — which suggests the organization mechanically follows procedures without understanding why.</p>
+
+<h5>Change management</h5>
+
+<p>When ASA-100 is revised, the flow-down maps determine which TurbineWorks documents need to be updated. The QA Manager reviews ASA-100 changes against the cross-reference matrix and identifies which procedures and forms are affected. This is much more efficient than reviewing every TurbineWorks document for impact.</p>
+
+<h5>Onboarding and training</h5>
+
+<p>New employees can understand their work in context. Rather than memorizing arbitrary procedures, they understand that their daily work satisfies specific external requirements. This understanding makes them more resilient — they can adapt to procedural changes because they understand the underlying intent.</p>
+
+<h5>Process simplification</h5>
+
+<p>Sometimes TurbineWorks procedures accumulate over time, adding steps that no longer trace to any required source. Periodic flow-down review identifies steps that don\'t map to any requirement — these are candidates for simplification.</p>
+
+<h4>Where AC 00-56 is silent and ASA-100 exceeds it</h4>
+
+<p>AC 00-56 sets minimums. ASA-100 typically exceeds those minimums substantially. Examples:</p>
+
+<table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse;">
+  <tr style="background:#0d2240; color:#fff;">
+    <th>AC 00-56 minimum</th><th>ASA-100 implementation</th>
+  </tr>
+  <tr>
+    <td>"Distributor must perform receiving inspection"</td>
+    <td>ASA-100 §6 specifies exactly what must be inspected, what documents must be verified, what disposition decisions are required</td>
+  </tr>
+  <tr>
+    <td>"Distributor must maintain records"</td>
+    <td>ASA-100 §8 specifies which record categories, with what retention periods, in what form</td>
+  </tr>
+  <tr>
+    <td>"Personnel must be trained"</td>
+    <td>ASA-100 specifies both initial training and recurring training requirements with cadence</td>
+  </tr>
+  <tr>
+    <td>"Supplier qualification required"</td>
+    <td>ASA-100 specifies qualification process elements, ongoing monitoring, removal procedures</td>
+  </tr>
+  <tr>
+    <td>"Storage must protect parts"</td>
+    <td>ASA-100 §7 specifies segregation zones, environmental controls, FOD prevention, hazmat handling</td>
+  </tr>
+</table>
+
+<p>TurbineWorks operates to ASA-100, which means TurbineWorks exceeds AC 00-56 minimums in most areas. This is the intended design — AC 00-56 is the floor, not the ceiling. ASA-100 (and other recognized standards) provide the operationally specific requirements that AC 00-56\'s general language doesn\'t.</p>
 
 <h4>When AC 00-56 changes</h4>
-<p>If the FAA revises AC 00-56, ASA reviews ASA-100 against the new revision and updates as needed. TurbineWorks then updates the QAM if ASA-100 changes affect TurbineWorks procedures. The flow-down propagates automatically — TurbineWorks does not need to monitor the FAA directly, only ASA-100 revisions.</p>
 
-<h4>What the auditor expects</h4>
-<p>An ASA auditor expects that:</p>
+<p>If the FAA revises AC 00-56, the flow-down propagates:</p>
+
+<ol>
+  <li>FAA publishes new revision of AC 00-56</li>
+  <li>ASA reviews ASA-100 against the new revision; if changes are needed, ASA revises ASA-100</li>
+  <li>ASA notifies accredited distributors of changes and provides transition timelines</li>
+  <li>TurbineWorks reviews its QAM against the new ASA-100 revision</li>
+  <li>QAM and downstream procedures are revised as needed</li>
+  <li>Training is delivered on any procedural changes</li>
+  <li>Records system continues; old records retain their validity under old procedures</li>
+</ol>
+
+<p>TurbineWorks does not need to monitor the FAA directly for AC 00-56 changes — ASA monitors and propagates. But the QA Manager does monitor ASA communications and ASA-100 revisions.</p>
+
+<h4>What the auditor expects in mapping discussions</h4>
+
+<p>ASA auditors probe the flow-down understanding at different levels:</p>
+
+<h5>At the QA Manager level</h5>
+
 <ul>
-  <li>The QA Manager can map any QAM procedure to the ASA-100 section it implements</li>
-  <li>The QA Manager can map ASA-100 sections to the AC 00-56 requirements they satisfy</li>
-  <li>Employees may not need to know the full flow-down, but should understand that "we do this because the standard requires it" — not "because someone says so"</li>
+  <li>Can map any QAM procedure to the ASA-100 section it implements</li>
+  <li>Can map ASA-100 sections to the AC 00-56 requirements they satisfy</li>
+  <li>Has a cross-reference matrix or equivalent showing the full mapping</li>
+  <li>Has reviewed ASA-100 revisions for impact and updated procedures as needed</li>
 </ul>
+
+<h5>At the supervisor / process owner level</h5>
+
+<ul>
+  <li>Can identify which ASA-100 section governs their area of responsibility</li>
+  <li>Can describe the relationship between their procedures and the QAM</li>
+  <li>Understands when a procedural change requires QAM update vs. when it\'s a work instruction-level change</li>
+</ul>
+
+<h5>At the operator / inspector level</h5>
+
+<ul>
+  <li>May not need to know the full flow-down chain</li>
+  <li>Should understand that "we do this because the standard requires it" — not "because someone says so"</li>
+  <li>Can describe how their work is governed by a QAM procedure</li>
+  <li>Knows where the QAM is located</li>
+</ul>
+
+<p>The expectation scales with role. Receiving inspectors don\'t need to recite AC 00-56 sections, but they should understand that their procedures aren\'t arbitrary.</p>
+
+<h4>Maintaining the cross-reference matrix</h4>
+
+<p>The cross-reference matrix is a document (electronic or paper) that maps:</p>
+
+<ul>
+  <li>AC 00-56 requirement → ASA-100 section addressing it</li>
+  <li>ASA-100 section → TurbineWorks QAM section implementing it</li>
+  <li>QAM section → TWP-XX procedures executing it</li>
+  <li>TWP-XX procedure → TWF-XX forms capturing records</li>
+</ul>
+
+<p>The matrix is a controlled document. Updates happen when any of the underlying documents are revised. The matrix is the QA Manager\'s tool for change management and the audit-readiness reference.</p>
+
+<p>A well-maintained matrix is itself audit-evidence that the quality system is coherently managed. An incomplete or out-of-date matrix is a finding.</p>
+
+<h4>Common flow-down failures</h4>
+
+<ul>
+  <li><strong>Procedure exists but doesn\'t map to any QAM requirement.</strong> "Orphan" procedure — either should be removed or the QAM updated to reference it.</li>
+  <li><strong>QAM references procedures that don\'t exist.</strong> The QAM says "per TWP-99" but no TWP-99 has been published.</li>
+  <li><strong>ASA-100 requirement exists but no QAM section addresses it.</strong> Gap in implementation.</li>
+  <li><strong>AC 00-56 revised but ASA-100 review not completed.</strong> ASA\'s problem, but it cascades to TurbineWorks if not addressed.</li>
+  <li><strong>ASA-100 revised but QAM not updated.</strong> TurbineWorks is operating to an old revision.</li>
+  <li><strong>Forms in use reference procedures that have been revised but the form wasn\'t updated.</strong> Inconsistency between form and current procedure.</li>
+</ul>
+
+<h4>The pre-accreditation TurbineWorks reality</h4>
+
+<p>TurbineWorks is currently building the QAM ahead of initial accreditation. Many references in TurbineWorks University currently point to "[TurbineWorks Procedure Reference]" placeholders because the QAM is in development. As the QAM is published, those placeholders will resolve to specific QAM section references.</p>
+
+<p>This is normal for pre-accreditation distributors. The auditor at the initial accreditation audit will check that the QAM is published, that all referenced procedures exist, and that the training program (including this content) correctly references the published QAM. Currently we\'re working ahead — building training that anticipates the QAM\'s structure.</p>
+
+<h4>References</h4>
+
+<ul>
+  <li><strong>FAA AC 00-56B</strong> — the apex document</li>
+  <li><strong>ASA-100</strong> — the standard that implements AC 00-56 for TurbineWorks</li>
+  <li><strong>TurbineWorks QAM</strong> — being developed pre-accreditation</li>
+  <li><strong>Cross-reference matrix</strong> — TurbineWorks-specific traceability document (to be developed)</li>
+</ul>
+
+<h4>Self-check</h4>
+
+<ol>
+  <li>Draw or describe the flow-down hierarchy from AC 00-56 to completed records.</li>
+  <li>Trace the 8130-3 verification procedure through the flow-down — what governs each layer?</li>
+  <li>Why is the flow-down mapping operationally important for audits, change management, onboarding, and process simplification?</li>
+  <li>Give 5 examples of how ASA-100 exceeds AC 00-56 minimums.</li>
+  <li>What is the 7-step process when AC 00-56 is revised?</li>
+  <li>What level of flow-down understanding is expected at the QA Manager, supervisor, and operator levels?</li>
+  <li>What is the cross-reference matrix and why does it matter at audits?</li>
+  <li>Name 6 common flow-down failures.</li>
+</ol>
 HTML
         ],
         [
             'name'  => 'Lesson 6.4 — Other Accreditation Programs and Loss of Accreditation',
-            'intro' => '<p>The broader accreditation landscape and what happens if accreditation is lost.</p>',
+            'intro' => '<p>The broader accreditation landscape — other FAA-recognized programs, when each applies, the operational and business consequences of losing accreditation, and what every employee\'s role is in maintaining it. The most consequential lesson in Module 6 because loss of accreditation is the existential risk to TurbineWorks\' core business.</p>',
             'content' => <<<'HTML'
-<h3>Other Programs and Loss of Accreditation</h3>
+<h3>Other Accreditation Programs and Loss of Accreditation</h3>
 
-<h4>ASA-100 vs. AS9120</h4>
-<p><strong>AS9120</strong> is the SAE/IAQG aerospace QMS standard for distributors. Like ASA-100, it is FAA-recognized under AC 00-56. The key differences:</p>
+<p>ASA-100 is one of several FAA-recognized accreditation programs. Understanding the broader landscape helps explain when TurbineWorks might consider additional or alternative accreditation, and helps in conversations with customers who use different terminology. The second half of this lesson covers the most consequential possibility: loss of accreditation. What can cause it, what happens when it happens, and why every employee\'s daily work matters to preventing it.</p>
+
+<h4>ASA-100 vs. AS9120 — the two major programs</h4>
+
+<p><strong>AS9120</strong> is the aerospace QMS standard for distributors, published by SAE International on behalf of the International Aerospace Quality Group (IAQG). Like ASA-100, it is FAA-recognized under AC 00-56. The two standards serve overlapping but distinct markets, with significant procedural differences.</p>
+
+<h5>Detailed comparison</h5>
+
 <table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse;">
   <tr style="background:#0d2240; color:#fff;">
     <th>Aspect</th><th>ASA-100</th><th>AS9120</th>
   </tr>
-  <tr><td>Publisher</td><td>Aviation Suppliers Association</td><td>SAE / IAQG (International Aerospace Quality Group)</td></tr>
-  <tr><td>Approach</td><td>Prescriptive — detailed specific requirements</td><td>QMS-focused — based on ISO 9001 + aerospace additions</td></tr>
-  <tr><td>Typical scope</td><td>Aftermarket parts distribution</td><td>OEM-supply-chain distribution</td></tr>
-  <tr><td>Audit duration</td><td>Typically 1-3 days for small distributors</td><td>Typically longer; ISO-style audit</td></tr>
-  <tr><td>Cost</td><td>Generally lower</td><td>Generally higher</td></tr>
+  <tr>
+    <td>Publisher</td>
+    <td>Aviation Suppliers Association (ASA)</td>
+    <td>SAE International / IAQG</td>
+  </tr>
+  <tr>
+    <td>Foundation</td>
+    <td>FAA AC 00-56B framework</td>
+    <td>ISO 9001 plus AS9100 family aerospace additions</td>
+  </tr>
+  <tr>
+    <td>Approach</td>
+    <td>Prescriptive — specific requirements per section</td>
+    <td>Process-based — outcome-focused with process discipline</td>
+  </tr>
+  <tr>
+    <td>Primary customer base</td>
+    <td>Aftermarket: airlines, MROs, parts brokers</td>
+    <td>OEM supply chain: Boeing, Airbus, GE Aerospace tier-1/2</td>
+  </tr>
+  <tr>
+    <td>Audit duration</td>
+    <td>1-3 days for small distributors</td>
+    <td>Typically longer (ISO-style breadth)</td>
+  </tr>
+  <tr>
+    <td>Audit cycle</td>
+    <td>3 years between full audits</td>
+    <td>3 years, with annual surveillance typical</td>
+  </tr>
+  <tr>
+    <td>Audit organization</td>
+    <td>ASA-qualified auditors (ASA directly)</td>
+    <td>IAQG-recognized registrar (BSI, DNV, NQA, SAI Global, LRQA, others)</td>
+  </tr>
+  <tr>
+    <td>Cost (annual)</td>
+    <td>Lower — fees plus audit costs</td>
+    <td>Higher — registrar fees plus more extensive audit</td>
+  </tr>
+  <tr>
+    <td>Public database</td>
+    <td>ASA accredited distributor list</td>
+    <td>IAQG OASIS database</td>
+  </tr>
+  <tr>
+    <td>Specific aerospace features</td>
+    <td>FAA-specific references (8130-3, FAA database, FAA forms)</td>
+    <td>Configuration management, risk management, counterfeit prevention as explicit clauses</td>
+  </tr>
 </table>
-<p>Some distributors hold both. TurbineWorks may pursue AS9120 in the future if OEM-supply-chain business becomes a priority — the training overlap is significant (~70%), so building TWU to support both is an investment of an extra ~30% effort now for full future flexibility.</p>
 
-<h4>Other recognized programs</h4>
+<h5>Why the two standards exist</h5>
+
+<p>The two programs serve different market segments. ASA-100 grew out of the aftermarket — the world of airlines and MROs buying parts to maintain in-service aircraft. The standard reflects aftermarket priorities: detailed 8130-3 verification, supplier qualification of brokers, SUP detection.</p>
+
+<p>AS9120 grew out of the OEM supply chain — the world of Boeing tier-1 suppliers and similar OEM-direct programs. The standard reflects OEM priorities: configuration management (which build standard is this?), risk management (what can go wrong with this supplier?), process discipline (can you demonstrate consistent quality outcomes?).</p>
+
+<p>Both standards address the AC 00-56 minimum elements; they just emphasize different aspects appropriate to their markets.</p>
+
+<h5>When TurbineWorks might pursue both</h5>
+
+<p>TurbineWorks currently targets aftermarket customers (airlines, MROs). ASA-100 is the appropriate primary accreditation. AS9120 would matter if TurbineWorks pursued OEM supply-chain business — selling parts directly to Boeing, Airbus, or major tier-1 suppliers for use in new production.</p>
+
+<p>The economics of dual accreditation: AS9120 audit costs and registrar fees are substantial (often $15K-30K+ per year incremental). The benefit is access to OEM customers who require AS9120. The decision depends on whether OEM business volume justifies the cost.</p>
+
+<p>One efficiency: training overlap between the two standards is roughly 70%. Building TurbineWorks University to support both training programs requires about 30% additional effort beyond ASA-100 alone. The training side of dual accreditation is therefore relatively low-cost; the audit side is the major incremental investment.</p>
+
+<h4>Other FAA-recognized programs</h4>
+
+<h5>TAC-2000</h5>
+
+<p>Transportation Association of Canada\'s distributor accreditation standard. Used by Canadian-based distributors and by some U.S. distributors selling into Canadian markets. Functionally similar to ASA-100. FAA-recognized under AC 00-56 for bilateral purposes.</p>
+
+<h5>FAA-recognized AS9100/AS9120 registrar programs</h5>
+
+<p>The IAQG operates a registrar program where individual auditing firms (BSI, DNV, NQA, SAI Global, LRQA, Bureau Veritas, others) are recognized to audit against AS9120. Each registrar is independently FAA-recognized under their IAQG arrangement. TurbineWorks choosing AS9120 would select a registrar from this list.</p>
+
+<h5>Various industry-specific programs</h5>
+
+<p>The complete current Appendix 1 list of FAA-recognized AOs is maintained by the FAA. Some programs are narrower than ASA-100 — focused on specific part types or specific customer segments. The list is updated periodically as programs gain or lose recognition.</p>
+
+<h4>Loss of accreditation — what can cause it</h4>
+
+<p>Accreditation is not permanent. An accredited distributor can lose accreditation through multiple pathways. Understanding the causes helps prevent them.</p>
+
+<h5>Failure to maintain compliance</h5>
+
+<p>The most common cause. Major audit findings that aren\'t corrected. Repeat findings of the same issue. Systematic deterioration of the quality system over time as discipline lapses. Each individual instance may seem small; the cumulative pattern triggers suspension.</p>
+
+<p>Example progression: a minor finding at one audit becomes a repeat finding at the next audit because corrective action wasn\'t effective. At the third audit, the same finding plus related findings suggest systemic problems. ASA escalates to conditional accreditation with enhanced surveillance. Continued issues lead to suspension.</p>
+
+<h5>Failure to renew on schedule</h5>
+
+<p>Missing the recurring audit cycle. This is rare with active distributors but can happen during periods of distraction (acquisitions, leadership changes, financial stress). The accreditation lapses when the cycle expires without successful re-audit.</p>
+
+<h5>Critical findings</h5>
+
+<p>Certain findings are severe enough to trigger immediate action regardless of overall audit pattern:</p>
+
 <ul>
-  <li><strong>TAC-2000</strong> — Transportation Association of Canada distributor standard</li>
-  <li><strong>FAA AC 00-56B Appendix 1</strong> — full current list of recognized accreditation organizations</li>
+  <li>Confirmed SUP that the distributor failed to report through proper channels</li>
+  <li>Falsified records (intentional, not error)</li>
+  <li>Willful violation of ASA-100 requirements</li>
+  <li>Fraud uncovered during investigation (counterfeit parts, false COCs, falsified test data)</li>
+  <li>Customer complaints substantiated as serious quality breakdown</li>
 </ul>
 
-<h4>Loss of accreditation — what happens</h4>
-<p>An accredited distributor can lose accreditation through:</p>
-<ul>
-  <li><strong>Failure to maintain compliance</strong> — major audit findings not corrected, repeat findings, deterioration of the quality system</li>
-  <li><strong>Failure to renew</strong> — missing the recurring audit cycle</li>
-  <li><strong>Critical findings</strong> — confirmed SUP that the distributor failed to report; falsified records; willful violation</li>
-  <li><strong>Customer complaints</strong> — substantiated complaints that point to systemic quality failures</li>
-  <li><strong>FAA referral</strong> — FAA investigation referred to the accreditation organization with findings</li>
-</ul>
+<h5>Substantiated customer complaints</h5>
+
+<p>ASA accepts complaints from customers about accredited distributors. Pattern complaints — multiple customers reporting similar quality problems — trigger ASA investigation. Substantiated complaints can result in surveillance audits, conditional accreditation, or withdrawal.</p>
+
+<h5>FAA referral</h5>
+
+<p>The FAA may refer specific cases to ASA when FAA investigation finds problems with an accredited distributor. The referral typically includes evidence of the issue. ASA investigates and takes appropriate action.</p>
+
+<h5>Insolvency or business closure</h5>
+
+<p>Accreditation can\'t apply to an organization that no longer operates. Bankruptcy filings and business closure trigger accreditation termination.</p>
 
 <h4>The consequences of losing accreditation</h4>
-<ol>
-  <li><strong>Immediate loss of market access.</strong> Customers requiring accredited suppliers cannot continue buying. Most major operators and MROs have this requirement.</li>
-  <li><strong>Listing in the accreditation organization's public records.</strong> Loss of accreditation is publicly visible — and visible to competitors.</li>
-  <li><strong>Customer notification obligation.</strong> Recent customers may need to be notified, potentially triggering quality investigations on parts they already received.</li>
-  <li><strong>FAA attention.</strong> Loss of accreditation may prompt FAA surveillance audits of the distributor's prior shipments.</li>
-  <li><strong>Insurance and contracts.</strong> Insurance policies and customer contracts may include accreditation as a condition.</li>
-</ol>
+
+<p>Loss of accreditation has severe operational and business consequences. The cascade:</p>
+
+<h5>1. Immediate loss of market access</h5>
+
+<p>Customers requiring accredited suppliers cannot continue buying. Most major operators and MROs have this requirement. Sales orders in process may be cancelled; future orders won\'t come. The market loss is essentially immediate — within days or weeks of accreditation withdrawal, the sales pipeline dries up.</p>
+
+<p>For TurbineWorks specifically: every major customer segment (airlines, MROs, government work) requires accreditation. Without it, the addressable market shrinks dramatically. The remaining business — perhaps small operators, certain broker-to-broker sales — represents a fraction of historical revenue and operates at much lower margins.</p>
+
+<h5>2. Public visibility</h5>
+
+<p>Loss of accreditation is publicly visible in the ASA accredited-distributor database. Competitors see it. Customers see it. The market knows.</p>
+
+<p>This is part of the framework design — public transparency is required of AOs under AC 00-56. The transparency creates accountability but also creates reputational damage when accreditation is lost.</p>
+
+<h5>3. Customer notification obligation</h5>
+
+<p>Recent customers may need to be notified that the supplier they\'ve been buying from has lost accreditation. The notification may trigger:</p>
+
+<ul>
+  <li>Customer quality investigations on parts they already received</li>
+  <li>Customer-side audits of TurbineWorks-supplied inventory</li>
+  <li>Customer demands for additional documentation or third-party verification</li>
+  <li>Customer relationships ending entirely</li>
+</ul>
+
+<p>The customer-notification cascade can extend the damage well beyond the initial accreditation loss.</p>
+
+<h5>4. FAA attention</h5>
+
+<p>Loss of accreditation often prompts FAA surveillance of the distributor\'s prior shipments. The FAA may investigate parts shipped during the period when quality controls had deteriorated. This investigation can expand into FAA enforcement, civil penalties, and (in extreme cases) criminal referral.</p>
+
+<h5>5. Insurance and contract impact</h5>
+
+<p>Insurance policies covering errors and omissions, product liability, and similar exposures often include accreditation as a condition. Loss of accreditation may void coverage or trigger premium increases at renewal. Customer contracts often include accreditation as a condition — loss may give customers contractual termination rights.</p>
+
+<h5>6. Employee impact</h5>
+
+<p>Operating without accreditation often means downsizing — fewer customers, less work, fewer people needed. Employee morale and retention suffer. Quality-focused employees may seek positions elsewhere because they can\'t do their work effectively without the accreditation framework.</p>
+
+<h5>7. Banking and finance impact</h5>
+
+<p>Lenders may treat accreditation as a covenant condition. Loss may trigger loan re-evaluation, increased interest rates, or in worst cases loan recall.</p>
 
 <h4>The reinstatement process</h4>
-<p>Losing accreditation is not permanent, but recovery is hard:</p>
-<ul>
-  <li>Identify and address the root causes of the loss</li>
-  <li>Demonstrate sustained compliance over a defined period</li>
-  <li>Re-apply for accreditation</li>
-  <li>Pass a fresh on-site audit (which will scrutinize the corrective actions taken)</li>
-  <li>Possibly accept conditional accreditation with enhanced surveillance for a period</li>
-</ul>
-<p>During the reinstatement period (which can take months or years), the distributor operates without accreditation — losing the customer base built on accreditation in the first place. The financial consequences typically dwarf the cost of maintaining accreditation in the first place.</p>
+
+<p>Losing accreditation is not necessarily permanent — but reinstatement is harder than maintaining accreditation in the first place. The process typically requires:</p>
+
+<h5>1. Root cause investigation</h5>
+
+<p>Identify why accreditation was lost. The investigation must be honest — surface-level explanations ("we had some bad findings") aren\'t sufficient. Real root cause might be inadequate management commitment, insufficient resources for the quality system, leadership turnover, or other systemic factors.</p>
+
+<h5>2. Sustained corrective action</h5>
+
+<p>Implement the changes that address root cause. This may include leadership changes, staff additions, procedure revisions, training program rebuilds, facility improvements. The corrective action must be sustained — not just implemented and then allowed to lapse.</p>
+
+<h5>3. Demonstration period</h5>
+
+<p>Operate the corrected quality system for a defined period (typically several months minimum) without the accreditation. During this period, the distributor accumulates evidence that the corrected system actually works — internal audit records, NCRs and corrective actions, training delivery, supplier qualification activity.</p>
+
+<h5>4. Reapplication</h5>
+
+<p>Apply to ASA (or the previous AO) for re-accreditation. The application includes the corrective-action evidence and demonstrates the distributor is ready for re-audit.</p>
+
+<h5>5. Fresh on-site audit</h5>
+
+<p>Pass a complete on-site audit. The audit will scrutinize the corrective actions specifically — were they real and effective? It will also probe for residual issues that the prior audit missed or that have emerged since.</p>
+
+<h5>6. Conditional accreditation possible</h5>
+
+<p>ASA may grant conditional accreditation with enhanced surveillance for an initial period (typically 1-2 years). The distributor is accredited but watched more closely than baseline. Full normal accreditation follows successful surveillance.</p>
+
+<h5>The financial gap</h5>
+
+<p>During the reinstatement period — which can take 6 months to 2+ years — the distributor operates without accreditation. Revenue is depressed. Costs of corrective action are real. The financial gap is significant. Many distributors don\'t survive the reinstatement period financially.</p>
+
+<p>The arithmetic: if maintaining accreditation costs $50K/year (audit fees, time, audit-readiness work), and losing it triggers $500K+ in lost revenue plus $200K+ in remediation costs plus 18+ months of impaired operations — the cost of failure dwarfs the cost of maintenance by an order of magnitude. This is why investment in quality discipline is rational at the business level, not just at the regulatory level.</p>
 
 <h4>The takeaway for every employee</h4>
-<p>Maintaining accreditation is not a QA Manager problem. Every employee's daily work is what an audit measures. A receiving inspector who skips a documentation check, a warehouse worker who moves a part out of quarantine, a sales person who promises a part the QA Manager hasn't released — each of these is a potential audit finding. Each finding moves the company closer to loss of accreditation.</p>
-<p>The training program (TurbineWorks University) exists precisely so that every employee understands their role in maintaining accreditation. The audit ultimately measures whether the training is being executed in daily work.</p>
+
+<p>Maintaining accreditation is not just a QA Manager problem. Every employee\'s daily work is what an audit measures and what determines whether the quality system actually functions.</p>
+
+<p>Examples of how individual employee actions affect accreditation:</p>
+
+<ul>
+  <li>A receiving inspector who skips the FAA database lookup on Block 15 creates a SUP escape risk. If it leads to a customer complaint or FAA finding, the corrective-action loop opens. Multiple incidents over time threaten accreditation.</li>
+  <li>A warehouse worker who informally moves a part out of quarantine because "it looks fine" creates a non-conformance escape. Customer impact may follow.</li>
+  <li>A sales person who promises a customer a part the QA Manager hasn\'t released creates pressure on the quality system to bypass controls. Sustained pressure of this kind erodes the system.</li>
+  <li>A shipping inspector who passes a shipment without verifying the documentation accompanies the part creates a customer-side complaint when the customer notices the gap.</li>
+  <li>An employee who skips training because "I already know this" undermines the training program\'s integrity at audit.</li>
+</ul>
+
+<p>Each individual instance may seem small. The cumulative pattern is what auditors detect and what determines accreditation outcomes. The training program (TurbineWorks University) exists precisely so that every employee understands their role in maintaining accreditation. The audit ultimately measures whether the training is being executed in daily work — not whether the training exists.</p>
+
+<h4>The culture dimension</h4>
+
+<p>Quality cultures that maintain accreditation share specific characteristics:</p>
+
+<ul>
+  <li><strong>Honesty about problems.</strong> Issues are surfaced and addressed. Hiding problems makes them worse.</li>
+  <li><strong>Independence of quality decisions.</strong> Quality calls are made by qualified personnel based on quality criteria, not commercial pressure.</li>
+  <li><strong>Continuous learning.</strong> Procedures evolve as experience accumulates. Findings become improvements.</li>
+  <li><strong>Resource commitment.</strong> Management funds the quality system as a business priority, not as overhead.</li>
+  <li><strong>Personnel respect.</strong> Quality work is valued; quality personnel have organizational standing.</li>
+</ul>
+
+<p>The cultures that lose accreditation tend to have the opposite patterns. The system works best when everyone in the organization, top to bottom, treats quality as core to the business rather than as compliance overhead.</p>
+
+<h4>References</h4>
+
+<ul>
+  <li><strong>FAA AC 00-56B Appendix 1</strong> — current list of FAA-recognized accreditation organizations</li>
+  <li><strong>SAE AS9120</strong> — aerospace QMS for distributors</li>
+  <li><strong>ASA accreditation handbook</strong> — current procedures for application, audit, suspension, withdrawal, reinstatement</li>
+  <li><strong>IAQG OASIS database</strong> — for AS9120-accredited supplier verification</li>
+</ul>
+
+<h4>Self-check</h4>
+
+<ol>
+  <li>Compare ASA-100 and AS9120 across 8 dimensions.</li>
+  <li>Why do the two standards exist for the same general purpose?</li>
+  <li>Under what circumstances might TurbineWorks pursue both ASA-100 and AS9120?</li>
+  <li>Name 6 causes of accreditation loss.</li>
+  <li>What are the 7 consequences of losing accreditation?</li>
+  <li>What is the 6-step reinstatement process?</li>
+  <li>Why is the cost of losing accreditation typically an order of magnitude higher than the cost of maintaining it?</li>
+  <li>Name 5 examples of how individual employee actions affect accreditation.</li>
+  <li>What 5 characteristics distinguish quality cultures that maintain accreditation?</li>
+</ol>
 HTML
         ],
         [
