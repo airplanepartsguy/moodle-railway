@@ -10545,107 +10545,884 @@ function local_twu_get_engine_parts_courses(): array {
 function local_twu_engine_cfm56_lessons(): array {
     return [
         [
-            'name'  => 'CFM56 Family Overview',
-            'intro' => '<p>The most-produced turbofan in history. Why CFM56 dominates the secondary parts market.</p>',
+            'name'  => 'Lesson 1 — CFM56 Family History, Variants, and Market Position',
+            'intro' => '<p>The origin of the CFM International joint venture, every CFM56 variant with thrust ratings and airframe applications, and why this engine dominates the aftermarket TurbineWorks operates in.</p>',
             'content' => <<<'HTML'
-<h3>CFM56 Family</h3>
-<p>The CFM56 is a family of high-bypass turbofan engines produced by CFM International, a 50/50 joint venture between GE Aerospace and Safran Aircraft Engines. Over 33,000 CFM56 engines have been delivered since 1982 — more than any other turbofan in history.</p>
+<h3>CFM56 Family: History, Variants, and Why It Owns the Market</h3>
 
-<h4>Variants and applications</h4>
+<h4>Origin: the GE/Snecma joint venture that almost did not happen</h4>
+<p>The CFM56 exists because of a 1971 conversation between General Electric and Snecma (now Safran Aircraft Engines, then a French state-owned company). GE had developed the CF6-50 high-bypass turbofan core for the DC-10 and A300. Snecma had been pursuing the M56 — a clean-sheet engine for a future 100-passenger jet. Neither company alone had what the market wanted: a 20,000–25,000-pound-thrust class engine to replace the JT8D on the 727, DC-9, and similar narrowbody airframes coming due for re-engining.</p>
+<p>GE proposed a deal: license the CF6-50 core (the high-pressure compressor, combustor, and high-pressure turbine — the "hot section") to Snecma. Snecma would develop the cold section (fan, low-pressure compressor, low-pressure turbine, accessory gearbox) and contribute manufacturing capacity. Production and sales would be 50/50 through a joint venture corporation: CFM International, headquartered with one office in Cincinnati (GE side) and one in Paris-area Évry-Courcouronnes (Snecma side).</p>
+<p>The U.S. government nearly killed the deal. The CF6 core was considered military-sensitive technology. State Department export licensing took two years and required intense negotiation between Washington and Paris. President Nixon and President Pompidou ultimately approved the technology transfer at a 1973 summit. The deal closed and CFM International formally began operations in 1974.</p>
+<p>First flight of a CFM56-2 was in 1979. First commercial service was 1982 (on the DC-8 Super 70 re-engine program). By 1984, the engine had been selected for the Boeing 737 Classic — the relationship that would make the CFM56 the best-selling turbofan in history. As of present, over <strong>33,000 CFM56 engines</strong> have been delivered. No other turbofan family is close to that number.</p>
+
+<h4>The two companies, today</h4>
+<p>CFM International remains a 50/50 joint venture. Production responsibility is split: GE manufactures the high-pressure compressor, combustor, high-pressure turbine, and accessory gearbox. Safran manufactures the fan, fan disk, booster (low-pressure compressor), low-pressure turbine, and engine externals. Final assembly occurs at both partner facilities (GE Evendale, Ohio for North American customers; Safran Villaroche, France for European customers; with some local final assembly in customer countries). This split matters operationally: <strong>some CFM56 part numbers are GE-coded, others are Safran/Snecma-coded</strong>. A receiving inspector at TurbineWorks looking at a part number prefix needs to know whether the prefix is consistent with the module the part belongs to.</p>
+<p>The same CFMI joint venture today produces the LEAP family — the CFM56 successor — using the same partner structure. LEAP and CFM56 share some part-number coding conventions; some "CFM56" labeled parts may actually be LEAP-applicable (or vice versa). Always verify per the Illustrated Parts Catalog (IPC) for the specific variant.</p>
+
+<h4>The variant family</h4>
+<p>Five primary CFM56 variants reached production, with extensive sub-variants within each. The variants are not interchangeable — they share the same architectural concept but differ in size, thrust rating, and many internal details.</p>
+
 <table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse;">
   <tr style="background:#0d2240; color:#fff;">
-    <th>Variant</th><th>Thrust</th><th>Primary Application</th>
+    <th>Variant</th><th>Thrust (lbf)</th><th>Fan Dia. (in)</th><th>Bypass Ratio</th><th>Primary Application</th><th>Production Years</th>
   </tr>
-  <tr><td>CFM56-2</td><td>22,000-24,000 lbf</td><td>KC-135R, DC-8, E-6</td></tr>
-  <tr><td>CFM56-3</td><td>18,500-23,500 lbf</td><td>737 Classic (300/400/500)</td></tr>
-  <tr><td>CFM56-5A/5B</td><td>22,000-33,000 lbf</td><td>A320 family (ceo)</td></tr>
-  <tr><td>CFM56-5C</td><td>31,200-34,000 lbf</td><td>A340-200/300</td></tr>
-  <tr><td>CFM56-7B</td><td>19,500-27,300 lbf</td><td>737NG (600/700/800/900)</td></tr>
+  <tr><td>CFM56-2</td><td>22,000–24,000</td><td>68.3</td><td>~6.0</td><td>DC-8 Super 70, KC-135R, E-6 Mercury, E-3 Sentry, KE-3 (Saudi tanker)</td><td>1979–early 1990s</td></tr>
+  <tr><td>CFM56-3</td><td>18,500–23,500</td><td>60.0</td><td>~5.0</td><td>737 Classic (300/400/500)</td><td>1984–1999</td></tr>
+  <tr><td>CFM56-5A</td><td>22,000–26,500</td><td>68.3</td><td>~6.0</td><td>A320 (early), A319 (early)</td><td>1987–1996</td></tr>
+  <tr><td>CFM56-5B</td><td>22,000–33,000</td><td>68.3</td><td>~5.5–6.0</td><td>A320ceo family (A319/320/321ceo)</td><td>1994–~2020 (now ramped down)</td></tr>
+  <tr><td>CFM56-5C</td><td>31,200–34,000</td><td>72.3</td><td>~6.6</td><td>A340-200/300</td><td>1991–2007</td></tr>
+  <tr><td>CFM56-7B</td><td>19,500–27,300</td><td>61.0</td><td>~5.1</td><td>737NG (600/700/800/900), 737BBJ, P-8 Poseidon, C-40 Clipper</td><td>1996–2019 (production ended; in-service ongoing)</td></tr>
 </table>
 
-<h4>Why CFM56 matters for TurbineWorks</h4>
+<h4>CFM56-2 — the foundational variant</h4>
+<p>The CFM56-2 was the variant that launched the family. It powered the DC-8 Super 70 re-engine conversion (replacing the original JT3D), and was selected by the U.S. Air Force for the KC-135R re-engine program — converting KC-135A tankers (originally with J57 turbojets) to KC-135R configuration with four CFM56-2 engines. The KC-135R program made the U.S. military a major CFM56 operator and put significant fleet hours on the engine. Variants:</p>
 <ul>
-  <li>Largest installed base of any turbofan — biggest aftermarket parts demand</li>
-  <li>Long production run means well-developed shop infrastructure and parts availability</li>
-  <li>Many engines reaching mid-life and end-of-life retirement — strong used-parts market</li>
-  <li>Mature SB / AD history — most known issues have known solutions</li>
+  <li><strong>CFM56-2A:</strong> ~22,000 lbf, the E-3 Sentry/E-6 Mercury military variants</li>
+  <li><strong>CFM56-2B / -2B1:</strong> ~22,000 lbf, KC-135R, KE-3 tanker</li>
+  <li><strong>CFM56-2C / -2C1:</strong> ~22,000 lbf, DC-8 Super 70 series</li>
+</ul>
+<p>The CFM56-2 fleet is aging but still operational. The KC-135R fleet alone (over 400 aircraft × 4 engines = 1,600+ engines plus spares) continues in service, with no immediate replacement. The DC-8 Super 70s are mostly retired, and aftermarket parts from those retirements have entered the broader CFM56-2 supply chain.</p>
+
+<h4>CFM56-3 — the 737 Classic engine</h4>
+<p>When Boeing decided in the early 1980s to extend the 737 line with a re-engined 737-300, the CFM56 was the engine selected — but with a problem. The original 737-200 had used the JT8D turbojet, mounted under the wing with relatively small fan diameter and short nacelle. The CFM56-2's 68.3" fan was too large to fit under the low-wing 737 without modifying the airframe.</p>
+<p>The solution was the CFM56-3, with reduced fan diameter (60 inches), flattened nacelle bottom (the now-iconic "hamster pouch" inlet shape), and other geometry changes to fit under the 737's wing. This solved the integration but at a cost: the CFM56-3 has lower bypass ratio (5.0 vs 6.0), lower fan diameter, and reduced fuel efficiency compared to its larger siblings.</p>
+<p>Variants:</p>
+<ul>
+  <li><strong>CFM56-3B1:</strong> 20,000 lbf, 737-300/-500</li>
+  <li><strong>CFM56-3B2:</strong> 22,000 lbf, 737-300/-400</li>
+  <li><strong>CFM56-3C1:</strong> 23,500 lbf, 737-400</li>
+</ul>
+<p>The 737 Classic fleet (-300, -400, -500) is largely retired or in cargo conversion. Many CFM56-3 engines have come out of service in the past decade. The aftermarket has substantial inventory of CFM56-3 modules and components — a market segment with declining demand (the active fleet shrinks every year) but extensive existing inventory.</p>
+<p>For TurbineWorks: CFM56-3 inventory is a buy-low opportunity if there is a customer use case (cargo conversions, regional operators in Africa/South America with active 737 Classic fleets, the persistent 737-300/-400 freighter market). It is a stranded-inventory risk if there is no customer use case. Inventory decisions require demand visibility.</p>
+
+<h4>CFM56-5A/-5B/-5C — the Airbus narrowbody and widebody engines</h4>
+<p><strong>CFM56-5A.</strong> Original A320 engine variant, 1987 entry into service with Air France. Lower thrust ratings (22,000–26,500 lbf). Manufactured 1987–1996. Modest fleet, most retired or transitioned to cargo.</p>
+<p><strong>CFM56-5B.</strong> The dominant Airbus narrowbody engine. Powered the A319ceo, A320ceo, and A321ceo from 1994 until the A320neo family began phasing in CFM56-5B production wound down around 2019–2020. Thrust ratings span 22,000–33,000 lbf depending on sub-variant (covering the full A319/320/321 thrust spectrum). Sub-variants include:</p>
+<ul>
+  <li>CFM56-5B1 through -5B9 (various thrust ratings)</li>
+  <li>"Tech Insertion" (TI) build standard introduced ~2007</li>
+  <li>"Tech Insertion Plus" (TI+) and "Performance Improvement Package" variants</li>
+</ul>
+<p>The CFM56-5B and IAE V2500 are the two engine options on the A320ceo family. Customer choice drove approximately 60% CFM56-5B / 40% V2500 split historically. The active fleet is large (thousands of aircraft) and will continue operating for the next 15–20 years as the A320ceo retires gradually.</p>
+<p><strong>CFM56-5C.</strong> The A340-200/-300 engine — a four-engine widebody application. Larger fan (72.3"), higher thrust (31,200–34,000 lbf), higher bypass ratio (6.6). Production ended in 2007. The A340 fleet has largely retired in commercial passenger service; some remain as government VIP transport or cargo. Aftermarket has limited demand.</p>
+
+<h4>CFM56-7B — the dominant variant of the family</h4>
+<p>The CFM56-7B was developed for the 737 Next Generation (NG: -600/-700/-800/-900) program. Larger fan than the CFM56-3 (61" vs 60"), 3-D aerodynamic blades on the fan, improved HPC and combustor, longer-life turbine, and Full-Authority Digital Engine Control (FADEC). Entered service 1997 on the 737-700.</p>
+<p>Sub-variants are extensive — at least a dozen "-7B" sub-variants exist, each tuned for a specific 737 NG variant and thrust requirement:</p>
+<ul>
+  <li><strong>CFM56-7B18:</strong> 19,500 lbf, 737-600</li>
+  <li><strong>CFM56-7B20:</strong> 20,600 lbf, 737-600/-700</li>
+  <li><strong>CFM56-7B22:</strong> 22,700 lbf, 737-700</li>
+  <li><strong>CFM56-7B24:</strong> 24,200 lbf, 737-800</li>
+  <li><strong>CFM56-7B26:</strong> 26,300 lbf, 737-800/-900</li>
+  <li><strong>CFM56-7B27:</strong> 27,300 lbf, 737-900/-900ER</li>
+</ul>
+<p>Plus military variants (the P-8 Poseidon and C-40 Clipper use CFM56-7B27A). The CFM56-7B was in production from 1996 until 2019, when the 737 NG line ended and the 737 MAX with LEAP-1B entered. Roughly 18,000 CFM56-7B engines were delivered — making this single variant nearly the size of all other CFM56 variants combined.</p>
+<p>The CFM56-7B fleet is the largest active commercial engine fleet in the world. It will continue in operation through the 2030s and into the 2040s. The aftermarket is enormous: every airline operating 737NGs needs spare modules, LLPs, and consumable parts. <strong>This is the engine variant that matters most for TurbineWorks today.</strong></p>
+
+<h4>What CFM56 has in common across variants</h4>
+<p>Despite the differences, all CFM56 variants share architectural concepts:</p>
+<ul>
+  <li><strong>Two-spool design.</strong> Low-pressure (LP) spool drives the fan and booster (low-pressure compressor); high-pressure (HP) spool drives the high-pressure compressor and high-pressure turbine.</li>
+  <li><strong>9-stage HPC.</strong> Nine axial-flow stages on the high-pressure compressor. Common across the family. (LEAP introduced a 10-stage HPC.)</li>
+  <li><strong>Single-stage HPT.</strong> One stage of high-pressure turbine drives the HPC. Allows compact, high-temperature hot section.</li>
+  <li><strong>4-stage LPT.</strong> Four stages of low-pressure turbine drive the fan and booster.</li>
+  <li><strong>Annular combustor.</strong> Single continuous combustor design (not the can-annular of older engines).</li>
+  <li><strong>FADEC on later variants (-5B, -5C, -7B).</strong> Earlier variants (-2, -3, original -5A) used hydromechanical fuel control with electronic supervision.</li>
 </ul>
 
-<h4>Key CFM56 LLPs</h4>
-<p>The high-cycle life-limited parts that drive CFM56 inventory value:</p>
-<ul>
-  <li>Fan disk</li>
-  <li>Booster (LPC) disks (stages 1-3)</li>
-  <li>HPC disks (stages 3-9)</li>
-  <li>HPT disk</li>
-  <li>LPT disks (stages 1-4)</li>
-  <li>HPT and LPT shafts</li>
-</ul>
-<p>Life limits are published in the CFM56 ESM and vary by variant. Current OEM publication controls — limits have been adjusted over time as service data accumulated.</p>
+<h4>Why CFM56 dominates the aftermarket TurbineWorks operates in</h4>
+<p>Six structural reasons CFM56 inventory and parts are the heart of the engine-parts distribution market:</p>
+<ol>
+  <li><strong>Volume.</strong> 33,000+ engines delivered. Even a 1% spares-and-overhaul intensity means hundreds of engines in shop visit each year. Module exchanges, component sales, and LLP transactions add up to a billions-of-dollars-annual market.</li>
+  <li><strong>Maturity.</strong> 40+ years of service history. Known issues, known repairs, known parts. Pricing well established. Buying and selling has predictable margin structure.</li>
+  <li><strong>Diversity of variants in service.</strong> Variants from -2 (1980s) through -7B (1990s–2010s) are all still operating somewhere. Each variant has its own parts ecosystem.</li>
+  <li><strong>Strong PMA penetration.</strong> Aviation Parts Manufacturer Approval (PMA) has developed extensive aftermarket alternatives to OEM parts for many CFM56 components — combustor liners, blades, vanes, seals, bearings. This expands the supplier base TurbineWorks can source from.</li>
+  <li><strong>Active retirement cycle.</strong> CFM56-3 (737 Classic) retiring out. CFM56-5B (A320ceo) retiring out over the next decade. Each retired engine becomes a USM (used serviceable material) source — and a parts harvest opportunity for the secondary market.</li>
+  <li><strong>Long remaining tail.</strong> Even as new aircraft transition to LEAP, the CFM56-7B fleet has 15+ years of remaining service life. Demand for parts will continue at scale.</li>
+</ol>
 
-<h4>Common CFM56 ADs to watch</h4>
+<h4>TurbineWorks-specific implications</h4>
+<p>For a distributor entering or operating in the CFM56 market:</p>
 <ul>
-  <li><strong>CFM56-7B fan blade AD (2018)</strong> — issued after Southwest 1380 in-flight fan blade failure. Triggered fleet-wide inspection.</li>
-  <li><strong>CFM56-5B HPT shroud cracking</strong> — recurrent inspection AD.</li>
-  <li><strong>CFM56-7B oil leak ADs</strong> — multiple over the years.</li>
-</ul>
-<p>The complete current AD list for the affected serial ranges is searchable in the FAA DRS (Dynamic Regulatory System).</p>
-
-<h4>What every TurbineWorks employee handling CFM56 parts should know</h4>
-<ul>
-  <li>CFM56 part numbers can be either CFM-prefixed or GE-prefixed depending on the component source — verify carefully</li>
-  <li>CFM56 ESM compliance is critical; CFM operates strict ESM revision control</li>
-  <li>Some "CFM56" parts are common with the LEAP family (the CFM56 successor) — confirm specific application via IPC</li>
+  <li><strong>Variant focus matters.</strong> Inventory specialization in CFM56-7B captures the largest active demand. CFM56-5B is the second-largest. CFM56-3 is a niche/declining play. CFM56-2 is military-focused (different customer base, different documentation requirements). CFM56-5A and -5C have limited demand.</li>
+  <li><strong>Sub-variant precision is critical.</strong> A CFM56-7B26 part is NOT a CFM56-7B27 part for many components. The sub-variant codes drive parts compatibility. Receiving inspection must verify the specific sub-variant.</li>
+  <li><strong>OEM vs PMA awareness.</strong> Some customers (especially leasing companies and certain operators) specify OEM-only on rotables. Others accept PMA. TurbineWorks must know each customer's PMA policy.</li>
+  <li><strong>Engine vs module vs component pricing tiers.</strong> Whole engines, modules, and components have different pricing structures. The same physical LLP has different value depending on whether it is sold loose, in a module, or in a complete engine.</li>
+  <li><strong>The LEAP transition.</strong> As airlines retire CFM56 NGs and 737 Classics in favor of MAX and A320neo, CFM56 inventory enters the secondary market in larger volumes. The supply curve is shifting outward — pricing pressure for sellers, opportunity for buyers building forward inventory.</li>
 </ul>
 
-<p><em>[TurbineWorks Procedure Reference: insert link to TurbineWorks CFM56-specific receiving inspection notes and supplier qualification list here.]</em></p>
+<h4>Self-check questions</h4>
+<ol>
+  <li>What is the corporate structure of CFM International and why was the joint venture politically difficult to form?</li>
+  <li>List all five CFM56 variant families and the primary airframe application for each.</li>
+  <li>Why does the CFM56-3 have a smaller fan diameter than the CFM56-2, despite being a "follow-on" variant?</li>
+  <li>Approximately how many CFM56-7B engines have been delivered? Why does this make the -7B the variant that matters most for TurbineWorks today?</li>
+  <li>What are the architectural features common to all CFM56 variants?</li>
+  <li>What are the six structural reasons CFM56 dominates the engine-parts aftermarket?</li>
+  <li>Why is sub-variant precision (e.g., -7B26 vs -7B27) critical at receiving inspection?</li>
+  <li>What does USM stand for, and how does CFM56-3 fleet retirement create USM supply?</li>
+</ol>
+
+<h4>References</h4>
+<ul>
+  <li>CFM International — official manufacturer publications</li>
+  <li>FAA Type Certificate Data Sheet E26NE (CFM56-7B); E32NE (CFM56-3); related TCDS for other variants</li>
+  <li>EASA Type Certificate sheets for European-registered operators</li>
+  <li>CFM56 Engine Shop Manual (ESM) — current revisions; controlled distribution</li>
+  <li>FAA DRS (Dynamic Regulatory System) — CFM56-applicable Airworthiness Directives</li>
+</ul>
 HTML
         ],
         [
-            'name'  => 'CFM56 Module Architecture',
-            'intro' => '<p>How CFM56 breaks down into modules, and what that means for module-level trading.</p>',
+            'name'  => 'Lesson 2 — CFM56 Architecture and Modules',
+            'intro' => '<p>The "two-spool" turbofan concept, module-by-module breakdown, sub-assemblies that trade as parts, and the cross-variant compatibility constraints that govern receiving inspection.</p>',
             'content' => <<<'HTML'
-<h3>CFM56 Module Architecture</h3>
-<p>The CFM56, like most modern turbofans, is built and maintained as a set of replaceable modules. Module-level architecture matters for the parts distribution market because modules can be traded independently of complete engines.</p>
+<h3>CFM56 Architecture and Module Structure</h3>
 
-<h4>Standard module breakdown</h4>
+<h4>The two-spool turbofan</h4>
+<p>The CFM56 is a "two-spool" turbofan. Two independent rotating assemblies (spools) operate on concentric shafts:</p>
 <ul>
-  <li><strong>Fan / Booster module</strong> — fan disk and blades, booster (LP compressor) section, fan case</li>
-  <li><strong>HPC (High-Pressure Compressor) module</strong> — 9-stage axial compressor</li>
-  <li><strong>Combustor module</strong> — combustion chamber, fuel nozzles, ignition system</li>
-  <li><strong>HPT (High-Pressure Turbine) module</strong> — single-stage HP turbine</li>
-  <li><strong>LPT (Low-Pressure Turbine) module</strong> — 4-stage LP turbine, LPT shaft</li>
-  <li><strong>AGB (Accessory Gearbox) module</strong> — driven accessories: fuel pump, oil pumps, generator drive, starter</li>
+  <li><strong>Low-pressure (LP) spool:</strong> the fan, booster (low-pressure compressor), and low-pressure turbine all rotate on a single shaft. The LP turbine extracts energy from the hot gas stream to drive the fan and booster.</li>
+  <li><strong>High-pressure (HP) spool:</strong> the high-pressure compressor and high-pressure turbine rotate on a second, concentric shaft. The HP turbine extracts energy to drive the HP compressor.</li>
+</ul>
+<p>The two spools are mechanically independent but aerodynamically and thermodynamically coupled — the HP compressor delivers air to the combustor, the combustor delivers gas to the HP turbine, the HP turbine drives the HP compressor, the LP turbine then extracts remaining energy. Each spool operates at its own speed (the LP spool is slower because the fan must remain subsonic at the tips; the HP spool is faster to maximize compressor efficiency).</p>
+<p>This architecture has been standard for high-bypass turbofans since the 1970s. The Pratt & Whitney PW1000G geared turbofan revisits the architecture with a reduction gearbox; the Rolls-Royce Trent family uses three spools instead of two. The CFM56 is the canonical two-spool design.</p>
+
+<h4>The module breakdown (production and maintenance)</h4>
+<p>The CFM56 is designed and maintained as a set of modules — major sub-assemblies that can be replaced or repaired as units. Module-level architecture has commercial significance for TurbineWorks because each module is a separable trading unit with its own LLP set, its own shop visit history, and its own market price.</p>
+
+<p><strong>The standard CFM56 modules:</strong></p>
+<table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse;">
+  <tr style="background:#0d2240; color:#fff;">
+    <th>Module</th><th>Contains</th><th>Major LLPs</th>
+  </tr>
+  <tr>
+    <td><strong>Fan Module</strong></td>
+    <td>Fan disk, fan blades, fan spinner, fan case (in some variants)</td>
+    <td>Fan disk</td>
+  </tr>
+  <tr>
+    <td><strong>Booster (LPC) Module</strong></td>
+    <td>Booster (low-pressure compressor) rotor and stator (3 stages typical), LP shaft (partial — front end)</td>
+    <td>Booster disks (stages 1–3), LP shaft (front portion)</td>
+  </tr>
+  <tr>
+    <td><strong>HPC Module (Core, Forward)</strong></td>
+    <td>9-stage high-pressure compressor rotor and stator, compressor casings</td>
+    <td>HPC disks (stages 3–9 typical; stages 1–2 are normally non-LLP)</td>
+  </tr>
+  <tr>
+    <td><strong>Combustor Module</strong></td>
+    <td>Combustion chamber (annular), fuel nozzles, ignition system (igniter plugs, exciter)</td>
+    <td>Combustor casing (life-monitored; in some variants LLP)</td>
+  </tr>
+  <tr>
+    <td><strong>HPT Module (Core, Aft)</strong></td>
+    <td>Single-stage high-pressure turbine: HPT disk, HPT blades, HPT nozzle (vanes), HPT shroud, HP shaft</td>
+    <td>HPT disk, HP shaft</td>
+  </tr>
+  <tr>
+    <td><strong>LPT Module</strong></td>
+    <td>4-stage low-pressure turbine: LPT disks, LPT blades, LPT nozzles, LPT case, LP shaft (rear portion)</td>
+    <td>LPT disks (stages 1–4), LP shaft (rear portion)</td>
+  </tr>
+  <tr>
+    <td><strong>AGB (Accessory Gearbox) Module</strong></td>
+    <td>Geared shaft assembly driven from the HP spool via a tower shaft, with mounting pads for engine-driven accessories</td>
+    <td>(Generally non-LLP)</td>
+  </tr>
+  <tr>
+    <td><strong>TGB (Transfer Gearbox) Module</strong></td>
+    <td>Right-angle gearbox transmitting drive from the HP rotor radially out to the AGB</td>
+    <td>(Generally non-LLP)</td>
+  </tr>
+  <tr>
+    <td><strong>Externals</strong></td>
+    <td>Fuel system (HMU, FMU, fuel nozzles), oil system (pumps, scavenge), pneumatic system, ignition, electrical harnesses, sensors, externals brackets</td>
+    <td>(LRU accessories: HMU, fuel pump, oil pump, etc.)</td>
+  </tr>
+</table>
+
+<h4>The "core" concept</h4>
+<p>CFM and other engine manufacturers often refer to the "core" or "gas generator" — the assembly comprising the HPC, combustor, and HPT modules. The core is the engine's high-pressure section; it operates at the highest temperatures and pressures and contains the highest-value rotables (HPT disk, HPC disks, HPT blades). In trade terms, "a core" or "a gas generator" usually refers to these three modules together, with appropriate documentation.</p>
+<p>A "stripped engine" or "core engine" in distribution terms may mean different things — from "engine with externals removed" to "core modules only, fan and LPT removed." Always verify the specific definition in the offering documentation before quoting or accepting.</p>
+
+<h4>Module sub-assemblies and rotable items</h4>
+<p>Within each module, sub-assemblies and individual components are themselves rotables — items that can be removed, repaired or replaced, and reinstalled. The most commercially significant sub-assemblies:</p>
+
+<p><strong>Fan module sub-assemblies:</strong></p>
+<ul>
+  <li>Fan disk (LLP)</li>
+  <li>Fan blades — individual blades can be replaced; sets of fan blades trade together</li>
+  <li>Fan spinner (nose cone)</li>
+  <li>Fan platforms</li>
+  <li>Booster disks (stages 1–3 each, LLP)</li>
+  <li>Booster blades (stages 1–3 each)</li>
+  <li>Inlet guide vanes (IGVs) and variable stator vanes (VSVs) — for some variants</li>
 </ul>
 
-<h4>Module trading economics</h4>
-<p>An operator removing a CFM56 from an aircraft has options beyond full-engine overhaul:</p>
+<p><strong>HPC sub-assemblies:</strong></p>
 <ul>
-  <li><strong>Module exchange:</strong> the failed module is replaced with a serviceable one from inventory; the original is sent for overhaul</li>
-  <li><strong>Component exchange:</strong> if the failure is at component-level (a specific blade set), only the component is changed</li>
-  <li><strong>Whole-engine swap:</strong> entire engine replaced with another</li>
+  <li>HPC disks stages 1–9, individually identifiable (stages 3–9 are LLPs typically; -3 and -7B have variant-specific lists)</li>
+  <li>HPC blades (each stage)</li>
+  <li>HPC vanes (each stage, fixed)</li>
+  <li>Variable stator vanes (VSVs) for first few stages, with actuation system</li>
+  <li>HPC casings (forward and aft halves)</li>
+  <li>Bearings (front and rear HPC bearings)</li>
 </ul>
-<p>TurbineWorks participates in the module exchange market — buying and selling individual modules with their own LLP status, time/cycles, and shop visit history.</p>
+
+<p><strong>Combustor sub-assemblies:</strong></p>
+<ul>
+  <li>Combustor liner (inner and outer)</li>
+  <li>Fuel nozzles (20 typical for CFM56)</li>
+  <li>Igniter plugs (2 per engine)</li>
+  <li>Igniter exciter box (electronic, ESD-sensitive)</li>
+  <li>Combustor casing</li>
+  <li>Diffuser</li>
+</ul>
+
+<p><strong>HPT sub-assemblies:</strong></p>
+<ul>
+  <li>HPT disk (LLP, highest single-item value typically)</li>
+  <li>HPT blades (single-crystal or directionally solidified superalloy; very high value)</li>
+  <li>HPT nozzle guide vanes (NGVs)</li>
+  <li>HPT shroud (segmented; high-temperature ceramic-coated)</li>
+  <li>HP shaft (LLP)</li>
+  <li>HPT bearings</li>
+</ul>
+
+<p><strong>LPT sub-assemblies:</strong></p>
+<ul>
+  <li>LPT disks (4 stages, all LLPs)</li>
+  <li>LPT blades (each stage)</li>
+  <li>LPT nozzles (each stage)</li>
+  <li>LP shaft rear section (LLP)</li>
+  <li>LPT case</li>
+  <li>LPT bearings</li>
+</ul>
+
+<p><strong>AGB sub-assemblies (LRUs):</strong></p>
+<ul>
+  <li>Hydromechanical unit (HMU) / Fuel Metering Unit (FMU) — depending on variant</li>
+  <li>Engine-driven fuel pump</li>
+  <li>Engine-driven oil pumps (main and scavenge)</li>
+  <li>Generator drive pad and starter pad (the starter and generator themselves are aircraft-supplied accessories)</li>
+  <li>FADEC (EEC) box — for CFM56-5B, -5C, -7B variants</li>
+</ul>
+
+<h4>Module-level trading: how the market operates</h4>
+<p>Operators returning engines from service have three main options:</p>
+<ol>
+  <li><strong>Whole-engine overhaul.</strong> The engine goes to a CFM-authorized MRO, every module is opened, inspected, repaired or replaced, and the engine is returned as a "shop-visited" unit. Most expensive option; longest turnaround; produces a known-quality engine.</li>
+  <li><strong>Module exchange.</strong> The failed module is replaced with a serviceable module from inventory; the original is sent for module-level overhaul. Faster turnaround; allows operator to keep flying while overhaul happens; market for module-exchange pools.</li>
+  <li><strong>Component exchange.</strong> If only a specific component has failed (a single blade, a single vane segment), the component is replaced and the module continues. Minimal disruption; smallest unit of repair.</li>
+</ol>
+
+<p>TurbineWorks operates in this market at multiple levels:</p>
+<ul>
+  <li><strong>Engine trader role:</strong> buying whole engines for parts harvest or for resale</li>
+  <li><strong>Module dealer role:</strong> selling individual modules with documentation</li>
+  <li><strong>Component dealer role:</strong> selling rotables, LLPs, and consumables</li>
+  <li><strong>LRU specialist role:</strong> for AGB-mounted accessories and FADECs (where applicable)</li>
+</ul>
 
 <h4>Module documentation requirements</h4>
-<p>Each module sold separately requires:</p>
+<p>Each module sold separately requires its own documentation package:</p>
+
+<ol>
+  <li><strong>Module-level FAA 8130-3</strong> (or equivalent EASA Form 1 / TCCA Form One). Issued by an authorized organization. Identifies the module by serial number, part number, and module-level traceability.</li>
+  <li><strong>LLP records for every LLP within the module.</strong> Back-to-birth records for each LLP — when manufactured, every shop visit, every cycle accumulated, every overhaul event. The LLP records must be complete; missing records make the LLP unsaleable for installation.</li>
+  <li><strong>Build standard documentation.</strong> What build configuration is the module in? Service Bulletin incorporation, Customer Notification compliance, Engineering Order applications. CFM-issued build-standard lists itemize the specific configuration.</li>
+  <li><strong>Shop visit history.</strong> Where has this module been? Which MRO performed which work? What was repaired or replaced? Total time / cycles on the module since new.</li>
+  <li><strong>Most recent borescope inspection (BSI) report</strong> — where applicable to verify gas-path component condition.</li>
+  <li><strong>Removal cause / serviceability statement.</strong> Why is this module out of an engine? Was it removed for opportunistic maintenance, scheduled overhaul, or in response to a fault? The history affects perceived value.</li>
+  <li><strong>Airworthiness Directive compliance status.</strong> Which ADs apply to the module and what is the compliance status of each?</li>
+</ol>
+
+<p>A module without complete documentation is severely discounted; in some cases unsaleable for direct installation. The documentation package is a substantial portion of the module's value.</p>
+
+<h4>Cross-variant compatibility constraints</h4>
+<p>The CFM56 family shares architectural concepts but the variants are NOT directly interchangeable. Constraints include:</p>
+
 <ul>
-  <li>Module-level FAA 8130-3 (issued by an authorized organization)</li>
-  <li>LLP records for every LLP within the module</li>
-  <li>Build standard / SB compliance documentation for the module</li>
-  <li>Most recent BSI (where applicable)</li>
-  <li>Shop visit history of the module</li>
+  <li><strong>Fan diameter differs.</strong> CFM56-3 has 60" fan; CFM56-7B has 61"; CFM56-5B has 68.3"; CFM56-5C has 72.3". Fans, fan disks, fan cases, and nacelles are variant-specific.</li>
+  <li><strong>Thrust ratings differ.</strong> Sub-variants within a family are tuned to specific thrust ratings via different fuel control limits, different turbine cooling, different module build standards.</li>
+  <li><strong>Build standards differ.</strong> A CFM56-7B26 has a different turbine clearance, different fuel nozzle set, different combustor tuning than a CFM56-7B27 — even though they share much else.</li>
+  <li><strong>Part numbers differ.</strong> An HPT blade for -7B26 has a different P/N than for -7B27. They look similar visually; they are not interchangeable.</li>
+  <li><strong>FADEC software differs.</strong> The FADEC firmware in a -7B26 may not be valid in a -7B27 engine. Software loads must match the engine's certified build standard.</li>
 </ul>
 
-<h4>Cross-module compatibility</h4>
-<p>Not every CFM56 module is compatible with every other CFM56 module. Variant differences (CFM56-3 vs -7B, etc.) drive incompatibility. Sub-variant build standards drive further constraints.</p>
-<p>The IPC and ESM define compatibility. Selling an HPT module from a CFM56-7B as if it were a CFM56-7B26 when it is actually a -7B27 is a misdeclaration — possibly fraud, depending on intent.</p>
+<p>The Illustrated Parts Catalog (IPC) for each variant is the authoritative reference for parts compatibility. The Engine Shop Manual (ESM) defines installation procedures and limits.</p>
+
+<h4>Misdeclaration is a serious offense</h4>
+<p>Selling an HPT blade for CFM56-7B26 as if it were applicable to CFM56-7B27 is not a paperwork error. It is potentially:</p>
+<ul>
+  <li>A material misrepresentation to the customer</li>
+  <li>A Suspected Unapproved Part (SUP) situation if the part is installed against its certified application</li>
+  <li>Possibly fraud, depending on intent and consequence</li>
+  <li>Grounds for FAA enforcement action against the distributor</li>
+  <li>Grounds for ASA accreditation impact</li>
+</ul>
+
+<p>The discipline at receiving and at outbound shipment is: verify the specific sub-variant matches the part-number's applicability per the IPC. When in doubt, the QA Manager makes the determination.</p>
+
+<h4>The receiving inspection workflow for a CFM56 module</h4>
+<p>When a CFM56 module arrives at TurbineWorks, receiving inspection follows this process:</p>
+
+<ol>
+  <li><strong>Verify the engine variant and sub-variant.</strong> Module data plate identifies the engine model (e.g., CFM56-7B26) and serial number. Cross-check against the purchase order and the supplier's release documentation.</li>
+  <li><strong>Verify the module identification.</strong> Module name (e.g., "HPT Module"), module serial number, module part number. Cross-check against the FAA 8130-3.</li>
+  <li><strong>Verify LLP records.</strong> Each LLP within the module must have complete back-to-birth records. Confirm cycles remaining for each LLP against the OEM's current life limit.</li>
+  <li><strong>Verify build standard.</strong> What SBs are incorporated? Is the module currently in a build standard the customer will accept?</li>
+  <li><strong>Verify AD compliance.</strong> Which ADs apply to this module? Compliance status of each?</li>
+  <li><strong>Inspect the physical module.</strong> Visual condition, packaging adequacy, data plate legible, no obvious damage. Borescope inspection if applicable and possible.</li>
+  <li><strong>Document the receipt.</strong> Receiving inspection record with all the above. Module enters quarantine pending QA Manager final approval.</li>
+  <li><strong>Update inventory.</strong> Module recorded in TurbineWorks inventory system with full traceability data.</li>
+</ol>
+
+<p>This workflow takes several hours per module — not a 5-minute box-check. The complexity reflects the value at stake (modules trade for tens of thousands to hundreds of thousands of dollars depending on type and condition).</p>
+
+<h4>Self-check questions</h4>
+<ol>
+  <li>What is a "two-spool" turbofan and how does the CFM56 implement it?</li>
+  <li>List the eight standard modules of a CFM56 and the LLPs each contains.</li>
+  <li>What does "core" or "gas generator" mean in CFM56 terminology, and which three modules are typically included?</li>
+  <li>Describe the three options an operator has for an engine returned from service.</li>
+  <li>What documentation must accompany a CFM56 module sold as a standalone item?</li>
+  <li>Why can't a CFM56-7B26 HPT module be sold as if applicable to CFM56-7B27?</li>
+  <li>What is the regulatory consequence of misdeclaring sub-variant applicability?</li>
+  <li>List the eight steps in TurbineWorks' receiving inspection workflow for a CFM56 module.</li>
+</ol>
+
+<h4>References</h4>
+<ul>
+  <li>CFM International CFM56 Engine Shop Manual (ESM) — current revisions, variant-specific</li>
+  <li>CFM International CFM56 Illustrated Parts Catalog (IPC) — variant-specific</li>
+  <li>CFM International Component Maintenance Manuals (CMM) — for AGB-mounted LRUs and other components</li>
+  <li>FAA Type Certificate Data Sheets for each CFM56 variant</li>
+  <li>Module-level OEM service bulletins and build standard lists</li>
+</ul>
 HTML
         ],
         [
-            'name'  => 'Module Summary',
-            'intro' => '<p>CFM56 familiarization recap.</p>',
-            'content' => '<h3>CFM56 Module Summary</h3><h4>Key takeaways</h4><ul><li>CFM56 is the largest installed-base turbofan — biggest aftermarket parts opportunity for TurbineWorks</li><li>Modular architecture (fan/booster, HPC, combustor, HPT, LPT, AGB) enables module-level trading</li><li>LLP set and current life limits per CFM ESM (current revision)</li><li>Cross-variant module compatibility is constrained — verify per IPC before any cross-application</li></ul><h4>References</h4><ul><li>CFM International ESM (CFM56 family, current revisions)</li><li>FAA Type Certificate Data Sheet E26NE (CFM56-7B) and related TCDS for other variants</li><li>FAA DRS — current AD list for affected CFM56 serial numbers</li></ul>',
+            'name'  => 'Lesson 3 — CFM56 LLP Set and Back-to-Birth Tracking',
+            'intro' => '<p>The complete CFM56 LLP roster, life-limit tracking, back-to-birth records, common documentation failures, and the LLP-fraud patterns the industry has seen.</p>',
+            'content' => <<<'HTML'
+<h3>CFM56 Life Limited Parts (LLPs): The Money in the Engine</h3>
+
+<h4>Why LLPs dominate engine value</h4>
+<p>A CFM56 has many parts. The LLPs — Life Limited Parts — are a relatively small number of rotating disks and shafts, but they dominate the engine's commercial value. A single HPT disk for a CFM56-7B carries a value of tens of thousands of dollars when serviceable with full life records; the same disk with missing records is worth scrap value. A complete CFM56-7B LLP stack (all disks, all shafts) represents a meaningful fraction of the entire engine's value.</p>
+<p>For TurbineWorks operating in the engine-parts distribution market, LLPs are the highest-value-per-pound items in inventory. The discipline of LLP tracking is therefore central to the business — not as a regulatory compliance burden, but as a core commercial competence.</p>
+
+<h4>What makes a part an LLP</h4>
+<p>An LLP is a rotating engine component whose failure could result in non-containment (a fragment exits the engine case in the event of failure) and whose life therefore must be tracked and limited. The FAA defines LLPs in 14 CFR §33.70 (Engine Life-Limited Parts), and Type Certificate Data Sheets list the specific parts and their initial life limits for each engine model.</p>
+<p>The life limit for an LLP is expressed in <strong>flight cycles</strong> (and sometimes flight hours, but for turbofan disks cycles are dominant). One cycle is one start-takeoff-cruise-descent-landing-shutdown sequence. The cycles reflect the low-cycle fatigue (LCF) loading on the part — each cycle accumulates fatigue damage at high-stress concentration locations in the disk's bore and rim.</p>
+<p>When an LLP reaches its life limit, it must be removed from service. It cannot be returned to service by inspection (the fatigue damage may be invisible until just before failure). It cannot be "re-lifed" through analysis. Life limit reached = end of useful life.</p>
+
+<h4>The complete CFM56-7B LLP set</h4>
+<p>The CFM56-7B LLPs (the variant TurbineWorks focuses on most) typically include:</p>
+
+<table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse;">
+  <tr style="background:#0d2240; color:#fff;">
+    <th>Module</th><th>LLP</th><th>Typical Initial Life Limit (cycles)</th>
+  </tr>
+  <tr><td>Fan</td><td>Fan disk</td><td>30,000+ (highest in the engine; conservative)</td></tr>
+  <tr><td>Booster</td><td>Booster stage 1 disk</td><td>~30,000</td></tr>
+  <tr><td>Booster</td><td>Booster stage 2 disk</td><td>~30,000</td></tr>
+  <tr><td>Booster</td><td>Booster stage 3 disk</td><td>~30,000</td></tr>
+  <tr><td>HPC</td><td>HPC stage 3 disk</td><td>20,000–30,000</td></tr>
+  <tr><td>HPC</td><td>HPC stage 4 disk</td><td>20,000–30,000</td></tr>
+  <tr><td>HPC</td><td>HPC stage 5 disk</td><td>20,000–30,000</td></tr>
+  <tr><td>HPC</td><td>HPC stage 6 disk</td><td>20,000–30,000</td></tr>
+  <tr><td>HPC</td><td>HPC stage 7 disk</td><td>20,000–30,000</td></tr>
+  <tr><td>HPC</td><td>HPC stage 8 disk</td><td>20,000–30,000</td></tr>
+  <tr><td>HPC</td><td>HPC stage 9 disk</td><td>20,000–30,000</td></tr>
+  <tr><td>HPT</td><td>HPT disk</td><td>~20,000 (lowest; highest stress)</td></tr>
+  <tr><td>HPT</td><td>HP shaft</td><td>20,000–30,000</td></tr>
+  <tr><td>LPT</td><td>LPT stage 1 disk</td><td>20,000–30,000</td></tr>
+  <tr><td>LPT</td><td>LPT stage 2 disk</td><td>20,000–30,000</td></tr>
+  <tr><td>LPT</td><td>LPT stage 3 disk</td><td>20,000–30,000</td></tr>
+  <tr><td>LPT</td><td>LPT stage 4 disk</td><td>20,000–30,000</td></tr>
+  <tr><td>LPT</td><td>LP shaft (rear portion)</td><td>20,000–30,000</td></tr>
+</table>
+
+<p><strong>Important caveats:</strong></p>
+<ul>
+  <li>Life limits are <strong>per CFM ESM at current revision</strong>. The cycles values above are illustrative ranges; the actual current limits depend on the part number, sub-variant, and any service-bulletin or service-letter adjustments.</li>
+  <li>CFM has revised limits over time as service data accumulates. Some limits have been extended (rare; requires substantial in-service evidence). Some have been reduced (more common, especially after field events). Always consult current ESM for the specific part number.</li>
+  <li>Customers (especially leasing companies) may impose more conservative limits than CFM's published values. The contractual limit, not just the regulatory limit, governs the commercial life of the part.</li>
+</ul>
+
+<h4>Why HPT disks are the highest-value LLPs</h4>
+<p>The HPT disk operates at the highest temperatures and stresses in the engine. Material costs are high (single-crystal or directionally-solidified nickel superalloys). Manufacturing complexity is high (precision forging, finish machining, dimensional verification at low-micron tolerance). Surface treatments are extensive (peening, coating). Single-disk replacement value is the highest of any LLP in the engine.</p>
+<p>The HPT disk's life limit is also typically the lowest of any LLP. The combination — highest value plus lowest life — means HPT disks turn over more frequently than other LLPs. A high fraction of the engine's life-cycle value flows through HPT disk replacements. Distributors specializing in CFM56 give HPT disks particular attention.</p>
+
+<h4>Back-to-birth (BtB) records: what they contain</h4>
+<p>"Back-to-birth" means tracking an LLP from manufacture to current state, with every event in between documented. The records must include:</p>
+
+<ol>
+  <li><strong>Manufacturer's release documentation.</strong> The original release for the part when manufactured. Identifies date of manufacture, part number, serial number, lot number, and OEM release authority.</li>
+  <li><strong>FAA 8130-3 (or equivalent) at manufacture.</strong> Original airworthiness release.</li>
+  <li><strong>Installation history.</strong> Every engine the part has been installed in, identified by engine serial number, with installation and removal dates.</li>
+  <li><strong>Cycle accumulation.</strong> Cycles accumulated on the part. May be tracked per-engine and totaled, or tracked separately per shop visit. Cycles since new (CSN) is the cumulative total.</li>
+  <li><strong>Shop visit history.</strong> Every shop visit the part has experienced. What MRO, when, what was performed, who released.</li>
+  <li><strong>Service bulletin and engineering order compliance.</strong> Any modifications or repairs applied to the part. Each SB or EO incorporation documented with date and authority.</li>
+  <li><strong>Inspection reports.</strong> Critical inspections — particularly at shop visits — documented with date, method, findings, and disposition.</li>
+  <li><strong>Repair history.</strong> Any repairs applied to the part, by whom, under what authority (typically OEM-approved repair process).</li>
+  <li><strong>Current FAA 8130-3.</strong> Current release attesting to the part's current airworthy status.</li>
+</ol>
+
+<p>The records are typically physical documents (paper) supplemented by electronic systems (the operator's maintenance tracking system, MRO records, OEM databases). For sale of an LLP, the records package travels with the part — copies, originals as required, in a documentation envelope.</p>
+
+<h4>Cycles tracking: TSN, CSN, TSO, CSO</h4>
+<p>Four time/cycle metrics are used in engine and LLP tracking:</p>
+<ul>
+  <li><strong>TSN (Time Since New)</strong> — total flight hours since manufacture</li>
+  <li><strong>CSN (Cycles Since New)</strong> — total flight cycles since manufacture</li>
+  <li><strong>TSO (Time Since Overhaul)</strong> — flight hours since the part's last overhaul</li>
+  <li><strong>CSO (Cycles Since Overhaul)</strong> — flight cycles since the part's last overhaul</li>
+</ul>
+
+<p>For LLPs, the metric that matters is <strong>CSN (cycles since new)</strong> — because the life limit is total cycles, not cycles since last overhaul. An LLP's remaining life is: life limit minus CSN.</p>
+
+<p>For non-LLP rotables (HPT blades, vanes, bearings, etc.), TSO/CSO matter for overhaul cadence and condition monitoring. These items can be overhauled and returned to service repeatedly; the cycles since last overhaul indicates how much remaining useful life is in the current build.</p>
+
+<h4>Common LLP documentation failures and red flags</h4>
+
+<p>The aviation parts industry has seen many LLP documentation failures. Some are honest errors; some are deliberate fraud. Common patterns to recognize:</p>
+
+<ol>
+  <li><strong>Missing manufacturer's original release.</strong> The 8130-3 at manufacture is the foundational document. Missing → part history starts somewhere in the middle, not at birth. Severely impacts saleability.</li>
+  <li><strong>Gap in installation history.</strong> The part shows installed in engine A from year 1 to 5, then in engine C from year 8 to current. What happened years 5–8? Unaccounted-for time can mean unrecorded cycles. Severely impacts trust.</li>
+  <li><strong>Inconsistent serial number trail.</strong> Records reference part SN 12345-67 but the data plate on the part reads 12345-67 with subtle differences (font, depth of engraving, etc.) suggesting the data plate was re-stamped. Investigate for counterfeit.</li>
+  <li><strong>Cycle counts that do not add up.</strong> The engine logs show 15,000 cycles on engine SN ABC; the LLP records claim 14,500 cycles on the LLP that was in that engine for the entire time. The 500-cycle gap is unexplained. Either the engine logs are wrong, the LLP logs are wrong, or the LLP was swapped.</li>
+  <li><strong>Repairs without OEM-approved data.</strong> The records reference a "repair" but the authority for the repair process is not identified, or the authority does not appear in OEM-approved repair sources. The repair may not be legitimate.</li>
+  <li><strong>"Lost in shipment" documentation.</strong> An LLP arrives without the full records package; the seller claims paperwork "was lost in shipping." Sometimes true; often a cover for documentation that does not exist.</li>
+  <li><strong>Photocopied records as "originals."</strong> The records package contains photocopies but the seller represents them as originals. A photocopied 8130-3 without a verified "TRUE COPY" stamp from an authorized organization is not a valid release.</li>
+  <li><strong>Re-issued 8130-3 without a justification.</strong> A re-issued 8130-3 is acceptable if there is a documented reason (e.g., the original was destroyed). A re-issued release without explanation is a flag.</li>
+  <li><strong>Mismatched part numbers between data plate and records.</strong> The data plate shows P/N X; the records show P/N Y. Either the data plate or the records are wrong. Both are evidence problems.</li>
+  <li><strong>Records that look "too clean."</strong> A 30-year-old LLP with crisp, never-folded, perfectly-typed records — versus the typical 30-year LLP record which is faded, hand-corrected, and reflects multiple operators and MROs. Suspicious cleanliness can indicate fabrication.</li>
+</ol>
+
+<p>The receiving QA Manager evaluates the records package as a whole. Individual flags may not be disqualifying; multiple flags together, or a single severe flag, support quarantine and supplier investigation.</p>
+
+<h4>LLP fraud patterns industry has seen</h4>
+
+<p>Three real-world LLP fraud patterns that have generated FAA enforcement actions and criminal prosecutions:</p>
+
+<p><strong>Pattern 1: Fictitious cycle records.</strong> An LLP from a high-cycle engine (close to life limit, low remaining value) is sold with falsified records claiming low cycles (mid-life, high remaining value). Buyer pays premium for "low-time" LLP that is actually near life limit. Detection: cross-check the LLP's claimed history against the engines it was reportedly installed in. Discrepancies emerge.</p>
+
+<p><strong>Pattern 2: Identity swap.</strong> A legitimate LLP with full records (good documentation) is paired with a different (counterfeit or higher-cycle) LLP via re-stamping or fake data plate. The records and the actual part are no longer the same item. Detection: physical inspection of data plate against records, dimensional measurements, in some cases metallurgical analysis.</p>
+
+<p><strong>Pattern 3: Re-introduction of scrapped LLPs.</strong> An LLP was previously declared scrap (mutilated, beyond economic repair) by an authorized organization. The mutilation was not properly performed; the part identity was re-stamped and the LLP is re-introduced to the secondary market with a fictitious low-cycle history. Detection: cross-check against OEM's scrap records (where available); look for evidence of re-stamping or repair of mutilation marks.</p>
+
+<p>Each pattern has been documented in real FAA enforcement cases involving CFM56, JT8D, CF6, and other widely-traded engines. The financial incentive for fraud is real: a single high-value LLP with falsified records can yield $30,000–$100,000+ over its actual value. The criminal exposure for sellers is also real: federal aviation fraud carries substantial prison sentences when proven.</p>
+
+<h4>The cycle counting discipline</h4>
+
+<p>When TurbineWorks receives an LLP, the cycle count must be verified against multiple sources:</p>
+
+<ol>
+  <li><strong>The LLP record (cycles since new).</strong> The headline number.</li>
+  <li><strong>The engine logs the LLP came from.</strong> Cross-check: did the engine accumulate the cycles claimed?</li>
+  <li><strong>The shop visit records.</strong> If the LLP has been removed for shop visits, the cycles at removal and reinstallation should align.</li>
+  <li><strong>The operator's tracking system records.</strong> Where available, the operator's maintenance tracking system has the master cycle history.</li>
+  <li><strong>OEM records (where accessible).</strong> CFM maintains some LLP serialization records; for high-value LLPs, OEM verification may be possible.</li>
+</ol>
+
+<p>If all sources agree on cycle count, the LLP's history is well-supported. Any disagreement requires investigation before accepting the LLP.</p>
+
+<h4>The "stub shaft" issue</h4>
+
+<p>Some CFM56 LLPs are not standalone disks but are integrated into a "stub shaft" or "drum" structure that combines multiple stages. The CFM56-7B booster is typically a single drum integrating stages 1–3. Each stage's "disk" is a feature within the drum, not a separable part.</p>
+
+<p>For such integrated LLPs, the life is tracked at the drum level, not at the individual stage level. Removing one stage means removing the entire drum. The complete drum is the trading unit.</p>
+
+<p>Receiving must understand the LLP topology of each CFM56 variant. The IPC is the authoritative reference.</p>
+
+<h4>LLP value drivers in trade</h4>
+
+<p>What determines what TurbineWorks pays for an LLP and what TurbineWorks can charge:</p>
+<ul>
+  <li><strong>Cycles remaining.</strong> The primary value driver. Low cycles since new = high remaining life = high value.</li>
+  <li><strong>Records quality.</strong> Complete, original, well-organized records = high value. Gaps, photocopies, missing originals = discounted.</li>
+  <li><strong>SB compliance status.</strong> Up-to-date SB compliance = no immediate work needed by buyer = higher value.</li>
+  <li><strong>AD compliance.</strong> All applicable ADs complied with = saleable as-is.</li>
+  <li><strong>Build standard.</strong> Current build standard (latest combustor, latest cooling configuration) = higher value than older build.</li>
+  <li><strong>Visual and dimensional condition.</strong> Inspection findings at shop visit affect value. Repairable damage = still saleable at reduced price; non-repairable = scrap.</li>
+  <li><strong>Market demand.</strong> Variant in active demand (CFM56-7B today) = higher value. Variant in declining demand (CFM56-3 today) = lower value.</li>
+  <li><strong>Provenance.</strong> Major operator pedigree (a CFM56-7B LLP from a large U.S. airline's well-maintained engine) = higher value than the same LLP from an unknown operator.</li>
+</ul>
+
+<h4>Self-check questions</h4>
+<ol>
+  <li>Why do LLPs dominate the commercial value of a CFM56 engine, despite being a relatively small number of total parts?</li>
+  <li>What is the legal definition of a Life Limited Part per 14 CFR §33.70?</li>
+  <li>List the CFM56-7B LLP set. Which LLP typically has the lowest life limit?</li>
+  <li>What does "back-to-birth" tracking mean, and what nine elements must the records contain?</li>
+  <li>For an LLP, why does CSN (Cycles Since New) matter more than CSO (Cycles Since Overhaul)?</li>
+  <li>List five common LLP documentation red flags.</li>
+  <li>Describe the three LLP fraud patterns the industry has documented.</li>
+  <li>Why is cross-checking LLP cycle counts against engine log records, shop visit records, and operator tracking systems important?</li>
+  <li>What is a "stub shaft" or "drum" structure in LLP terms, and how does it affect parts trading?</li>
+  <li>List the eight value drivers for LLP trade.</li>
+</ol>
+
+<h4>References</h4>
+<ul>
+  <li>14 CFR §33.70 — Engine Life-Limited Parts</li>
+  <li>FAA AC 33.70-1 — Guidance Material on Life-Limited Engine Parts</li>
+  <li>FAA AC 120-77 — Maintenance and Alteration Data</li>
+  <li>CFM International ESM — current revision life limits for each variant and part number</li>
+  <li>CFM International IPC — LLP topology per variant</li>
+  <li>FAA Type Certificate Data Sheet (E26NE for CFM56-7B; equivalents for other variants)</li>
+  <li>FAA DRS — Airworthiness Directives applicable to CFM56 LLPs</li>
+</ul>
+HTML
+        ],
+        [
+            'name'  => 'Lesson 4 — CFM56 ADs, SBs, and Service Documentation',
+            'intro' => '<p>Airworthiness Directives, Service Bulletins, Customer Notifications — the document hierarchy that governs CFM56 compliance, with the major ADs every distributor should know.</p>',
+            'content' => <<<'HTML'
+<h3>CFM56 Airworthiness Directives, Service Bulletins, and Service Documentation</h3>
+
+<h4>The document hierarchy</h4>
+<p>CFM and FAA together produce a layered set of documents governing what may, must, or should be done to a CFM56 engine. Understanding the hierarchy is essential because each document type has different legal weight and different operational implications:</p>
+
+<ol>
+  <li><strong>Airworthiness Directive (AD).</strong> Issued by the FAA (or equivalent authority — EASA AD, TCCA AD). <strong>Mandatory.</strong> Compliance is required by law for any registered aircraft using the affected engines. Non-compliance grounds the engine and the aircraft.</li>
+  <li><strong>Emergency Airworthiness Directive (EAD).</strong> A subset of AD that the FAA issues without normal notice-and-comment when an unsafe condition is identified. Immediately effective. Same legal weight as AD.</li>
+  <li><strong>Service Bulletin (SB).</strong> Issued by CFM. <strong>Generally optional</strong> unless mandated by an AD that references the SB. SBs describe modifications, inspections, or repairs. Classified by CFM as:
+    <ul>
+      <li><strong>Alert SB</strong> — addresses a safety issue; intended for prompt action (and often subsequently mandated via AD)</li>
+      <li><strong>Recommended SB</strong> — improvements or refinements; not safety-critical</li>
+      <li><strong>Optional SB</strong> — purely optional configuration changes</li>
+    </ul>
+  </li>
+  <li><strong>Service Letter (SL).</strong> Issued by CFM. Information rather than action. Identifies issues, communicates technical guidance, recommends practices. Lower commitment level than SB.</li>
+  <li><strong>Customer Notification.</strong> CFM-to-operator communication, often addressing a specific issue at a specific operator. Not generally available to the broader market.</li>
+  <li><strong>Engineering Order (EO).</strong> Sometimes issued by operators or MROs as their internal implementation of an SB or AD. Documents the specific work performed on a specific engine.</li>
+</ol>
+
+<h4>How ADs and SBs relate</h4>
+<p>The relationship is non-trivial. Many CFM56 ADs reference specific CFM SBs:</p>
+<ul>
+  <li><strong>The AD mandates compliance with the SB.</strong> Example: "FAA AD 2018-XX requires accomplishment of CFM SB 72-XXXX by [date or cycle threshold]." The SB describes the work; the AD makes it mandatory.</li>
+  <li><strong>The AD may modify the SB's instructions.</strong> Example: "comply with SB 72-XXXX with the following changes:..." The AD has higher legal weight than the SB it references.</li>
+  <li><strong>An SB may exist without an AD.</strong> Many CFM-recommended SBs are not mandated. Operators choose whether to incorporate based on cost-benefit.</li>
+  <li><strong>An AD may exist without a specific SB.</strong> Some ADs prescribe action directly without referencing an SB (less common).</li>
+</ul>
+
+<p>For a distributor: the AD compliance status of an engine or component is a hard requirement. The SB compliance status of an engine is a market-value driver — buyers prefer up-to-date SB configuration even when not legally required.</p>
+
+<h4>The major CFM56-7B ADs every distributor should know</h4>
+
+<p>This section summarizes notable ADs. The current text of each is on the FAA Dynamic Regulatory System (DRS). For any actual compliance decision, retrieve the current AD text from DRS — wording, dates, and applicability change as ADs are revised.</p>
+
+<p><strong>1. CFM56-7B Fan Blade Inspection AD (2018).</strong></p>
+<p>Issued in response to Southwest Airlines Flight 1380 on April 17, 2018. A CFM56-7B fan blade failed in flight at cruise altitude on a 737-700. The fan blade detached, struck the nacelle and inlet, fragments impacted the aircraft fuselage, depressurization occurred, and one passenger was killed. The fan blade root had cracked at a location prone to high-cycle fatigue.</p>
+<p>The FAA EAD followed within weeks, ordering ultrasonic inspection of fan blade roots across the CFM56-7B fleet at a cycle threshold. The AD was subsequently revised multiple times as the fleet's inspection results clarified the failure mechanism. Implications for distributors: any CFM56-7B fan blade in inventory has a known inspection-status condition; the inspection records become part of the LLP-like documentation accompanying fan blades.</p>
+
+<p><strong>2. CFM56-7B HPT Shroud Cracking ADs.</strong></p>
+<p>Multiple ADs over the years addressing cracking in HPT shroud segments. Shrouds are the segmented ceramic-coated metal pieces that form the outer boundary of the gas path adjacent to HPT blade tips. Cracking can affect tip-clearance and engine performance and (in extreme cases) lead to liberation of fragments. Recurrent inspection requirements typical.</p>
+
+<p><strong>3. CFM56-7B Oil Leak ADs.</strong></p>
+<p>Several ADs over the years addressing oil leak issues — from external oil seal failures, from internal seals between bearing compartments, from oil tube fittings. Each AD specifies the affected component, the inspection or replacement requirement, and the compliance schedule.</p>
+
+<p><strong>4. CFM56-7B Combustor Cracking ADs.</strong></p>
+<p>Specific build standards of combustor have shown cracking patterns. Modified combustor builds (Tech Insertion etc.) have improved combustor durability. ADs prescribe inspection or replacement of pre-modification combustors at specified cycle thresholds.</p>
+
+<p><strong>5. CFM56-5B HPT Vane / Combustor / Compressor ADs.</strong></p>
+<p>The -5B variant has its own AD list, largely independent of -7B. Issues addressed have included HPT vane cracking, certain HPC stage cracking, fuel nozzle deposit-related distress. Each AD is variant-specific; not transferable to -7B even where the issue sounds similar.</p>
+
+<p><strong>6. CFM56-3 Fan Blade Root Inspection ADs.</strong></p>
+<p>Predecessor to the -7B fan blade issue. Earlier-discovered fatigue cracking in -3 fan blade roots prompted earlier ADs on the -3 variant. The -7B AD largely repeats lessons learned from the -3 program.</p>
+
+<p><strong>7. CFM56-2 Series ADs.</strong></p>
+<p>Older variant; AD history extends back to the 1980s. Major military operator (USAF KC-135R fleet) has its own internal compliance program; commercial -2 operations have similar AD compliance requirements. Aging-engine-specific ADs apply to the oldest in-service -2 engines.</p>
+
+<p><strong>Common pattern across these ADs:</strong> a specific failure event drives investigation, investigation identifies the failure mechanism, the failure mechanism is shown to be present in other in-service parts, the FAA mandates inspection or modification, and the fleet incorporates the change. The CFM56 fleet has been through many such cycles over 40 years of service.</p>
+
+<h4>Notable SBs without mandatory AD status</h4>
+
+<p>Some CFM SBs are commercially significant even though not legally mandated. Examples:</p>
+<ul>
+  <li><strong>Tech Insertion (TI) build standard SBs.</strong> Series of SBs introduced around 2007 for CFM56-7B (and parallel for -5B). Improved compressor, combustor, and turbine durability. Engines incorporating TI have measurably better on-wing time. Operators incorporated voluntarily for the operating-cost benefit. TI-configured engines trade at premium to non-TI in the secondary market.</li>
+  <li><strong>Performance Improvement Package (PIP) SBs.</strong> Subsequent improvements to TI baseline.</li>
+  <li><strong>Compressor cleaning SBs.</strong> Procedures for in-service compressor cleaning to recover performance loss. Voluntary but operationally common.</li>
+  <li><strong>Borescope inspection (BSI) procedural SBs.</strong> Define BSI procedures and acceptance criteria. Not actions to be performed but procedural references.</li>
+</ul>
+
+<h4>How to verify AD/SB compliance status on a CFM56 part</h4>
+
+<p>For a CFM56 component or engine arriving at TurbineWorks, AD/SB compliance verification follows a workflow:</p>
+
+<ol>
+  <li><strong>Identify applicable ADs.</strong> Use the FAA DRS (Dynamic Regulatory System) at <a href="https://drs.faa.gov/" target="_blank" rel="noopener">drs.faa.gov</a>. Search for ADs applicable to the engine variant (e.g., "CFM56-7B") and component category. Generate a current applicability list.</li>
+  <li><strong>Identify applicable SBs.</strong> The supplier's documentation typically lists SBs incorporated. CFM maintains build standard listings — the current configuration of the engine or module.</li>
+  <li><strong>Verify each AD compliance.</strong> For each AD, the records should document: SB referenced (if any), date of compliance, work performed, who performed (MRO and authority), and any cycle/time threshold tracking. The records show compliance; absence of records suggests non-compliance.</li>
+  <li><strong>Verify each SB incorporation.</strong> For each SB the customer requires, the records should document incorporation similar to AD records.</li>
+  <li><strong>Flag non-compliance.</strong> A part with an open AD (mandatory, not yet complied with) cannot be sold for installation. The part must be modified to compliance before installation, or sold for non-installation use (test bench, training).</li>
+  <li><strong>Document the verification.</strong> TurbineWorks records identify which AD/SB compliance status was verified at receiving. This becomes part of the part's documentation.</li>
+</ol>
+
+<h4>The DRS is the authoritative AD source</h4>
+
+<p>The FAA DRS contains the current text of every active AD. Historical ADs are also available. The DRS is updated when ADs are revised or new ADs are issued. <strong>Distributors should not rely on printed AD lists, summaries, or third-party databases for compliance decisions — those age out as ADs are revised.</strong> Always retrieve the current AD from DRS for any compliance verification.</p>
+
+<p>Some operators and MROs subscribe to commercial AD tracking services that consolidate FAA, EASA, TCCA, and other authority ADs in one interface. These can be operationally convenient but the DRS remains the authoritative source for FAA ADs.</p>
+
+<h4>Foreign authority ADs</h4>
+
+<p>EASA, TCCA, ANAC (Brazil), CAAC (China), and other authorities issue their own ADs. For a CFM56 component installed on a non-U.S.-registered aircraft, the applicable AD authority is the registering country's authority. EASA ADs for CFM56 frequently mirror FAA ADs but may have different effective dates, different applicability cycles, or additional requirements.</p>
+
+<p>For a U.S.-based distributor like TurbineWorks selling primarily to U.S. operators: FAA ADs are the primary concern. For international sales, the buyer's authority's ADs become relevant — the buyer typically tracks these and confirms the part's status against their requirements.</p>
+
+<h4>The TurbineWorks AD/SB compliance verification workflow</h4>
+
+<p>Practical workflow for AD/SB verification at TurbineWorks:</p>
+
+<ol>
+  <li><strong>At receiving:</strong> verify the supplier's claimed compliance against the records. Cross-check at least the most-recently-issued ADs and customer-required SBs.</li>
+  <li><strong>For inventory items:</strong> periodically (quarterly or on AD issuance) review existing inventory against newly-issued ADs. An AD issued today may affect a part already in TurbineWorks inventory — the part may need rework before sale.</li>
+  <li><strong>At sale:</strong> verify current AD/SB compliance status matches what the customer expects. Update the records if any compliance work was performed in the interim.</li>
+  <li><strong>Records retention:</strong> AD/SB compliance records become part of the part's documentation and travel with the part.</li>
+</ol>
+
+<h4>What the auditor expects</h4>
+
+<p>An ASA-100 audit, an AS9120 audit, or a customer quality audit will verify:</p>
+<ul>
+  <li>TurbineWorks has access to current AD information (DRS or equivalent)</li>
+  <li>A documented procedure for AD/SB compliance verification</li>
+  <li>Trained personnel performing the verification</li>
+  <li>Records demonstrating verification has occurred on inventory and sales</li>
+  <li>A process to identify and address open ADs on inventory items</li>
+</ul>
+
+<p>The ASA inspector may spot-check by selecting a specific inventory item and asking to see the AD/SB compliance verification record. A coherent, current record demonstrates the program operates.</p>
+
+<h4>Self-check questions</h4>
+<ol>
+  <li>What is the difference between an AD, an SB, and a Service Letter? Which has legal mandatory weight?</li>
+  <li>Describe how the 2018 Southwest 1380 incident led to a CFM56-7B fan blade AD.</li>
+  <li>Why might an operator voluntarily incorporate a "Tech Insertion" SB even though it is not mandated by an AD?</li>
+  <li>What is the FAA Dynamic Regulatory System (DRS), and why is it the authoritative source for current ADs?</li>
+  <li>Describe TurbineWorks' six-step workflow for verifying AD/SB compliance on a received CFM56 component.</li>
+  <li>If a CFM56-7B component in TurbineWorks inventory becomes affected by a newly-issued AD, what does TurbineWorks do?</li>
+  <li>For a CFM56 component shipped to an EU operator, whose ADs apply — FAA or EASA?</li>
+  <li>What records does TurbineWorks retain to demonstrate AD/SB verification, and how do they travel with the part?</li>
+</ol>
+
+<h4>References</h4>
+<ul>
+  <li>FAA Dynamic Regulatory System (DRS) — <a href="https://drs.faa.gov/" target="_blank" rel="noopener">drs.faa.gov</a></li>
+  <li>EASA Airworthiness Directives — <a href="https://ad.easa.europa.eu/" target="_blank" rel="noopener">ad.easa.europa.eu</a></li>
+  <li>CFM International Service Bulletins and Service Letters (controlled distribution)</li>
+  <li>CFM International CFM56 ESM with current SB list</li>
+  <li>14 CFR §39 — Airworthiness Directives</li>
+  <li>NTSB Aircraft Accident Report — Southwest Airlines Flight 1380 (2018)</li>
+</ul>
+HTML
+        ],
+        [
+            'name'  => 'Lesson 5 — CFM56 Aftermarket Ecosystem and TurbineWorks Positioning',
+            'intro' => '<p>The MROs, PMA suppliers, dealers, and brokers that make up the CFM56 secondary market — and where TurbineWorks fits in the value chain.</p>',
+            'content' => <<<'HTML'
+<h3>The CFM56 Aftermarket: Ecosystem and TurbineWorks Positioning</h3>
+
+<h4>The aftermarket is a multi-billion-dollar industry</h4>
+<p>The CFM56 generates substantial aftermarket revenue every year. Shop visit cost for a CFM56-7B (a "performance restoration" overhaul) is typically several million dollars. Across 18,000+ in-service CFM56-7B engines with shop visit intervals of roughly 8,000–15,000 cycles, the fleet generates thousands of shop visits annually — and each shop visit consumes hundreds of consumable parts plus modules of repair work. Aggregate annual aftermarket revenue across all CFM56 variants is in the billions of dollars.</p>
+<p>The market has multiple distinct participants, each playing a different role:</p>
+
+<h4>OEM (CFM International / CFM Materials)</h4>
+<p>CFM itself supplies new parts and provides reference services to operators. CFM Materials is the dedicated parts-sales organization. OEM new parts are typically the most expensive option but also the most clearly-documented. Some operators (particularly leasing companies and risk-sensitive operators) specify OEM-new on high-value rotables.</p>
+
+<h4>Authorized MROs (engine shops)</h4>
+<p>The MROs perform engine and module overhauls. They consume parts (some new, some used-serviceable) and produce shop-visited engines and modules. The major CFM56 MROs:</p>
+<ul>
+  <li><strong>StandardAero</strong> — multiple U.S. and international locations</li>
+  <li><strong>MTU Maintenance</strong> — German aerospace MRO</li>
+  <li><strong>Lufthansa Technik</strong> — Germany-based, global operations</li>
+  <li><strong>Air France Industries / KLM E&M (AFI KLM E&M)</strong> — combined Franco-Dutch MRO</li>
+  <li><strong>Delta TechOps</strong> — Delta Air Lines' in-house MRO; also serves external customers</li>
+  <li><strong>American Airlines Tulsa</strong> — internal MRO</li>
+  <li><strong>HAECO</strong> — Hong Kong-based, broad commercial operations</li>
+  <li><strong>SR Technics</strong> — Switzerland</li>
+  <li><strong>ST Aerospace / ST Engineering</strong> — Singapore</li>
+  <li><strong>CFM Services / CFM Materials</strong> — CFM's own MRO and parts arm</li>
+  <li><strong>Aero Engines & Aviation Tulsa</strong> — Tulsa, OK independent</li>
+  <li>Many regional/independent shops with CFM-authorization for specific work scopes</li>
+</ul>
+<p>MROs are TurbineWorks' customers when TurbineWorks supplies parts for shop visits. They are also TurbineWorks' competitors at the "shop visit" level — an MRO that has a full parts kit option can include the parts in its shop visit price, competing against TurbineWorks parts.</p>
+
+<h4>PMA suppliers</h4>
+<p>FAA Parts Manufacturer Approval (PMA) is the regulatory pathway for non-OEM manufacturers to produce certified replacement parts. PMA suppliers for CFM56 components have proliferated since the 1990s, particularly for:</p>
+<ul>
+  <li>Combustor liners and fuel nozzles</li>
+  <li>HPT blades and vanes (after the original OEM patent protection expired)</li>
+  <li>HPC blades and vanes</li>
+  <li>Seals, gaskets, O-rings</li>
+  <li>Various brackets, fittings, and mechanical accessories</li>
+</ul>
+<p>Major PMA suppliers in CFM56 parts:</p>
+<ul>
+  <li><strong>HEICO</strong> — largest commercial PMA supplier; deep CFM56 parts catalog</li>
+  <li><strong>Chromalloy</strong> — repair and PMA-replacement specialist</li>
+  <li><strong>Triumph Group</strong> — various PMA parts</li>
+  <li><strong>Aviall (Boeing)</strong> — distribution plus some PMA</li>
+  <li>Numerous smaller PMA suppliers for specific part categories</li>
+</ul>
+<p>PMA parts trade at discount to OEM new (typically 20–40% less). Their certification basis is FAA-approved data showing the PMA part is at least equivalent to the OEM original. Some operators accept PMA broadly; others restrict PMA to non-critical parts; some operators (typically high-end leasing companies) restrict PMA entirely.</p>
+
+<h4>Module and component dealers</h4>
+<p>Independent dealers specialize in trading modules and high-value components. These are the direct competitors and counterparties to TurbineWorks. Major players include:</p>
+<ul>
+  <li>Large engine leasing companies (GECAS — now AerCap; SMBC Aviation Capital; AerSale; Willis Lease)</li>
+  <li>Engine teardown brokers (specialists in buying retired engines and breaking them down for parts)</li>
+  <li>Component dealers focusing on specific categories (e.g., dealers who specialize in HPT disks)</li>
+  <li>Regional aviation parts distributors (similar in size to TurbineWorks but with different geographic/customer focus)</li>
+</ul>
+
+<h4>USM (Used Serviceable Material) brokers</h4>
+<p>USM brokers buy retired engines from operators, leasing companies, or scrap yards, then break the engines down into modules, sub-modules, components, and consumables. The broker is an upstream supplier to distributors and MROs.</p>
+<p>A retired CFM56-3 from a cargo-converted 737 Classic, for example, may be worth more broken down into parts than as a complete engine. The broker performs the breakdown, has the parts certified by an authorized organization, and feeds the resulting inventory into the market.</p>
+<p>For TurbineWorks: USM brokers are key suppliers. Building strong relationships with reliable brokers is a sourcing-side competitive advantage.</p>
+
+<h4>Operators (the end customers)</h4>
+<p>Commercial airlines, cargo operators, leasing companies, military, and others operating CFM56-powered aircraft. The end customers for the entire aftermarket:</p>
+<ul>
+  <li><strong>U.S. airlines:</strong> Southwest (largest 737NG operator), American, Delta, United, Alaska, JetBlue, etc.</li>
+  <li><strong>International airlines:</strong> Ryanair (largest 737NG operator globally), Lufthansa, Air France, easyJet, IndiGo, etc.</li>
+  <li><strong>Cargo operators:</strong> ATSG, FedEx (737 freighters), Atlas Air</li>
+  <li><strong>Leasing companies:</strong> AerCap, SMBC, Avolon, BBAM, Air Lease Corp, others</li>
+  <li><strong>U.S. military:</strong> KC-135R fleet (Air National Guard, regular AF), C-40 Clipper, P-8 Poseidon, E-3, E-6, E-8</li>
+  <li><strong>Foreign militaries:</strong> Saudi Arabia (KE-3 tankers), India, others operating CFM56-2/3/7B in military or government roles</li>
+</ul>
+<p>Operators source parts through multiple channels: direct from CFM, through their MROs, through authorized distributors, through brokers, and through USM channels. The distributor's role is to be in the supply chain when the operator (or its MRO) places an order.</p>
+
+<h4>Where TurbineWorks fits</h4>
+
+<p>For a 2-person aviation parts distributor specializing in aircraft engine parts, the strategic positioning options:</p>
+
+<p><strong>Geographic focus.</strong> Geographic specialization (e.g., U.S. + Latin America focus, or regional U.S. focus) reduces competition with global majors and concentrates relationship investment.</p>
+
+<p><strong>Variant specialization.</strong> CFM56-7B has the largest active demand. CFM56-5B has the second-largest. Focusing on these two variants concentrates inventory and expertise.</p>
+
+<p><strong>Module-level vs component-level.</strong> Modules are higher-value individual transactions but require larger inventory capital. Components are smaller transactions but higher transaction frequency. Mix depends on capital availability and customer mix.</p>
+
+<p><strong>Customer specialization.</strong> Some distributors specialize in serving MROs (high volume, lower margin, more parts-kit work). Others specialize in serving direct operators (lower volume, higher margin per unit). Others specialize in serving brokers/dealers (resale market). TurbineWorks' positioning here depends on commercial relationships.</p>
+
+<p><strong>OEM vs PMA mix.</strong> A distributor sourcing primarily OEM-new from CFM has a different capital structure (higher inventory cost, more conservative customer base) than a distributor sourcing primarily USM or PMA (lower inventory cost, more cost-sensitive customer base).</p>
+
+<p><strong>Inventory vs broker model.</strong> "Stocking distributor" — holds inventory, ships from stock, faster delivery. "Broker distributor" — does not hold most inventory, fills orders from supplier network, slower delivery but lower capital. TurbineWorks' positioning here is a fundamental business model question.</p>
+
+<h4>Pricing dynamics in the CFM56 aftermarket</h4>
+
+<p>Key drivers of pricing:</p>
+<ul>
+  <li><strong>Cycles remaining on LLPs.</strong> The dominant driver for life-limited rotables. A near-life-limit LLP is worth a fraction of a low-time LLP.</li>
+  <li><strong>Provenance.</strong> Major operator pedigree commands premium. "From a Southwest Airlines maintenance program" is worth more than "from an unknown operator."</li>
+  <li><strong>Build standard / SB compliance.</strong> Current build standard commands premium. Older standards trade at discount unless brought up to current.</li>
+  <li><strong>AD compliance status.</strong> Up-to-date compliance is the baseline expectation. Open ADs require remediation before sale.</li>
+  <li><strong>Market demand for the variant.</strong> CFM56-7B in active demand vs CFM56-3 in declining demand.</li>
+  <li><strong>Inventory position.</strong> When a specific part is scarce (recent surge in shop visit demand, supplier capacity constraint), pricing rises. When abundant (multiple engine teardowns hitting market), pricing falls.</li>
+  <li><strong>Time pressure of the customer.</strong> An aircraft on ground at the customer's hub commands premium for fast delivery. A customer planning a six-month overhaul has time to find the best price.</li>
+</ul>
+
+<h4>The competitive dynamic for a small distributor</h4>
+
+<p>A 2-person distributor competes against multi-hundred-person operations. The competitive advantages a small distributor can realistically build:</p>
+
+<ol>
+  <li><strong>Relationships.</strong> Direct customer and supplier relationships. Larger operators have more relationships but less individual attention to each. Small distributor can be the preferred call for specific customers and specific part categories.</li>
+  <li><strong>Speed and responsiveness.</strong> A small organization can quote in hours rather than days, ship same-day, handle non-routine requests.</li>
+  <li><strong>Niche expertise.</strong> Deep specialization in a specific variant or component category. Knowing the CFM56-7B LLP market better than the average generalist distributor.</li>
+  <li><strong>Quality / records discipline.</strong> ASA-100 accreditation, careful documentation, low rejection rates. Differentiator with quality-conscious customers (leasing companies, top-tier operators).</li>
+  <li><strong>Pricing flexibility.</strong> Lower overhead than majors. Can sometimes win on price for similar quality.</li>
+  <li><strong>Geographic accessibility.</strong> Local presence to specific customers reduces freight time and complexity.</li>
+</ol>
+
+<p>Where the small distributor cannot effectively compete:</p>
+<ul>
+  <li><strong>Inventory breadth.</strong> Cannot stock thousands of part numbers across all variants.</li>
+  <li><strong>Long-term contract supply.</strong> Limited ability to commit to multi-year flow contracts.</li>
+  <li><strong>OEM-direct purchasing scale.</strong> CFM does not give the same discount tiers to 2-person operations as to majors.</li>
+  <li><strong>Brand recognition for risk-sensitive customers.</strong> Some customers' procurement teams will not buy from unknown distributors.</li>
+</ul>
+
+<h4>The accreditation imperative</h4>
+
+<p>For a small distributor, ASA-100 accreditation is the credential that opens doors. Without accreditation, many quality-sensitive customers will not engage. With accreditation, the distributor is on the qualified-supplier list and can compete for business.</p>
+
+<p>TurbineWorks' path to ASA-100 accreditation is the foundation of all the other competitive positioning. The training program, the QAM, the procedures, the records — these are not just regulatory burdens. They are the operational competence that proves the distributor is reliable. The same discipline that satisfies ASA also satisfies customer quality audits, supports AS9120 progression when desired, and protects the distributor when issues arise.</p>
+
+<h4>What every TurbineWorks employee should understand about the market</h4>
+
+<ol>
+  <li>TurbineWorks operates in a specific niche of a large, mature, multi-billion-dollar aftermarket.</li>
+  <li>The CFM56-7B is the most operationally important variant; CFM56-5B is the second; others are smaller or declining markets.</li>
+  <li>The market has several distinct participant types — OEM, MROs, PMA suppliers, dealers, brokers, USM specialists, operators. TurbineWorks interacts with multiple types.</li>
+  <li>Pricing reflects cycles remaining, build standard, AD compliance, provenance, demand cycle, and time pressure.</li>
+  <li>A small distributor competes through relationships, speed, niche expertise, and quality discipline — not through inventory breadth or scale.</li>
+  <li>ASA-100 accreditation is the foundational credential.</li>
+  <li>The LEAP transition is the long-term context — the CFM56 market is mature, declining over decades, but with substantial runway remaining (15+ years for CFM56-7B). TurbineWorks' business will eventually need to transition with the market.</li>
+</ol>
+
+<h4>Self-check questions</h4>
+<ol>
+  <li>Who are the major MRO players in the CFM56 aftermarket?</li>
+  <li>What is the difference between an OEM new part and a PMA part? What is the typical price difference?</li>
+  <li>What is a USM broker, and why are they key suppliers to distributors like TurbineWorks?</li>
+  <li>List six positioning options a small distributor can choose among.</li>
+  <li>Why does provenance affect parts pricing in the CFM56 aftermarket?</li>
+  <li>List six competitive advantages a small distributor can build against larger competitors.</li>
+  <li>Why is ASA-100 accreditation foundational rather than incidental for a small distributor?</li>
+  <li>What is the long-term outlook for the CFM56 market, and how should that affect TurbineWorks' strategic planning?</li>
+</ol>
+
+<h4>References</h4>
+<ul>
+  <li>CFM International — corporate publications</li>
+  <li>ASA Aftermarket Operations Reports</li>
+  <li>Aviation Week MRO Americas / MRO Europe market reports</li>
+  <li>FAA PMA program (14 CFR §21.303 and AC 21-303)</li>
+  <li>Industry publications — Aviation Week, Air Transport World, Airline Economics</li>
+</ul>
+HTML
+        ],
+        [
+            'name'  => 'Lesson 6 — CFM56 Module Summary',
+            'intro' => '<p>CFM56 deep-dive recap.</p>',
+            'content' => '<h3>CFM56 Course Summary</h3>
+
+<h4>What you should now know</h4>
+<p>This course covered the CFM56 family — the engine line at the core of TurbineWorks\' commercial focus. Specifically:</p>
+<ul>
+  <li><strong>History and variants.</strong> CFM International is a GE/Safran 50/50 JV; five variant families (-2, -3, -5A/B, -5C, -7B); 33,000+ engines delivered.</li>
+  <li><strong>Architecture.</strong> Two-spool turbofan with eight standard modules; LLP set per variant; cross-variant compatibility constraints.</li>
+  <li><strong>LLPs.</strong> The economic core of the engine; back-to-birth records; cycle tracking discipline; common documentation failures; LLP fraud patterns.</li>
+  <li><strong>ADs and SBs.</strong> Document hierarchy; major CFM56-7B ADs (fan blade post-1380, HPT shroud, oil leak, combustor); FAA DRS as authoritative source; AD/SB compliance verification workflow.</li>
+  <li><strong>Market and positioning.</strong> The aftermarket ecosystem; MROs, PMA suppliers, USM brokers, operators; pricing dynamics; competitive positioning for a small distributor; accreditation imperative.</li>
+</ul>
+
+<h4>Where to find more</h4>
+<ul>
+  <li>CFM International ESM (current revision; controlled distribution per the operator\'s subscription)</li>
+  <li>CFM IPC (current revision; controlled distribution)</li>
+  <li>FAA DRS for current ADs</li>
+  <li>FAA Type Certificate Data Sheets (E26NE for -7B; others for other variants)</li>
+  <li>Engine Manuals (variant-specific; controlled distribution)</li>
+  <li>Industry publications — Aviation Week MRO sector reports</li>
+</ul>
+
+<h4>Recurring training reminder</h4>
+<p>This course is reviewed in the 6-month recurring training cadence. Updates reflect: newly-issued ADs, market changes (new MRO entrants, OEM PMA disputes, fleet retirements), and TurbineWorks-specific business shifts (new supplier relationships, new customer segments).</p>
+
+<h4>Why this matters for TurbineWorks</h4>
+<p>The CFM56 is the core engine line TurbineWorks operates in. The variants TurbineWorks focuses on (likely -7B and -5B) define the customer base, the supplier network, and the pricing dynamics that drive TurbineWorks\' revenue. Every employee should have a working knowledge of the engine\'s structure, the documentation that accompanies its parts, and the market that values that work. This course gives that working knowledge.</p>',
         ],
     ];
 }
