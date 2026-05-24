@@ -32,7 +32,7 @@ require_once(__DIR__ . '/../content/glossary.php');
 
 // Bump the suffix here (and in the entrypoint marker docs) when adding new
 // bootstrap steps that should run on existing sites.
-$marker = $CFG->dataroot . '/.twu-bootstrapped-v27';
+$marker = $CFG->dataroot . '/.twu-bootstrapped-v28';
 $force  = in_array('--force', $argv ?? [], true);
 if (file_exists($marker) && !$force) {
     cli_writeln("[twu] already bootstrapped (marker present at $marker). Pass --force to re-run.");
@@ -221,16 +221,116 @@ function twu_ensure_cohort(string $idnumber, string $name, string $description):
     return $id;
 }
 
-twu_ensure_cohort(
+// Status cohorts — track training lifecycle stage
+$cohort_initial = twu_ensure_cohort(
     'twu_initial_trainees',
     'Initial Trainees',
-    '<p>Employees enrolled in the initial ASA-100 training program. Manually assigned at hire; auto-removed after all initial courses are completed.</p>'
+    '<p>Employees in the initial ASA-100 training program. Assigned at hire; remains until all Initial Training (TWF4-1 through TWF4-8) is completed.</p>'
 );
-twu_ensure_cohort(
+$cohort_recurring = twu_ensure_cohort(
     'twu_recurring_trainees',
     'Recurring Trainees (6-month)',
-    '<p>Employees in the 6-month recurring training cycle. Auto-enrolled 30 days before their last initial-or-recurring completion turns 6 months old.</p>'
+    '<p>Employees in the 6-month recurring training cycle. Cycled in 30 days before previous completion expires.</p>'
 );
+
+// All Employees cohort — every TurbineWorks employee. Auto-enrolls in
+// every Initial Training course. The simplest path to "everyone trained
+// on everything baseline" without per-employee enrolment management.
+$cohort_all = twu_ensure_cohort(
+    'twu_all_employees',
+    'All Employees',
+    '<p>Every TurbineWorks employee. Default cohort — auto-enrols into all eight Initial Training modules. Add a user to this cohort to grant baseline ASA-100 training access.</p>'
+);
+
+// Role-based cohorts — for role-specific recurring/additional training
+// (e.g., hazmat handlers need DOT recertification every 3 years, DGR
+// signers every 24 months). Membership is in addition to All Employees.
+$cohort_warehouse = twu_ensure_cohort(
+    'twu_role_warehouse',
+    'Role: Warehouse Operators',
+    '<p>Personnel performing warehouse work — receiving, storage, picking, packing. Focus on Modules 2 (Receiving/Shipping), 4 (Parts/Warehousing), 7 (ESD), 8 (Hazmat).</p>'
+);
+$cohort_qa = twu_ensure_cohort(
+    'twu_role_qa',
+    'Role: Quality Assurance',
+    '<p>QA inspectors and QA management. Full Initial Training plus engine-model courses and AS9120 familiarization.</p>'
+);
+$cohort_shipping = twu_ensure_cohort(
+    'twu_role_shipping',
+    'Role: Shipping &amp; Receiving',
+    '<p>Personnel involved in inbound and outbound logistics. Strong emphasis on Module 2, Module 5 (Records), Module 8 (Hazmat), and Export Control / ITAR / EAR.</p>'
+);
+$cohort_management = twu_ensure_cohort(
+    'twu_role_management',
+    'Role: Management',
+    '<p>Accountable Manager, QA Manager, Operations Manager. Full Initial Training plus Operations courses (AS9120, Customer Relations, Export Control).</p>'
+);
+
+// Certification cohorts — track regulated certifications with renewal
+// requirements. Membership demonstrates current certification status.
+$cohort_hazmat = twu_ensure_cohort(
+    'twu_cert_hazmat',
+    'Certification: DOT Hazmat',
+    '<p>Personnel currently certified for DOT hazmat handling per 49 CFR §172.704. Initial training plus recurrent every 3 years. Required for any employee classifying, packaging, marking, or shipping hazmat.</p>'
+);
+$cohort_dgr = twu_ensure_cohort(
+    'twu_cert_dgr',
+    'Certification: IATA DGR Air Shipper',
+    '<p>Personnel currently authorised to sign Shipper&apos;s Declarations for Dangerous Goods (air). Per IATA DGR; recertification every 24 months. Subset of DOT Hazmat certification.</p>'
+);
+$cohort_esd = twu_ensure_cohort(
+    'twu_cert_esd',
+    'Certification: ESD Handler',
+    '<p>Personnel trained on ANSI/ESD S20.20 program requirements and authorised to handle ESD-sensitive items within the EPA. Recurrent training per program schedule.</p>'
+);
+$cohort_dgd_signer = twu_ensure_cohort(
+    'twu_role_dgd_signer',
+    'Authority: SUP Reporter / DGD Signer',
+    '<p>Specific personnel with delegated authority to file FAA Form 8120-11 (SUP) and to sign Shipper&apos;s Declarations. Tracked as a separate authority cohort independent of training certification.</p>'
+);
+
+// ---------------------------------------------------------------------------
+// 4b. Cohort sync — auto-enrol cohort members into their courses
+// ---------------------------------------------------------------------------
+function twu_ensure_cohort_sync(stdClass $course, int $cohortid, int $roleid = 5): void {
+    global $DB;
+    static $plugin = null;
+    if ($plugin === null) {
+        $plugin = enrol_get_plugin('cohort');
+    }
+    if (!$plugin) {
+        cli_writeln("[twu] enrol_cohort plugin unavailable; cannot sync cohort to course");
+        return;
+    }
+    $existing = $DB->get_record('enrol', [
+        'courseid'   => $course->id,
+        'enrol'      => 'cohort',
+        'customint1' => $cohortid,
+    ]);
+    if ($existing) {
+        return; // already linked
+    }
+    $plugin->add_instance($course, [
+        'customint1' => $cohortid,
+        'roleid'     => $roleid,
+        'customint2' => 0, // no group sync
+        'status'     => ENROL_INSTANCE_ENABLED,
+    ]);
+}
+
+// Wire All Employees → every Initial Training course
+foreach ($createdcourses as $idnumber => $course) {
+    twu_ensure_cohort_sync($course, $cohort_all);
+}
+cli_writeln("[twu] cohort sync: All Employees → 8 Initial Training courses");
+
+// Initial Trainees cohort → also enrolled in Initial Training (same target,
+// different status reason — being in this cohort means "currently working
+// through initial training" vs All Employees which is permanent baseline)
+foreach ($createdcourses as $idnumber => $course) {
+    twu_ensure_cohort_sync($course, $cohort_initial);
+}
+cli_writeln("[twu] cohort sync: Initial Trainees → 8 Initial Training courses");
 
 // ---------------------------------------------------------------------------
 // 5. Site-wide defaults useful for compliance training
@@ -655,7 +755,7 @@ function twu_ensure_forum(stdClass $course, string $name, string $intro): ?int {
     );
     if ($existing) {
         cli_writeln("[twu]   forum exists: $name (cmid={$existing->id})");
-        return (int)$existing->id;
+        return (int)$existing->forumid;
     }
 
     $moduleinfo = (object)[
@@ -680,19 +780,101 @@ function twu_ensure_forum(stdClass $course, string $name, string $intro): ?int {
     try {
         $cm = add_moduleinfo($moduleinfo, $course);
         cli_writeln("[twu]   created forum: $name (cmid={$cm->coursemodule})");
-        return (int)$cm->coursemodule;
+        return (int)$cm->instance; // forum.id, not cm.id — needed by post seeder
     } catch (Throwable $e) {
         cli_writeln("[twu]   could not create forum: " . $e->getMessage());
         return null;
     }
 }
 
+// Seed a starter discussion in a forum if it has no discussions yet.
+// Posted by admin (acts as QA Manager until a real account is assigned).
+function twu_ensure_forum_starter(stdClass $course, int $forumid, string $subject, string $message): void {
+    global $DB, $CFG;
+    require_once($CFG->dirroot . '/mod/forum/lib.php');
+
+    // Idempotent: skip if any discussion already exists in this forum.
+    if ($DB->record_exists('forum_discussions', ['forum' => $forumid])) {
+        return;
+    }
+
+    $forum = $DB->get_record('forum', ['id' => $forumid], '*', MUST_EXIST);
+    $admin = get_admin();
+    $now = time();
+
+    $discussion = (object)[
+        'course'       => $course->id,
+        'forum'        => $forumid,
+        'name'         => $subject,
+        'firstpost'    => 0, // populated after post insert
+        'userid'       => $admin->id,
+        'groupid'      => -1, // no group
+        'assessed'     => 0,
+        'timemodified' => $now,
+        'usermodified' => $admin->id,
+        'timestart'    => 0,
+        'timeend'      => 0,
+        'pinned'       => 1, // pin the welcome thread
+        'timelocked'   => 0,
+    ];
+    $discussionid = $DB->insert_record('forum_discussions', $discussion);
+
+    $post = (object)[
+        'discussion'  => $discussionid,
+        'parent'      => 0,
+        'userid'      => $admin->id,
+        'created'     => $now,
+        'modified'    => $now,
+        'mailed'      => 0,
+        'subject'     => $subject,
+        'message'     => $message,
+        'messageformat' => FORMAT_HTML,
+        'messagetrust' => 0,
+        'attachment'   => '',
+        'totalscore'   => 0,
+        'mailnow'      => 0,
+        'deleted'      => 0,
+        'privatereplyto' => 0,
+        'wordcount'    => null,
+        'charcount'    => null,
+    ];
+    $postid = $DB->insert_record('forum_posts', $post);
+
+    // Backfill firstpost pointer.
+    $DB->set_field('forum_discussions', 'firstpost', $postid, ['id' => $discussionid]);
+
+    cli_writeln("[twu]   seeded forum starter: $subject (forum=$forumid, post=$postid)");
+}
+
+// "Ask the QA Manager" forum + starter discussion, one per Initial Training course.
+$forumstarter_subject = 'Welcome — how this forum works';
+$forumstarter_message = '<p>Welcome to this module&apos;s Q&amp;A forum. Use this space to ask questions about the module content, about how the standard applies to TurbineWorks operations, or about edge cases you have encountered in your work.</p>
+<p><strong>How this forum is moderated:</strong></p>
+<ul>
+  <li>The QA Manager (or designate) reviews new posts and responds.</li>
+  <li>Threads remain visible to all employees so common questions become permanent reference material.</li>
+  <li>If a question reveals a gap in our procedures or training content, we will update the procedure or the training, and the thread becomes the audit trail of the change.</li>
+</ul>
+<p><strong>Good questions to ask here:</strong></p>
+<ul>
+  <li>&ldquo;The lesson says X — does that apply when we receive Y from supplier Z?&rdquo;</li>
+  <li>&ldquo;I encountered situation A today; how should I document it?&rdquo;</li>
+  <li>&ldquo;What is the difference between term P and term Q in practice?&rdquo;</li>
+  <li>&ldquo;The SOP step is unclear — can someone walk through it with an example?&rdquo;</li>
+</ul>
+<p><strong>Not for here:</strong> emergencies (call/Slack the QA Manager directly), confidential customer or supplier discussions (use the appropriate channel), personnel issues (HR).</p>
+<p>Post freely. If you are unsure whether a question is &ldquo;dumb&rdquo;, post it anyway — chances are someone else is wondering the same thing, and the answer benefits the whole team.</p>
+<p>&mdash; QA Manager</p>';
+
 foreach ($createdcourses as $idnumber => $course) {
-    twu_ensure_forum(
+    $forumid = twu_ensure_forum(
         $course,
         'Ask the QA Manager',
         '<p>Post questions about the module content or how it applies to TurbineWorks procedures. The QA Manager (or designate) will respond. Threads stay visible to all employees so common questions become reference material.</p>'
     );
+    if ($forumid) {
+        twu_ensure_forum_starter($course, $forumid, $forumstarter_subject, $forumstarter_message);
+    }
 }
 
 // ---------------------------------------------------------------------------
@@ -711,6 +893,8 @@ foreach (local_twu_get_reference_library() as $coursedata) {
 // ---------------------------------------------------------------------------
 // 5d. Engine-Parts Specific courses + lessons
 // ---------------------------------------------------------------------------
+$enginecourses = [];
+$opscourses    = [];
 foreach (local_twu_get_engine_parts_courses() as $coursedata) {
     $lessons = $coursedata['lessons'] ?? [];
     unset($coursedata['lessons']);
@@ -719,6 +903,39 @@ foreach (local_twu_get_engine_parts_courses() as $coursedata) {
     foreach ($lessons as $lesson) {
         twu_ensure_page_lesson($course, 0, $lesson['name'], $lesson['intro'], $lesson['content']);
     }
+    // Distinguish engine-model courses from operations courses by shortname
+    // prefix. TWU-OPS-* are operations; everything else under enginecat is
+    // engine-parts technical content.
+    if (strncmp($coursedata['shortname'], 'TWU-OPS-', 8) === 0) {
+        $opscourses[$coursedata['shortname']] = $course;
+    } else {
+        $enginecourses[$coursedata['shortname']] = $course;
+    }
+}
+
+// Cohort sync — role-based auto-enrolment into supplemental courses
+// Engine-model + technical courses → QA and Management (deep product knowledge
+// required for inspection and commercial decisions).
+foreach ($enginecourses as $shortname => $course) {
+    twu_ensure_cohort_sync($course, $cohort_qa);
+    twu_ensure_cohort_sync($course, $cohort_management);
+}
+if (!empty($enginecourses)) {
+    cli_writeln("[twu] cohort sync: QA + Management → " . count($enginecourses) . " engine/technical courses");
+}
+
+// Operations courses (AS9120, Customer Relations, Export Control) →
+// Management (always) and QA (always). Export Control specifically also →
+// Shipping/Receiving cohort.
+foreach ($opscourses as $shortname => $course) {
+    twu_ensure_cohort_sync($course, $cohort_qa);
+    twu_ensure_cohort_sync($course, $cohort_management);
+    if ($shortname === 'TWU-OPS-INTSHIP') {
+        twu_ensure_cohort_sync($course, $cohort_shipping);
+    }
+}
+if (!empty($opscourses)) {
+    cli_writeln("[twu] cohort sync: QA + Management → " . count($opscourses) . " operations courses");
 }
 
 // ---------------------------------------------------------------------------
@@ -1083,6 +1300,258 @@ CSS;
 } else {
     cli_writeln("[twu] theme_moove directory missing; skipping theme config");
 }
+
+// ---------------------------------------------------------------------------
+// 6b. Demo seed users — one per role cohort, suspended by default
+// ---------------------------------------------------------------------------
+// These accounts demonstrate the cohort model but cannot log in (suspended=1)
+// until an administrator activates them. The username/email pattern uses
+// example.com so they are unmistakably placeholders. Real employee accounts
+// should be created via Moodle's admin UI (or bulk-uploaded) and added to
+// the appropriate cohorts.
+function twu_ensure_demo_user(string $username, string $firstname, string $lastname,
+                              string $email, int $cohortid, string $description): void {
+    global $DB, $CFG;
+    require_once($CFG->dirroot . '/user/lib.php');
+    require_once($CFG->dirroot . '/cohort/lib.php');
+
+    $user = $DB->get_record('user', ['username' => $username]);
+    if (!$user) {
+        $user = (object)[
+            'auth'         => 'manual',
+            'confirmed'    => 1,
+            'mnethostid'   => $CFG->mnet_localhost_id,
+            'username'     => $username,
+            'password'     => hash_internal_user_password('!disabled' . random_string(16)),
+            'firstname'    => $firstname,
+            'lastname'     => $lastname,
+            'email'        => $email,
+            'maildisplay'  => 0,
+            'mailformat'   => 1,
+            'lang'         => $CFG->lang,
+            'timezone'     => $CFG->timezone,
+            'description'  => $description,
+            'descriptionformat' => FORMAT_HTML,
+            'city'         => '',
+            'country'      => 'US',
+            'suspended'    => 1, // disabled until admin activates
+            'timecreated'  => time(),
+            'timemodified' => time(),
+        ];
+        $user->id = user_create_user($user, false, false);
+        cli_writeln("[twu] demo user created (suspended): $username");
+    }
+
+    // Ensure cohort membership.
+    if (!$DB->record_exists('cohort_members', ['cohortid' => $cohortid, 'userid' => $user->id])) {
+        cohort_add_member($cohortid, $user->id);
+    }
+    // Also always in All Employees baseline.
+    if (isset($GLOBALS['twu_cohort_all'])
+        && !$DB->record_exists('cohort_members', ['cohortid' => $GLOBALS['twu_cohort_all'], 'userid' => $user->id])) {
+        cohort_add_member($GLOBALS['twu_cohort_all'], $user->id);
+    }
+}
+
+// Make the All Employees cohort id available to the helper without re-querying.
+$GLOBALS['twu_cohort_all'] = $cohort_all;
+
+twu_ensure_demo_user(
+    'demo.warehouse',
+    'Demo',
+    'Warehouse Operator',
+    'demo-warehouse@example.com',
+    $cohort_warehouse,
+    '<p>Demo / template user for the Warehouse Operator role. Suspended by default; activate via Site Admin to use as a real account, or create a fresh user and copy this account&apos;s cohort memberships.</p>'
+);
+twu_ensure_demo_user(
+    'demo.qa',
+    'Demo',
+    'QA Inspector',
+    'demo-qa@example.com',
+    $cohort_qa,
+    '<p>Demo / template user for the Quality Assurance role. Enrolled in all Initial Training plus engine-model + operations courses via the QA cohort.</p>'
+);
+twu_ensure_demo_user(
+    'demo.shipping',
+    'Demo',
+    'Shipping Receiving',
+    'demo-shipping@example.com',
+    $cohort_shipping,
+    '<p>Demo / template user for the Shipping &amp; Receiving role. Emphasis on Export Control / ITAR / EAR alongside Initial Training.</p>'
+);
+twu_ensure_demo_user(
+    'demo.manager',
+    'Demo',
+    'Management',
+    'demo-manager@example.com',
+    $cohort_management,
+    '<p>Demo / template user for the Management role. Full curriculum including operations courses.</p>'
+);
+
+cli_writeln("[twu] 4 demo template users created (suspended; in role + All Employees cohorts)");
+
+// ---------------------------------------------------------------------------
+// 6c. Course completion criteria — every tracked activity must be completed
+// ---------------------------------------------------------------------------
+// Sets each Initial Training (and supplemental) course to "complete when all
+// tracked activities (page lessons + quiz) are complete". This is what makes
+// course completion auditable: an employee's course-completion record reflects
+// that they actually viewed every lesson and passed the quiz, not just that
+// they were enrolled.
+function twu_ensure_course_completion_criteria(stdClass $course): int {
+    global $DB, $CFG;
+    require_once($CFG->dirroot . '/completion/completion_aggregation.php');
+
+    // Find tracked activities in this course (pages + quizzes; cert is the
+    // output, forum is supplementary — neither participates in completion).
+    $modules = $DB->get_records_sql(
+        "SELECT cm.id AS cmid, cm.module AS modid, m.name AS modname, cm.completion
+           FROM {course_modules} cm
+           JOIN {modules} m ON m.id = cm.module
+          WHERE cm.course = :courseid
+            AND cm.completion > 0
+            AND m.name IN ('page', 'quiz')",
+        ['courseid' => $course->id]
+    );
+    if (!$modules) {
+        return 0;
+    }
+
+    // Overall aggregation method (one row per course; criteriatype = NULL).
+    $rowall = $DB->get_record('course_completion_aggr_methd',
+        ['course' => $course->id, 'criteriatype' => null]);
+    if (!$rowall) {
+        $DB->insert_record('course_completion_aggr_methd', (object)[
+            'course'       => $course->id,
+            'criteriatype' => null,
+            'method'       => 1, // COMPLETION_AGGREGATION_ALL
+            'value'        => null,
+        ]);
+    } elseif ((int)$rowall->method !== 1) {
+        $DB->set_field('course_completion_aggr_methd', 'method', 1, ['id' => $rowall->id]);
+    }
+
+    // Activity-criterion aggregation (criteriatype = 1 — COMPLETION_CRITERIA_TYPE_ACTIVITY).
+    $rowact = $DB->get_record('course_completion_aggr_methd',
+        ['course' => $course->id, 'criteriatype' => 1]);
+    if (!$rowact) {
+        $DB->insert_record('course_completion_aggr_methd', (object)[
+            'course'       => $course->id,
+            'criteriatype' => 1,
+            'method'       => 1, // ALL
+            'value'        => null,
+        ]);
+    }
+
+    // Insert one criterion row per tracked module. Idempotent on (course,
+    // criteriatype, moduleinstance).
+    $added = 0;
+    foreach ($modules as $cm) {
+        $existing = $DB->get_record('course_completion_criteria', [
+            'course'         => $course->id,
+            'criteriatype'   => 1,
+            'moduleinstance' => $cm->cmid,
+        ]);
+        if ($existing) {
+            continue;
+        }
+        $DB->insert_record('course_completion_criteria', (object)[
+            'course'         => $course->id,
+            'criteriatype'   => 1,
+            'module'         => $cm->modname,
+            'moduleinstance' => $cm->cmid,
+            'courseinstance' => null,
+            'enrolperiod'    => null,
+            'timeend'        => null,
+            'gradepass'      => null,
+            'role'           => null,
+        ]);
+        $added++;
+    }
+    return $added;
+}
+
+// Apply to every course we created in this bootstrap.
+$alltargetcourses = array_merge(
+    array_values($createdcourses),
+    array_values($enginecourses),
+    array_values($opscourses)
+);
+$totalcriteria = 0;
+foreach ($alltargetcourses as $course) {
+    $totalcriteria += twu_ensure_course_completion_criteria($course);
+}
+cli_writeln("[twu] course completion criteria: $totalcriteria activity-criterion rows across " . count($alltargetcourses) . " courses");
+
+// ---------------------------------------------------------------------------
+// 6d. Certificate availability — gate cert behind completion of all lessons + quiz
+// ---------------------------------------------------------------------------
+// The customcert is visible on the course page but should be unavailable
+// (greyed out with "Restricted") until the user completes every tracked
+// activity. This is what prevents users from downloading the cert before
+// they've earned it.
+function twu_ensure_cert_availability(stdClass $course): void {
+    global $DB;
+
+    // Find the customcert for this course.
+    $cert = $DB->get_record_sql(
+        "SELECT cm.id AS cmid
+           FROM {course_modules} cm
+           JOIN {modules} m ON m.id = cm.module AND m.name = 'customcert'
+          WHERE cm.course = :courseid",
+        ['courseid' => $course->id]
+    );
+    if (!$cert) {
+        return; // no cert in this course (engine/ops courses don't have one)
+    }
+
+    // Find all tracked page + quiz cmids — these are the prerequisites.
+    $prereqcmids = $DB->get_fieldset_sql(
+        "SELECT cm.id
+           FROM {course_modules} cm
+           JOIN {modules} m ON m.id = cm.module
+          WHERE cm.course = :courseid
+            AND cm.completion > 0
+            AND m.name IN ('page', 'quiz')",
+        ['courseid' => $course->id]
+    );
+    if (!$prereqcmids) {
+        return;
+    }
+
+    // Build the availability JSON. Each c entry requires the named cm to be
+    // complete (e=1 means COMPLETION_COMPLETE). showc=false hides the
+    // individual condition descriptions; one combined message is cleaner.
+    $conditions = [];
+    foreach ($prereqcmids as $cmid) {
+        $conditions[] = ['type' => 'completion', 'cm' => (int)$cmid, 'e' => 1];
+    }
+    $availability = json_encode([
+        'op'    => '&',
+        'c'     => $conditions,
+        'showc' => array_fill(0, count($conditions), false),
+    ]);
+
+    // Only update if different from current value.
+    $current = $DB->get_field('course_modules', 'availability', ['id' => $cert->cmid]);
+    if ($current !== $availability) {
+        $DB->set_field('course_modules', 'availability', $availability, ['id' => $cert->cmid]);
+    }
+}
+
+foreach ($createdcourses as $idnumber => $course) {
+    twu_ensure_cert_availability($course);
+}
+cli_writeln("[twu] certificate availability: gated behind completion of all lessons + quiz in " . count($createdcourses) . " Initial Training courses");
+
+// Rebuild course cache for all touched courses so completion / availability /
+// cohort-sync changes are visible immediately rather than after the next
+// nightly cron rebuild.
+foreach ($alltargetcourses as $course) {
+    rebuild_course_cache($course->id, true);
+}
+cli_writeln("[twu] rebuilt course cache for " . count($alltargetcourses) . " courses");
 
 // ---------------------------------------------------------------------------
 // 7. Mark done

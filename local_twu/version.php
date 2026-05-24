@@ -4,8 +4,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2026052401;
+$plugin->version   = 2026052402;
 $plugin->requires  = 2024100100; // Moodle 4.5 LTS
 $plugin->component = 'local_twu';
 $plugin->maturity  = MATURITY_STABLE;
-$plugin->release   = '1.0.0';
+$plugin->release   = '1.1.0'; // adds cohort sync, completion criteria, recurring task
