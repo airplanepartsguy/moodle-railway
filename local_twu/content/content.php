@@ -39,282 +39,1037 @@ function local_twu_get_lessons(): array {
         'TWF4-3' => [
             [
                 'name' => 'Lesson 3.1 — What is ASA-100?',
-                'intro' => '<p>An introduction to the ASA-100 standard and where it fits in the FAA / aviation regulatory landscape.</p>',
-                'content' => <<<HTML
+                'intro' => '<p>The foundational lesson. Where ASA-100 came from, what it is, why it exists, where it sits in the regulatory landscape, what it covers, and why every employee at TurbineWorks needs to understand it as the framework everything else in this training program rests on.</p>',
+                'content' => <<<'HTML'
 <h3>What is ASA-100?</h3>
-<p><strong>ASA-100</strong> is the <em>Quality Assurance Standard for Aircraft Parts Distributors</em>, published and maintained by the
-<a href="https://www.aviationsuppliers.org/" target="_blank" rel="noopener">Aviation Suppliers Association (ASA)</a>.
-It defines the quality-system requirements that a distributor of aircraft parts must implement to demonstrate that the parts it sells
-are traceable, properly handled, and eligible for installation on civil aircraft.</p>
 
-<h4>Why does ASA-100 exist?</h4>
-<p>Anyone can buy a turbine blade on the open market and resell it. Without a standard for how that blade is documented, inspected,
-stored, and shipped, there is no way for the airline buying it to know:</p>
+<p><strong>ASA-100</strong> is the <em>Quality Assurance Standard for Aircraft Parts Distributors</em>, published and maintained by the Aviation Suppliers Association (ASA). It defines the quality-system requirements that a distributor of aircraft parts must implement to demonstrate that the parts it sells are traceable, properly handled, and eligible for installation on civil aircraft.</p>
+
+<p>That sentence is the headline definition. The rest of this lesson unpacks each part of it: who publishes ASA-100, why distributors specifically need a standard, what the alternative looks like, how the standard relates to FAA regulations, what compliance practically means, and why this knowledge is foundational for every TurbineWorks employee — not just QA staff.</p>
+
+<h4>Why a parts-distributor standard exists at all</h4>
+
+<p>Aviation\'s safety record is built on a chain of accountability. The manufacturer designs and produces the part under FAA-approved processes and certifies it conforms to type design. The aircraft operator installs the part and is responsible for installation quality. The maintenance organization performs repairs under FAA-approved procedures. Each link in the chain has a documented role and accountability.</p>
+
+<p>The distributor sits between manufacturer and operator. Historically, this link was the weakest part of the chain — least regulated, most subject to fraud, hardest for downstream operators to verify. The FAA recognized this gap in the 1980s and 1990s as counterfeit and unapproved parts began causing in-service incidents traceable to distributors with inadequate quality controls.</p>
+
+<p>The FAA had two options for closing the gap. One: extend direct FAA regulation to distributors with FAA inspectors auditing each one. Two: create a framework for industry-managed accreditation under FAA recognition. The FAA chose option two — for budgetary, political, and practical reasons covered in detail in Module 6. The framework was published as FAA Advisory Circular 00-56 in 1996.</p>
+
+<p>AC 00-56 created the framework, but it did not itself define a quality standard for distributors. That work was left to the accreditation organizations the FAA would recognize. The Aviation Suppliers Association responded by publishing ASA-100 as the standard their accreditation program would audit against. The FAA reviewed ASA\'s program, found it satisfied AC 00-56, and added ASA to the recognized-accreditation-organization list.</p>
+
+<p>The result: a layered system where the FAA defines the framework, ASA defines the standard, and TurbineWorks complies with the standard through its Quality Assurance Manual. Each layer adds specificity. The FAA framework is general; ASA-100 is specific; the TurbineWorks QAM is operational.</p>
+
+<h4>Who publishes and maintains ASA-100</h4>
+
+<p>The <strong>Aviation Suppliers Association (ASA)</strong> is an industry trade association based in Washington, D.C. ASA membership includes distributors, brokers, surplus dealers, and other companies in the aviation parts supply chain. ASA serves multiple functions: industry representation, networking, training, and — most relevant here — accreditation.</p>
+
+<p>ASA-100 is reviewed and updated periodically. The current revision (subject to change; always verify the latest at <a href="https://www.aviationsuppliers.org/" target="_blank" rel="noopener">aviationsuppliers.org</a>) reflects industry experience and FAA expectations as they evolve. Revisions historically have:</p>
+
 <ul>
-  <li>Where the part originally came from (an FAA-approved manufacturer? a teardown of a high-time engine? a scrapyard?)</li>
-  <li>Whether the documentation is real or fabricated</li>
-  <li>Whether the part has been damaged in storage</li>
-  <li>Whether the part has been mislabeled, mixed up, or substituted for a counterfeit</li>
-</ul>
-<p>ASA-100 standardizes the answers to all of these questions. A distributor accredited to ASA-100 has proven, through a third-party
-audit, that they follow a documented quality system covering receiving inspection, traceability, storage, recordkeeping, and shipping.</p>
-
-<h4>ASA-100 is voluntary — but effectively required</h4>
-<p>ASA-100 is a <em>voluntary</em> industry standard, not an FAA regulation. The FAA does not mandate that distributors be accredited.
-However, virtually every airline, MRO (Maintenance, Repair, and Overhaul facility), and government customer requires their parts
-suppliers to hold an FAA-recognized accreditation under <strong>FAA Advisory Circular 00-56</strong> — and ASA-100 is the most
-widely adopted accreditation program under that AC.</p>
-<p>In practice: if TurbineWorks wants to sell parts to commercial operators, ASA-100 accreditation (or an equivalent like AS9120)
-is a contractual prerequisite. The standard isn't just a quality nicety — it's a market-access requirement.</p>
-
-<h4>What ASA-100 covers (at a glance)</h4>
-<ul>
-  <li><strong>Section 6 — Receiving Inspection.</strong> What must be checked when a part comes in the door, what documentation
-      must accompany it, and how non-conforming parts are quarantined.</li>
-  <li><strong>Section 7 — Storage and Handling.</strong> ESD control, shelf-life monitoring, segregation of serviceable vs.
-      non-serviceable parts, FOD (Foreign Object Damage) prevention.</li>
-  <li><strong>Section 8 — Recordkeeping.</strong> What documentation must be retained, for how long (typically 7+ years), and
-      how records must be made available during an audit.</li>
-  <li><strong>Internal audits, corrective action, and management review</strong> — the standard requires the distributor to audit
-      itself on a regular cadence and act on findings.</li>
+  <li>Tightened SUP detection requirements in response to industry incidents</li>
+  <li>Added explicit counterfeit-prevention language as the counterfeit problem evolved</li>
+  <li>Clarified records-retention expectations</li>
+  <li>Refined training requirements</li>
+  <li>Added or clarified hazmat handling requirements</li>
 </ul>
 
-<h4>Key takeaways</h4>
+<p>When ASA-100 is revised, accredited distributors are given a transition period to implement the changes. The QA Manager monitors revisions; the QAM is updated accordingly; TurbineWorks University training reflects the current revision.</p>
+
+<h4>The alternative — what happens without ASA-100</h4>
+
+<p>To understand why ASA-100 matters, consider what aviation parts distribution would look like without a quality standard:</p>
+
 <ul>
-  <li>ASA-100 is the quality standard that lets TurbineWorks sell parts to commercial operators.</li>
-  <li>It is voluntary in regulation but effectively mandatory in the marketplace.</li>
-  <li>It is built on top of FAA Advisory Circular 00-56 (covered in detail in Module 6).</li>
-  <li>Compliance is proven by passing a third-party on-site audit, then re-audited periodically.</li>
+  <li><strong>No standard receiving inspection.</strong> Each distributor sets its own procedures, ranging from rigorous to nonexistent. Customers cannot evaluate distributors at a distance.</li>
+  <li><strong>No traceability discipline.</strong> Parts arrive at operators with documentation chains that may or may not connect to approved sources. Operators can\'t tell which distributors are reliable.</li>
+  <li><strong>No SUP detection framework.</strong> Suspect parts pass through the chain because no distributor in the chain has clear obligation or procedure for detection.</li>
+  <li><strong>No accountability.</strong> If a customer\'s aircraft fails due to a bad part, the chain of accountability is impossible to trace.</li>
 </ul>
+
+<p>This was the actual state of aviation parts distribution in the 1980s. The FAA SUP Program documented the consequences: NTSB investigations, in-service failures, the Partnair Convair 580 crash, others. ASA-100 (and AC 00-56 generally) exist because the unregulated alternative produced unacceptable safety outcomes.</p>
+
+<h4>What ASA-100 actually says (overview of contents)</h4>
+
+<p>The standard is structured by sections covering the lifecycle of a part at a distributor. Each section establishes specific requirements that the accredited distributor must implement in their QMS.</p>
+
+<h5>Quality System Requirements (early sections)</h5>
+
+<p>The standard opens with general QMS requirements: documented procedures, designated personnel, management commitment, resource adequacy. These set the foundation — the distributor must operate as an organized quality system, not as ad-hoc activities.</p>
+
+<h5>Section 6 — Receiving Inspection</h5>
+
+<p>The substantive heart of distributor operations. Defines what must be checked when a part arrives: documentation review, physical inspection, disposition decisions. Covered in operational depth in Module 2.</p>
+
+<h5>Section 7 — Storage and Handling</h5>
+
+<p>How parts are stored to preserve their integrity. ESD control, shelf-life management, FOD prevention, segregation of serviceable from non-serviceable, hazmat storage. Covered in Module 4.</p>
+
+<h5>Section 8 — Recordkeeping</h5>
+
+<p>What records must be kept, for how long, in what form, retrievable how quickly. The records are the audit-evidence backbone of the entire system. Covered in Module 5.</p>
+
+<h5>Section 9 / 10 — Customer complaints, corrective action</h5>
+
+<p>How non-conformances and complaints are handled. The corrective action process is the QMS\'s self-improvement mechanism — every finding becomes a learning opportunity and a process change.</p>
+
+<h5>Internal audits, management review</h5>
+
+<p>The distributor audits itself on a defined cadence (typically annually). Findings are addressed through the corrective action system. Management formally reviews the QMS at intervals (typically annually). This is the self-monitoring required to keep the QMS functioning between external audits.</p>
+
+<h5>Training, supplier qualification, document control</h5>
+
+<p>Supporting elements that hold the system together. Training ensures personnel can perform their roles correctly (this very course satisfies the ASA-100 training requirement). Supplier qualification controls supply-chain integrity at the front end. Document control ensures everyone works from the current revision of procedures.</p>
+
+<p>The exact section numbering and detailed wording shift with revisions, but the substantive scope is consistent.</p>
+
+<h4>"Voluntary but effectively required" — the market reality</h4>
+
+<p>ASA-100 is a voluntary industry standard, not an FAA regulation. The FAA does not mandate that distributors be accredited. Yet virtually every commercial operator and MRO requires their parts suppliers to hold an FAA-recognized accreditation under AC 00-56 — and ASA-100 is the most widely adopted such accreditation.</p>
+
+<h5>Why the market enforces what the FAA does not mandate</h5>
+
+<ul>
+  <li><strong>Risk management.</strong> An airline cannot inspect every part it buys to the level required to detect SUP. Buying only from accredited distributors transfers the verification burden to qualified intermediaries.</li>
+  <li><strong>Liability insurance.</strong> Many liability insurers require operators to source parts only from accredited suppliers. The premium structure makes non-accredited sourcing financially impractical.</li>
+  <li><strong>Customer expectations.</strong> Major customers in turn require their suppliers to source from accredited distributors. The requirement flows down the chain.</li>
+  <li><strong>FAA expectations.</strong> While not formally mandated, the FAA in practice expects operators to source from accredited distributors. Failure to do so is a finding in FAA inspections of operators.</li>
+  <li><strong>Audit efficiency.</strong> Operators perform supplier audits. Choosing accredited distributors reduces the operator\'s audit burden — the ASA-100 audit covers most of what the operator would otherwise audit themselves.</li>
+</ul>
+
+<p>The practical consequence: in the U.S. aftermarket aviation parts business, accreditation is functionally a market-entry requirement. A distributor without ASA-100 (or AS9120, or equivalent) accreditation is excluded from most major customer segments.</p>
+
+<h4>The pre-accreditation period — where TurbineWorks is today</h4>
+
+<p>TurbineWorks is currently building toward ASA-100 accreditation, not yet accredited. This affects the program:</p>
+
+<ul>
+  <li>The training program (TurbineWorks University) is part of the documentation the auditor will review during the initial accreditation audit</li>
+  <li>The QAM is being developed; some of the procedural references in TurbineWorks University point to TBD locations in the QAM</li>
+  <li>Internal audits will begin once the QAM is in place; corrective action history will accumulate before the external audit</li>
+  <li>Receiving inspections performed during the pre-accreditation period generate records that will be reviewed by the auditor</li>
+</ul>
+
+<p>The pre-accreditation work is itself the audit-readiness preparation. By the time the on-site audit happens, the auditor expects to find a system that has been operating long enough to demonstrate consistent performance — not just a paper system that was set up last week. This is part of why we are investing in training and documentation now, ahead of any specific audit date.</p>
+
+<h4>How accreditation works once granted</h4>
+
+<p>The accreditation process is detailed in Lesson 3.3. At a summary level: TurbineWorks submits the QAM and supporting documents for ASA review (Stage 1, document review). ASA assigns a qualified auditor who performs an on-site audit (Stage 2). The audit produces findings — non-conformances that must be addressed before accreditation is granted. After corrective actions are implemented and verified, ASA issues the accreditation certificate. TurbineWorks is then listed in ASA\'s public database of accredited distributors.</p>
+
+<p>Accreditation typically renews every 3 years through a full re-audit, with surveillance audits possible at any time if customer complaints or other concerns arise.</p>
+
+<h4>Why every TurbineWorks employee needs to understand this</h4>
+
+<p>You might be wondering why a receiving inspector or a warehouse worker needs to understand the regulatory framework. Three reasons:</p>
+
+<ul>
+  <li><strong>The ASA auditor will interview you.</strong> During the on-site audit, the auditor speaks with employees at all levels. Questions like "Why do you perform this procedure?" expect answers that demonstrate understanding of the regulatory context, not just procedural compliance. An employee who can answer "because ASA-100 §6 requires it and ASA-100 implements FAA AC 00-56" sounds different to an auditor than an employee who answers "because someone told me to."</li>
+  <li><strong>Procedure changes have rationale.</strong> When ASA-100 is revised, or when the FAA issues new guidance, TurbineWorks procedures change. Employees who understand the framework can adapt to changes rather than being confused by them.</li>
+  <li><strong>Quality culture rests on understanding.</strong> A quality system where every employee understands why the procedures exist functions differently than one where employees follow procedures mechanically. The understanding is what survives pressure, time, and turnover.</li>
+</ul>
+
+<h4>The relationship to other Modules</h4>
+
+<p>Module 3 (this module) is the framework. Subsequent modules go into specific operational areas:</p>
+
+<ul>
+  <li>Module 1 — Unapproved parts and counterfeit materials (the threats the system defends against)</li>
+  <li>Module 2 — Receiving and shipping inspection (the operational heart, implementing ASA-100 §6)</li>
+  <li>Module 4 — Storage and handling (implementing ASA-100 §7)</li>
+  <li>Module 5 — Recordkeeping (implementing ASA-100 §8)</li>
+  <li>Module 6 — FAA AC 00-56 deep dive (the regulatory framework Module 3 introduces)</li>
+  <li>Module 7 — ESD handling (a technical area that supports Module 4)</li>
+  <li>Module 8 — Hazmat (a regulatory overlay on Modules 2 and 4)</li>
+</ul>
+
+<p>Each module assumes you understand the framework established here. If at any point in the later modules a reference to ASA-100, AC 00-56, the QAM, or the accreditation process is unclear, come back to Module 3.</p>
+
+<h4>Key vocabulary</h4>
+
+<dl>
+  <dt><strong>ASA</strong></dt>
+  <dd>Aviation Suppliers Association — the trade association publishing ASA-100 and operating the accreditation program.</dd>
+
+  <dt><strong>ASA-100</strong></dt>
+  <dd>The Quality Assurance Standard for Aircraft Parts Distributors. The standard TurbineWorks is being accredited against.</dd>
+
+  <dt><strong>Accreditation Organization (AO)</strong></dt>
+  <dd>An FAA-recognized organization that audits distributors against a published standard. ASA is the AO TurbineWorks is engaged with.</dd>
+
+  <dt><strong>FAA AC 00-56</strong></dt>
+  <dd>The Advisory Circular establishing the Voluntary Industry Distributor Accreditation Program. The framework ASA operates under.</dd>
+
+  <dt><strong>QAM</strong></dt>
+  <dd>Quality Assurance Manual. TurbineWorks\' top-level quality document, describing how TurbineWorks complies with ASA-100.</dd>
+
+  <dt><strong>Accountable Manager</strong></dt>
+  <dd>Senior company official (typically CEO or equivalent) who is corporately responsible for the quality system.</dd>
+
+  <dt><strong>QA Manager</strong></dt>
+  <dd>Day-to-day owner of the quality system; manages the QAM, internal audits, corrective action.</dd>
+
+  <dt><strong>Voluntary but effectively required</strong></dt>
+  <dd>Description of ASA-100\'s regulatory status. Not legally mandated; functionally required by the market.</dd>
+</dl>
+
+<h4>Self-check</h4>
+
+<ol>
+  <li>What does ASA-100 stand for and who publishes it?</li>
+  <li>Why did the FAA choose industry accreditation over direct FAA regulation of distributors?</li>
+  <li>What is the relationship between FAA AC 00-56, ASA, and ASA-100?</li>
+  <li>What does "voluntary but effectively required" mean for ASA-100?</li>
+  <li>Name three sections of ASA-100 and what each covers.</li>
+  <li>Why does TurbineWorks operate to ASA-100 even though there is no FAR requiring it?</li>
+  <li>What happens during the pre-accreditation period and why does training matter during that time?</li>
+  <li>How often is ASA-100 accreditation typically renewed?</li>
+  <li>Why does every TurbineWorks employee need to understand ASA-100, not just the QA staff?</li>
+</ol>
 
 <p><em>Continue to Lesson 3.2 — The FAA AC 00-56 Framework.</em></p>
 HTML
             ],
             [
                 'name' => 'Lesson 3.2 — The FAA AC 00-56 Framework',
-                'intro' => '<p>How FAA Advisory Circular 00-56 created the accreditation framework that ASA-100 implements.</p>',
-                'content' => <<<HTML
+                'intro' => '<p>The FAA Advisory Circular that created the accreditation framework ASA-100 implements. Historical context, structural design, the specific contents of AC 00-56B, how it relates to ASA-100 and to other accreditation programs, and what the framework means for every TurbineWorks employee.</p>',
+                'content' => <<<'HTML'
 <h3>FAA Advisory Circular 00-56: The Framework</h3>
-<p><strong>FAA AC 00-56B</strong> — "Voluntary Industry Distributor Accreditation Program" — is the FAA document that defines
-the framework for industry-managed accreditation of aircraft parts distributors. It is the regulatory backbone that ASA-100
-(and competing standards like AS9120) implement.</p>
+
+<p>Lesson 3.1 introduced ASA-100 as the quality standard TurbineWorks is accredited against. This lesson covers the regulatory framework that made ASA-100 possible: <strong>FAA Advisory Circular 00-56</strong>. Without AC 00-56 there is no ASA accreditation program. Without ASA accreditation there is no ASA-100 standard. Without ASA-100 there is no TurbineWorks QAM. The framework matters because everything downstream rests on it.</p>
+
+<h4>What an Advisory Circular is and is not</h4>
+
+<p>The FAA issues regulatory material in several formats:</p>
+
+<ul>
+  <li><strong>Federal Aviation Regulations (FARs):</strong> codified in 14 CFR. Force of law. Violations carry civil and criminal penalties.</li>
+  <li><strong>Advisory Circulars (ACs):</strong> FAA guidance documents. Not legally binding in themselves, but authoritative interpretations and accepted means of compliance. Following the AC is the safe path; deviating from it requires justification.</li>
+  <li><strong>Orders and Notices:</strong> internal FAA documents directing FAA personnel. Visible to industry but binding on the FAA, not on operators directly.</li>
+  <li><strong>Special Federal Aviation Regulations (SFARs):</strong> temporary rules with sunset provisions.</li>
+</ul>
+
+<p>AC 00-56 is in the second category — guidance. It is not itself a regulation that requires distributors to be accredited. It defines the framework under which voluntary accreditation operates with FAA recognition.</p>
+
+<h5>The "voluntary" significance</h5>
+
+<p>The FAA chose the voluntary framework for several reasons:</p>
+
+<ul>
+  <li><strong>Constitutional and procedural simplicity.</strong> Direct regulation of distributors would require an extensive rulemaking process under the Administrative Procedure Act, complete with notice and comment, congressional review, and budget appropriation for enforcement.</li>
+  <li><strong>Enforcement burden.</strong> Direct regulation requires FAA inspectors. The FAA had neither the budget nor the staff to inspect every parts distributor in the country on a meaningful cadence.</li>
+  <li><strong>Industry expertise.</strong> Industry associations like ASA had more practical familiarity with distributor operations than FAA inspectors. They could write a more rigorous standard than the FAA could.</li>
+  <li><strong>Market enforcement.</strong> The FAA understood that if accreditation became the market standard for customer purchasing, distributors would seek accreditation regardless of whether the FAA mandated it. Voluntary accreditation could achieve the same effect as mandatory accreditation through market mechanisms.</li>
+</ul>
+
+<p>The choice has worked. ASA-100 has high uptake among major U.S. parts distributors. Major airlines and MROs require accreditation. The voluntary framework is, in practice, mandatory through market pressure.</p>
 
 <h4>Why the FAA wrote AC 00-56</h4>
-<p>In the 1980s and 1990s, the FAA identified a recurring problem: counterfeit, mislabeled, and stolen parts were entering the
-civil aviation supply chain through unaccredited distributors. The FAA's own resources could not realistically inspect every
-parts distributor in the country. Instead, the FAA chose to recognize <em>industry-led</em> accreditation programs that would
-audit distributors on the FAA's behalf, against published standards.</p>
-<p>AC 00-56 defines:</p>
+
+<p>The full historical context: in the 1980s and 1990s, the FAA identified a recurring pattern. Aircraft incidents and accidents were being traced to parts that had entered the supply chain through inadequately controlled distributors. Specific events drove the regulatory response:</p>
+
 <ul>
-  <li>What an accreditation program must require of its distributors</li>
-  <li>How accreditation organizations (like ASA) become FAA-recognized</li>
-  <li>What audit procedures the accreditation organization must use</li>
-  <li>How the FAA monitors the accreditation organizations themselves</li>
+  <li><strong>The Partnair Convair 580 crash (1989).</strong> Tail control bolts traced to counterfeit manufacture. The investigation led the FAA to deeply question the integrity of the U.S. parts distribution system.</li>
+  <li><strong>FAA SUP Program findings (early 1990s).</strong> The Suspected Unapproved Parts Program documented hundreds of cases per year of parts traced to unaccredited or fraudulent distributors.</li>
+  <li><strong>NTSB pattern findings.</strong> Multiple accident investigations across the late 1980s and early 1990s identified parts-source problems as contributing factors.</li>
+  <li><strong>Congressional attention.</strong> Hearings on aviation safety in the early 1990s raised distribution-side issues as a regulatory gap.</li>
 </ul>
+
+<p>The FAA convened working groups, consulted industry, drafted the AC. The first version of AC 00-56 was published in 1996. It has been revised periodically since; the current revision is 00-56B.</p>
+
+<h4>What AC 00-56 actually says</h4>
+
+<p>The AC is structured into sections covering different aspects of the framework. The structure as of revision B:</p>
+
+<h5>Section 1 — Purpose</h5>
+<p>Establishes the AC as guidance for industry-led accreditation of aircraft parts distributors. States that the program is voluntary and that the FAA recognizes accreditation organizations meeting the AC\'s criteria.</p>
+
+<h5>Section 2 — Background</h5>
+<p>The history that motivated the AC — the parts-fraud concerns of the 1980s-1990s, the FAA\'s decision to use industry accreditation as the response. This is the section where the FAA explains why it chose voluntary accreditation rather than direct regulation.</p>
+
+<h5>Section 3 — Definitions</h5>
+<p>Key terms: <em>Accreditation Organization (AO)</em>, <em>accredited distributor</em>, <em>eligible part</em>, <em>quality system</em>, <em>recognition</em>, and others. The definitions establish what the AC\'s terms of art mean — and indirectly, what scope of activities the framework covers.</p>
+
+<h5>Section 4 — Accreditation Organization Requirements</h5>
+
+<p>This is the substantive heart of the AC. To be FAA-recognized, an accreditation organization must:</p>
+
+<ul>
+  <li>Publish a written quality standard (this is what ASA-100 is)</li>
+  <li>Have qualified auditors with documented competency standards</li>
+  <li>Have an audit program covering all relevant aspects of distributor operations</li>
+  <li>Have a documented corrective-action follow-up process</li>
+  <li>Maintain records of all accreditation activities (audits, findings, certifications)</li>
+  <li>Have a procedure for handling complaints about accredited distributors</li>
+  <li>Have a procedure for de-accrediting distributors that fail to maintain compliance</li>
+  <li>Be financially independent of the distributors it accredits (no conflict of interest)</li>
+  <li>Operate transparently — accredited-distributor lists are public</li>
+</ul>
+
+<p>An AO that does not meet these requirements is not FAA-recognized. The list of recognized AOs (Appendix 1) reflects which programs have demonstrated compliance.</p>
+
+<h5>Section 5 — Distributor Quality System Elements</h5>
+
+<p>The AC specifies the minimum elements a distributor\'s quality system must address. This is the floor that the AO\'s standard (ASA-100) must require:</p>
+
+<ul>
+  <li>Receiving inspection</li>
+  <li>Documentation control</li>
+  <li>Identification and traceability</li>
+  <li>Storage and handling</li>
+  <li>Records (with retention requirements)</li>
+  <li>Personnel training</li>
+  <li>Internal audits</li>
+  <li>Corrective action</li>
+  <li>Management review</li>
+  <li>Supplier qualification</li>
+  <li>Customer complaint handling</li>
+</ul>
+
+<p>ASA-100 sections map to these requirements. The mapping is not always one-to-one — ASA-100 may combine multiple AC requirements into a single section or split one AC requirement across multiple sections — but every AC-required element is addressed somewhere in ASA-100.</p>
+
+<h5>Section 6 — Audit Procedures</h5>
+
+<p>Defines minimum audit cadence and content. Initial accreditation requires an on-site audit. Recurring audits are at intervals not exceeding 3 years. Surveillance audits are at the AO\'s discretion based on complaints, performance, or other concerns.</p>
+
+<p>Audit content requirements:</p>
+
+<ul>
+  <li>Document review (the QAM and supporting procedures)</li>
+  <li>Personnel interviews</li>
+  <li>Records review</li>
+  <li>Observation of actual operations</li>
+  <li>Facility walkthrough</li>
+  <li>Sample part traceability verification (pull random parts, trace through receiving)</li>
+</ul>
+
+<p>The audit format is structured but not rigidly prescribed. AOs have latitude to apply judgment, but the minimum elements must be covered.</p>
+
+<h5>Section 7 — FAA Oversight</h5>
+
+<p>The FAA monitors the AOs themselves. Activities include:</p>
+
+<ul>
+  <li>Periodic FAA review of each AO\'s program (typically every 2-3 years)</li>
+  <li>FAA surveillance audits of accredited distributors (the FAA may show up at a distributor independently of ASA)</li>
+  <li>FAA review of accreditation withdrawals to ensure the AO is applying its standards consistently</li>
+  <li>Authority to withdraw FAA recognition of an AO that fails to maintain its program</li>
+</ul>
+
+<p>The FAA\'s recognition of an AO is itself revocable. An AO that becomes lax — that issues accreditation to distributors who don\'t actually meet the standard — risks losing FAA recognition. This keeps the AOs honest in their own audit programs.</p>
+
+<h5>Section 8 — List of Recognized Accreditation Organizations</h5>
+
+<p>Maintained as Appendix 1 to the AC. Periodically updated. Includes contact information for each recognized AO. ASA is on this list. AS9120-administering registrars are typically also listed, though through a slightly different structure.</p>
+
+<h5>Appendices</h5>
+
+<ul>
+  <li><strong>Appendix 1:</strong> Recognized AO list (the authoritative current list)</li>
+  <li><strong>Appendix 2:</strong> Procedure for an AO to apply for FAA recognition</li>
+  <li><strong>Appendix 3:</strong> Definitions and references</li>
+</ul>
+
+<h4>What changed in 00-56B vs. earlier revisions</h4>
+
+<p>The current revision B was published as an update to the original 1996 AC and subsequent revision A. Significant changes in revision B included:</p>
+
+<ul>
+  <li>Tightened audit procedures (more specific minimum requirements)</li>
+  <li>Added explicit counterfeit-parts provisions in response to the electronic counterfeit problem</li>
+  <li>Updated cross-references to current FAA regulations (since the FARs had evolved since 1996)</li>
+  <li>Clarified state of accreditation withdrawal and reinstatement procedures</li>
+  <li>Updated definitions to align with current industry usage</li>
+</ul>
+
+<p>The AC will continue to evolve. Whenever a new revision is published, ASA reviews ASA-100 against the new revision and updates as needed. TurbineWorks then updates the QAM if ASA-100 changes affect operations. The cascade is automatic — TurbineWorks doesn\'t need to track the FAA directly, only ASA-100 revisions.</p>
 
 <h4>How AC 00-56 connects to ASA-100</h4>
-<p>The Aviation Suppliers Association applied to the FAA in the 1990s to be a recognized accreditation organization under AC 00-56.
-ASA published the ASA-100 standard as its accreditation criteria. The FAA reviewed ASA's program and added ASA to its list of
-recognized accreditation organizations.</p>
-<p>The chain looks like this:</p>
+
+<p>The connection is structural, not numerical. ASA-100 is not a derivative of AC 00-56 — it\'s ASA\'s response to AC 00-56\'s framework. ASA chose its own structure, terminology, and section numbering. But every requirement in AC 00-56 §5 must be addressed somewhere in ASA-100.</p>
+
+<p>The chain of authority looks like this:</p>
+
 <pre>
-FAA AC 00-56B  ──►  defines accreditation framework
-       │
-       ▼
-ASA      ──►  FAA-recognized accreditation organization
-       │
-       ▼
-ASA-100 standard  ──►  what distributors must comply with
-       │
-       ▼
-TurbineWorks QAM  ──►  how TurbineWorks specifically implements ASA-100
-       │
-       ▼
-SOPs and work instructions  ──►  what each employee does day-to-day
+FAA AC 00-56B
+  └─ defines accreditation framework
+
+ASA
+  └─ FAA-recognized accreditation organization under AC 00-56
+     └─ publishes ASA-100 as the standard it audits against
+        └─ audits accredited distributors against ASA-100
+
+ASA-100 Standard
+  └─ defines specific quality-system requirements for distributors
+
+TurbineWorks
+  └─ accredited to ASA-100 (or pursuing accreditation)
+     └─ publishes the QAM describing how TurbineWorks complies
+        └─ supporting SOPs and work instructions
+           └─ day-to-day employee work
 </pre>
 
+<p>At each level, the document or organization at one layer enables the layer below. AC 00-56 enables ASA. ASA enables ASA-100. ASA-100 enables the QAM. The QAM enables the SOPs. The SOPs enable employee work.</p>
+
 <h4>Other accreditation programs under AC 00-56</h4>
-<p>ASA-100 is not the only accreditation standard recognized under AC 00-56. Others include:</p>
+
+<p>ASA-100 is not the only standard recognized under AC 00-56. Other accreditation programs the FAA recognizes:</p>
+
+<h5>AS9120</h5>
+
+<p>The aerospace-industry quality management system standard for distributors. Published by SAE International on behalf of the International Aerospace Quality Group (IAQG). Built on ISO 9001 with aerospace-specific additions. Often pursued <em>in addition to</em> ASA-100 by distributors selling into the OEM supply chain (Boeing tier-1/2, Airbus, etc.). Audited by IAQG-recognized registrars (BSI, DNV, NQA, SAI Global, LRQA, others).</p>
+
+<p>AS9120 takes a different approach than ASA-100: process-based QMS structure derived from ISO 9001, with aerospace additions for risk management, configuration management, counterfeit prevention. Where ASA-100 is prescriptive (specific receiving inspection requirements, specific records to keep), AS9120 is more outcome-based (you must have a quality system that achieves these objectives; you describe how).</p>
+
+<p>Many large distributors hold both ASA-100 and AS9120. The two are complementary — ASA-100 serves the FAA-recognized aftermarket; AS9120 serves the IAQG OEM-supply-chain market.</p>
+
+<h5>TAC-2000</h5>
+
+<p>Transportation Association of Canada equivalent. Used by Canadian-based distributors and some U.S. distributors selling into Canadian markets.</p>
+
+<h5>Other recognized programs</h5>
+
+<p>Appendix 1 of AC 00-56 lists all currently recognized AOs. The list changes over time as new programs gain recognition or existing programs lose it. Distributors and their customers should consult the current Appendix 1 directly for the authoritative list.</p>
+
+<h4>What FAA recognition means in practice</h4>
+
+<p>An FAA-recognized AO has a specific status:</p>
+
 <ul>
-  <li><strong>AS9120</strong> — the aerospace-industry QMS standard for distributors (managed by SAE / IAQG). Often pursued
-      <em>in addition to</em> ASA-100 by distributors selling into the OEM supply chain.</li>
-  <li><strong>TAC-2000</strong> — Transportation Association of Canada equivalent.</li>
-  <li><strong>FAA AC 00-56B Appendix 1 list</strong> — the current authoritative list of recognized accreditation organizations
-      is maintained by the FAA and updated periodically.</li>
+  <li>The FAA accepts the AO\'s accreditation as evidence that an accredited distributor meets the AO\'s standard</li>
+  <li>The FAA does not separately certify accredited distributors — it relies on the AO\'s audit work</li>
+  <li>The FAA may use the AO\'s findings in its own enforcement work</li>
+  <li>The FAA periodically reviews the AO to ensure it continues to meet AC 00-56 requirements</li>
+  <li>Loss of FAA recognition would mean the AO\'s accreditations no longer have FAA standing — a serious consequence both for the AO and for its accredited members</li>
 </ul>
 
-<h4>What this means for TurbineWorks employees</h4>
-<p>When an ASA auditor visits TurbineWorks for accreditation, they are checking compliance against the ASA-100 standard. But
-ASA's authority to audit TurbineWorks at all comes from the FAA's recognition under AC 00-56. An employee asked "what regulation
-requires this?" can answer accurately: <em>"This procedure implements ASA-100, which is the standard the FAA recognizes under
-AC 00-56 for distributor accreditation."</em></p>
+<p>From TurbineWorks\' perspective, ASA recognition means: ASA accreditation is meaningful to customers, to the FAA, and to insurers. ASA derecognition would mean: TurbineWorks would need to migrate to another AO\'s program quickly to maintain market access.</p>
+
+<h4>What this framework means for TurbineWorks employees</h4>
+
+<p>The framework is the answer to the question every employee should be able to answer: "Why do I do this procedure?"</p>
+
+<p>Working backward from the employee\'s daily work to the framework:</p>
+
+<ul>
+  <li>"I follow this procedure because the TurbineWorks QAM Section X.Y describes it"</li>
+  <li>"The QAM requires this because ASA-100 §Z mandates it"</li>
+  <li>"ASA-100 mandates it because AC 00-56 Section 5 requires distributors to address this element"</li>
+  <li>"AC 00-56 requires it because the FAA determined that distributor controls in this area are necessary for supply-chain integrity"</li>
+</ul>
+
+<p>That chain is the answer. An employee who can articulate it demonstrates understanding of why their work matters. An employee who cannot articulate it may still perform the procedure correctly — but mechanically, without the resilience that understanding provides under pressure.</p>
 
 <h4>Key takeaways</h4>
+
 <ul>
-  <li>AC 00-56 is the FAA document that created the accreditation framework.</li>
-  <li>ASA is one of several FAA-recognized accreditation organizations under AC 00-56.</li>
-  <li>ASA-100 is ASA's published standard — the actual criteria TurbineWorks must comply with.</li>
-  <li>TurbineWorks' QAM tells the auditor <em>how</em> TurbineWorks complies with ASA-100.</li>
+  <li>AC 00-56 is the FAA-issued framework for industry-led distributor accreditation</li>
+  <li>It is guidance (an Advisory Circular), not a regulation — voluntary but effectively required through market mechanisms</li>
+  <li>ASA is one of several FAA-recognized accreditation organizations under AC 00-56</li>
+  <li>ASA-100 is ASA\'s published standard — the criteria TurbineWorks must comply with</li>
+  <li>The chain of authority runs: AC 00-56 → ASA → ASA-100 → TurbineWorks QAM → SOPs → daily employee work</li>
+  <li>Other accreditation programs (AS9120, TAC-2000, others) are also recognized under AC 00-56</li>
+  <li>The FAA monitors AOs themselves and can withdraw recognition if an AO\'s program becomes inadequate</li>
 </ul>
+
+<h4>Self-check</h4>
+
+<ol>
+  <li>What is the difference between a Federal Aviation Regulation and an Advisory Circular in terms of legal force?</li>
+  <li>Why did the FAA choose voluntary industry accreditation over direct FAA regulation of distributors?</li>
+  <li>What four major events in the 1980s-1990s motivated AC 00-56?</li>
+  <li>What are the requirements an accreditation organization must meet to be FAA-recognized?</li>
+  <li>What 11 distributor quality system elements must AC 00-56 §5 address?</li>
+  <li>What is the relationship between AC 00-56, ASA, ASA-100, and the TurbineWorks QAM?</li>
+  <li>Name three other accreditation programs recognized under AC 00-56 besides ASA-100.</li>
+  <li>What does FAA recognition of an AO mean in practical terms?</li>
+  <li>Why does every TurbineWorks employee need to understand this framework, not just QA staff?</li>
+</ol>
 
 <p><em>Continue to Lesson 3.3 — The Accreditation Process.</em></p>
 HTML
             ],
             [
                 'name' => 'Lesson 3.3 — The Accreditation Process',
-                'intro' => '<p>What happens during initial accreditation and recurring audits, and what an auditor looks for.</p>',
-                'content' => <<<HTML
+                'intro' => '<p>End-to-end walkthrough of becoming and remaining ASA-100 accredited. Each phase in operational detail: application, document submission, on-site audit, findings, corrective action, accreditation grant, recurring audits, surveillance. Every employee needs this context because the audit interviews and observes employees at all levels.</p>',
+                'content' => <<<'HTML'
 <h3>The ASA-100 Accreditation Process</h3>
-<p>This lesson walks through what TurbineWorks goes through to <em>become</em> ASA-100 accredited and what happens at
-recurring audits afterward. Understanding the process helps every employee know <em>why</em> certain procedures exist and what
-an auditor will be looking for.</p>
 
-<h4>Phase 1 — Application and Document Submission</h4>
-<p>TurbineWorks submits an application to ASA along with the complete Quality Assurance Manual (QAM), procedures, and supporting
-documents. ASA reviews these for completeness and conformance to the ASA-100 standard <em>on paper</em> before scheduling an
-on-site audit.</p>
-<p>Common findings at this stage:</p>
+<p>Accreditation is not a one-time event. It\'s a continuing relationship between TurbineWorks and ASA that begins with the application, peaks at the on-site audit, continues through corrective action, settles into a steady state with recurring audits, and may be punctuated by surveillance audits in between. Every TurbineWorks employee is part of this process, whether or not they realize it.</p>
+
+<p>This lesson walks through each phase in operational depth. The point is to demystify the audit — to make it clear what the auditor is doing, what they\'re looking for, what they\'ll ask employees, and what \'good\' looks like at each phase. Demystified, the audit is much less scary.</p>
+
+<h4>Phase 1 — Application and document submission</h4>
+
+<p>The accreditation journey begins with an application. TurbineWorks formally applies to ASA, providing:</p>
+
 <ul>
-  <li>QAM does not address every section of ASA-100</li>
-  <li>Procedures reference forms that don't exist or aren't controlled</li>
-  <li>Training program is described but no records exist of actual training delivery</li>
-  <li>Records-retention policy doesn't meet the 7+ year expectation</li>
+  <li>Application form completed with TurbineWorks identification, scope of business, products handled, customer base</li>
+  <li>The complete Quality Assurance Manual (QAM)</li>
+  <li>All referenced procedures and work instructions</li>
+  <li>Organizational chart showing reporting lines</li>
+  <li>List of personnel by role (especially Accountable Manager, QA Manager, Receiving Inspectors)</li>
+  <li>Facility information (location, square footage, storage zones)</li>
+  <li>List of customers and major suppliers</li>
+  <li>Any prior accreditation or audit history</li>
+  <li>Initial accreditation fee</li>
 </ul>
 
-<h4>Phase 2 — On-Site Audit</h4>
-<p>An ASA-qualified auditor visits TurbineWorks (typically 1–3 days depending on company size) and reviews:</p>
+<p>ASA assigns a reviewer to evaluate the documentation. The reviewer checks:</p>
+
+<ul>
+  <li>QAM addresses every section of ASA-100 — no sections missing</li>
+  <li>Procedures referenced in the QAM actually exist and are controlled (revision number, approval, effective date)</li>
+  <li>Forms referenced in procedures exist and are controlled</li>
+  <li>Training program is described and records exist demonstrating actual training delivery</li>
+  <li>Records-retention policy meets the 7+ year baseline</li>
+  <li>Roles and responsibilities are clearly assigned</li>
+  <li>The organizational structure is consistent with the QAM</li>
+</ul>
+
+<h5>Common Phase 1 findings</h5>
+
+<p>Document-stage findings the reviewer might raise (these would need to be addressed before the on-site audit is scheduled):</p>
+
+<ul>
+  <li>"QAM does not describe procedures for [specific ASA-100 element]"</li>
+  <li>"Procedure X references Form Y, but Form Y is not provided and appears not to exist as a controlled document"</li>
+  <li>"Training records show only management personnel; receiving inspectors have no documented training"</li>
+  <li>"Records-retention schedule shows 3 years for receiving records; ASA-100 expects 7+ years"</li>
+  <li>"Accountable Manager identified in QAM is not the same as on the organizational chart"</li>
+</ul>
+
+<p>If document review identifies gaps, TurbineWorks addresses them and resubmits. Only when document review is satisfactory does ASA schedule the on-site audit. The document review can take 4–8 weeks; with cycles of revisions it can extend longer.</p>
+
+<h4>Phase 2 — On-site audit</h4>
+
+<p>An ASA-qualified auditor visits TurbineWorks. For a typical small-to-medium distributor, the on-site audit takes 1–3 days. The auditor\'s objective: verify that what the QAM says is true — that procedures described on paper are actually being executed in practice.</p>
+
+<h5>Audit opening</h5>
+
+<p>The audit typically opens with an opening meeting attended by the Accountable Manager, QA Manager, and other key personnel. The auditor explains the scope, schedule, and approach. The auditor asks for any updates or changes since document submission.</p>
+
+<p>Most auditors will provide an initial agenda — what they plan to look at on day 1, day 2, etc. The agenda is flexible; the auditor adjusts based on what they find.</p>
+
+<h5>Personnel interviews</h5>
+
+<p>The auditor interviews employees at multiple levels. Expected interview subjects:</p>
+
+<ul>
+  <li>Accountable Manager — corporate commitment to the quality system, resource allocation, management review</li>
+  <li>QA Manager — every aspect of the QMS</li>
+  <li>Receiving Inspectors — daily work, authority, independence, training</li>
+  <li>Warehouse personnel — storage practices, segregation, handling procedures</li>
+  <li>Shipping personnel — outbound documentation, customer-side compliance</li>
+  <li>Sales/customer service — customer interactions, complaint handling</li>
+  <li>IT (if applicable) — backup procedures, data security</li>
+</ul>
+
+<p>Interview questions are open-ended and probing. The auditor wants to understand whether employees know their role, whether they can articulate why they do what they do, and whether the system actually works under everyday operations.</p>
+
+<p>Typical questions you might be asked as a receiving inspector:</p>
+
+<ul>
+  <li>"Walk me through what you do when a shipment arrives."</li>
+  <li>"What\'s your authority to reject a part? Has anyone ever told you not to use it?"</li>
+  <li>"What training have you had? When?"</li>
+  <li>"Show me where the QAM describes your job."</li>
+  <li>"Tell me about a quarantine decision you made. Walk me through it."</li>
+  <li>"What do you do if the documentation doesn\'t match the part?"</li>
+  <li>"How do you verify a Block 15 certificate number?"</li>
+  <li>"Has anyone ever asked you to skip a procedure step? What did you do?"</li>
+</ul>
+
+<h5>Observation of operations</h5>
+
+<p>The auditor watches actual receiving inspections in real time. They observe:</p>
+
+<ul>
+  <li>Does the inspector follow the documented procedure?</li>
+  <li>Are required documents reviewed in the right sequence?</li>
+  <li>Is the FAA database actually checked for Block 15 numbers?</li>
+  <li>Is the receiving inspection record completed contemporaneously?</li>
+  <li>Is the disposition decision actually made and recorded?</li>
+</ul>
+
+<p>The auditor doesn\'t interrupt during the observation — they take notes and may ask clarifying questions afterward.</p>
+
+<h5>Records pull and audit</h5>
+
+<p>The auditor pulls random parts from serviceable inventory and asks to see their complete receiving inspection records. The expectation: records retrievable within minutes, complete, signed by an authorized inspector.</p>
+
+<p>The auditor may also pull recent quarantine and reject decisions, training records, internal audit records, corrective action records, supplier qualification records, shipping documents, customer complaint records. The pull is somewhat random — the auditor uses this technique to test whether the QMS actually applies across the operation, not just at one or two showpiece points.</p>
+
+<h5>Facility walkthrough</h5>
+
+<p>The auditor walks the facility:</p>
+
+<ul>
+  <li>Is the receiving area physically segregated from serviceable inventory?</li>
+  <li>Is the quarantine area marked, accessible only to authorized personnel?</li>
+  <li>Are the storage zones organized per the QAM?</li>
+  <li>Is the ESD area properly grounded and equipped?</li>
+  <li>Is hazmat storage separated and labeled?</li>
+  <li>Are shelf-life items rotated FIFO?</li>
+  <li>Is the facility FOD-controlled?</li>
+  <li>Are housekeeping standards consistent with the QAM?</li>
+</ul>
+
+<h5>Closing meeting</h5>
+
+<p>At the end of the on-site audit, the auditor convenes a closing meeting. Attended by the same group as the opening. The auditor presents preliminary findings — what they found that wasn\'t in conformance with ASA-100, and what they observed that was. The findings are sometimes given verbally with a written report following within days.</p>
+
+<h4>Phase 3 — Findings and corrective action</h4>
+
+<p>The audit report categorizes findings:</p>
+
+<ul>
+  <li><strong>Major Non-Conformance.</strong> A significant gap that compromises the integrity of the quality system. Examples: receiving inspectors are not actually checking Block 15 numbers; the QA Manager is not independent; quarantine area is not segregated. Major non-conformances must be corrected before accreditation is granted.</li>
+  <li><strong>Minor Non-Conformance.</strong> A deviation from a specific requirement but isolated. Examples: a single record missing a signature; a single training file out of date; a single procedure not reflecting current practice. Minor non-conformances must be addressed but typically don\'t delay accreditation.</li>
+  <li><strong>Observation.</strong> A practice that is technically compliant but where the auditor sees a risk or improvement opportunity. Not required to be addressed, but the distributor often responds to observations to strengthen the system.</li>
+</ul>
+
+<p>For each finding, TurbineWorks must:</p>
+
 <ol>
-  <li><strong>Receiving inspection in action</strong> — the auditor watches a real receiving inspection from start to finish.
-      Does the inspector follow the procedure? Are the right documents checked? Is the tagging correct?</li>
-  <li><strong>Storage and traceability</strong> — the auditor pulls random parts from inventory and asks "show me the
-      traceability for this part." Every record from receipt through current storage must be available within minutes.</li>
-  <li><strong>Records</strong> — the auditor reviews completed inspection records, COCs, 8130-3 tags, shipping documents,
-      training records, internal audit records, and corrective-action records.</li>
-  <li><strong>Personnel interviews</strong> — the auditor speaks with employees and asks what their role is, where their
-      procedures are documented, and what training they have completed.</li>
-  <li><strong>SUP / disposition handling</strong> — the auditor specifically checks how suspected unapproved parts have been
-      handled and how unsalvageable parts are disposed of (mutilated or scrapped per FAA AC 21-38).</li>
+  <li>Acknowledge the finding (typically by signing the audit report)</li>
+  <li>Investigate the root cause</li>
+  <li>Define a corrective action that addresses the root cause</li>
+  <li>Implement the corrective action</li>
+  <li>Verify effectiveness</li>
+  <li>Submit evidence to the auditor</li>
+  <li>Wait for auditor verification (sometimes remote, sometimes a follow-up visit)</li>
 </ol>
 
-<h4>Phase 3 — Findings and Corrective Action</h4>
-<p>The auditor issues findings (non-conformances) and observations. For initial accreditation, all major findings must be
-corrected before the accreditation is granted. TurbineWorks submits a corrective-action plan, evidence of implementation, and
-the auditor verifies (either remotely or at a follow-up visit).</p>
+<p>The corrective-action submission typically includes: revised procedures, training records showing personnel are now trained on the revised procedure, evidence of implementation (sample records, photographs, etc.), and a statement of effectiveness.</p>
 
-<h4>Phase 4 — Accreditation Granted</h4>
-<p>Once findings are closed, ASA issues the accreditation certificate. TurbineWorks is then listed in the public ASA-accredited
-distributor database, which is the proof customers check before placing orders.</p>
+<h4>Phase 4 — Accreditation granted</h4>
 
-<h4>Phase 5 — Recurring Audits</h4>
-<p>Accreditation is not permanent. ASA-100 accreditation is typically renewed every 3 years with a full re-audit, and ASA
-reserves the right to conduct interim audits without notice if customer complaints, FAA referrals, or other concerns arise.</p>
+<p>Once all major non-conformances are closed and corrective actions verified, ASA issues the accreditation certificate. TurbineWorks is added to ASA\'s public accredited-distributor database. The certificate is good for a specified period (typically 3 years) subject to surveillance and re-audit.</p>
 
-<h4>What every employee should know</h4>
+<p>The accreditation certificate is a visible, marketable asset:</p>
+
 <ul>
-  <li><strong>The auditor may interview you.</strong> Be honest. The right answer is often "I follow procedure X, which is in
-      the QAM at section Y." Auditors are not trying to trick you — they are checking that the system actually works.</li>
-  <li><strong>Don't make things up.</strong> If you don't know the answer, say "I don't know — let me find out." A culture of
-      honest answers is what passes audits.</li>
-  <li><strong>The training you complete in TurbineWorks University is part of the audit.</strong> Your completion records will
-      be reviewed by the auditor as evidence that the company's training program is being executed.</li>
-  <li><strong>Findings are normal.</strong> Even mature ASA-100 distributors get findings at most audits. The question is
-      whether the company responds quickly and effectively.</li>
+  <li>Displayed at the TurbineWorks facility</li>
+  <li>Referenced in customer communications</li>
+  <li>Included in marketing materials</li>
+  <li>Listed on the TurbineWorks website</li>
+  <li>Verifiable via the public ASA database</li>
 </ul>
+
+<p>Customers verify accreditation through the ASA database before adding TurbineWorks to their approved-supplier list. The certificate alone is not sufficient — they confirm via the authoritative database.</p>
+
+<h4>Phase 5 — Surveillance and recurring audits</h4>
+
+<p>Accreditation is not permanent. ASA-100 accreditation includes:</p>
+
+<h5>Surveillance audits</h5>
+
+<p>ASA may conduct surveillance audits at any time during the accreditation period, particularly if:</p>
+
+<ul>
+  <li>Customer complaints have been filed</li>
+  <li>FAA SUP referrals point at TurbineWorks</li>
+  <li>Industry alerts identify pattern issues TurbineWorks might be involved in</li>
+  <li>ASA\'s own pattern analysis suggests follow-up</li>
+  <li>Random sampling under ASA\'s oversight program</li>
+</ul>
+
+<p>Surveillance audits are typically narrower than full audits — focused on specific concerns rather than the entire QMS. But they\'re unannounced or short-notice, so the QMS must be in a state of continuous readiness.</p>
+
+<h5>Recurring full audit (every 3 years)</h5>
+
+<p>The full audit cycle repeats, typically every 3 years. The recurring audit looks at:</p>
+
+<ul>
+  <li>Continued conformance to ASA-100 (now possibly a newer revision than the original accreditation)</li>
+  <li>Closure and effectiveness of findings from the previous audit</li>
+  <li>QMS evolution — has the distributor maintained the system or let it deteriorate?</li>
+  <li>New activities, new customers, new suppliers, new part categories</li>
+  <li>Surveillance audit follow-ups</li>
+</ul>
+
+<p>The recurring audit is conducted similarly to the initial audit but with the auditor\'s knowledge of the distributor\'s history. The auditor may probe areas where past findings occurred or where surveillance has raised concerns.</p>
+
+<h4>What can go wrong — accreditation suspension or withdrawal</h4>
+
+<p>Accreditation can be suspended or withdrawn for cause:</p>
+
+<ul>
+  <li>Failure to maintain ASA-100 compliance — major findings repeated, system deterioration</li>
+  <li>Failure to complete corrective action on prior findings</li>
+  <li>Critical findings such as: confirmed SUP that was not reported, falsified records, willful violations</li>
+  <li>Substantiated customer complaints pointing to systemic quality failures</li>
+  <li>FAA referral with findings against the distributor</li>
+  <li>Failure to pay accreditation fees (rare cause but procedural)</li>
+</ul>
+
+<p>Suspension is typically temporary — the distributor has a defined period to address the cause, after which accreditation is reinstated or withdrawn. Withdrawal is more serious — the distributor must reapply, often after a defined cooling-off period, and undergo a full new audit.</p>
+
+<p>Loss of accreditation has immediate market consequences (Module 6 covers in depth) — customers requiring accredited suppliers cannot continue buying. The financial impact is significant. The reputational impact is even greater.</p>
+
+<h4>What every employee should know about audits</h4>
+
+<p>Auditing is a structured but not adversarial process. The auditor is not trying to fail TurbineWorks — they\'re trying to objectively assess whether the QMS meets the standard. Findings are normal even at well-run distributors. The question is whether findings are minor and addressed quickly, or major and indicative of systemic issues.</p>
+
+<h5>If the auditor interviews you</h5>
+
+<ul>
+  <li><strong>Be honest.</strong> "I don\'t know" is acceptable. Making up answers to seem competent is detectable and damaging.</li>
+  <li><strong>Reference the QAM.</strong> "I follow Procedure X, which is in QAM Section Y" is the strongest answer when applicable.</li>
+  <li><strong>Speak from experience.</strong> "Last week I had a quarantine situation where I..." is more compelling than abstract description.</li>
+  <li><strong>Stick to what you know.</strong> If asked about something outside your role, say so and offer to find someone who can answer.</li>
+  <li><strong>Don\'t volunteer problems.</strong> Answer what\'s asked, accurately. Auditors will probe; that\'s their job.</li>
+  <li><strong>Don\'t criticize colleagues or management.</strong> If you have system concerns, raise them through the corrective-action system, not in an audit interview.</li>
+</ul>
+
+<h5>Common audit-interview mistakes</h5>
+
+<ul>
+  <li>Giving the answer you think the auditor wants rather than the truthful answer</li>
+  <li>Inflating your role or knowledge</li>
+  <li>Glossing over weaknesses ("everything works great")</li>
+  <li>Disparaging the QMS in an unhelpful way</li>
+  <li>Discussing the audit with other employees during breaks (some auditors check for this)</li>
+</ul>
+
+<h4>Your training is part of the audit</h4>
+
+<p>The training records the auditor reviews include yours. Your completion of TurbineWorks University Modules 1–8, and your participation in recurring training, is evidence the company\'s training program is being executed. Skipping training or not completing courses you\'re enrolled in becomes visible during the audit.</p>
+
+<p>This is part of the design. The auditor isn\'t just looking at whether the company has a training program on paper — they\'re looking at whether the program is being delivered, completed, and applied. Your training record is part of the audit-evidence portfolio.</p>
+
+<h4>Key takeaways</h4>
+
+<ul>
+  <li>Accreditation is a 5-phase process: application, document review, on-site audit, findings/corrective action, accreditation grant, then ongoing surveillance and recurring re-audit</li>
+  <li>The on-site audit looks at documents, observes operations, interviews personnel, examines records, walks the facility</li>
+  <li>Findings are normal — even mature distributors get findings. What matters is response time and effectiveness</li>
+  <li>Surveillance audits can happen any time; recurring full audits are every 3 years</li>
+  <li>Accreditation can be suspended or withdrawn for cause — loss has serious market consequences</li>
+  <li>Every employee may be interviewed; honesty and reference to the QAM are the right approach</li>
+  <li>Training records (including TurbineWorks University completion) are part of audit evidence</li>
+</ul>
+
+<h4>Self-check</h4>
+
+<ol>
+  <li>What are the five phases of the ASA-100 accreditation process?</li>
+  <li>What does ASA review during Phase 1 (document submission)?</li>
+  <li>Name three things an auditor does during the on-site audit.</li>
+  <li>What is the difference between Major, Minor, and Observation findings?</li>
+  <li>What is the typical recurring audit cycle?</li>
+  <li>What triggers a surveillance audit?</li>
+  <li>What are five reasons accreditation can be suspended or withdrawn?</li>
+  <li>How should you respond if an auditor interviews you?</li>
+  <li>Why are training records part of the audit evidence?</li>
+</ol>
 
 <p><em>Continue to Lesson 3.4 — Roles, Responsibilities, and the QAM.</em></p>
 HTML
             ],
             [
                 'name' => 'Lesson 3.4 — Roles, Responsibilities, and the QAM',
-                'intro' => '<p>Who is responsible for what under ASA-100, and how the Quality Assurance Manual ties it all together.</p>',
-                'content' => <<<HTML
+                'intro' => '<p>Who at TurbineWorks is responsible for what under ASA-100, how those roles relate to each other, and how the Quality Assurance Manual ties the entire quality system together. The lesson that establishes the organizational backbone of the ASA-100 program.</p>',
+                'content' => <<<'HTML'
 <h3>Roles, Responsibilities, and the QAM</h3>
-<p>ASA-100 requires that every distributor define <em>specific roles</em> with specific responsibilities, and document them in
-the Quality Assurance Manual. The auditor will check that the people named in the QAM are actually doing what the QAM says
-they do — and that anyone <em>not</em> named in the QAM is not making quality decisions.</p>
 
-<h4>Standard ASA-100 Roles</h4>
-<table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse;">
-  <tr style="background:#0d2240; color:#fff;">
-    <th>Role</th><th>Typical Responsibilities</th>
-  </tr>
-  <tr>
-    <td><strong>Accountable Manager</strong></td>
-    <td>Has corporate authority to commit resources to maintain ASA-100 compliance. Usually the CEO, President, or General
-        Manager. Signs the QAM. Ultimately responsible for the quality system.</td>
-  </tr>
-  <tr>
-    <td><strong>Quality Assurance Manager</strong></td>
-    <td>Day-to-day owner of the quality system. Maintains the QAM, manages internal audits, manages corrective action, owns
-        the relationship with the accreditation body. Independent authority to stop shipments.</td>
-  </tr>
-  <tr>
-    <td><strong>Receiving Inspector(s)</strong></td>
-    <td>Performs incoming-parts inspection per the QAM. Authorized to accept, reject, or quarantine parts. Maintains
-        receiving inspection records.</td>
-  </tr>
-  <tr>
-    <td><strong>Warehouse / Storage personnel</strong></td>
-    <td>Maintains storage conditions (ESD, hazmat, shelf-life). Maintains FOD-free environment. Maintains physical segregation
-        of serviceable vs. quarantined parts.</td>
-  </tr>
-  <tr>
-    <td><strong>Shipping personnel</strong></td>
-    <td>Ensures outbound shipments include correct documentation, packaging meets requirements (including hazmat where
-        applicable), and traceability is maintained through delivery.</td>
-  </tr>
-  <tr>
-    <td><strong>Sales / Customer Service</strong></td>
-    <td>Often the first to hear customer complaints. Must escalate complaints into the corrective-action system. May not
-        promise parts to customers without QA confirmation of availability and condition.</td>
-  </tr>
-</table>
+<p>ASA-100 requires that every accredited distributor define specific roles with specific responsibilities, document them in the Quality Assurance Manual, assign them to named individuals, and maintain consistency between what the QAM says and what those individuals actually do. The structure is the organizational backbone of the quality system. Without role clarity, accountability dissolves — and without accountability, the quality system fails regardless of how good the procedures look on paper.</p>
+
+<p>This lesson covers each standard ASA-100 role in detail, the QAM as the document that ties them together, the document hierarchy that places the QAM in context, and what every employee needs to understand about role boundaries and authority.</p>
+
+<h4>Why role clarity matters</h4>
+
+<p>A quality system functions through specific people doing specific things. "TurbineWorks ensures quality" is meaningless. "The Receiving Inspector performs incoming inspection per Procedure TWP-06, with accept/quarantine/reject authority, and the QA Manager dispositions all quarantined material" is meaningful.</p>
+
+<p>The ASA auditor verifies that:</p>
+
+<ul>
+  <li>Every role required by ASA-100 has a named person assigned to it in the QAM</li>
+  <li>The named persons are actually performing the responsibilities the QAM assigns to them</li>
+  <li>Anyone making quality decisions is named in the QAM as authorized to make those decisions</li>
+  <li>Anyone NOT in a quality role is NOT making quality decisions (sales is not authorizing receiving inspector disposition reversals, for example)</li>
+</ul>
+
+<p>Role clarity also matters for the day-to-day functioning of the system. An employee who clearly understands their role acts decisively within it. An employee unclear on role boundaries either over-reaches (making decisions they shouldn\'t) or under-reaches (passing decisions up that they should make themselves).</p>
+
+<h4>The standard ASA-100 roles</h4>
+
+<h5>Accountable Manager</h5>
+
+<p>The senior company official with corporate authority over the quality system. In small distributors this is the CEO, President, or General Manager. In larger organizations it may be a VP of Quality or a Chief Quality Officer.</p>
+
+<p><strong>Responsibilities:</strong></p>
+
+<ul>
+  <li>Signs the QAM as the company\'s commitment to the quality system</li>
+  <li>Has corporate authority to commit resources to maintain ASA-100 compliance (budget, headcount, facility, equipment)</li>
+  <li>Receives reports from the QA Manager on QMS performance</li>
+  <li>Conducts or participates in management review (formal QMS-effectiveness review at defined intervals)</li>
+  <li>Ultimately responsible to ASA and the FAA for the company\'s accreditation</li>
+  <li>Cannot delegate ultimate responsibility — though specific tasks are delegated to the QA Manager</li>
+</ul>
+
+<p>What the auditor checks at the Accountable Manager interview:</p>
+
+<ul>
+  <li>Does the Accountable Manager understand their role and responsibility?</li>
+  <li>Can they articulate the quality policy and the company\'s commitment to ASA-100?</li>
+  <li>Is the QA Manager able to access resources when needed (does the system actually function)?</li>
+  <li>Does management review happen on schedule with meaningful content?</li>
+  <li>Are there examples of resource commitments the Accountable Manager has made in support of the QMS?</li>
+</ul>
+
+<h5>Quality Assurance Manager</h5>
+
+<p>Day-to-day owner of the quality system. The QA Manager is the operational head of the QMS — the person who maintains the QAM, manages internal audits, manages corrective action, owns the relationship with ASA, signs COCs, dispositions non-conforming material, and is accountable to the Accountable Manager for QMS performance.</p>
+
+<p><strong>Responsibilities:</strong></p>
+
+<ul>
+  <li>Maintains the QAM and supporting procedures (revisions, distribution, document control)</li>
+  <li>Schedules and conducts internal audits</li>
+  <li>Investigates findings and manages corrective actions</li>
+  <li>Reviews supplier qualifications and maintains the Approved-Supplier List</li>
+  <li>Dispositions quarantined material after investigation</li>
+  <li>Reviews and signs the TurbineWorks Certificate of Conformance on outbound shipments</li>
+  <li>Liaises with ASA (audit coordination, accreditation maintenance)</li>
+  <li>Handles customer complaints and customer audits</li>
+  <li>Manages SUP investigations and FAA Form 8120-11 filings</li>
+  <li>Owns the training program (or coordinates with HR/training function)</li>
+  <li>Reports to the Accountable Manager on QMS performance</li>
+</ul>
+
+<p><strong>Critical authority:</strong> the QA Manager has independent authority to stop shipments. If the QA Manager determines that a shipment cannot be released for any quality reason, sales/operations/management cannot override the decision. This independence is a foundational ASA-100 principle (parallel to the Receiving Inspector\'s independence).</p>
+
+<p>What the auditor checks at the QA Manager interview:</p>
+
+<ul>
+  <li>Walk through any recent corrective action and explain it</li>
+  <li>Show me the internal audit schedule and the last audit\'s findings</li>
+  <li>Has anyone ever overridden one of your decisions? If so, what happened?</li>
+  <li>How do you maintain the QAM? Show me the last revision and explain the change</li>
+  <li>How do you stay current on ASA-100 revisions and FAA updates?</li>
+  <li>What\'s your most recent SUP investigation? Walk me through it.</li>
+</ul>
+
+<h5>Receiving Inspectors</h5>
+
+<p>Front-line quality role. Receiving Inspectors are the people performing incoming-parts inspection per the QAM. The role and its authority are covered in detail in Module 2; this section emphasizes the organizational placement.</p>
+
+<p><strong>Responsibilities:</strong></p>
+
+<ul>
+  <li>Performs receiving inspection per the documented procedure</li>
+  <li>Verifies documentation (8130-3 and equivalents, COCs, packing lists, material certs)</li>
+  <li>Performs physical inspection at the depth appropriate to part category</li>
+  <li>Makes the accept/quarantine/reject disposition decision</li>
+  <li>Creates and maintains receiving inspection records</li>
+  <li>Tags parts appropriately (Serviceable, Quarantine, Reject)</li>
+  <li>Escalates quarantine and reject decisions to the QA Manager same business day</li>
+</ul>
+
+<p><strong>Authority:</strong> independent decision authority on accept/quarantine/reject. Cannot be overridden by sales, operations, or management on quarantine decisions. The QA Manager can investigate and disposition after quarantine, but cannot prevent the initial quarantine.</p>
+
+<h5>Warehouse / Storage personnel</h5>
+
+<p>The people responsible for storing parts after receiving inspection and before shipping.</p>
+
+<p><strong>Responsibilities:</strong></p>
+
+<ul>
+  <li>Maintains storage conditions per QAM and OEM requirements (ESD, hazmat, shelf-life, temperature, humidity, UV)</li>
+  <li>Maintains the FOD-free environment (FOD walks, tool control, cleanliness)</li>
+  <li>Maintains physical segregation of serviceable, quarantine, unserviceable, and scrap zones</li>
+  <li>Executes FIFO rotation for shelf-life-limited items</li>
+  <li>Maintains storage records (which part is in which location)</li>
+  <li>Identifies storage anomalies (environmental excursions, damage discoveries) and reports to QA</li>
+</ul>
+
+<p>Warehouse personnel are not authorized to make quality dispositions. They handle parts that have already been dispositioned (serviceable or quarantine) without changing the disposition. Moving a part out of quarantine requires QA Manager authorization, not warehouse-level decision.</p>
+
+<h5>Shipping personnel</h5>
+
+<p>Responsible for preparing and dispatching outbound shipments per Module 2 Lesson 2.6.</p>
+
+<p><strong>Responsibilities:</strong></p>
+
+<ul>
+  <li>Verifies the parts pulled for shipping match the customer PO</li>
+  <li>Ensures documentation accompanies the shipment (8130-3, TurbineWorks COC, customer-specific documents)</li>
+  <li>Packages per requirements (ATA Spec 300, ESD, hazmat as applicable)</li>
+  <li>Labels and marks per regulation and customer requirements</li>
+  <li>Performs final shipping inspection</li>
+  <li>Maintains shipping records</li>
+  <li>Handles hazmat shipping documentation if qualified (some hazmat air shipments require specifically-trained shipping personnel)</li>
+</ul>
+
+<h5>Sales and customer service</h5>
+
+<p>Often the first to interact with customers and the first to hear of customer concerns.</p>
+
+<p><strong>Responsibilities:</strong></p>
+
+<ul>
+  <li>Communicates with customers about products, availability, lead times, status</li>
+  <li>Creates quotes and processes orders</li>
+  <li>Coordinates with QA Manager on parts condition disclosure (Module Customer Relations)</li>
+  <li>Routes customer complaints into the corrective-action system (not just informal email handling)</li>
+  <li>Cannot make quality decisions or override QA decisions</li>
+  <li>Cannot promise parts to customers without QA confirmation of availability and condition</li>
+</ul>
+
+<p>The boundary between sales and QA is critical. Sales pressure on quality decisions is the most common pathway by which quality systems erode. ASA auditors specifically probe this boundary during interviews.</p>
+
+<h5>Other roles as applicable</h5>
+
+<p>Larger distributors may have additional formally-defined roles:</p>
+
+<ul>
+  <li><strong>Document Control Coordinator</strong> — manages the document control system on behalf of the QA Manager</li>
+  <li><strong>Training Coordinator</strong> — administers TurbineWorks University and tracks training compliance</li>
+  <li><strong>Internal Auditor(s)</strong> — performs internal audits separately from the QA Manager (sometimes external contractors)</li>
+  <li><strong>Hazmat Coordinator</strong> — qualified for hazmat shipping documentation per DOT/IATA</li>
+  <li><strong>Export Compliance Officer / Empowered Official</strong> — qualified for ITAR/EAR export determinations</li>
+  <li><strong>IT / Cybersecurity</strong> — for records system integrity and security</li>
+</ul>
+
+<p>These roles may overlap with the core roles in small organizations (the QA Manager often plays Document Control, Training, and Internal Auditor in addition to QA Manager). The QAM documents the actual structure regardless of the formal role labels.</p>
 
 <h4>The Quality Assurance Manual (QAM)</h4>
-<p>The QAM is the single document that ties together everything about how TurbineWorks complies with ASA-100. The auditor
-treats the QAM as the authoritative description of the company's quality system. Anything you do that contradicts the QAM is
-a non-conformance — even if what you are doing is "better."</p>
-<p>The QAM typically contains:</p>
+
+<p>The QAM is the single document that ties everything together. The auditor treats the QAM as the authoritative description of TurbineWorks\' quality system. Anything observed during the audit that contradicts the QAM is a finding — even if what\'s being done is "better" than what the QAM says.</p>
+
+<h5>What the QAM contains</h5>
+
 <ul>
-  <li>Company overview, scope of accreditation (what parts, what services)</li>
-  <li>Organizational chart showing reporting lines for quality decisions</li>
-  <li>Procedures cross-referenced to each section of ASA-100</li>
-  <li>Forms referenced (every TWF-XX form, like the TWF-4 training record, lives in the QAM)</li>
-  <li>Document control: how revisions are approved, distributed, and obsolete versions retrieved</li>
-  <li>Records-retention schedule</li>
+  <li><strong>Company overview.</strong> What TurbineWorks does, scope of accreditation (what parts, what services, what customer types).</li>
+  <li><strong>Quality policy.</strong> Statement of management commitment to ASA-100 compliance, signed by the Accountable Manager.</li>
+  <li><strong>Organizational chart.</strong> Reporting lines for quality decisions. Shows the Accountable Manager → QA Manager → Receiving Inspectors / Warehouse / Shipping chain. Sales is shown as a separate line.</li>
+  <li><strong>Role definitions.</strong> Each role from Accountable Manager down. Named individuals (sometimes by position with a separate current-personnel roster).</li>
+  <li><strong>Procedures.</strong> Detailed how-to for each ASA-100 element: receiving inspection, storage, shipping, recordkeeping, internal audit, corrective action, supplier qualification, training, document control, customer complaint handling.</li>
+  <li><strong>Forms referenced.</strong> Each TWF-XX form referenced in procedures is included or referenced in the QAM.</li>
+  <li><strong>Cross-reference to ASA-100.</strong> Each section of the QAM identifies which ASA-100 section it implements.</li>
+  <li><strong>Records-retention schedule.</strong> What\'s kept, for how long.</li>
+  <li><strong>Document control rules.</strong> How revisions happen, how they\'re approved, distributed, and retrieved.</li>
+  <li><strong>Revision history.</strong> Past revisions of the QAM with summary of changes.</li>
 </ul>
 
-<h4>The hierarchy of documents</h4>
+<h5>QAM structure variations</h5>
+
+<p>Different distributors organize their QAM differently. Common approaches:</p>
+
+<ul>
+  <li><strong>ASA-100-mirroring.</strong> The QAM follows the ASA-100 section structure section by section. Easiest for auditors to navigate but sometimes awkward for daily operational reference.</li>
+  <li><strong>Process-based.</strong> The QAM is organized by major business process (receiving, storage, shipping, customer interaction, internal QMS). Easier for employees to find their section but requires a cross-reference matrix to ASA-100.</li>
+  <li><strong>Hybrid.</strong> Process-based at the top level with explicit ASA-100 cross-references in each section.</li>
+</ul>
+
+<p>The QAM is unambiguously controlled — single owner (QA Manager), formal revision process, distribution list, retrieval of obsolete copies. Uncontrolled copies are a finding.</p>
+
+<h4>The document hierarchy</h4>
+
+<p>The QAM doesn\'t exist in isolation. It sits within a hierarchy of documents that govern operations:</p>
+
 <pre>
-14 CFR (FARs)               ← Law. Always wins in conflict.
-   │
-FAA Advisory Circulars      ← FAA guidance. Authoritative interpretation.
-   │
-ASA-100 Standard            ← Industry standard we are accredited to.
-   │
-TurbineWorks QAM            ← How we comply with ASA-100.
-   │
-SOPs / Work Instructions    ← Step-by-step for specific tasks.
-   │
-Forms / Records             ← Evidence the work was done correctly.
-</pre>
-<p>When two documents conflict, the higher level wins. If the QAM says "do X" and an SOP says "do Y," the QAM wins (and the
-SOP needs to be corrected).</p>
+14 CFR (Federal Aviation Regulations)
+  └─ The law. Wins all conflicts.
 
-<h4>What every employee should know</h4>
+FAA Advisory Circulars
+  └─ Authoritative FAA interpretation and guidance.
+
+ASA-100 Standard
+  └─ Industry standard TurbineWorks is accredited to.
+
+TurbineWorks Quality Assurance Manual (QAM)
+  └─ How TurbineWorks complies with ASA-100.
+
+Standard Operating Procedures (TWP-XX)
+  └─ Process-level procedures referenced by the QAM.
+
+Work Instructions
+  └─ Task-level step-by-step for specific activities.
+
+Forms (TWF-XX)
+  └─ Records templates capturing evidence of work performed.
+
+Records
+  └─ Filled-in forms and other artifacts proving the work was done.
+</pre>
+
+<h5>Conflict resolution rule</h5>
+
+<p>When two documents conflict, the higher level wins. If the QAM says "do X" and an SOP says "do Y," the QAM wins and the SOP must be corrected. If ASA-100 conflicts with the QAM, ASA-100 wins and the QAM must be corrected. If a FAR conflicts with ASA-100, the FAR wins.</p>
+
+<p>This rule is not just abstract — it determines what happens when a procedural question arises in operations. The employee checks the lower-level document first (the work instruction or SOP) for specific guidance. If the guidance is unclear or contradicted by higher-level doc, the employee escalates.</p>
+
+<h4>What every employee needs to know about their role</h4>
+
+<h5>Know your role title in the QAM</h5>
+
+<p>If you are a "Receiving Inspector" per the QAM, the auditor will hold you accountable for what the QAM says Receiving Inspectors do. If you are a "Warehouse Technician," you are accountable for those responsibilities. If you do work outside your QAM role, document the basis (QA Manager-authorized exception, temporary assignment, etc.).</p>
+
+<h5>Know where the QAM lives and how to find your section</h5>
+
+<p>The QAM is typically accessible electronically (current revision) at a documented location. Bound copies may exist at specific stations. Every employee should know how to access the QAM and find the section describing their role.</p>
+
+<p>An auditor will sometimes ask: "Show me where the QAM describes your job." A response of "I\'ve never looked at the QAM" or "I\'m not sure where it is" is a finding by itself.</p>
+
+<h5>Don\'t make quality decisions outside your role</h5>
+
+<p>If you are not the QA Manager, you do not approve non-conforming parts for use. You do not release a quarantined part. You do not waive a procedural requirement. You do not make supplier qualification decisions. These are QA Manager authorities.</p>
+
+<p>Your role authority is what the QAM says it is — no more. Stretching beyond your authority is itself a quality-system failure.</p>
+
+<h5>Raise conflicts through the system</h5>
+
+<p>If you notice a conflict between the QAM and what\'s actually happening — or a procedure that doesn\'t work in practice, or a form that\'s incomplete, or a rule that doesn\'t match reality — the right response is to raise it through the corrective-action system. Open an NCR, talk to the QA Manager, propose a change.</p>
+
+<p>Quality systems improve through systematic feedback. Quietly working around a broken procedure is the worst response — it hides the problem and lets the system drift further from reality.</p>
+
+<h4>The auditor\'s view of roles</h4>
+
+<p>An auditor probes role clarity at every interview:</p>
+
 <ul>
-  <li>Know <strong>which role</strong> in the QAM applies to you. If your job title in the QAM is "Receiving Inspector,"
-      the auditor will hold you accountable for what the QAM says a Receiving Inspector does.</li>
-  <li>Know <strong>where the QAM lives</strong> and how to find your section. Auditors regularly ask "show me where the QAM
-      describes your job."</li>
-  <li><strong>Don't make quality decisions outside your role.</strong> If you're not the QA Manager, you don't approve a
-      non-conforming part for use. Refer it up.</li>
-  <li>If you spot a conflict between the QAM and what's actually happening, <strong>raise it.</strong> That's how the system
-      improves. It is not an accusation — it's the corrective-action system working as designed.</li>
+  <li>"What\'s your job title here?"</li>
+  <li>"Show me where that role is described in the QAM."</li>
+  <li>"What are your responsibilities under that role?"</li>
+  <li>"What decisions are you authorized to make?"</li>
+  <li>"What decisions go to the QA Manager?"</li>
+  <li>"What training does your role require?"</li>
+  <li>"How is your role training documented?"</li>
 </ul>
 
-<p><em>[TurbineWorks Procedure Reference: insert link to the current TurbineWorks QAM and organizational chart here once
-the QAM is published in the document control system.]</em></p>
+<p>An employee who can answer these clearly demonstrates that the role structure is meaningful, not just paper. An employee who can\'t demonstrates a role-clarity gap.</p>
+
+<h4>Key takeaways</h4>
+
+<ul>
+  <li>ASA-100 requires specific roles with specific responsibilities, documented in the QAM</li>
+  <li>The Accountable Manager has corporate responsibility; the QA Manager has day-to-day operational responsibility</li>
+  <li>The QA Manager has independent authority to stop shipments — cannot be overridden by sales or management</li>
+  <li>Receiving Inspectors have independent authority on accept/quarantine/reject decisions</li>
+  <li>Warehouse, Shipping, Sales each have defined responsibilities and boundaries</li>
+  <li>The QAM ties everything together — anything that contradicts the QAM is a finding</li>
+  <li>Document hierarchy: FARs → ACs → ASA-100 → QAM → SOPs → Work Instructions → Forms → Records</li>
+  <li>Higher level wins in conflict</li>
+  <li>Every employee needs to know their role, where the QAM describes it, and what authority they have</li>
+</ul>
+
+<h4>Self-check</h4>
+
+<ol>
+  <li>What is the Accountable Manager\'s role and what specific responsibilities are theirs alone?</li>
+  <li>What independent authority does the QA Manager have, and why is it independent?</li>
+  <li>What are the responsibilities of a Receiving Inspector?</li>
+  <li>What can warehouse personnel NOT do (what decisions are not theirs)?</li>
+  <li>Why is the sales/QA boundary particularly important to the audit?</li>
+  <li>What 10 elements does a typical QAM contain?</li>
+  <li>Draw or describe the document hierarchy from FARs to records.</li>
+  <li>What is the conflict-resolution rule when two documents disagree?</li>
+  <li>What should every employee know about their role, and where do they find it?</li>
+</ol>
+
+<p><em>[TurbineWorks Procedure Reference: insert link to the current TurbineWorks QAM and the organizational chart here once the QAM is published in the document control system.]</em></p>
 HTML
             ],
             [
