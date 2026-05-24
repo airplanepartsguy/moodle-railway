@@ -2485,182 +2485,809 @@ HTML
         ],
         [
             'name'  => 'Lesson 2.4 — Physical Inspection',
-            'intro' => '<p>What you inspect on the part itself.</p>',
+            'intro' => '<p>The systematic physical examination of the part after documentation is verified. Operational depth on quantity, identifiers, markings, condition, packaging, and when calibrated dimensional verification is required.</p>',
             'content' => <<<'HTML'
 <h3>Physical Inspection</h3>
-<p>With documentation verified, the receiving inspector examines the physical part. The depth of physical inspection depends on the part type — a turbine blade with a serial number gets more attention than a box of standard fasteners with a lot number.</p>
 
-<h4>Quantity verification</h4>
-<p>Count the parts. Match to Block 9 of the 8130-3 and to the packing list. Discrepancies are investigated before disposition. Common discrepancies:</p>
+<p>With documentation review complete and consistent, the receiving inspector now examines the physical part itself. This lesson covers the systematic workflow for physical inspection — what to look at, in what order, with what reference, at what level of detail.</p>
+
+<p>Module 1 Lesson 1.4 covered <em>physical red flags</em> — the indicators that signal something is wrong. This lesson covers the <em>routine workflow</em> — what every receiving inspector does on every part, before red-flag-level investigation kicks in. The two are complementary: this lesson is the everyday discipline; 1.4 is the deeper-look response when something looks off.</p>
+
+<h4>Depth of physical inspection — calibrating to the part</h4>
+
+<p>Not every part receives the same physical inspection depth. A box of MS-standard fasteners gets a different inspection than a $40,000 HPT blade. The QAM should define inspection depth by part category. Typical categories:</p>
+
 <ul>
-  <li>Over-shipment: more parts than ordered. Often legitimate (supplier sent extra in case of breakage) but must be documented.</li>
-  <li>Under-shipment: fewer parts than ordered. Note as partial shipment, follow up with supplier.</li>
-  <li>Count off by one: surprisingly common. Recount before recording.</li>
+  <li><strong>Standard hardware</strong> (fasteners, washers, cotter pins, standard fittings) — quantity verification, lot number / cure date check, visible condition. A box of 500 cotter pins gets a sampling inspection, not item-by-item.</li>
+  <li><strong>Consumables</strong> (sealants, adhesives, lubricants) — quantity, expiration date, packaging integrity, label verification, hazmat handling if applicable.</li>
+  <li><strong>Components, non-serialized</strong> (lower-value rotables, accessories) — quantity, part number verification, visual condition, packaging.</li>
+  <li><strong>Serialized parts</strong> (turbine blades, disks, fuel controls, instruments) — item-by-item, including serial number verification per Block 10, full visual examination, markings check.</li>
+  <li><strong>LLPs (Life Limited Parts)</strong> — most thorough. Item-by-item, full visual, full markings verification, condition assessment, life-record cross-check.</li>
+  <li><strong>Modules and engines</strong> — receiving inspection at this level usually involves the QA Manager directly. Module-level documentation review, BSI photo review if available, accessories inventory, build standard verification.</li>
 </ul>
 
-<h4>Serial number verification</h4>
-<p>For serialized parts, the data plate or stamped serial number must exactly match Block 10 of the 8130-3. Verify character by character. A single transposed digit is grounds for quarantine.</p>
+<p>The TurbineWorks QAM specifies inspection depth per category. The receiving inspector applies the right depth without escalation; the QA Manager handles the highest-stakes inspections (modules, engines, high-value LLPs) personally or with senior inspector involvement.</p>
 
-<h4>Part number verification</h4>
-<p>Part number stamped or marked on the part must match Block 8 of the 8130-3 and the PO. Look for revision letters — a part number "ABC-1234-5 Rev B" is not the same as "ABC-1234-5 Rev C" if the customer ordered Rev C.</p>
+<h4>Step 1 — Quantity verification</h4>
 
-<h4>Markings and stampings</h4>
-<p>See Module 1 Lesson 1.4 for the full list of marking red flags. At minimum, check:</p>
+<p>Count the parts in the shipment. Match against:</p>
+
 <ul>
-  <li>Markings present where they should be (per OEM spec)</li>
-  <li>Markings appear factory-original (no re-stamping evidence)</li>
-  <li>Cure dates, manufacturing dates, lot codes legible and consistent with the documentation</li>
+  <li>Block 9 of the 8130-3 (or equivalent — Block 6 of EASA Form 1)</li>
+  <li>The packing list quantity</li>
+  <li>The PO line item quantity</li>
 </ul>
 
-<h4>Visual condition</h4>
+<p>All three should agree. Discrepancies require investigation before continuing.</p>
+
+<h5>Common quantity discrepancies</h5>
+
 <ul>
-  <li>FOD (Foreign Object Damage): nicks, dents, dings on critical surfaces — especially turbine and compressor blade leading edges, sealing surfaces, bearing races</li>
-  <li>Corrosion: pitting, discoloration, staining</li>
-  <li>Heat distress: discoloration on areas that should not have been heat-affected</li>
-  <li>Repair evidence: weld beads, machining marks where a part should be virgin material</li>
-  <li>Wear: scoring, gouging, contact wear on bearing surfaces of a "NEW" part</li>
+  <li><strong>Over-shipment.</strong> Supplier shipped more than ordered. Sometimes legitimate (supplier sent extras to cover potential breakage; supplier intends invoice adjustment). Sometimes a tracking problem. Document the excess; the excess is not authorized for inventory until the PO is amended or the excess is returned.</li>
+  <li><strong>Under-shipment.</strong> Fewer parts than ordered. Document as partial shipment. Confirm whether the remaining quantity is in a future shipment or whether the supplier cancelled the balance.</li>
+  <li><strong>Count off by one.</strong> Surprisingly common; usually a counting error rather than fraud. Recount before recording. If discrepancy persists, count a third time with a witness.</li>
+  <li><strong>Count significantly off.</strong> A 5-piece order showing 10 pieces or 2 pieces is not a counting error. Investigate the cause — likely a paperwork mix-up or a wrong-part shipment.</li>
 </ul>
 
-<h4>Packaging integrity</h4>
+<p>Verified count goes into the receiving inspection record. The recorded count is what subsequent inventory tracking is based on.</p>
+
+<h4>Step 2 — Serial number verification</h4>
+
+<p>For each serialized part, the serial number on the data plate (or stamped/etched on the part) must match Block 10 of the 8130-3 character-by-character.</p>
+
+<h5>Where serial numbers appear on parts</h5>
+
 <ul>
-  <li>Was the part packaged appropriately for its type? (Anti-static for electronics, sealed bag for moisture-sensitive, individual wrap for finished surfaces)</li>
-  <li>Is the packaging damaged in a way that suggests in-transit damage to the part?</li>
-  <li>Preservation: oil-coated steel parts should have visible preservative; bearings in moisture-sensitive packaging should have intact desiccant</li>
+  <li><strong>Data plate</strong> — most common for major components (fuel controls, electronic units, accessories). Removable plate with stamped or etched serial number, attached by rivets or screws.</li>
+  <li><strong>Direct stamping</strong> — typical for blades, disks, shafts. Serial number stamped or etched directly on the part in a non-stressed area.</li>
+  <li><strong>Etched serial</strong> — common for smaller parts. Electrochemically etched (EChE) or laser etched.</li>
+  <li><strong>Bar code / QR code</strong> — increasingly common on newer parts, in addition to readable serial number.</li>
+  <li><strong>RFID tag</strong> — some recent parts have embedded RFID for tracking. Auxiliary to the human-readable identifier.</li>
 </ul>
 
-<h4>Dimensional verification</h4>
-<p>Routine receiving inspection typically does not include dimensional measurement — that level of verification is the OEM's responsibility under their PMA or production approval. However, dimensional verification may be required by the PO for certain parts (custom-machined items, critical-fit parts, parts where the supplier history justifies extra verification).</p>
-<p>When dimensional verification is required, use calibrated measuring tools that are listed in TurbineWorks' calibration program. Out-of-cal tools cannot be used — that's a finding by itself.</p>
+<h5>Verification procedure</h5>
 
-<h4>What to do with non-conformance</h4>
-<p>If the part fails any check, the disposition is <strong>Quarantine</strong>. Move to the Quarantine area, tag with non-conformance description, notify QA Manager. Do not move to serviceable inventory under any circumstances until the non-conformance is dispositioned.</p>
+<ol>
+  <li>Read the serial number from the physical part. If multiple locations (data plate AND direct stamping), confirm both match.</li>
+  <li>Read the serial number from Block 10 of the 8130-3.</li>
+  <li>Compare character by character — letters and digits exactly as written. "0" vs "O" matters. "1" vs "I" matters. A leading zero counts.</li>
+  <li>If they don\'t match, do NOT correct the 8130-3 or re-stamp the part. The mismatch is the finding. Quarantine.</li>
+</ol>
+
+<h5>Data plate condition</h5>
+
+<p>Examine the data plate itself for evidence of tampering:</p>
+
+<ul>
+  <li>Plate appears to have been removed and reinstalled (mounting screw witness marks, paint disturbance around plate edges)</li>
+  <li>Plate is loose, cracked, or shows damage inconsistent with normal handling</li>
+  <li>Plate has secondary stamping over the original (overstamping is a known SUP indicator)</li>
+  <li>Plate is missing entirely (a part with no data plate cannot be serialized-verified; quarantine)</li>
+</ul>
+
+<h4>Step 3 — Part number verification</h4>
+
+<p>The part number stamped or marked on the part must match Block 8 of the 8130-3 AND the PO part number.</p>
+
+<h5>Watch for revision letters</h5>
+
+<p>Part numbers often include a revision letter or dash number that distinguishes pre-mod from post-mod configurations: "ABC-1234-5 Rev B" is not the same part as "ABC-1234-5 Rev C." A customer ordering Rev C will reject a Rev B shipment even if everything else looks correct. Verify the revision letter character-by-character.</p>
+
+<h5>Cross-reference against the OEM IPC</h5>
+
+<p>The part number must exist in the OEM\'s current Illustrated Parts Catalog. A part number that doesn\'t exist in the IPC may be:</p>
+
+<ul>
+  <li>An old part number superseded by a current one (verify the supersedure)</li>
+  <li>A typo on the documentation</li>
+  <li>A fabricated part number that doesn\'t correspond to any actual OEM part</li>
+</ul>
+
+<p>Reference current OEM IPC documentation for the engine model. If the part number is unfamiliar, look it up.</p>
+
+<h4>Step 4 — Markings and stampings</h4>
+
+<p>Beyond serial number and part number, modern aviation parts carry additional markings. Verify their presence and consistency.</p>
+
+<h5>Typical additional markings on engine parts</h5>
+
+<ul>
+  <li><strong>Manufacturing date code</strong> — when the part was produced. Format varies by OEM.</li>
+  <li><strong>Heat number / lot number</strong> — material traceability identifier.</li>
+  <li><strong>Cure date</strong> — for elastomers, adhesives, anything with a shelf-life clock.</li>
+  <li><strong>Inspector stamp</strong> — sometimes present from OEM final inspection.</li>
+  <li><strong>OEM mark / brand</strong> — the manufacturer\'s identifying mark.</li>
+  <li><strong>Modification level / build standard marking</strong> — for parts with multiple configurations.</li>
+</ul>
+
+<h5>Verification</h5>
+
+<ul>
+  <li>Required markings are present per OEM specification (verify against IPC if uncertain what markings should be there)</li>
+  <li>Markings appear factory-original (Module 1 Lesson 1.4 covers indicators of re-stamping in depth)</li>
+  <li>Cure dates, manufacturing dates, and date codes are legible and consistent</li>
+  <li>Markings are consistent across all the parts in the lot if non-serialized (variation suggests mixed-source parts)</li>
+</ul>
+
+<h4>Step 5 — Visual condition</h4>
+
+<p>Examine the physical condition of the part. The depth of visual examination depends on the part type and condition claim (per Block 11 of the 8130-3).</p>
+
+<h5>Foreign Object Damage (FOD)</h5>
+
+<p>Look for damage from impact, debris, or rough handling:</p>
+
+<ul>
+  <li>Nicks, dings, dents on critical surfaces — especially turbine and compressor blade leading edges, sealing surfaces, bearing races</li>
+  <li>Scoring or scratch marks on functional surfaces</li>
+  <li>Bent or deformed features</li>
+</ul>
+
+<p>A part claimed "NEW" with visible FOD is misrepresented. A part claimed "AS-REMOVED" with FOD may be expected — but the FOD should be documented and the customer should know what they\'re getting.</p>
+
+<h5>Corrosion</h5>
+
+<ul>
+  <li>Pitting</li>
+  <li>Discoloration suggesting oxidation</li>
+  <li>Staining or rust spots</li>
+  <li>Plating loss or blistering</li>
+</ul>
+
+<p>Corrosion on a part stored in proper environmental conditions shouldn\'t happen. Corrosion suggests the part was stored improperly or has been in service longer than represented.</p>
+
+<h5>Heat distress</h5>
+
+<ul>
+  <li>Discoloration on surfaces that shouldn\'t have been heat-affected (blue, purple, gold tints on parts that should be silvery)</li>
+  <li>Bluing on bolts that should be uncolored</li>
+  <li>Heat checking (fine crazing) on parts that have been overheated</li>
+</ul>
+
+<p>Heat distress on a "NEW" part is a major red flag. Even on a used part, heat distress beyond normal operating exposure suggests the part exceeded its design envelope.</p>
+
+<h5>Repair evidence</h5>
+
+<ul>
+  <li>Weld beads on parts that should be virgin material</li>
+  <li>Machining over original surfaces (one machining pattern crossing another)</li>
+  <li>Blending or grinding evidence on edges or surfaces</li>
+  <li>Plating over evident defects (sometimes used to hide damage)</li>
+</ul>
+
+<p>Repair without authorization is unapproved status. Even authorized repair may have changed the part\'s applicability or its remaining service life — confirm against the 8130-3 Block 11 status.</p>
+
+<h5>Wear indicators</h5>
+
+<ul>
+  <li>Bearing race showing run-in patterns or pitting</li>
+  <li>Fastener threads showing torque marks (lead-edge compression)</li>
+  <li>Contact surfaces showing wear marks from adjacent part contact</li>
+  <li>Sealing surfaces showing groove wear from O-ring contact</li>
+  <li>Gear teeth showing wear patterns</li>
+</ul>
+
+<p>Wear on a "NEW" part is misrepresentation. Wear on used parts is expected but should be within published service limits.</p>
+
+<h4>Step 6 — Packaging integrity</h4>
+
+<p>The packaging that arrived with the part conveys information about how the part has been handled.</p>
+
+<h5>Appropriate packaging for part type</h5>
+
+<ul>
+  <li><strong>ESD-sensitive electronics</strong> — should be in ESD-safe packaging (pink antistatic poly, silver shielded bags, conductive foam). Standard cardboard or bubble wrap on electronics is a flag.</li>
+  <li><strong>Moisture-sensitive parts</strong> — sealed bag with desiccant. Humidity indicator if applicable.</li>
+  <li><strong>Bearings and finished surfaces</strong> — protective wrap or VCI paper preventing surface contact damage.</li>
+  <li><strong>Hazmat</strong> — UN-spec packaging with proper labels per 49 CFR / IATA DGR.</li>
+  <li><strong>High-value parts</strong> — typically OEM-branded packaging, foam inserts molded for the part, protection of critical surfaces.</li>
+</ul>
+
+<h5>Packaging condition</h5>
+
+<ul>
+  <li>Outer carton intact or damaged?</li>
+  <li>Inner packaging intact?</li>
+  <li>Anti-corrosion preservation present (oil coat, VCI, desiccant)?</li>
+  <li>Caps on bearing seats, plugs in ports, edge protectors on blades?</li>
+  <li>OEM labels match the contents?</li>
+</ul>
+
+<h5>Repackaging indicators</h5>
+
+<p>Signs that the packaging has been opened and re-sealed at some point in the supply chain:</p>
+
+<ul>
+  <li>Tape residue on the carton suggesting prior opening</li>
+  <li>OEM label over a different (covered) label — peel back may reveal the original</li>
+  <li>Foam inserts that don\'t fit the part well (suggesting the foam came from a different part)</li>
+  <li>Generic packaging substituting what should be OEM packaging</li>
+  <li>Preservation materials that don\'t match what the OEM uses</li>
+</ul>
+
+<h4>Step 7 — Dimensional verification (when required)</h4>
+
+<p>Routine receiving inspection typically does NOT include dimensional measurement. The OEM\'s production QC under their PMA / TSO / production certificate authority ensures dimensional conformance, and the 8130-3 attests to this.</p>
+
+<p>Dimensional verification at TurbineWorks receiving is performed when:</p>
+
+<ul>
+  <li>The PO requires it (specific contract terms)</li>
+  <li>The customer requires it (customer-specified incoming inspection plan)</li>
+  <li>The part type warrants it (custom-machined items, critical-fit parts)</li>
+  <li>Supplier history warrants it (suppliers with past dimensional issues get tighter inspection)</li>
+  <li>SUP investigation requires it (confirming a suspect part\'s dimensions against the OEM drawing)</li>
+</ul>
+
+<h5>Dimensional verification requirements</h5>
+
+<ul>
+  <li><strong>Calibrated measuring tools.</strong> Any tool used for dimensional verification must be listed in TurbineWorks\' calibration program with a current calibration certificate. An out-of-cal tool used for inspection is itself a finding.</li>
+  <li><strong>Reference to OEM drawing.</strong> The measurement is against the OEM\'s specified dimension with tolerance. Without the drawing, you don\'t know what you\'re measuring against.</li>
+  <li><strong>Documented measurements.</strong> Each measurement value is recorded on the inspection sheet, not just "in-spec" or "OK." Auditors and customers may want to see actual values.</li>
+  <li><strong>Identification of the inspector.</strong> The person performing the measurement is named on the record.</li>
+</ul>
+
+<h5>Dimensional findings</h5>
+
+<p>If a dimension is out of spec, the part is non-conforming. Disposition is quarantine pending QA Manager review. The QA Manager may:</p>
+
+<ul>
+  <li>Authorize re-measurement by a second inspector with a different tool to rule out measurement error</li>
+  <li>Reject the part as non-conforming and return to supplier</li>
+  <li>Refer to engineering for use-as-is determination (rare; only for parts where the OEM authorizes specific tolerance deviations)</li>
+</ul>
+
+<h4>Step 8 — Other condition-specific checks</h4>
+
+<p>Some part types require category-specific checks beyond general visual examination:</p>
+
+<h5>Electronic components</h5>
+<ul>
+  <li>ESD-safe handling from the moment packaging opens</li>
+  <li>Visual inspection of leads or pins for damage or contamination</li>
+  <li>Date code verification — plausible for the manufacturer\'s production period</li>
+  <li>Marking texture and quality (laser-etched vs. ink — counterfeits often differ)</li>
+</ul>
+
+<h5>Bearings</h5>
+<ul>
+  <li>Race surfaces under magnification — any pitting or brinelling</li>
+  <li>Roller / ball examination through the cage gaps</li>
+  <li>Cage condition — no cracks, no excessive wear</li>
+  <li>Preservation oil/grease — present, correct type, not contaminated</li>
+  <li>Smooth rotation when turned slowly by hand (for accessible bearings)</li>
+</ul>
+
+<h5>Blades</h5>
+<ul>
+  <li>Airfoil leading edges and trailing edges — sharp where they should be, free of FOD</li>
+  <li>Root attachment surfaces (fir-tree, dovetail) — undamaged, conformant to OEM geometry</li>
+  <li>TBC (Thermal Barrier Coating) on hot-section blades — present, intact, no excessive spalling</li>
+  <li>Cooling holes (cooled blades) — present in correct number and location, free of obstruction</li>
+  <li>Tip condition — no excessive rub damage</li>
+</ul>
+
+<h5>Disks (LLPs)</h5>
+<ul>
+  <li>Bore, web, rim dimensions per OEM (dimensional check often required by PO for LLPs)</li>
+  <li>Surface finish on fatigue-critical fillets (web-to-rim transition)</li>
+  <li>Inspection records reviewed (NDT records from OEM and from any prior shop visits)</li>
+  <li>No repair or rework evidence — disks generally cannot be repaired</li>
+  <li>Markings: part number, serial number, manufacturing date, material heat number all present</li>
+</ul>
+
+<h4>Step 9 — Update the receiving inspection record</h4>
+
+<p>Throughout physical inspection, the inspector records observations on the receiving inspection record. The record includes:</p>
+
+<ul>
+  <li>Inspector name, date, and time of inspection</li>
+  <li>Part identification (part number, serial number, quantity)</li>
+  <li>Documents reviewed</li>
+  <li>Findings — any non-conformances observed, with descriptive detail</li>
+  <li>Dimensional measurements if performed (actual values)</li>
+  <li>Photographs taken (referenced by photo identifier)</li>
+  <li>Disposition (pending until Lesson 2.5 — accept / quarantine / reject)</li>
+  <li>Inspector signature</li>
+</ul>
+
+<p>The record is contemporaneous — written during or immediately after the inspection, not days later from memory. Auditors will look at the timestamp and consistency.</p>
+
+<h4>What to do with any non-conformance</h4>
+
+<p>If the part fails any check during physical inspection, the disposition is Quarantine. Lesson 2.5 covers the disposition decision in depth. For now: any non-conformance, no matter how minor it appears, results in Quarantine pending QA Manager review. The inspector\'s authority is to identify and quarantine, not to disposition non-conforming material.</p>
+
+<h4>Self-check</h4>
+
+<ol>
+  <li>What factors determine the depth of physical inspection for a given part?</li>
+  <li>What three references must agree on quantity?</li>
+  <li>Why is character-by-character serial number verification important?</li>
+  <li>What does it mean for a data plate to "appear to have been removed and reinstalled"?</li>
+  <li>Why does the revision letter on a part number matter?</li>
+  <li>Name four indicators of wear that suggest a "NEW" part has actually been in service.</li>
+  <li>What is the difference between ESD-safe packaging types (pink poly, silver shielded, conductive)?</li>
+  <li>Under what circumstances does TurbineWorks perform dimensional verification at receiving?</li>
+  <li>What happens to a part that fails any physical inspection check?</li>
+</ol>
+
+<p><em>[TurbineWorks Procedure Reference: insert TurbineWorks receiving inspection record form designator and the calibration program reference here.]</em></p>
 HTML
         ],
         [
             'name'  => 'Lesson 2.5 — Disposition Decision: Accept, Quarantine, or Reject',
-            'intro' => '<p>The three possible outcomes of receiving inspection and how each is handled.</p>',
+            'intro' => '<p>The three possible outcomes of every receiving inspection. The decision the inspector is authorized to make, the actions that follow each, and the foundational independence principle that protects the integrity of the entire quality system.</p>',
             'content' => <<<'HTML'
 <h3>Disposition Decision</h3>
-<p>Every receiving inspection ends with one of three dispositions. The choice is not the inspector's discretion — it is determined by what the inspection found.</p>
 
-<h4>Accept</h4>
-<p>Documentation is complete and verified, physical inspection finds no non-conformance. The part is approved for serviceable inventory.</p>
-<p>Actions on accept:</p>
+<p>Every receiving inspection ends with a single decision: Accept, Quarantine, or Reject. This is the inspector\'s most important responsibility — the moment where pre-receiving, documentation review, and physical inspection converge into a binding determination about what happens to the part.</p>
+
+<p>This lesson covers each disposition in operational depth: what triggers it, what the inspector does, what records are created, who is notified, and what happens next. It also covers the foundational independence principle: the inspector\'s disposition authority cannot be overridden by sales, management, or even the QA Manager — and why that matters.</p>
+
+<h4>The disposition is determined by findings, not by preference</h4>
+
+<p>A common misunderstanding: the inspector "decides" the disposition. In one sense yes — the inspector signs the record. But the disposition is not a judgment call about whether to accept the part. The disposition is the application of standard criteria to the inspection findings.</p>
+
 <ul>
-  <li>Complete the receiving inspection record (sign, date)</li>
-  <li>Apply the TurbineWorks serviceable tag to the part (per QAM-defined tag format)</li>
-  <li>Move the part to the appropriate serviceable storage location</li>
-  <li>Update inventory system (system marks part as available)</li>
-  <li>File all original documentation against the part record in the document control system</li>
+  <li>Documentation complete and verified, physical inspection finds nothing of concern → Accept</li>
+  <li>Documentation incomplete, internally inconsistent, or externally unverifiable; OR physical inspection finds a non-conformance; OR pre-receiving raised an unresolved concern → Quarantine</li>
+  <li>The part cannot be accepted under any reasonable resolution — documentation is confirmed fraudulent, the part is the wrong part entirely, the supplier is confirmed unqualified → Reject</li>
 </ul>
 
-<h4>Quarantine</h4>
-<p>Documentation is incomplete or questionable, physical inspection found a non-conformance, or there is any other reason to delay disposition pending investigation. <strong>Quarantine is not rejection</strong> — the part may eventually be accepted after the issue is resolved. The point is to prevent the part from entering serviceable inventory while the investigation is in progress.</p>
-<p>Actions on quarantine:</p>
+<p>This means: an inspector who finds non-conformance is not "deciding" to quarantine; the inspector is recording the disposition required by the finding. The disposition is binding. It cannot be talked away by sales, customer urgency, or schedule pressure.</p>
+
+<h4>Disposition 1 — Accept</h4>
+
+<p>Triggered when: documentation review and physical inspection are complete, all checks pass, no non-conformance observed.</p>
+
+<h5>Actions on Accept</h5>
+
+<ol>
+  <li><strong>Complete the receiving inspection record.</strong> Inspector name, signature, date, time. Findings: "documentation verified per checklist; physical inspection complete; no non-conformance observed." Disposition: Accept.</li>
+  <li><strong>Apply the TurbineWorks serviceable tag.</strong> The QAM defines the tag format. Typical content: part number, serial number, condition (NEW/NE/OH/SV/AR), TurbineWorks reference number, receiving inspection date, inspector identifier. The tag stays with the part through storage and shipping.</li>
+  <li><strong>Move the part to the appropriate serviceable storage location.</strong> The storage location depends on the part type — ESD-controlled area for electronics, hazmat cabinet for hazmat, climate-controlled area for shelf-life items, general shelving for hardware. The location is recorded in the inventory system.</li>
+  <li><strong>Update the inventory system.</strong> The system marks the part as available for sale. Quantity on hand increases. The receiving inspection record is linked to the part record.</li>
+  <li><strong>File all original documentation against the part record.</strong> Originals to the document control system per the records-retention schedule. Copies may be filed with the warehouse storage record if helpful, but the controlling record is the original in document control.</li>
+</ol>
+
+<h5>What the customer is paying for at this point</h5>
+
+<p>When TurbineWorks ships an accepted part to a customer, the customer is paying for the verification work that backed up the Accept disposition. The TurbineWorks Certificate of Conformance that accompanies the outbound shipment attests that this verification was performed. If the verification was inadequate — if the inspector cut corners or missed an indicator — the COC misrepresents what TurbineWorks did. That\'s a contract issue and an audit issue.</p>
+
+<h4>Disposition 2 — Quarantine</h4>
+
+<p>Triggered when: any check during pre-receiving, documentation review, or physical inspection raises a question that cannot be resolved in the routine flow. Quarantine is not rejection — the part may eventually be accepted after the question is answered.</p>
+
+<h5>Common triggers for Quarantine</h5>
+
 <ul>
-  <li>Move the part to the physically segregated Quarantine area</li>
-  <li>Apply the Quarantine tag with reason for hold</li>
-  <li>Document the non-conformance: what specifically was wrong, what is being investigated</li>
-  <li>Notify the QA Manager</li>
-  <li>Open a non-conformance report in the corrective-action system</li>
-  <li>Do not return part or documentation to supplier without QA Manager authorization</li>
-</ul>
-<p>Typical reasons for quarantine:</p>
-<ul>
-  <li>SUP investigation (see Module 1)</li>
-  <li>Missing documentation expected within a defined timeframe</li>
-  <li>Visible damage that may have occurred in transit (insurance claim pending)</li>
+  <li>SUP investigation — any of the SUP indicators from Module 1 Lessons 1.3 and 1.4</li>
+  <li>Missing documentation that is expected to arrive within a defined timeframe</li>
+  <li>Visible damage to the part or its packaging that may have occurred in transit (insurance claim pending)</li>
   <li>Serial number discrepancy requiring supplier confirmation</li>
-  <li>Supplier qualification status pending</li>
+  <li>Supplier qualification status pending — QA Manager needs to authorize one-time receipt or complete supplier qualification first</li>
+  <li>Documentation date inconsistency requiring clarification</li>
+  <li>Block 15 certificate database lookup returned no result — pending verification of issuing organization</li>
+  <li>Dimensional verification revealed a measurement that needs re-check or QA Manager review</li>
+  <li>Customer-specific requirement not met (the customer-specific incoming inspection plan flagged something)</li>
 </ul>
 
-<h4>Reject</h4>
-<p>The part cannot be accepted under any reasonable resolution. Documentation is fraudulent, the part itself does not conform, the part is the wrong part number entirely. Rejected parts go back to the supplier OR are destroyed per ASA-100 §8 disposition procedures (for confirmed SUP that has been investigated).</p>
-<p>Actions on reject:</p>
+<h5>Actions on Quarantine</h5>
+
+<ol>
+  <li><strong>Move the part to the physically segregated Quarantine area.</strong> The part cannot remain in the Receiving area while quarantine is active, because Receiving needs to handle subsequent shipments. The Quarantine area is separate, marked, and access-controlled.</li>
+  <li><strong>Apply the Quarantine tag.</strong> The tag identifies: part number, serial number, supplier, PO reference, date of quarantine, inspector who initiated, reason for quarantine, status of investigation. The tag stays with the part until disposition.</li>
+  <li><strong>Document the non-conformance in detail.</strong> "Failed receiving inspection" is not sufficient. The record specifies: what check failed, what was observed, what reference the observation was compared against. Photographs.</li>
+  <li><strong>Notify the QA Manager same business day.</strong> The QA Manager owns the investigation from this point. The inspector is the source of the finding but not the investigator.</li>
+  <li><strong>Open an NCR (Non-Conformance Report) in the corrective-action system.</strong> The NCR tracks the investigation through to closure. The receiving inspection record references the NCR; the NCR references the receiving inspection record.</li>
+  <li><strong>Preserve all original documentation.</strong> Do not annotate, stamp, or alter. The originals are evidence for the investigation.</li>
+  <li><strong>Do not return the part or documentation to the supplier without QA Manager authorization.</strong> Returning a quarantined part without investigation defeats the purpose of quarantine.</li>
+</ol>
+
+<h5>What happens during quarantine</h5>
+
+<p>The QA Manager investigates. Depending on the specific concern, the investigation may include:</p>
+
 <ul>
-  <li>Document the rejection reason in the receiving inspection record</li>
-  <li>Notify the QA Manager and the buyer who issued the PO</li>
-  <li>Tag the part as Rejected — do not let it touch serviceable inventory under any circumstances</li>
-  <li>Coordinate return to supplier OR disposition (mutilation per AC 21-38) per QA Manager direction</li>
-  <li>Open a corrective-action report</li>
-  <li>Evaluate supplier performance — repeated rejections from the same supplier may trigger removal from the approved-supplier list</li>
+  <li>Verification with the issuing organization (Module 1 Lesson 1.5)</li>
+  <li>Re-inspection by a second inspector or by the QA Manager personally</li>
+  <li>Laboratory analysis if warranted</li>
+  <li>Supplier engagement to obtain missing documentation or clarification</li>
+  <li>FAA database checks or industry alerts review</li>
 </ul>
 
-<h4>What you cannot do</h4>
+<p>The investigation concludes with a QA Manager disposition. The disposition is documented on the NCR and the receiving inspection record.</p>
+
+<h5>Possible disposition outcomes after quarantine investigation</h5>
+
 <ul>
-  <li>Accept a part with non-conformance because "it looks OK and the customer needs it"</li>
-  <li>Quarantine a part for "a little while" and then accept it without resolving the non-conformance</li>
-  <li>Return a SUP to the supplier without first investigating (that just shifts the SUP to the next distributor)</li>
-  <li>Destroy a SUP without QA Manager authorization (loses evidence)</li>
-  <li>Re-stamp, re-mark, or alter a part to make it pass inspection (this is itself fraud)</li>
+  <li><strong>Released to Accept.</strong> Investigation resolved the concern. The part moves to serviceable inventory. The receiving inspection record is updated; the NCR is closed with the resolution documented.</li>
+  <li><strong>Confirmed Reject.</strong> Investigation confirmed the non-conformance is real and not resolvable. The part moves to the Reject disposition (below). The NCR continues to track the reject handling.</li>
+  <li><strong>Confirmed SUP.</strong> Investigation confirmed the part is a Suspected Unapproved Part. SUP reporting workflow per Module 1 Lesson 1.5 begins.</li>
+  <li><strong>Inconclusive.</strong> Investigation cannot definitively confirm or refute. QA Manager dispositions conservatively — typically Reject, with documented reasoning. Records reflect the inconclusive finding so the supplier and part type are flagged for future scrutiny.</li>
 </ul>
 
-<h4>The receiving inspector's authority</h4>
-<p>Receiving inspectors are authorized in the QAM to make the accept/quarantine/reject decision. <strong>This authority cannot be overridden by sales, by management, or by the QA Manager.</strong> The QA Manager can authorize the inspector to re-inspect, can request additional information, or can take the part for separate investigation — but the inspector who finds non-conformance cannot be ordered to ignore it. This is a foundational principle of ASA-100 quality systems.</p>
+<h4>Disposition 3 — Reject</h4>
+
+<p>Triggered when: the part cannot be accepted under any reasonable resolution. The reject decision is typically made by the QA Manager after quarantine investigation, but in clear-cut cases an inspector may reject directly (with concurrent QA Manager notification).</p>
+
+<h5>Clear-cut reject triggers</h5>
+
+<ul>
+  <li>Documentation confirmed fraudulent (Block 15 not in FAA database, supplier confirms they did not issue the tag, etc.)</li>
+  <li>Wrong part — the part shipped does not match the PO part number, no possible reconciliation</li>
+  <li>Part visibly destroyed in transit beyond serviceable condition</li>
+  <li>Supplier confirmed unqualified, no path to qualification</li>
+  <li>Sanctioned-party screening returns the supplier or end-user — TurbineWorks cannot transact</li>
+</ul>
+
+<h5>Actions on Reject</h5>
+
+<ol>
+  <li><strong>Document the rejection reason in the receiving inspection record.</strong> Detailed: what was found, what investigation occurred, why no resolution was possible.</li>
+  <li><strong>Notify the QA Manager and the buyer who issued the PO.</strong> Sales and the buyer need to know to manage the customer relationship if the part was for a specific customer order.</li>
+  <li><strong>Apply the Reject tag.</strong> The tag\'s purpose is to make absolutely clear the part cannot enter serviceable inventory under any circumstances.</li>
+  <li><strong>Hold the part pending disposition direction from the QA Manager.</strong> Reject parts may be returned to supplier OR destroyed per AC 21-38, depending on the nature of the rejection.</li>
+  <li><strong>Open a corrective-action report.</strong> Every reject generates a CAPA file. The investigation: why did this reject occur? Was the supplier qualified properly? Did receiving inspection catch this, or did downstream review catch it? What process change prevents recurrence?</li>
+  <li><strong>Evaluate supplier performance.</strong> Repeated rejects from the same supplier trigger supplier review. The QA Manager evaluates whether the supplier remains on the Approved-Supplier List.</li>
+</ol>
+
+<h5>Two paths after Reject</h5>
+
+<ul>
+  <li><strong>Return to supplier.</strong> Used for routine reject conditions where the part is the supplier\'s problem — wrong part shipped, damaged in transit, documentation incomplete and unrecoverable. Return is coordinated with the supplier; documented return record retained.</li>
+  <li><strong>Destruction per FAA AC 21-38.</strong> Used for confirmed unapproved parts (SUP investigation concluded). The part is mutilated; the mutilation witnessed and documented. The part cannot return to the supplier because that would just transfer the SUP to the next distributor.</li>
+</ul>
+
+<h4>What inspectors cannot do — the forbidden actions</h4>
+
+<p>The disposition decision has clear authority but also clear limits. Things an inspector is NOT permitted to do:</p>
+
+<ul>
+  <li><strong>Accept a part with non-conformance because "it looks OK and the customer needs it."</strong> The non-conformance is what matters; customer urgency does not override.</li>
+  <li><strong>Quarantine a part briefly and then quietly accept it without resolving the non-conformance.</strong> Quarantine requires investigation and QA Manager disposition. "Just hold it for a day and then release" without documentation is forbidden.</li>
+  <li><strong>Return a SUP to the supplier without investigation.</strong> That just shifts the SUP to the next distributor and destroys evidence.</li>
+  <li><strong>Destroy a SUP or evidence without QA Manager authorization.</strong> Evidence preservation is critical to investigation; premature destruction may compromise FAA or law-enforcement work.</li>
+  <li><strong>Re-stamp, re-mark, or alter a part to make it pass inspection.</strong> This is itself fraud — converting a non-conforming part into "conforming" through alteration of identifiers.</li>
+  <li><strong>Annotate or correct original documentation to "fix" a discrepancy.</strong> The documentation is evidence. Alteration is evidence tampering.</li>
+  <li><strong>Skip required checks because the inspection workload is high.</strong> Schedule pressure is real but doesn\'t override the standard.</li>
+</ul>
+
+<p>These prohibitions are non-negotiable. An inspector who repeatedly performs any of these actions is removed from the Receiving Inspector designation. An inspector who does so under direction from sales or management is in a difficult position — the right response is to refuse, document the direction received, and escalate to the QA Manager or Accountable Manager.</p>
+
+<h4>The independence principle</h4>
+
+<p>This is the foundational ASA-100 quality-system principle: <strong>the inspector\'s disposition authority is independent of commercial pressure.</strong></p>
+
+<p>Specifically, the inspector\'s decision to Quarantine or Reject a part cannot be overridden by:</p>
+
+<ul>
+  <li><strong>Sales</strong> because a customer is waiting</li>
+  <li><strong>Operations</strong> because schedule is tight</li>
+  <li><strong>Senior management</strong> because of business pressure</li>
+  <li><strong>The Accountable Manager</strong> except to authorize a re-inspection by a different inspector (which is itself an unusual step that must be documented)</li>
+  <li><strong>The Quality Assurance Manager</strong> on the inspector\'s decision to quarantine. The QA Manager can disposition the quarantined part after investigation, but cannot order the inspector to "not quarantine" in the first place.</li>
+</ul>
+
+<p>This is unusual. In most business contexts, employees follow direction from management. In ASA-100 quality systems, the receiving inspector is deliberately structured outside that hierarchy on quality matters specifically. The reason: without inspector independence, commercial pressure inevitably erodes the quality system. Inspectors find ways to make non-conformances disappear. Suppliers learn which distributors are "easy" and route bad inventory accordingly. Customers eventually pay for the failures, and the accreditation eventually catches up.</p>
+
+<h5>What independence looks like in practice</h5>
+
+<ul>
+  <li>If sales asks the inspector to "just accept it, the customer is screaming," the right answer is: "I can\'t override the standard. If there\'s a path forward, it\'s through the QA Manager."</li>
+  <li>If management asks the inspector to skip a check, the right answer is: "The check is required by the QAM. I\'ll perform it. If you want the procedure changed, that\'s a QAM revision, not an instruction to me."</li>
+  <li>If a customer threatens to cancel an order over a quarantine decision, the right answer (typically delivered by the QA Manager, not by the inspector) is: "We can\'t ship a part with unresolved non-conformance. We\'re working the investigation as fast as possible. We\'ll keep you informed."</li>
+</ul>
+
+<h5>The audit verification of independence</h5>
+
+<p>ASA auditors specifically probe independence in personnel interviews. Common questions:</p>
+
+<ul>
+  <li>"Has anyone ever asked you to release a quarantined part without QA Manager disposition?"</li>
+  <li>"Has anyone ever told you to skip a step in your inspection procedure?"</li>
+  <li>"What would you do if your manager told you to accept a non-conforming part?"</li>
+  <li>"Have you ever felt commercial pressure on a quality decision?"</li>
+</ul>
+
+<p>The expected answers, in order: "No," "No," "Refuse and escalate," "Sometimes, and the right response is to refuse and document." Inspectors who answer differently — yes there\'s pressure, yes they\'ve been overridden, yes they\'ve felt forced to compromise — are evidence the quality system isn\'t functioning, regardless of what the paper procedures say.</p>
+
+<h4>The QA Manager\'s role in disposition</h4>
+
+<p>The QA Manager doesn\'t override the inspector\'s quarantine decision. But the QA Manager IS the authority for disposition of quarantined material:</p>
+
+<ul>
+  <li>Reviews the inspector\'s finding and the supporting evidence</li>
+  <li>Authorizes investigation (verification with issuing organization, laboratory analysis, supplier engagement)</li>
+  <li>Reviews investigation results</li>
+  <li>Dispositions the part: Release to Accept, Move to Reject, Confirm SUP, Inconclusive</li>
+  <li>Signs the NCR closure</li>
+  <li>Drives the corrective action — what process change prevents recurrence</li>
+</ul>
+
+<p>The QA Manager and the inspector work as complementary roles: inspector identifies; QA Manager investigates and dispositions. Both functions are required for the system to work.</p>
+
+<h4>Self-check</h4>
+
+<ol>
+  <li>What are the three possible dispositions in receiving inspection?</li>
+  <li>Why is the disposition described as "determined by findings, not by preference"?</li>
+  <li>What 5 actions follow an Accept disposition?</li>
+  <li>What is the difference between Quarantine and Reject?</li>
+  <li>What 7 actions follow a Quarantine disposition?</li>
+  <li>What are the four possible outcomes of a quarantine investigation?</li>
+  <li>List five "forbidden actions" inspectors cannot perform.</li>
+  <li>What is the "independence principle" and why does it matter for the quality system?</li>
+  <li>What is the QA Manager\'s role relative to the inspector\'s disposition authority?</li>
+</ol>
+
+<p><em>[TurbineWorks Procedure Reference: insert TurbineWorks NCR system reference, the Quarantine area location, and the disposition workflow steps here.]</em></p>
 HTML
         ],
         [
             'name'  => 'Lesson 2.6 — Shipping: Outbound Documentation and Packaging',
-            'intro' => '<p>What goes out the door with a customer shipment.</p>',
+            'intro' => '<p>Everything that goes out the door with a customer shipment. The shipping inspection is the receiving inspection in reverse — the customer\'s receiving inspector will check what TurbineWorks ships against the same kind of criteria TurbineWorks applies to incoming shipments. Get this right and the customer relationship works; get it wrong and the customer becomes a quality complaint case.</p>',
             'content' => <<<'HTML'
-<h3>Shipping: Outbound Requirements</h3>
-<p>The same documentation rigor that applies at receiving applies at shipping. The customer receiving a part from TurbineWorks should have everything they need to add the part to their own traceability records.</p>
+<h3>Shipping: Outbound Documentation and Packaging</h3>
+
+<p>The discipline applied to receiving inspection applies, in mirror image, to outbound shipping. The customer receiving a part from TurbineWorks is going to perform their own receiving inspection. They will check documentation, verify markings, examine condition, look for red flags. What they find is a direct reflection of TurbineWorks\' shipping work.</p>
+
+<p>This lesson covers what every outbound shipment includes, how it\'s packaged, how it\'s labeled, how it\'s shipped, and how the records close the loop. By the end you should understand that shipping inspection is not packaging — it\'s the final quality control checkpoint before the part leaves TurbineWorks custody.</p>
+
+<h4>The shipping inspection mindset</h4>
+
+<p>An effective shipping inspector thinks like the customer\'s receiving inspector:</p>
+
+<ul>
+  <li>What will the customer\'s inspector check first?</li>
+  <li>Will the documentation be complete and clear?</li>
+  <li>Will the part match what the documentation says?</li>
+  <li>Will the packaging protect the part during transit and during the customer\'s own storage?</li>
+  <li>Are there any obvious problems that will trigger a customer NCR or rejection?</li>
+</ul>
+
+<p>A part that arrives at a customer with anything wrong becomes a customer complaint that takes more time to resolve than the original shipment would have taken to prepare correctly. The shipping inspector\'s job is to prevent that.</p>
 
 <h4>Required outbound documentation</h4>
-<p>Every outbound shipment includes:</p>
+
+<p>Every outbound shipment includes a documentation package. Specific contents depend on the part type and customer PO terms, but the typical package:</p>
+
+<h5>Packing list — TurbineWorks-generated</h5>
+
+<p>Lists every line item being shipped. For each:</p>
+
 <ul>
-  <li><strong>Packing list</strong> — TurbineWorks-generated, listing every part, serial number, quantity, customer PO reference</li>
-  <li><strong>Original 8130-3</strong> (or copy with proper TRUE COPY attestation per QAM) — must accompany the part</li>
-  <li><strong>Certificate of Conformance</strong> — TurbineWorks-issued, attesting that the part has been received, inspected, and stored per ASA-100 procedures</li>
-  <li><strong>Material certifications</strong> if required by customer PO</li>
-  <li><strong>Country-of-origin declaration</strong> for export shipments</li>
-  <li><strong>Shipper's Declaration for Dangerous Goods</strong> if any hazmat is involved (see Module 8)</li>
+  <li>Part number (with revision letter if applicable)</li>
+  <li>Serial number for serialized parts</li>
+  <li>Quantity</li>
+  <li>Customer PO line reference</li>
+  <li>Condition code (NEW, NE, OH, SV, AR)</li>
 </ul>
+
+<p>Header information: TurbineWorks PO number, customer PO number, customer name, ship-to address, ship date, TurbineWorks shipping reference (often a tracking number or unique shipment ID).</p>
+
+<p>The packing list is the customer\'s starting point — they reference it when receiving and use it to reconcile against their PO.</p>
+
+<h5>Original 8130-3 (or equivalent)</h5>
+
+<p>The airworthiness approval tag that came in with the part stays with the part through TurbineWorks custody and ships with the part to the customer. The original physical tag is what the customer needs for their own records and for any onward installation.</p>
+
+<p><strong>True Copy alternative.</strong> Some PO terms allow the customer to accept a "True Copy" attestation in place of the physical original. A True Copy is a photocopy bearing an attestation from an authorized custodian (typically the QA Manager) stating it is an exact copy of the original. True Copy use is governed by the QAM and the customer-specific contract — not all customers accept True Copies.</p>
+
+<p>TurbineWorks must retain a copy (electronic or physical) of every 8130-3 that ships out, even when the original goes to the customer. This is part of the records-retention requirement (Module 5).</p>
+
+<h5>Certificate of Conformance — TurbineWorks-issued</h5>
+
+<p>The TurbineWorks COC attests that:</p>
+
+<ul>
+  <li>The part has been received and inspected per ASA-100 procedures</li>
+  <li>The accompanying 8130-3 (or equivalent) was verified during receiving inspection</li>
+  <li>The part has been stored under proper conditions while in TurbineWorks custody</li>
+  <li>Any non-conformances or relevant findings are disclosed</li>
+</ul>
+
+<p>The COC is signed by an authorized TurbineWorks person (typically the QA Manager or a designated alternate). It is on TurbineWorks letterhead, with TurbineWorks contact information.</p>
+
+<p><strong>What the COC must NOT say:</strong> TurbineWorks cannot certify airworthiness on parts where airworthiness was certified by another organization. The OEM\'s 8130-3 certifies airworthiness; TurbineWorks\' COC certifies the distribution-side handling. Conflating the two on the COC is regulatory misrepresentation.</p>
+
+<h5>Material certifications</h5>
+
+<p>If the PO required material test reports at receiving, they are forwarded to the customer. The customer needs them for their own material traceability records.</p>
+
+<h5>Country-of-origin declaration</h5>
+
+<p>Required for export shipments and for many customer contracts. Identifies where the part was originally manufactured.</p>
+
+<h5>Hazmat documentation</h5>
+
+<p>If any hazmat is involved, the Shipper\'s Declaration for Dangerous Goods (for air shipments) or equivalent ground-mode documentation is required per Module 8. Hazmat shipping without proper documentation is a regulatory violation.</p>
+
+<h5>Customer-specific documentation</h5>
+
+<p>Some customers (especially OEMs and major MROs) require additional documentation: their own COC template filled out, supplier-quality forms, traceability matrices, specific test results. The PO terms specify what\'s required. Failing to include customer-specific documentation typically results in receiving rejection by the customer.</p>
 
 <h4>Packaging requirements</h4>
+
+<p>Packaging must protect the part during transit and during the customer\'s own storage (which may extend for weeks or months before installation).</p>
+
+<h5>Container selection per ATA Spec 300</h5>
+
+<p>ATA Spec 300 is the Air Transport Association specification for reusable containers in aviation parts shipping. The spec defines container categories:</p>
+
 <ul>
-  <li>Parts must be packaged per <strong>ATA Spec 300</strong> (or equivalent) container categories appropriate to the part type</li>
-  <li>ESD-sensitive parts in ESD-safe packaging (see Module 7)</li>
-  <li>Moisture-sensitive parts in sealed bags with desiccant and humidity indicator</li>
-  <li>Critical surfaces protected (caps on bearing seats, plugs in ports, edge protectors on blades)</li>
-  <li>Outer container appropriate for transit method (heavier carton for ocean freight than air)</li>
-  <li>Hazmat packaging meets 49 CFR / IATA DGR requirements per Module 8</li>
+  <li><strong>Category I:</strong> reusable for many shipments (heavy-duty plastic cases with foam inserts)</li>
+  <li><strong>Category II:</strong> reusable for moderate number of shipments (corrugated plastic cases)</li>
+  <li><strong>Category III:</strong> limited reuse (heavy corrugated cardboard with reinforcement)</li>
 </ul>
+
+<p>The selection depends on part value, fragility, transit mode, and reuse expectation. High-value rotables typically ship in Category I containers. Standard hardware ships in Category III or simpler. TurbineWorks QAM specifies appropriate container selection by part category.</p>
+
+<h5>ESD-sensitive parts</h5>
+
+<p>Module 7 covers ESD in depth. For shipping: ESD-sensitive parts go in appropriate ESD packaging — silver shielded bags for moderate sensitivity, conductive bags for highly sensitive components, anti-static foam for cushioning. The outer container should be labeled with the ESD symbol.</p>
+
+<p>An ESD-sensitive part shipped without ESD packaging is at risk of latent damage. The customer receiving such a shipment will note the packaging deficiency and may reject the shipment.</p>
+
+<h5>Moisture-sensitive parts</h5>
+
+<p>Per IPC J-STD-033 for moisture-sensitive electronic devices, and per OEM spec for other moisture-sensitive items: sealed bag with desiccant pack and humidity indicator card. The customer can see the humidity indicator to verify the package wasn\'t breached in transit.</p>
+
+<h5>Critical surface protection</h5>
+
+<ul>
+  <li>Caps on bearing seats</li>
+  <li>Plugs in ports (fuel, hydraulic, oil)</li>
+  <li>Edge protectors on blade leading and trailing edges</li>
+  <li>Padded wrap on finished optical surfaces</li>
+  <li>Anti-corrosion oil coat on ferrous parts</li>
+  <li>VCI paper for parts susceptible to corrosion</li>
+</ul>
+
+<h5>Outer container</h5>
+
+<p>The outer container needs to survive the transit mode. Air freight is relatively gentle (handled by humans, climate-controlled cargo holds). Ocean freight is rougher (containers stacked, exposed to humidity, sometimes salt spray). Truck and rail are intermediate.</p>
+
+<p>For high-value or fragile parts, the outer container is over-built relative to what minimum-spec packaging would require. The cost of better packaging is far less than the cost of a damaged-in-transit claim.</p>
+
+<h5>Hazmat packaging</h5>
+
+<p>UN-spec packaging per 49 CFR / IATA DGR. The UN packaging mark indicates the package has been tested to specific drop, leak, and pressure requirements. Hazmat in non-UN packaging cannot be legally shipped.</p>
 
 <h4>Marking and labeling</h4>
+
+<p>The outer container is labeled to identify the shipment and any handling requirements:</p>
+
+<h5>Required labels</h5>
+
 <ul>
-  <li>Part identification visible without opening packaging (part number, serial number, customer PO)</li>
-  <li>"FRAGILE" / "THIS SIDE UP" / "DO NOT STACK" labels as appropriate</li>
-  <li>Hazmat labels and markings per regulation (Module 8)</li>
-  <li>Customer-specified labeling (some customers require specific routing barcodes, customer part numbers, etc.)</li>
+  <li>From / To addresses</li>
+  <li>Tracking number / waybill</li>
+  <li>Customer PO reference visible without opening</li>
+  <li>Part identification (part number, serial number, quantity) on the package exterior — minimizes need to open packaging to identify contents</li>
 </ul>
 
-<h4>Carrier and method</h4>
+<h5>Handling labels (as applicable)</h5>
+
 <ul>
-  <li>Carrier authorized by TurbineWorks (some carriers do not meet customer or regulatory requirements for hazmat or high-value cargo)</li>
-  <li>Service level appropriate (next-day for AOG / Aircraft on Ground urgent shipments; ground for routine)</li>
-  <li>Insurance and declared value appropriate to part value</li>
-  <li>Tracking number captured and provided to customer</li>
+  <li>"FRAGILE"</li>
+  <li>"THIS SIDE UP"</li>
+  <li>"DO NOT STACK"</li>
+  <li>"KEEP DRY"</li>
+  <li>"ESD SENSITIVE"</li>
+  <li>Orientation arrows (for liquids or parts that must remain in specific orientation)</li>
 </ul>
 
-<h4>Shipping inspection — the final check</h4>
-<p>Before the carton is sealed, a shipping inspector verifies:</p>
+<h5>Hazmat labels and markings</h5>
+
+<p>Per 49 CFR / IATA DGR per Module 8. Hazard class diamond, UN number, proper shipping name, packing group indication, shipper and consignee, emergency response phone number.</p>
+
+<h5>Customer-specific labels</h5>
+
+<p>Some customers require specific routing barcodes, customer part numbers, or scannable labels per their warehouse management system. These are dictated by the customer\'s receiving operation, not by TurbineWorks preference.</p>
+
+<h4>Carrier and shipping method</h4>
+
+<h5>Carrier selection</h5>
+
 <ul>
-  <li>Documentation in the carton matches the part in the carton (serial number, part number)</li>
-  <li>Packaging is appropriate</li>
-  <li>Labels are correct and legible</li>
-  <li>The shipment matches the customer PO</li>
-  <li>Hazmat is properly documented if applicable</li>
+  <li><strong>Authorized carrier.</strong> Some carriers don\'t handle aviation parts, hazmat, or high-value cargo. TurbineWorks maintains a list of authorized carriers. Shipping outside the list requires QA Manager authorization.</li>
+  <li><strong>Hazmat-qualified carrier</strong> if hazmat is involved. Not every carrier is qualified for every hazmat class.</li>
+  <li><strong>Insurance and declared value</strong> appropriate to part value. High-value parts need declared-value coverage; the carrier\'s default liability is typically per-pound and inadequate for aviation parts.</li>
 </ul>
+
+<h5>Service level</h5>
+
+<ul>
+  <li><strong>AOG (Aircraft on Ground):</strong> next-flight-out air. Customer has a grounded aircraft waiting; cost of delay is enormous.</li>
+  <li><strong>Critical:</strong> next-day air. Customer urgency but not AOG.</li>
+  <li><strong>Standard:</strong> ground or deferred air. Routine shipments where 3-5 day transit is acceptable.</li>
+  <li><strong>Ocean / surface:</strong> non-urgent international shipments, low-value bulk items.</li>
+</ul>
+
+<h5>Tracking</h5>
+
+<p>The tracking number is captured and provided to the customer. Customer can monitor transit; TurbineWorks can monitor for problems (delays, damage notifications). The tracking number is part of the shipping record.</p>
+
+<h4>The shipping inspection — final pre-shipment quality check</h4>
+
+<p>Before the carton is sealed, a shipping inspector performs a final verification:</p>
+
+<ol>
+  <li><strong>Documentation in the carton matches the part in the carton.</strong> Serial number on the 8130-3 in the package matches the serial number on the actual part being shipped.</li>
+  <li><strong>Packaging is appropriate.</strong> ESD packaging if needed, moisture barrier if needed, critical surface protection in place.</li>
+  <li><strong>Labels are correct and legible.</strong> Address correct; part identification visible; handling labels appropriate.</li>
+  <li><strong>The shipment matches the customer PO.</strong> Right parts, right quantities, right configuration.</li>
+  <li><strong>Hazmat is properly documented and packaged.</strong> If applicable.</li>
+  <li><strong>Customer-specific requirements are satisfied.</strong> Per-customer documentation, labeling, or packaging.</li>
+  <li><strong>The TurbineWorks COC is signed and included.</strong></li>
+</ol>
+
+<p>The shipping inspector signs the shipping inspection record certifying the final check was performed. The signature is meaningful — the shipping inspector is accountable for the shipment\'s correctness as it leaves TurbineWorks.</p>
+
+<h4>Common shipping inspection failures</h4>
+
+<ul>
+  <li>Wrong serial number in the package (part swapped with documentation from another shipment)</li>
+  <li>Missing 8130-3 (forgotten in document control)</li>
+  <li>ESD-sensitive part in non-ESD packaging</li>
+  <li>Hazmat shipped without DGD or with wrong UN number</li>
+  <li>Customer-specific documentation omitted</li>
+  <li>Outer container damaged before shipping (should have been replaced)</li>
+  <li>Tracking number wrong on the packing list (different from the actual waybill)</li>
+  <li>Ship-to address wrong (typo, outdated customer information)</li>
+</ul>
+
+<p>Each of these creates a customer complaint, a possible regulatory issue, or a customer rejection. Catching them before shipping is the shipping inspector\'s job.</p>
 
 <h4>Recordkeeping</h4>
+
+<p>Every outbound shipment generates records:</p>
+
 <ul>
-  <li>Copy of the shipping documentation filed against the part record</li>
-  <li>Customer PO reference cross-linked to the inventory record showing which serial number went to which customer</li>
-  <li>Carrier tracking number recorded</li>
-  <li>Date and time of shipment recorded</li>
+  <li>Copy of the shipping documentation (packing list, COC, copy of the 8130-3 that shipped with the part)</li>
+  <li>Customer PO cross-reference</li>
+  <li>Internal sales order / shipment reference</li>
+  <li>Inventory record update — which serial number went to which customer on which date</li>
+  <li>Carrier tracking number</li>
+  <li>Date and time of shipment</li>
+  <li>Shipping inspector identification</li>
+  <li>Photographs of the prepared shipment if customer or part value warrants</li>
 </ul>
-<p>This creates the audit chain: a customer can show TurbineWorks the part they received, and TurbineWorks can produce every record from receiving inspection through outbound shipment — including who inspected, when, against what documentation. That chain is the entire value proposition of an ASA-100 accredited distributor.</p>
+
+<p>These records close the loop. A customer can show TurbineWorks the part they received and reference the shipment. TurbineWorks can produce every record from the receiving inspection of that part through the outbound shipment — including who inspected at each step, when, against what documentation. That chain is the audit-evidence proof of the entire ASA-100 quality system in action.</p>
+
+<h4>The customer experience</h4>
+
+<p>From the customer\'s perspective, what they see when a TurbineWorks shipment arrives:</p>
+
+<ul>
+  <li>Properly addressed package with clear labels</li>
+  <li>Outer packaging intact and appropriate for the part type</li>
+  <li>Inside: organized documentation package and the part itself in protective packaging</li>
+  <li>The documentation matches the part exactly</li>
+  <li>The packing list matches the PO</li>
+  <li>Everything looks professional, complete, and unambiguous</li>
+</ul>
+
+<p>This experience is what builds the customer relationship. A customer who has received 50 perfect TurbineWorks shipments treats TurbineWorks differently than a customer who has received 5 perfect shipments and 1 partially-broken one. The shipping inspector\'s discipline is what produces the perfect-shipment track record.</p>
+
+<h4>Self-check</h4>
+
+<ol>
+  <li>What is the "shipping inspection mindset" and why does thinking like the customer\'s receiving inspector matter?</li>
+  <li>What 5 documents typically accompany an outbound aviation parts shipment?</li>
+  <li>What does TurbineWorks\' COC attest, and what must it NOT claim?</li>
+  <li>When is a True Copy of the 8130-3 acceptable instead of the original?</li>
+  <li>What is ATA Spec 300 and what does it govern?</li>
+  <li>Name 4 categories of critical surface protection that may be required in packaging.</li>
+  <li>What is the service level "AOG" and when does it apply?</li>
+  <li>What 7 checks does the shipping inspector perform before the carton is sealed?</li>
+  <li>What records are created for every outbound shipment, and why does this matter for ASA-100 audit purposes?</li>
+</ol>
+
+<p><em>[TurbineWorks Procedure Reference: insert TurbineWorks shipping inspection SOP, COC template, and the list of authorized carriers here.]</em></p>
 HTML
         ],
         [
