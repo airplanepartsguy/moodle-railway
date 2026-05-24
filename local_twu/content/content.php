@@ -4091,170 +4091,747 @@ function local_twu_module_4_lessons(): array {
     return [
         [
             'name'  => 'Lesson 4.1 — ASA-100 §7 Storage and Handling Overview',
-            'intro' => '<p>The storage requirements that protect inventory integrity.</p>',
+            'intro' => '<p>The framework section that governs everything that happens to a part between receiving inspection acceptance and customer shipment. ASA-100 §7 in operational depth — what the requirements are, why they exist, how they translate into TurbineWorks warehouse practices.</p>',
             'content' => <<<'HTML'
 <h3>ASA-100 §7 Storage and Handling</h3>
-<p>Receiving inspection is the gate that lets parts into inventory. Storage and handling is what protects them once they are in. A part correctly inspected at receiving but stored improperly is an inventory loss — possibly an undetected one.</p>
 
-<h4>The storage environment</h4>
-<p>ASA-100 §7 requires that storage areas:</p>
+<p>Receiving inspection (Module 2) is the gate that determines what enters inventory. Storage and handling is what protects parts once they are in. A part correctly inspected at receiving but stored improperly is an inventory loss — possibly an undetected one. The customer who receives a damaged part won\'t care that receiving inspection was performed correctly; they\'ll see TurbineWorks as the failure point.</p>
+
+<p>This module covers ASA-100 §7 and the operational practices that satisfy it. Lesson 4.1 (this lesson) establishes the framework. Subsequent lessons cover specific operational areas: segregation, shelf-life management, FOD prevention, environmental controls and hazmat storage. The lessons are interconnected — each requirement reinforces the others.</p>
+
+<h4>What §7 actually requires</h4>
+
+<p>ASA-100 §7 (current revision; verify against published standard) establishes that the accredited distributor must maintain storage practices that:</p>
+
+<ol>
+  <li><strong>Physically segregate parts by status.</strong> Serviceable, quarantine, unserviceable, and scrap zones must be physically distinct — not merely logically separated in software.</li>
+  <li><strong>Protect parts from damage, contamination, deterioration, and unauthorized access.</strong> Storage conditions appropriate to the part type. Environmental controls where required. Access controls to prevent tampering or unauthorized handling.</li>
+  <li><strong>Maintain environmental conditions per OEM specifications and applicable industry standards.</strong> Temperature, humidity, lighting, ESD controls where applicable.</li>
+  <li><strong>Enable efficient location and retrieval.</strong> Any part in inventory must be locatable within minutes — for shipping, for inspection, for audit.</li>
+  <li><strong>Remain clean and free of FOD generators.</strong> The warehouse is itself a controlled environment, not just a place where parts happen to be stored.</li>
+  <li><strong>Maintain handling procedures appropriate to each part category.</strong> ESD-sensitive parts handled in ESD-controlled areas; hazmat per 49 CFR; moisture-sensitive items per IPC J-STD-033 where applicable.</li>
+  <li><strong>Provide records linking each part to its storage location.</strong> Inventory records show where each part is at any given time.</li>
+</ol>
+
+<p>These are the substantive requirements. The TurbineWorks QAM translates them into specific procedures that operations can execute and audit.</p>
+
+<h4>Why storage discipline matters disproportionately</h4>
+
+<p>Receiving inspection catches defects coming in. Shipping catches errors going out. Storage is everything in between — typically the longest period a part spends in TurbineWorks custody. Storage failures account for a recurring class of customer complaints:</p>
+
 <ul>
-  <li>Are physically segregated by part status (serviceable, quarantine, unserviceable, scrap)</li>
-  <li>Protect parts from physical damage, contamination, deterioration, and unauthorized access</li>
-  <li>Maintain environmental conditions appropriate to the parts stored (temperature, humidity, ESD control)</li>
-  <li>Are organized so that any part can be located efficiently for shipment or audit</li>
-  <li>Are clean and free of FOD generators</li>
+  <li><strong>Damage during storage.</strong> Parts get bumped, dropped, scraped during warehouse handling. The damage may be subtle (a nicked turbine blade leading edge, a scratch on a sealing surface) but the customer receives a part that wasn\'t in the condition TurbineWorks attested to.</li>
+  <li><strong>Wrong-part pulls.</strong> Two similar parts stored adjacent to each other; the picker grabs the wrong one. The customer receives something other than what they ordered.</li>
+  <li><strong>Mixed-status confusion.</strong> Serviceable and quarantine parts not adequately segregated; the picker grabs a quarantined part. The customer receives a non-conforming part with TurbineWorks COC attesting it\'s serviceable.</li>
+  <li><strong>Environmental damage.</strong> Shelf-life-limited parts left in inventory past their expiration. Humidity-sensitive parts allowed to absorb moisture. ESD-sensitive parts handled without proper grounding. The damage may not be visible until the part fails in service.</li>
+  <li><strong>Loss of traceability.</strong> Parts in storage without proper tags or with degraded tags become indistinguishable from each other. The 8130-3 chain breaks down because the physical part can no longer be linked to its documentation.</li>
 </ul>
 
-<h4>Status zones</h4>
-<p>Every part in the warehouse is in one of four status zones:</p>
-<dl>
-  <dt><strong>Serviceable</strong></dt>
-  <dd>Inspected and approved. Available for sale. Has a TurbineWorks serviceable tag attached.</dd>
-  <dt><strong>Quarantine</strong></dt>
-  <dd>Inspected and flagged for non-conformance investigation. Cannot be sold. Has a Quarantine tag with reason.</dd>
-  <dt><strong>Unserviceable</strong></dt>
-  <dd>Has been determined unfit for service but not yet finally dispositioned. Cannot be sold. May be repairable or may need to be scrapped after evaluation.</dd>
-  <dt><strong>Scrap</strong></dt>
-  <dd>Final disposition is destruction. Awaiting mutilation per FAA AC 21-38 (see Module 5).</dd>
-</dl>
-<p>The zones are <em>physically segregated</em>, not just logically. An auditor walking the warehouse must be able to immediately see which area is which. Color-coded shelving, painted floor lines, locked cages, signage — the implementation varies, but the segregation is non-negotiable.</p>
+<p>Every one of these failures represents a quality system breakdown in the storage area, not in receiving or shipping. An ASA auditor who walks the warehouse and sees disorganization is looking at the storage-discipline failure that creates these defects downstream.</p>
 
-<h4>Why physical segregation matters</h4>
-<p>If serviceable and quarantine parts share the same shelf, the inevitable human error — wrong tag, wrong location, distracted picker — puts a non-conforming part into a customer shipment. The whole point of quarantine is to make that error physically impossible.</p>
+<h4>Status zones — the four-zone model</h4>
 
-<h4>Access control</h4>
-<p>Storage areas have controlled access. Not everyone in the building has the authority to move parts in and out of inventory. Typically:</p>
+<p>Every part in TurbineWorks inventory exists in one of four status zones at all times. Each zone has specific physical, procedural, and access controls.</p>
+
+<h5>Serviceable</h5>
+
+<p>Inspected and approved through receiving inspection. Available for sale to customers. Has the TurbineWorks serviceable tag attached, identifying part number, serial number, condition code (NEW/NE/OH/SV/AR), and TurbineWorks reference. The tag travels with the part through any subsequent movement.</p>
+
+<p>Serviceable inventory is the largest zone — most parts spend most of their TurbineWorks time here. The zone is organized for efficient pick-pack-ship operations. Storage location within the serviceable zone may further organize by:</p>
+
 <ul>
-  <li>Receiving Inspectors place parts into serviceable inventory</li>
-  <li>Warehouse personnel pull parts for shipping</li>
-  <li>The QA Manager (or designate) is the only person who can move parts between status zones (e.g., from Quarantine to Serviceable after non-conformance resolution)</li>
-  <li>Visitors and unauthorized personnel cannot enter storage areas unaccompanied</li>
+  <li>Part category (rotables, consumables, hardware, electronics)</li>
+  <li>Customer assignment (some inventory may be reserved for specific customers)</li>
+  <li>Environmental requirements (ESD-controlled, climate-controlled, hazmat)</li>
+  <li>Velocity (fast-moving items in accessible locations; slow-moving items further back)</li>
+  <li>FIFO requirements (oldest stock at the front for shelf-life-limited items)</li>
 </ul>
 
-<h4>What the auditor checks</h4>
+<h5>Quarantine</h5>
+
+<p>Parts under non-conformance investigation. Cannot be sold. Cannot move out of quarantine without QA Manager disposition. Has a Quarantine tag identifying the reason for hold and the open NCR reference.</p>
+
+<p>The Quarantine zone is physically separate from Serviceable — typically a marked area, sometimes a locked cage, always identifiable to anyone walking through. The separation prevents the recurring failure mode where a part in quarantine accidentally migrates to serviceable storage and then gets pulled for a customer shipment.</p>
+
+<p>Time in Quarantine should be bounded. A part that sits in Quarantine indefinitely is a system failure — either the investigation isn\'t happening, or the disposition isn\'t being recorded. The QA Manager monitors Quarantine inventory and ensures timely investigation closure.</p>
+
+<h5>Unserviceable</h5>
+
+<p>Parts determined unfit for service but not yet finally dispositioned. May be repairable (and queued for return to a repair station) or may be moving toward scrap. Cannot be sold. Has an Unserviceable tag.</p>
+
+<p>The Unserviceable zone is separate from both Serviceable and Quarantine. Parts in Unserviceable have already been through the disposition decision — they\'re not under investigation. They\'re waiting for the final path (repair, return, scrap).</p>
+
+<h5>Scrap</h5>
+
+<p>Final disposition is destruction. Awaiting mutilation per FAA AC 21-38 (Module 5 covers in detail). The Scrap zone is the destination just before parts are destroyed. Often the smallest zone — parts don\'t spend long here because mutilation is performed on a regular cadence.</p>
+
+<p>Scrap zone access is tightly controlled. Diverted scrap is the largest single pathway by which unapproved parts enter the supply chain (Module 1 Lesson 1.2). Preventing scrap diversion is a specific TurbineWorks responsibility — once parts are designated Scrap, the disposition must complete promptly and verifiably.</p>
+
+<h4>Why physical segregation matters operationally</h4>
+
+<p>The four-zone model is enforced by physical separation, not by labeling alone. Some operations have tried to operate with logical-only separation — "the inventory system tracks each part\'s status; physical placement doesn\'t matter." This consistently fails. Here\'s why:</p>
+
 <ul>
-  <li>Random part pull: "show me this part's location" — must be findable within minutes</li>
-  <li>Walk the warehouse: are the status zones visibly segregated?</li>
-  <li>Tag check: every part has its required tag (serviceable, quarantine, unserviceable, or scrap)?</li>
-  <li>Environmental conditions: is the ESD area properly grounded? Are shelf-life parts within date?</li>
-  <li>Cleanliness: is the warehouse free of dust, debris, food, beverages, FOD generators?</li>
+  <li><strong>Human error.</strong> Pickers make mistakes. A picker focused on a customer order grabs the part adjacent to the one specified. If the adjacent part is a different status, the error propagates.</li>
+  <li><strong>Tag damage or loss.</strong> Tags can be torn, become illegible, or get separated from parts during handling. If the only indicator of status is the tag, a damaged tag means the part\'s status becomes uncertain.</li>
+  <li><strong>System failure or lag.</strong> The inventory system may be updated correctly but at delay relative to the physical movement. A part scanned out of Quarantine into Serviceable may not show up in the system as serviceable for hours. During that gap, the physical reality is the only truth.</li>
+  <li><strong>New personnel.</strong> A new warehouse hire who hasn\'t internalized the status nuances may handle parts based on what they look like, not on what their tags say. If serviceable and quarantine parts are physically mixed, the new hire\'s default ("they look the same") becomes the error mode.</li>
+  <li><strong>Auditor visibility.</strong> The auditor walking the warehouse must be able to immediately see status zones. Logical-only separation looks the same to an auditor as no separation at all. Physical segregation is the visible audit-evidence.</li>
 </ul>
 
-<p><em>[TurbineWorks Procedure Reference: insert TurbineWorks warehouse layout diagram and zone-coding scheme here.]</em></p>
+<p>The implementation of physical segregation varies. Common approaches:</p>
+
+<ul>
+  <li>Painted floor lines marking zone boundaries</li>
+  <li>Color-coded shelving (e.g., green for serviceable, yellow for quarantine, red for scrap)</li>
+  <li>Locked cages for higher-control zones (especially Quarantine and Scrap)</li>
+  <li>Signage at zone entries and throughout</li>
+  <li>Different rooms or building sections for different zones</li>
+  <li>Combination of the above</li>
+</ul>
+
+<p>The TurbineWorks QAM specifies the actual implementation. Whatever the implementation, the visual distinction is unambiguous.</p>
+
+<h4>Access control — who handles parts where</h4>
+
+<p>Different personnel have different authorities for handling parts in different zones:</p>
+
+<table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse;">
+  <tr style="background:#0d2240; color:#fff;">
+    <th>Zone</th>
+    <th>Who can place parts here</th>
+    <th>Who can remove parts</th>
+  </tr>
+  <tr>
+    <td>Serviceable</td>
+    <td>Receiving Inspector (after acceptance disposition)</td>
+    <td>Warehouse personnel (for customer pulls)</td>
+  </tr>
+  <tr>
+    <td>Quarantine</td>
+    <td>Receiving Inspector or QA Manager (after quarantine disposition)</td>
+    <td>QA Manager only (after investigation/disposition)</td>
+  </tr>
+  <tr>
+    <td>Unserviceable</td>
+    <td>QA Manager (after disposition from quarantine or from in-service finding)</td>
+    <td>QA Manager (for return-to-repair or transition to scrap)</td>
+  </tr>
+  <tr>
+    <td>Scrap</td>
+    <td>QA Manager (after final scrap disposition)</td>
+    <td>QA Manager + designated mutilation personnel only</td>
+  </tr>
+</table>
+
+<p>This authority structure prevents informal status changes. A warehouse worker cannot move a part from Quarantine to Serviceable because they think it looks fine — only the QA Manager has that authority, and only after documented disposition.</p>
+
+<h5>Visitor and unauthorized access</h5>
+
+<p>Storage areas are not open access. Visitors are escorted. Sales personnel, customer representatives, and other non-warehouse staff cannot enter storage areas unaccompanied. This isn\'t about secrecy — it\'s about preventing accidental tampering with inventory, accidental status changes, and contamination of controlled environments (ESD, hazmat).</p>
+
+<h4>The auditor\'s walk-through</h4>
+
+<p>During an on-site audit, the ASA auditor walks the warehouse. They are forming an overall impression of how well the storage discipline functions. Specific things they observe:</p>
+
+<ul>
+  <li><strong>Status zone visibility.</strong> Can the auditor tell, by walking through, which area is which? Or are the zones blended together?</li>
+  <li><strong>Tag presence and legibility.</strong> Every part has its appropriate tag (serviceable, quarantine, etc.). Tags are readable, not torn or faded.</li>
+  <li><strong>Organization.</strong> Parts are arranged logically. Fast-moving items in accessible locations. Stock rotated FIFO where required.</li>
+  <li><strong>Cleanliness.</strong> No food, no beverages, no debris, no FOD generators on floor or shelves.</li>
+  <li><strong>Environmental controls.</strong> ESD area is properly grounded. Hazmat segregated. Climate-controlled areas at appropriate conditions.</li>
+  <li><strong>Random pull verification.</strong> The auditor selects a random part and asks the warehouse personnel to retrieve it. Time-to-retrieve, and whether the actual location matches the inventory system, are observed.</li>
+  <li><strong>Quarantine area.</strong> The auditor specifically checks the Quarantine area — what\'s currently in quarantine, how long has each part been there, is the documentation present.</li>
+  <li><strong>Scrap area.</strong> Similar — what\'s in Scrap, how long, what\'s the mutilation cadence.</li>
+</ul>
+
+<h5>Common §7 audit findings industry-wide</h5>
+
+<ul>
+  <li>Serviceable and Quarantine zones not clearly segregated</li>
+  <li>Parts in serviceable inventory missing serviceable tags or with illegible tags</li>
+  <li>Quarantined parts present without QA Manager investigation documented</li>
+  <li>Stock rotation not FIFO for shelf-life items (older stock blocked by newer stock)</li>
+  <li>Expired parts present in serviceable inventory</li>
+  <li>Environmental conditions out of spec (humidity, temperature) without corrective action</li>
+  <li>ESD area not properly grounded (testing reveals continuity failure)</li>
+  <li>Hazmat improperly segregated from non-hazmat or from incompatible hazmat classes</li>
+  <li>Cleanliness deficient — debris, dust accumulation, food/beverage residue</li>
+  <li>Random pull part not findable at the system-indicated location</li>
+</ul>
+
+<p>Avoiding these findings is the operational outcome of consistent application of §7 requirements. The procedures exist; the practice has to match.</p>
+
+<h4>The storage discipline mindset</h4>
+
+<p>Effective warehouse operations require a specific mindset:</p>
+
+<ul>
+  <li><strong>Status awareness.</strong> Every part has a status; the status determines how it can be handled and where it can go. Status is not a label — it\'s a real constraint on physical movement.</li>
+  <li><strong>Tag discipline.</strong> Tags stay with parts. If a tag is damaged or missing, the part is held until the tag is restored — not assumed to be the same status it "probably" was.</li>
+  <li><strong>FIFO habit.</strong> For shelf-life items, the oldest goes first. New stock goes to the back. This becomes automatic with practice.</li>
+  <li><strong>Cleanliness as quality.</strong> A clean warehouse is a quality control practice, not just aesthetics. Debris on shelves means FOD risk to parts. Food and beverages mean contamination risk.</li>
+  <li><strong>Environmental awareness.</strong> If you notice the temperature is unusually high, the humidity is unusually low, the lighting has changed, or any environmental condition seems off, report it. Environmental excursions affect parts even when the excursion is brief.</li>
+</ul>
+
+<h4>References</h4>
+
+<ul>
+  <li><strong>ASA-100 §7</strong> — Storage and Handling requirements (current revision)</li>
+  <li><strong>FAA AC 21-38</strong> — Disposition of Unsalvageable Aircraft Parts (covered in Module 5)</li>
+  <li><strong>ATA Spec 300</strong> — Packaging of Aircraft Parts (handling and packaging during storage and shipping)</li>
+  <li><strong>NAS 412</strong> — National Aerospace Standard for FOD Prevention (covered in Lesson 4.4)</li>
+  <li><strong>ANSI/ESD S20.20</strong> — ESD Control Program Standard (covered in Module 7)</li>
+  <li><strong>49 CFR Parts 100-185</strong> — DOT Hazmat (covered in Module 8; applies to hazmat storage)</li>
+  <li><strong>IPC J-STD-033</strong> — Moisture-Sensitive Device Handling (applies to certain electronic components)</li>
+  <li>TurbineWorks QAM Section [TBD] — Storage and Handling Procedure</li>
+</ul>
+
+<h4>Self-check</h4>
+
+<ol>
+  <li>What 7 substantive requirements does ASA-100 §7 establish?</li>
+  <li>Why is storage discipline as important as receiving inspection?</li>
+  <li>Name and describe the 4 status zones.</li>
+  <li>Why must the 4 zones be PHYSICALLY segregated, not just logically separated?</li>
+  <li>Who is authorized to place parts in each zone, and who is authorized to remove them?</li>
+  <li>Name 5 things an ASA auditor specifically observes during a warehouse walk-through.</li>
+  <li>List 5 common §7 audit findings that distributors industry-wide receive.</li>
+  <li>What 5 mental disciplines constitute the "storage discipline mindset"?</li>
+</ol>
+
+<p><em>[TurbineWorks Procedure Reference: insert TurbineWorks warehouse layout diagram, zone-coding scheme, and access-control matrix here.]</em></p>
 HTML
         ],
         [
             'name'  => 'Lesson 4.2 — Segregation: Serviceable, Quarantine, Unserviceable, Scrap',
-            'intro' => '<p>How parts move between status zones and the records that track every move.</p>',
+            'intro' => '<p>How parts move between status zones and the records that track every move. The status transition system is the operational reality of the four-zone model — done well it prevents non-conforming material from ever reaching customers; done poorly it\'s the largest single source of quality system failures.</p>',
             'content' => <<<'HTML'
 <h3>Segregation and Status Transitions</h3>
-<p>A part's status in the inventory system and its physical location in the warehouse must always agree. When they don't, the cause is usually a missed status transition — a part was physically moved without the system being updated, or vice versa.</p>
 
-<h4>Movement triggers</h4>
+<p>Lesson 4.1 established the four status zones. This lesson covers how parts move between zones — who authorizes each transition, what records are created, how the inventory system stays synchronized with physical reality, and what auditors probe to verify the discipline.</p>
+
+<p>A part\'s status in the inventory system and its physical location in the warehouse must always agree. When they don\'t — and this happens — the cause is usually a missed status transition. A part was physically moved without the system being updated, or the system was updated without the physical move occurring. Either form creates a quality system failure that can take weeks to detect and longer to investigate.</p>
+
+<h4>The transition matrix</h4>
+
+<p>Every status transition follows defined rules. The table below shows authorized transitions, what triggers each, and who has the authority to make them.</p>
+
 <table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse;">
   <tr style="background:#0d2240; color:#fff;">
-    <th>From</th><th>To</th><th>Trigger</th><th>Who authorizes</th>
+    <th>From</th>
+    <th>To</th>
+    <th>Trigger</th>
+    <th>Authority</th>
   </tr>
-  <tr><td>Receiving</td><td>Serviceable</td><td>Receiving inspection: Accept disposition</td><td>Receiving Inspector</td></tr>
-  <tr><td>Receiving</td><td>Quarantine</td><td>Receiving inspection: Quarantine disposition</td><td>Receiving Inspector</td></tr>
-  <tr><td>Receiving</td><td>Reject (back to supplier)</td><td>Receiving inspection: Reject disposition</td><td>Receiving Inspector + QA Manager approves return</td></tr>
-  <tr><td>Quarantine</td><td>Serviceable</td><td>Non-conformance resolved, part now conforms</td><td>QA Manager only</td></tr>
-  <tr><td>Quarantine</td><td>Unserviceable / Scrap</td><td>Non-conformance investigation concluded the part is not serviceable</td><td>QA Manager only</td></tr>
-  <tr><td>Serviceable</td><td>Quarantine</td><td>New non-conformance discovered after acceptance (rare but possible)</td><td>QA Manager only</td></tr>
-  <tr><td>Serviceable</td><td>Customer shipment</td><td>Customer order pulls the part</td><td>Warehouse + Shipping Inspector</td></tr>
-  <tr><td>Unserviceable</td><td>Scrap</td><td>Final determination: not repairable</td><td>QA Manager</td></tr>
-  <tr><td>Scrap</td><td>Destroyed</td><td>Mutilation per FAA AC 21-38 completed</td><td>QA Manager certifies destruction</td></tr>
+  <tr>
+    <td>Receiving</td>
+    <td>Serviceable</td>
+    <td>Receiving inspection complete; Accept disposition</td>
+    <td>Receiving Inspector</td>
+  </tr>
+  <tr>
+    <td>Receiving</td>
+    <td>Quarantine</td>
+    <td>Receiving inspection complete; Quarantine disposition</td>
+    <td>Receiving Inspector</td>
+  </tr>
+  <tr>
+    <td>Receiving</td>
+    <td>Reject (return to supplier)</td>
+    <td>Receiving inspection complete; Reject disposition</td>
+    <td>Receiving Inspector + QA Manager approval for return</td>
+  </tr>
+  <tr>
+    <td>Quarantine</td>
+    <td>Serviceable</td>
+    <td>Investigation complete; non-conformance resolved; part now conforms</td>
+    <td>QA Manager only</td>
+  </tr>
+  <tr>
+    <td>Quarantine</td>
+    <td>Unserviceable</td>
+    <td>Investigation complete; part is not serviceable but may be repairable</td>
+    <td>QA Manager only</td>
+  </tr>
+  <tr>
+    <td>Quarantine</td>
+    <td>Scrap</td>
+    <td>Investigation complete; part confirmed unapproved or beyond repair</td>
+    <td>QA Manager only</td>
+  </tr>
+  <tr>
+    <td>Serviceable</td>
+    <td>Quarantine</td>
+    <td>New non-conformance discovered after acceptance (recall, AD impact, post-acceptance damage)</td>
+    <td>QA Manager only</td>
+  </tr>
+  <tr>
+    <td>Serviceable</td>
+    <td>Customer shipment</td>
+    <td>Customer order; pick/pack/ship</td>
+    <td>Warehouse + Shipping Inspector</td>
+  </tr>
+  <tr>
+    <td>Unserviceable</td>
+    <td>Repair (return to repair station)</td>
+    <td>Part determined repairable; sent to authorized facility</td>
+    <td>QA Manager</td>
+  </tr>
+  <tr>
+    <td>Repair (after work)</td>
+    <td>Serviceable (or Receiving)</td>
+    <td>Repair complete; documentation received from repair station</td>
+    <td>Re-receive per Module 2 receiving inspection</td>
+  </tr>
+  <tr>
+    <td>Unserviceable</td>
+    <td>Scrap</td>
+    <td>Final determination: not economically repairable</td>
+    <td>QA Manager</td>
+  </tr>
+  <tr>
+    <td>Scrap</td>
+    <td>Destroyed (out of inventory)</td>
+    <td>Mutilation per FAA AC 21-38 completed</td>
+    <td>QA Manager certifies destruction</td>
+  </tr>
 </table>
 
+<h4>What is NOT a permitted transition</h4>
+
+<p>Some movements look superficially reasonable but are not permitted under ASA-100:</p>
+
+<ul>
+  <li><strong>Serviceable → Returned to supplier without investigation.</strong> If a part in serviceable inventory turns out to have an issue, the issue requires investigation through the corrective-action system. The part can\'t simply be returned to supplier and the inventory reduced.</li>
+  <li><strong>Quarantine → Returned to supplier without investigation.</strong> Same logic. Returning a quarantined part without investigation just transfers the SUP risk downstream and destroys evidence.</li>
+  <li><strong>Scrap → Anywhere except destruction.</strong> Once a part is dispositioned to Scrap, it cannot move out of that zone except by mutilation. Restoring a Scrap-designated part to Serviceable is fraud.</li>
+  <li><strong>Bypass receiving for incoming parts.</strong> Every incoming part goes through Receiving first, regardless of how rushed the customer order is or how trusted the supplier is.</li>
+</ul>
+
+<p>The transition matrix is intentionally restrictive. Every restriction prevents a recognized failure mode in distributor operations.</p>
+
 <h4>Every move is recorded</h4>
-<p>Each transition above generates a record. The record includes:</p>
-<ul>
-  <li>Part number, serial number</li>
-  <li>From zone → to zone</li>
-  <li>Date and time</li>
-  <li>Reason for transition</li>
-  <li>Authorizing person (initials or signature)</li>
-</ul>
-<p>This audit trail is what lets TurbineWorks answer the question "where has this part been?" The answer should never be "we don't know."</p>
 
-<h4>Why QA Manager authorization for some transitions</h4>
-<p>Transitions that move parts <em>out of</em> Quarantine require QA Manager authorization because the QA Manager is the only role authorized to disposition non-conforming material. This is not a bureaucratic hurdle — it is the control that prevents informal "well, it looked OK so I moved it to serviceable" decisions that compromise inventory integrity.</p>
+<p>Each transition above generates a record in the inventory system. The record contains:</p>
 
-<h4>Cycle counting and reconciliation</h4>
-<p>Periodic cycle counts verify that the physical inventory matches the inventory system. Discrepancies require investigation:</p>
 <ul>
-  <li>Physical part present but not in system: how did it get here? When was the receiving inspection done?</li>
-  <li>Part in system but not physically present: was it shipped without updating system? Stolen? Misplaced?</li>
-  <li>Part in wrong location: how did the transition record miss this move?</li>
+  <li>Part number and serial number (or lot/batch number for non-serialized)</li>
+  <li>From zone → To zone</li>
+  <li>Date and time of the transition</li>
+  <li>Specific reason for the transition (e.g., "Accept disposition," "Quarantine investigation closed: cleared," "Mutilation complete")</li>
+  <li>Authorizing person — initials or signature, or digital authorization in the inventory system</li>
+  <li>Reference to related documents — NCR number, receiving inspection record, mutilation certificate, customer shipment reference</li>
 </ul>
-<p>Reconciliation discrepancies feed the corrective-action system. A pattern of discrepancies in the same area suggests a process problem, not a one-off mistake.</p>
 
-<h4>What an auditor will probe</h4>
+<p>The transition record is the audit-evidence trail. When an auditor asks "where has this part been since it arrived?" the answer is a chronological list of zone-to-zone movements with authorizing personnel and dates. Any gaps or unauthorized transitions are findings.</p>
+
+<h5>The "transition log" concept</h5>
+
+<p>Many inventory systems maintain a transition log per part — a chronological record of every status change. The log enables three audit questions:</p>
+
 <ul>
-  <li>"Walk me through the last 10 quarantine transitions." Are they all documented? Did the QA Manager authorize each move out of quarantine?</li>
-  <li>"Show me a part that has been scrapped." Where is the mutilation record? Who certified the destruction?</li>
-  <li>"Pick a random part — show me its complete movement history from receipt to today."</li>
+  <li><strong>"Where is this part right now?"</strong> — last entry in the log</li>
+  <li><strong>"Where has this part been?"</strong> — full log history</li>
+  <li><strong>"Who authorized each move?"</strong> — authorizing person on each log entry</li>
 </ul>
+
+<p>An auditor pulling a random part and asking for its log will see all three pieces of information. The log is part of the records retained per the records-retention schedule (Module 5).</p>
+
+<h4>Why QA Manager authorization for transitions out of Quarantine</h4>
+
+<p>Notice that all transitions OUT of Quarantine require QA Manager authorization. This is intentional and structural. The reasoning:</p>
+
+<ul>
+  <li>Quarantine exists to hold non-conforming material pending investigation</li>
+  <li>The investigation determines whether the non-conformance can be resolved or whether the part must be rejected</li>
+  <li>Only the QA Manager has the authority to disposition non-conforming material — Module 2 Lesson 2.5 establishes this</li>
+  <li>Therefore only the QA Manager can authorize moving parts out of Quarantine</li>
+</ul>
+
+<p>A warehouse worker who sees a part in Quarantine and decides "this looks fine to me, let me move it to Serviceable" is making a quality decision they\'re not authorized to make. The decision is wrong even if the part actually is fine — because the disposition wasn\'t documented, didn\'t go through investigation, and didn\'t have authorized closure.</p>
+
+<p>This boundary is one of the most consistently probed areas in ASA audits. An auditor will pull recent Quarantine releases and verify each was authorized by the QA Manager with documented investigation.</p>
+
+<h4>Cycle counting and inventory reconciliation</h4>
+
+<p>Periodic cycle counts verify that the physical inventory matches the inventory system. Cycle counts are an inventory-management practice but they also serve quality-system integrity.</p>
+
+<h5>What cycle counts find</h5>
+
+<ul>
+  <li><strong>Physical part present, not in system.</strong> How did it get here? When was receiving inspection done? The part may be unaccounted-for inventory from a missed receiving, or worse, a part placed without going through receiving inspection at all.</li>
+  <li><strong>Part in system, not physically present.</strong> Was it shipped without updating the system? Stolen? Misplaced? Damaged and destroyed without the system being updated?</li>
+  <li><strong>Part in wrong location.</strong> The system says location A but the part is in location B. How did the transition record miss this move? Was the move authorized?</li>
+  <li><strong>Wrong status.</strong> System says Serviceable but the physical tag is Quarantine, or vice versa. Status synchronization failure.</li>
+  <li><strong>Wrong part number or serial number.</strong> The part at the location doesn\'t match what the system says is there. Wrong-part-pulled error from a prior pick, or system data entry error.</li>
+</ul>
+
+<h5>How reconciliation discrepancies feed corrective action</h5>
+
+<p>Each discrepancy generates an NCR. The corrective action investigates:</p>
+
+<ul>
+  <li>Why did this discrepancy occur?</li>
+  <li>Is this a one-off (data entry error, pick error) or systemic (procedure gap, training issue, system bug)?</li>
+  <li>If systemic, what process change prevents recurrence?</li>
+  <li>Are there similar discrepancies elsewhere in inventory that need investigation?</li>
+</ul>
+
+<p>A pattern of discrepancies in the same area (e.g., the ESD zone, the high-velocity rack, the engine-specific area) suggests a localized process problem worth focused investigation.</p>
+
+<h5>Cycle count cadence</h5>
+
+<p>Different cadences are appropriate to different inventory:</p>
+
+<ul>
+  <li><strong>High-value or LLP inventory</strong> — counted more frequently (monthly or quarterly)</li>
+  <li><strong>Fast-moving inventory</strong> — counted more frequently (high handling means more error opportunity)</li>
+  <li><strong>Standard inventory</strong> — counted on a rolling schedule (e.g., 10% per month, full inventory cycled annually)</li>
+  <li><strong>Quarantine and Scrap zones</strong> — counted on every cycle because they\'re smaller and higher-stakes</li>
+</ul>
+
+<p>The TurbineWorks QAM specifies the cadence. ASA auditors will check cycle count records during the on-site audit.</p>
+
+<h4>Transition record retention</h4>
+
+<p>Transition records are retained per the records-retention schedule (Module 5 covers this in depth). Typical retention: 7+ years for transitions of serialized parts; same for non-serialized lots. Transitions affecting LLPs may be retained longer because the LLP\'s full life history must be preservable for the part\'s entire service life.</p>
+
+<p>Electronic records are acceptable provided the standard requirements (durability, backup, tamper-evidence, retrievability) are met. Most modern inventory systems maintain transition logs natively.</p>
+
+<h4>Common segregation failures and how they happen</h4>
+
+<h5>Failure 1 — Tag damage or removal</h5>
+<p>A serviceable tag gets torn or smudged. The part is still in inventory but the tag is now illegible. Without the tag, the part\'s status is uncertain. If a picker handles the part during this window, they may treat it as serviceable (because that\'s where it\'s located) without verifying. <strong>Response:</strong> tag is restored or replaced before any further handling; QA Manager notified if the original tag content is no longer determinable.</p>
+
+<h5>Failure 2 — Inventory system lag</h5>
+<p>The picker takes a part out of serviceable for a customer order. The pick is recorded in the system minutes later. During the gap, another customer query might show the part as available when it\'s actually being packaged. Worse, if the system records the pick incorrectly (wrong part), the actual part shipped doesn\'t match the system record. <strong>Response:</strong> picks are recorded in real time using barcode scanning or similar; pick errors are caught at shipping inspection (the part-vs-paperwork verification).</p>
+
+<h5>Failure 3 — Quarantine drift</h5>
+<p>A part is placed in Quarantine pending investigation. The investigation takes longer than expected. Months pass. The Quarantine tag fades, the NCR record drifts in the system, the original receiving inspector and possibly the QA Manager have moved on. The part is now in Quarantine purgatory — no one remembers exactly why or what to do about it. <strong>Response:</strong> QA Manager monitors Quarantine inventory regularly; aged Quarantine items trigger escalation; no part stays in Quarantine indefinitely without active investigation.</p>
+
+<h5>Failure 4 — Scrap diversion</h5>
+<p>A part dispositioned to Scrap is not mutilated promptly. It sits in Scrap area for weeks. During that time, an employee with bad intent (or just unaware of mutilation requirements) takes the part out — either to use it for some other purpose or to sell it externally. <strong>Response:</strong> Scrap is mutilated on a regular cadence; Scrap inventory is access-controlled; mutilation is witnessed by QA Manager and documented.</p>
+
+<h5>Failure 5 — Location mismatch</h5>
+<p>The system says part is in location A1-23. Picker goes to A1-23 and finds the location empty (or finds a different part). The actual part is at A1-32 (transposed). Picker spends 20 minutes searching. <strong>Response:</strong> location mismatches trigger an NCR. Repeated mismatches in the same area suggest a labeling or system issue worth investigating. Locations are clearly marked and the system uses verifiable location codes.</p>
+
+<h4>What an auditor probes</h4>
+
+<p>Specific audit questions a TurbineWorks employee may face:</p>
+
+<ul>
+  <li>"Walk me through the last 10 transitions out of Quarantine. Are they all documented? Did the QA Manager authorize each?"</li>
+  <li>"Show me a part that has been scrapped this quarter. Where is the mutilation record? Who witnessed the destruction?"</li>
+  <li>"Pick a random part from serviceable inventory. Show me its complete transition history from receipt to today."</li>
+  <li>"Show me the cycle count records for the last six months. How many discrepancies were found, and what corrective actions resulted?"</li>
+  <li>"Show me your Quarantine inventory. For each item, what\'s the open NCR and where is the investigation?"</li>
+  <li>"What\'s the oldest item in Quarantine? Why is it still there?"</li>
+</ul>
+
+<p>An employee who can answer these clearly demonstrates that the segregation system is functioning. Inability to answer, or finding gaps in the documented chain, is a finding.</p>
+
+<h4>References</h4>
+
+<ul>
+  <li><strong>ASA-100 §7</strong> — Storage and Handling (segregation specifics)</li>
+  <li><strong>ASA-100 §8</strong> — Recordkeeping (transition record retention; covered in Module 5)</li>
+  <li><strong>FAA AC 21-38</strong> — Disposition of Unsalvageable Aircraft Parts (mutilation procedures for Scrap; Module 5)</li>
+  <li>TurbineWorks QAM Section [TBD] — Segregation and Status Transition Procedure</li>
+</ul>
+
+<h4>Self-check</h4>
+
+<ol>
+  <li>What is the transition matrix and why is it intentionally restrictive?</li>
+  <li>Name four transitions that are NOT permitted under ASA-100.</li>
+  <li>What 6 pieces of information does every transition record contain?</li>
+  <li>Why do transitions OUT of Quarantine require QA Manager authorization?</li>
+  <li>What 5 things can cycle counts find?</li>
+  <li>What is "Quarantine drift" and how is it prevented?</li>
+  <li>What is "Scrap diversion" and what controls prevent it?</li>
+  <li>What 6 audit questions might a TurbineWorks employee face on segregation?</li>
+</ol>
+
+<p><em>[TurbineWorks Procedure Reference: insert TurbineWorks inventory system reference, transition log access, and cycle-count schedule here.]</em></p>
 HTML
         ],
         [
             'name'  => 'Lesson 4.3 — Shelf-Life Management',
-            'intro' => '<p>Parts with limited storage life: identifying them, tracking them, and rotating stock.</p>',
+            'intro' => '<p>Parts with limited storage life — identifying them, tracking them, rotating stock, dispositioning at expiration. The most common single source of "found expired parts in inventory" audit findings industry-wide, and the operational discipline that prevents it.</p>',
             'content' => <<<'HTML'
 <h3>Shelf-Life Management</h3>
-<p>Many aviation parts have a defined storage life beyond which they cannot be sold. The shelf-life clock starts at the manufacturer's specified date (usually cure date for elastomers, manufacture date for sealants and adhesives) and ends at an expiration date.</p>
 
-<h4>Common shelf-life-limited categories</h4>
+<p>Many aviation parts have a defined storage life beyond which they cannot be sold for installation. The shelf-life clock starts at the manufacturer\'s specified date (usually the <em>cure date</em> for elastomers, or the <em>manufacture date</em> for sealants, adhesives, and batteries) and ends at an expiration date determined by adding the OEM-specified shelf life to the start date.</p>
+
+<p>An expired part is not necessarily a damaged part. It may look pristine; it may even still function. But the regulatory and contractual reality is binary — once expired, the part cannot be sold for installation on a type-certificated aircraft. The OEM\'s warrant of conformance expires with the shelf life.</p>
+
+<p>This lesson covers identifying which parts have shelf lives, tracking the expiration clock, rotating stock to ship oldest first, and properly dispositioning parts that reach expiration. The discipline is operationally simple but consistently fails at distributors that don\'t treat it as a deliberate practice.</p>
+
+<h4>Why shelf-life is a real engineering concern, not just paperwork</h4>
+
+<p>Some aviation employees develop the view that shelf-life is a regulatory technicality — that the part is fine, the date is just the OEM\'s liability hedge. This is wrong. Shelf-life limits reflect real material science:</p>
+
 <ul>
-  <li><strong>O-rings, seals, gaskets</strong> — elastomers degrade over time. Typical shelf life 5-10 years depending on compound, but some are shorter.</li>
-  <li><strong>Sealants and adhesives</strong> — chemical aging. Often 6-24 months from manufacture.</li>
-  <li><strong>Battery cells</strong> — chemistry-dependent. Some lithium primary cells have 5+ year shelf life; lead-acid much shorter.</li>
-  <li><strong>Inflatables</strong> — life vests, slides, oxygen masks. Defined service life.</li>
-  <li><strong>Pyrotechnics</strong> — flares, fire bottles. Strict shelf life. Hazmat handling required (Module 8).</li>
-  <li><strong>Some lubricants and hydraulic fluids</strong> — particularly mil-spec fluids in sealed containers.</li>
+  <li><strong>Elastomers</strong> (O-rings, seals, gaskets) chemically age. The polymer cross-links continue to evolve over time even in storage. Hardness changes; compression set increases. After years in storage, an O-ring may install but fail prematurely from accelerated aging.</li>
+  <li><strong>Sealants and adhesives</strong> undergo slow chemical changes — partial polymerization, solvent migration, viscosity change. A sealant past its shelf life may not bond properly when applied.</li>
+  <li><strong>Batteries</strong> self-discharge and the electrolyte chemistry evolves. Lithium primary cells lose capacity. Lead-acid batteries sulfate. A battery past its shelf life may have insufficient capacity for its rated application.</li>
+  <li><strong>Inflatables</strong> (life vests, slides, masks) have elastomeric or coated-fabric components that age. The inflation mechanism may also have shelf-life-limited gas cartridges or pyrotechnic actuators.</li>
+  <li><strong>Pyrotechnics</strong> degrade unpredictably. An expired pyrotechnic might fail to function (worse: might function partially or with degraded timing).</li>
 </ul>
 
-<h4>Tracking shelf-life</h4>
-<p>Every shelf-life-limited part is tagged at receiving with:</p>
-<ul>
-  <li>Cure / manufacture date (from the supplier documentation)</li>
-  <li>Expiration date (calculated from cure date plus shelf life per OEM/spec)</li>
-  <li>Storage requirements (temperature, humidity, lighting if applicable)</li>
-</ul>
-<p>The inventory system tracks expiration dates and flags parts approaching expiration. ASA-100 requires that expired parts cannot be shipped to customers.</p>
+<p>The OEM\'s shelf-life specification is the OEM\'s engineering judgment about when the part can no longer be relied on to meet specification. Selling an expired part to a customer is selling a part the OEM has effectively withdrawn from service. The customer who installs it does so without the OEM\'s warrant.</p>
 
-<h4>FIFO and stock rotation</h4>
-<p>First-In-First-Out (FIFO) is the default rule: ship the oldest stock first, so newer stock doesn't sit on the shelf until it expires while older stock continues to be picked. Warehouse layout and picking procedures must support FIFO — typically achieved by stocking in date order with the oldest at the front of the bin.</p>
+<h4>Common shelf-life-limited categories at TurbineWorks</h4>
+
+<h5>Elastomers</h5>
+
+<ul>
+  <li>O-rings (Buna-N, fluorocarbon, EPDM, silicone, etc. — each chemistry has different shelf life)</li>
+  <li>Gaskets and seals</li>
+  <li>Hoses with rubber components</li>
+  <li>Boots, bellows, diaphragms</li>
+  <li>Vibration mounts</li>
+</ul>
+
+<p>Typical shelf life: 5–10 years from cure date for many fluorocarbon and Buna-N parts, shorter for some specialty compounds. The actual life is specified by the OEM (or by mil-spec) — verify against current OEM documentation. Some industries (military, NASA) use shorter shelf lives than commercial.</p>
+
+<h5>Sealants and adhesives</h5>
+
+<ul>
+  <li>Fuel tank sealants (PR-1422, AMS-S-8802, etc.)</li>
+  <li>Aerospace adhesives (epoxy systems, structural adhesives)</li>
+  <li>RTV silicones</li>
+  <li>Anaerobic adhesives (thread-lockers, retaining compounds)</li>
+  <li>Cyanoacrylates (limited aviation use but present in some assemblies)</li>
+</ul>
+
+<p>Typical shelf life: 6–24 months from manufacture date. Refrigerated storage extends shelf life for some products. The OEM specification controls.</p>
+
+<h5>Batteries</h5>
+
+<ul>
+  <li>Aircraft batteries (lead-acid, nickel-cadmium) — typically shorter shelf life than installed life</li>
+  <li>Emergency Locator Transmitter (ELT) batteries — typical 5-year shelf life; replaced on schedule</li>
+  <li>Underwater Locator Beacon (ULB / pinger) batteries</li>
+  <li>Backup batteries for FADECs, flight recorders, emergency lighting</li>
+  <li>Lithium primary cells in various electronic applications</li>
+</ul>
+
+<p>Battery shelf life varies by chemistry. Storage temperature matters significantly — many battery types have spec\'d shelf lives at room temperature with longer life under refrigerated storage.</p>
+
+<h5>Inflatables and emergency equipment</h5>
+
+<ul>
+  <li>Life vests</li>
+  <li>Slide/rafts</li>
+  <li>Emergency oxygen masks (some types)</li>
+  <li>Crash position indicator marker buoys</li>
+</ul>
+
+<p>These typically have service-life rather than shelf-life — the part is overhauled rather than scrapped at the end of life. But during storage as new inventory, the cure-date and shelf-life clock applies.</p>
+
+<h5>Pyrotechnics</h5>
+
+<ul>
+  <li>Fire bottle squibs and cartridges</li>
+  <li>Escape slide inflation actuators</li>
+  <li>Ejection seat charges</li>
+  <li>Flare pyrotechnics</li>
+  <li>Emergency exit explosive bolts</li>
+</ul>
+
+<p>Pyrotechnics have strict shelf lives and require hazmat handling (Module 8). Storage conditions matter — temperature, humidity, segregation from incompatible materials.</p>
+
+<h5>Specialty fluids and lubricants</h5>
+
+<ul>
+  <li>Some mil-spec hydraulic fluids in sealed containers</li>
+  <li>Some greases (especially specialty aerospace lubricants)</li>
+  <li>Engine starting compounds</li>
+  <li>Coolants and de-icing fluids in specific applications</li>
+</ul>
+
+<p>Most engine oils and hydraulic fluids in unopened sealed containers have very long shelf lives (10+ years), but specialty fluids may be shorter.</p>
+
+<h4>Tracking shelf-life at receiving</h4>
+
+<p>Every shelf-life-limited part receives specific handling at receiving inspection:</p>
+
+<h5>Information captured</h5>
+
+<ul>
+  <li><strong>Cure date</strong> (for elastomers) or <strong>manufacture date</strong> (for sealants, adhesives, batteries, etc.) — read from the part marking or supplier documentation</li>
+  <li><strong>Shelf life per OEM/spec</strong> — verified against current OEM documentation; not assumed from prior knowledge</li>
+  <li><strong>Calculated expiration date</strong> — cure or manufacture date plus shelf life</li>
+  <li><strong>Storage requirements</strong> — temperature range, humidity range, lighting restrictions, segregation requirements</li>
+  <li><strong>Lot or batch number</strong> — for traceability if a defect is discovered in the lot</li>
+</ul>
+
+<h5>Tagging</h5>
+
+<p>The serviceable tag for shelf-life-limited parts includes the expiration date. The expiration date is also entered into the inventory system so that aging alerts can trigger.</p>
+
+<h5>Storage placement</h5>
+
+<p>Shelf-life-limited parts are stored where:</p>
+
+<ul>
+  <li>Environmental conditions match the OEM specification</li>
+  <li>FIFO rotation is enforceable (oldest accessible first)</li>
+  <li>Quick identification of expiration date is possible (tag visible without picking the part)</li>
+</ul>
+
+<h4>The inventory system\'s role</h4>
+
+<p>The inventory system tracks expiration dates and provides several supporting functions:</p>
+
+<ul>
+  <li><strong>Aging reports</strong> — list of parts approaching expiration within a defined window (e.g., next 90 days). The QA Manager and warehouse review these periodically.</li>
+  <li><strong>Pick-priority enforcement</strong> — when a customer order pulls a shelf-life part, the system identifies the oldest in-life unit, supporting FIFO.</li>
+  <li><strong>Expiration alerts</strong> — automatic flags when a part reaches expiration. The system prevents pulling expired parts for customer shipment.</li>
+  <li><strong>Expiration history</strong> — record of parts that have expired (where they came from, when expired, how dispositioned). Useful for inventory-cost analysis and supplier-performance review.</li>
+</ul>
+
+<h4>FIFO — first in, first out</h4>
+
+<p>FIFO is the default rotation rule. The intent: ship the oldest stock first so newer stock doesn\'t sit on the shelf until it expires while the picker continues to grab the easy-to-reach (newer) stock.</p>
+
+<h5>Implementation</h5>
+
+<ul>
+  <li>New stock goes to the back of the bin or shelf location</li>
+  <li>Pickers grab from the front</li>
+  <li>Bin organization supports FIFO — older stock is physically accessible while newer stock is behind</li>
+  <li>System-supported picking identifies the oldest in-life unit and directs the picker to it</li>
+</ul>
+
+<h5>Practical challenges</h5>
+
+<ul>
+  <li><strong>Picker convenience.</strong> Pickers grab what\'s easy to reach. Newer stock at the front bypasses FIFO. Layout must make FIFO the easy path.</li>
+  <li><strong>Lot mixing.</strong> If multiple lots are stored together with different cure dates, identifying the oldest in-life unit requires reading every tag. Bins should organize lots so older is in front by physical position.</li>
+  <li><strong>Single-piece stock.</strong> For non-bulk parts where each item has its own location, FIFO is enforced by system pick instruction rather than physical position. Picker must follow the system.</li>
+</ul>
+
+<h5>FIFO discipline check</h5>
+
+<p>An auditor verifying FIFO discipline pulls a part from a bin and looks at the neighbors. If the part just pulled is newer than the parts remaining, FIFO is failing. If the part pulled is the oldest in the bin, FIFO is working.</p>
 
 <h4>What happens at expiration</h4>
-<p>An expired part is moved to Unserviceable status. The disposition options:</p>
+
+<p>An expired part is moved to Unserviceable status. The transition is recorded; the QA Manager dispositions further. Options:</p>
+
+<h5>Scrap</h5>
+
+<p>Most common outcome. Expired elastomers, sealants, adhesives are scrapped per ASA-100 §8 and FAA AC 21-38. Mutilation is appropriate to the part type (cutting, drilling, irreversible damage; for liquids, opening the seal and labeling as expired). Mutilation is documented.</p>
+
+<h5>Re-life</h5>
+
+<p>Possible for some part types if the OEM specifically authorizes a re-life inspection. Examples: some batteries can be re-tested and re-life\'d if test results meet criteria; some pyrotechnics can be inspected and re-certified. Re-life requires:</p>
+
 <ul>
-  <li><strong>Scrap</strong> — most common. Expired elastomers and sealants are scrapped per ASA-100 §8 and FAA AC 21-38.</li>
-  <li><strong>Re-life</strong> — possible for some parts if the manufacturer authorizes a re-life inspection (e.g., re-test of certain batteries). Documentation must support this — cannot be done informally.</li>
-  <li><strong>Return to manufacturer</strong> — some manufacturers offer credit for expired stock returned.</li>
+  <li>OEM-published procedure authorizing re-life</li>
+  <li>Test/inspection performed by qualified personnel or facility</li>
+  <li>New release documentation reflecting the re-life action</li>
+  <li>Updated expiration date based on re-life results</li>
 </ul>
-<p><strong>Expired parts cannot be re-tagged as serviceable.</strong> An auditor will specifically look for expired parts in serviceable inventory — it is a common finding at first audits.</p>
+
+<p>Re-life is not informal. It cannot happen at TurbineWorks unilaterally. The OEM authorization controls.</p>
+
+<h5>Return to manufacturer</h5>
+
+<p>Some manufacturers offer credit for expired stock returned. This is contractual between TurbineWorks and the manufacturer. The expired part leaves TurbineWorks inventory through this return path (recorded as such) rather than through scrap.</p>
+
+<h5>Sale to non-aviation use</h5>
+
+<p>Some expired aviation parts have legitimate non-aviation applications (e.g., expired elastomer O-rings can sometimes be sold as industrial parts). This is allowed but requires explicit documentation that the part is being sold for non-aviation use. The part cannot be sold with any aviation documentation; the buyer must be aware the part is expired for aviation purposes.</p>
+
+<h5>What CANNOT happen</h5>
+
+<ul>
+  <li><strong>Expired parts cannot be re-tagged as serviceable.</strong> An ASA auditor will specifically look for expired parts in serviceable inventory. Finding one is a hard finding — one of the most common in first audits.</li>
+  <li><strong>Expired parts cannot be "ignored" in inventory.</strong> They must be dispositioned. Sitting expired-but-undecided is itself a quality system failure.</li>
+  <li><strong>Expired parts cannot be quietly disposed of without records.</strong> Disposition is recorded. Scrap is documented.</li>
+</ul>
 
 <h4>Environmental conditions affecting shelf life</h4>
-<p>Shelf life is specified assuming proper storage conditions. Improper conditions accelerate aging and effectively reduce shelf life:</p>
+
+<p>Shelf life specifications assume proper storage conditions. Improper conditions accelerate aging and effectively reduce shelf life. The OEM\'s 5-year shelf life assumes the part has been stored at the OEM\'s specified temperature and humidity; storage outside that range may reduce effective life significantly.</p>
+
+<h5>Critical environmental factors</h5>
+
 <ul>
-  <li>Temperature outside spec range (elastomers degrade faster in heat)</li>
-  <li>Direct sunlight or UV exposure (degrades rubber, plastic, some elastomers)</li>
-  <li>Humidity outside spec (corrosion, moisture absorption)</li>
-  <li>Ozone exposure (degrades rubber rapidly — keep elastomers away from electric motors that generate ozone)</li>
+  <li><strong>Temperature.</strong> Elastomers degrade exponentially faster at high temperatures. An OEM 10-year shelf life at 70°F may be 3-4 years at 85°F. Refrigerated storage (32-40°F) extends shelf life for many materials.</li>
+  <li><strong>UV exposure.</strong> Direct sunlight or high-UV lighting degrades rubber, some plastics, certain elastomers. Store light-sensitive items in opaque containers or shaded areas.</li>
+  <li><strong>Humidity.</strong> High humidity causes corrosion in ferrous parts, moisture absorption in moisture-sensitive components, mold growth in some packaging materials. Low humidity can cause static buildup and brittleness in some materials.</li>
+  <li><strong>Ozone exposure.</strong> Ozone is particularly aggressive on rubber. Keep elastomers away from sources of ozone — electric motors, ozone-producing equipment, some types of UV light. A few hours of high-ozone exposure can degrade rubber more than years of normal aging.</li>
+  <li><strong>Atmospheric contamination.</strong> Industrial pollutants, salt air (coastal locations), chemical fumes — all may affect specific materials.</li>
 </ul>
-<p>If storage conditions are exceeded for a documented period, the part's effective shelf life may be reduced. Document any environmental excursions (HVAC failure, etc.) and notify QA Manager — affected parts may need to be re-evaluated.</p>
+
+<h5>Environmental monitoring</h5>
+
+<p>Temperature and humidity in storage areas are monitored, typically with continuous data-logging sensors. Logs are retained as part of quality records. Excursions outside spec are documented:</p>
+
+<ul>
+  <li>What environmental condition went out of spec</li>
+  <li>How long it remained out of spec</li>
+  <li>What parts may have been affected</li>
+  <li>Whether the excursion was severe enough to warrant re-evaluation of affected parts</li>
+</ul>
+
+<p>Significant excursions (HVAC failure for 24+ hours, refrigerator failure, fire, water leak) trigger explicit QA Manager review. Affected parts may be moved to Quarantine pending engineering or OEM consultation on whether their effective shelf life has been compromised.</p>
 
 <h4>What the auditor checks</h4>
+
+<p>ASA-100 §7 audits give specific attention to shelf-life discipline. Common audit activities:</p>
+
 <ul>
-  <li>Random pull of shelf-life parts: are dates legible and within life?</li>
-  <li>Expired parts in inventory: are any in serviceable? (Hard finding if yes.)</li>
-  <li>FIFO discipline: pick a part and look at neighboring stock — is the oldest at the front?</li>
-  <li>Environmental records: temperature/humidity logs available?</li>
+  <li>Random pull of shelf-life parts and verification that dates are legible and in life</li>
+  <li>Inspection of inventory for any expired parts present in serviceable storage (hard finding)</li>
+  <li>FIFO discipline check — pulling a part and examining neighboring stock</li>
+  <li>Environmental records review — temperature/humidity logs available, excursions documented</li>
+  <li>Disposition records for expired parts — what happened to them, when, who authorized</li>
+  <li>Review of the aging report and follow-up on items approaching expiration</li>
+  <li>Specific check on hazmat-classified shelf-life items (pyrotechnics, batteries) for proper segregation</li>
 </ul>
 
-<p><em>[TurbineWorks Procedure Reference: insert TurbineWorks shelf-life monitoring SOP and the list of part categories tracked here.]</em></p>
+<h5>Common audit findings</h5>
+
+<ul>
+  <li>Expired part in serviceable inventory (the canonical finding)</li>
+  <li>Cure dates illegible on packaging — cannot verify in-life status</li>
+  <li>FIFO failure — older stock blocked behind newer</li>
+  <li>Environmental monitoring records gaps — sensor failures, missing logs</li>
+  <li>Expiration excursions documented but no corrective action recorded</li>
+  <li>Aging report shows items approaching expiration but no follow-up action</li>
+</ul>
+
+<h4>References</h4>
+
+<ul>
+  <li><strong>ASA-100 §7</strong> — Storage and handling requirements (shelf-life specific)</li>
+  <li><strong>OEM specifications and IPCs</strong> — authoritative shelf-life data per part</li>
+  <li><strong>Mil-spec / industry standards</strong> — for parts produced to military or industry specifications (e.g., AMS-S-8802 for fuel tank sealants)</li>
+  <li><strong>FAA AC 21-38</strong> — Disposition of unsalvageable parts (covers Scrap disposition of expired items)</li>
+  <li>TurbineWorks QAM Section [TBD] — Shelf-Life Management Procedure</li>
+</ul>
+
+<h4>Self-check</h4>
+
+<ol>
+  <li>Why is shelf-life a real engineering concern and not just paperwork?</li>
+  <li>Name 5 shelf-life-limited categories common at TurbineWorks.</li>
+  <li>What information is captured at receiving for every shelf-life-limited part?</li>
+  <li>What is FIFO and what 4 implementation elements support it?</li>
+  <li>What 4 disposition options exist for expired parts?</li>
+  <li>What disposition is NOT permitted for expired parts?</li>
+  <li>Name 5 environmental factors that affect shelf life.</li>
+  <li>What does an auditor typically check during shelf-life audit activities?</li>
+  <li>What is the canonical "expired-parts" audit finding and why is it considered hard?</li>
+</ol>
+
+<p><em>[TurbineWorks Procedure Reference: insert TurbineWorks shelf-life monitoring SOP, the list of part categories tracked, and the environmental monitoring system reference here.]</em></p>
 HTML
         ],
         [
