@@ -33,7 +33,7 @@ require_once(__DIR__ . '/../content/glossary.php');
 
 // Bump the suffix here (and in the entrypoint marker docs) when adding new
 // bootstrap steps that should run on existing sites.
-$marker = $CFG->dataroot . '/.twu-bootstrapped-v29';
+$marker = $CFG->dataroot . '/.twu-bootstrapped-v30';
 $force  = in_array('--force', $argv ?? [], true);
 if (file_exists($marker) && !$force) {
     cli_writeln("[twu] already bootstrapped (marker present at $marker). Pass --force to re-run.");
@@ -1310,14 +1310,16 @@ function twu_ensure_forum(stdClass $course, string $name, string $intro): ?int {
     }
 }
 
-// Seed a starter discussion in a forum if it has no discussions yet.
-// Posted by admin (acts as QA Manager until a real account is assigned).
+// Seed a starter discussion in a forum if no discussion with this subject
+// already exists. Posted by admin (acts as QA Manager until a real account
+// is assigned).
 function twu_ensure_forum_starter(stdClass $course, int $forumid, string $subject, string $message): void {
     global $DB, $CFG;
     require_once($CFG->dirroot . '/mod/forum/lib.php');
 
-    // Idempotent: skip if any discussion already exists in this forum.
-    if ($DB->record_exists('forum_discussions', ['forum' => $forumid])) {
+    // Idempotent per (forum, subject) — allows multiple seeded threads in
+    // one forum (welcome + multiple FAQs) without re-inserting on reruns.
+    if ($DB->record_exists('forum_discussions', ['forum' => $forumid, 'name' => $subject])) {
         return;
     }
 
@@ -1389,6 +1391,90 @@ $forumstarter_message = '<p>Welcome to this module&apos;s Q&amp;A forum. Use thi
 <p>Post freely. If you are unsure whether a question is &ldquo;dumb&rdquo;, post it anyway — chances are someone else is wondering the same thing, and the answer benefits the whole team.</p>
 <p>&mdash; QA Manager</p>';
 
+// Per-module FAQ thread seeds — five common questions per module with the
+// QA Manager's expected answer. Pre-seeds reference material so forums are
+// useful from day 1 rather than empty until first user question.
+$forum_faqs = [
+    'TWF4-1' => [
+        ['Q: A part shows up at receiving with a photocopied 8130-3. Should I accept it?',
+         'A: A photocopy without a "TRUE COPY" stamp from an authorized organization is not a valid release document. Quarantine the part, document the receipt (photographs, who delivered, original packaging condition), and request the original from the supplier. If the supplier cannot produce an original, this is a SUP situation and you should escalate to me before doing anything else with the part. Do not return the part to the shipper — that just moves the SUP somewhere else.'],
+        ['Q: What if I find what looks like a counterfeit part but I am not 100% sure?',
+         'A: "Suspect" is the right word. Quarantine the part immediately. Document what made you suspect it (photographs of part markings, comparison to known-good examples, any documentation discrepancies). Bring it to me. We will investigate together. The cost of pausing for 30 minutes is much less than the cost of an undetected counterfeit reaching a customer.'],
+        ['Q: I noticed a small discrepancy on an 8130-3 but the part itself looks fine. Should I still flag it?',
+         'A: Yes — always. Discrepancies, even small ones, get documented. Many SUP investigations have started with what initially seemed like a "small" paperwork issue. Document the discrepancy on the receiving inspection report and have me review before accepting.'],
+        ['Q: We received a part from a supplier we use regularly and have never had problems with. Do I still need to do the full receiving inspection?',
+         'A: Yes. Familiarity with a supplier does not change the receiving inspection requirement. ASA-100 expects every part to receive the same inspection regardless of source. A "trusted supplier" assumption is exactly the cultural opening that lets bad parts through eventually.'],
+        ['Q: What is the difference between an "unapproved" part and a "counterfeit" part?',
+         'A: An unapproved part is one that does not meet its certification basis — could be wrong materials, wrong manufacture process, expired status, missing documentation. A counterfeit part is specifically one that was made to deceive — re-stamped data plate, fake serial number, intentional misrepresentation. All counterfeits are unapproved. Not all unapproved parts are counterfeit (some are honest errors). Either way, both get quarantined and investigated.'],
+    ],
+    'TWF4-2' => [
+        ['Q: The carton arrived crushed but the part inside looks fine. Do I still note the carton damage?',
+         'A: Yes. Document the carton damage at receiving (photographs, notes on the receiving record). The damage may have caused latent issues with the part that are not visually obvious — especially for ESD-sensitive or precision-machined parts. The supplier and carrier need this documentation if any future claim arises. Never discard the original packaging until receiving is complete.'],
+        ['Q: An 8130-3 came in with the right-side installer blocks already filled in. Is this a problem?',
+         'A: Yes — a major one. The right side is reserved for the installing mechanic when the part is installed on an aircraft. If they are filled in on a part shipped as new or repaired, it means the part may have been installed previously and removed. Quarantine and investigate the history. Could be a SUP indicator.'],
+        ['Q: We get parts shipped on Saturday but I am not in the warehouse. Can someone else just sign for them?',
+         'A: A non-trained employee can take physical delivery (sign the carrier paperwork) but cannot perform the receiving inspection. The parts go to a designated holding area until a trained inspector performs the inspection. They do not enter serviceable inventory until inspection is complete.'],
+        ['Q: I do not have all the documentation listed in the PO — should I reject the shipment?',
+         'A: Do not reject outright. Document the missing items, quarantine the parts, and contact the supplier for the missing documentation. Most cases are simple — the supplier forgot to include something. Reject only if the supplier cannot or will not provide what is required and the discrepancy is material.'],
+        ['Q: How long should the receiving inspection take per part?',
+         'A: Depends on the part. A box of 100 standard hardware items may take 5 minutes total. A single high-value rotable (HPT disk, FADEC) may take 30-60 minutes if records verification is involved. Do not rush. The records verification step is what catches the issues that matter.'],
+    ],
+    'TWF4-3' => [
+        ['Q: How is ASA-100 different from AS9120?',
+         'A: ASA-100 is published by ASA specifically for aircraft parts distributors. AS9120 is published by SAE/IAQG for the broader aerospace QMS context. Both are valid; ASA-100 is more aviation-distribution-specific. Many distributors hold both. We are pursuing ASA-100 first as the foundational accreditation. AS9120 may follow in 1-2 years.'],
+        ['Q: Where do I find the current version of the ASA-100 standard?',
+         'A: Through ASA membership at aviationsuppliers.org. The standard is not free — it is a controlled industry document. The current revision number is something the QA Manager confirms with ASA before any audit. We have a current copy on file in the QMS.'],
+        ['Q: What is "voluntary accreditation"? Is it actually required?',
+         'A: Technically voluntary — the FAA does not legally require ASA-100. In practice, many customers (major airlines, leasing companies, MRO networks) will not buy from unaccredited distributors. Accreditation is the practical entry credential. "Voluntary" in name; commercially required in practice.'],
+        ['Q: What does an ASA audit actually look like?',
+         'A: A trained ASA auditor visits the facility for 1-3 days. They review the QAM, walk the facility, interview employees, sample inventory and trace records, review training records, observe receiving and shipping operations. Findings are issued at exit. Corrective actions follow within defined timeframes. Successful audit = accreditation status maintained or granted.'],
+    ],
+    'TWF4-4' => [
+        ['Q: We do not have a formal ESD area yet — where should I put ESD-sensitive parts?',
+         'A: Until the EPA is built out, ESD-sensitive parts stay in their original ESD-safe packaging in a designated section of the warehouse. Do not open the packaging outside an EPA. If you need to inspect an ESDS part, coordinate with me so we can do it under correct ESD controls. This is a real gap we are working on.'],
+        ['Q: How strict is "FIFO" enforcement for shelf-life items?',
+         'A: First-in-first-out is the requirement for shelf-life-limited items — older stock ships first. Strict enforcement: if you find newer stock in front of older stock, rotate it. Items that exceed shelf life cannot be sold for installation; they are either scrap or revert to expired-stock disposition per the QMS.'],
+        ['Q: What is the difference between FOD and "loose debris"?',
+         'A: FOD (Foreign Object Damage / Debris) is specifically debris that could enter an engine or aircraft system. Loose hardware on the warehouse floor near a part is FOD risk. Loose hardware in a sealed shipping carton is just sloppy packing — still a quality issue, but not an FOD finding. The distinction matters at audit.'],
+    ],
+    'TWF4-5' => [
+        ['Q: How long do we retain training records?',
+         'A: Per ASA-100 expectations, training records are retained for 7+ years from training completion. Our Moodle system is configured to retain log data indefinitely. Certificates issued are also stored in the system. If you need a record for an external audit or customer inquiry, contact me.'],
+        ['Q: I made an error on a receiving record. Can I correct it after the fact?',
+         'A: Yes — but with discipline. Strike through the original entry (single line so the original remains readable), write the correction next to it, initial and date the correction. Do not use whiteout. Do not erase. The audit trail must show what was originally entered and what was changed. This is records-discipline 101.'],
+        ['Q: A customer is asking for the back-to-birth records on an LLP we are about to ship. What do I send?',
+         'A: The complete LLP records package: manufacturer\'s original release, all 8130-3s (original and subsequent releases), installation history, cycle accumulation records, shop visit history, SB compliance, AD compliance, current 8130-3. Copies are acceptable for customer use. Originals stay with the part until installed on an aircraft.'],
+    ],
+    'TWF4-6' => [
+        ['Q: What is the relationship between AC 00-56 and ASA-100?',
+         'A: AC 00-56 is the FAA Advisory Circular that establishes the framework for voluntary industry distributor accreditation. It defines what accreditation programs the FAA recognizes. ASA-100 is one such accreditation program — published by ASA, which is itself an FAA-recognized Accreditation Organization (AO) under AC 00-56. So the chain is: FAA → AC 00-56 → ASA (AO) → ASA-100 (standard) → TurbineWorks (accredited distributor).'],
+        ['Q: Does our QAM need to literally reference AC 00-56?',
+         'A: No — but it must reflect AC 00-56 requirements via ASA-100. AC 00-56 sets requirements on the AO (ASA); ASA-100 sets requirements on the distributor (us); the QAM defines how TurbineWorks satisfies ASA-100. We do not need to cite AC 00-56 line-by-line in the QAM, but the requirements flow through.'],
+        ['Q: What happens if we lose accreditation?',
+         'A: Customer contracts that require ASA-100 accreditation immediately become non-compliant. Affected customers must be notified. Lost revenue from those customers can be substantial. Recovery requires resubmitting accreditation application — a multi-month process and not guaranteed. This is why the QMS and the training program matter — they keep us audit-ready.'],
+    ],
+    'TWF4-7' => [
+        ['Q: How do I know if a part is ESD-sensitive without opening the packaging?',
+         'A: Three sources: (1) the supplier packaging — ESD-safe packaging is marked with the ESD susceptibility symbol; (2) the part-master record in our system — we flag known-ESDS part numbers; (3) part-type knowledge — FADECs, ECUs, sensors with electronic outputs, any printed circuit board, are always ESDS. When uncertain, treat as ESDS.'],
+        ['Q: I forgot to put on my wrist strap before picking up an ESDS part. What do I do?',
+         'A: Stop. Set the part back down. Put on the wrist strap. Re-inspect the part for any visible damage (there usually is none — that\'s the latent damage problem). Report the incident on the ESD log so we can track frequency and improve the procedure if needed. Most importantly: tell me. If the part is high-value or destined for a critical customer, we may decide to send it for testing rather than ship as serviceable.'],
+        ['Q: Do all ESD-safe bags last forever?',
+         'A: No. Pink antistatic bags lose their antistatic property within 6-12 months. Metallized shielded bags last longer but degrade with repeated handling. Visibly damaged bags get replaced. We track packaging age in the inventory system and rotate as needed.'],
+        ['Q: What humidity should the ESD area be at?',
+         'A: Target 40-60% relative humidity. Below 30% RH, enhanced grounding verification applies and Class 0 component handling may be suspended until humidity is restored. Above 70% RH starts to risk moisture-related issues. We monitor continuously.'],
+    ],
+    'TWF4-8' => [
+        ['Q: A part arrived without hazmat documentation, but I know from the part type it should be hazmat. What do I do?',
+         'A: Quarantine the part. Document the missing documentation as a supplier-quality issue. Contact the supplier for the missing paperwork. Do not accept the part into inventory and do not ship it as non-hazmat. If the supplier cannot or will not provide proper hazmat documentation, the shipment may need to be returned. Document everything for the supplier quality record.'],
+        ['Q: We need to ship a lithium battery — what training is required?',
+         'A: For air shipment of lithium batteries (UN3480/3481), the signer of the Shipper\'s Declaration must have current IATA DGR training (initial plus recurrent every 24 months). Without DGR training, you cannot sign a DGD. Ground shipments may be done under broader DOT hazmat training. We have one DGD signer designated; if they are unavailable, the shipment waits.'],
+        ['Q: What is the difference between UN3480 and UN3481?',
+         'A: UN3480 = standalone lithium-ion batteries (in a box, not connected to anything). UN3481 = lithium-ion batteries packed with equipment or contained in equipment. Different packing instructions, different state-of-charge limits, different documentation. The choice depends on how the battery is shipped — alone, accompanying equipment, or installed in equipment.'],
+        ['Q: I think we received an oxygen generator with no hazmat documentation. How serious is this?',
+         'A: Very serious. Oxygen generators are UN3356 / Class 5.1 oxidizer. They caused the ValuJet 592 crash in 1996. Quarantine immediately, do not move or jostle the part, get me involved. We will need supplier documentation and possibly OEM disposition guidance.'],
+    ],
+];
+
 foreach ($createdcourses as $idnumber => $course) {
     $forumid = twu_ensure_forum(
         $course,
@@ -1397,6 +1483,14 @@ foreach ($createdcourses as $idnumber => $course) {
     );
     if ($forumid) {
         twu_ensure_forum_starter($course, $forumid, $forumstarter_subject, $forumstarter_message);
+        // Seed FAQ threads for this module if defined.
+        $faqs = $forum_faqs[$idnumber] ?? [];
+        foreach ($faqs as $faq) {
+            twu_ensure_forum_starter($course, $forumid, $faq[0], '<p>' . str_replace("\n", '</p><p>', $faq[1]) . '</p>');
+        }
+        if ($faqs) {
+            cli_writeln("[twu]   seeded " . count($faqs) . " FAQ threads in $idnumber forum");
+        }
     }
 }
 
@@ -1915,6 +2009,118 @@ twu_ensure_demo_user(
 cli_writeln("[twu] 4 demo template users created (suspended; in role + All Employees cohorts)");
 
 // ---------------------------------------------------------------------------
+// 6b2. Site calendar events — recurring compliance and training milestones
+// ---------------------------------------------------------------------------
+// Seeds a small set of recurring site-wide calendar events visible in the
+// Moodle calendar block on the dashboard. Helps employees see upcoming
+// compliance deadlines without separate tracking.
+function twu_ensure_site_event(string $name, string $description, int $timestart,
+                               int $duration, string $eventtype, ?int $repeatuntil = null): void {
+    global $DB, $CFG;
+    require_once($CFG->dirroot . '/calendar/lib.php');
+
+    // Idempotent on name + eventtype + timestart-day so reruns do not duplicate.
+    $daystart = strtotime(date('Y-m-d', $timestart));
+    $dayend   = $daystart + DAYSECS;
+    $existing = $DB->record_exists_sql(
+        "SELECT 1 FROM {event}
+          WHERE name = :name AND eventtype = :type
+            AND timestart >= :ds AND timestart < :de",
+        ['name' => $name, 'type' => $eventtype, 'ds' => $daystart, 'de' => $dayend]
+    );
+    if ($existing) {
+        return;
+    }
+
+    $admin = get_admin();
+    $event = (object)[
+        'name'          => $name,
+        'description'   => $description,
+        'format'        => FORMAT_HTML,
+        'courseid'      => SITEID,
+        'groupid'       => 0,
+        'userid'        => $admin->id,
+        'modulename'    => 0,
+        'instance'      => 0,
+        'eventtype'     => $eventtype,
+        'type'          => 0,
+        'timestart'     => $timestart,
+        'timeduration'  => $duration,
+        'visible'       => 1,
+        'sequence'      => 1,
+        'timemodified'  => time(),
+        'priority'      => null,
+    ];
+    \calendar_event::create($event, false);
+}
+
+// Calendar events: management review (quarterly), audit prep (annual),
+// recurring training reminders, ASA accreditation milestones.
+$now = time();
+$thisyear = (int)date('Y');
+$year = $thisyear;
+
+// Quarterly management review meetings — Q1/Q2/Q3/Q4 of current and next year.
+foreach ([$thisyear, $thisyear + 1] as $y) {
+    foreach ([['03', 'Q1'], ['06', 'Q2'], ['09', 'Q3'], ['12', 'Q4']] as $qm) {
+        $ts = strtotime("$y-{$qm[0]}-15 10:00:00");
+        if ($ts && $ts > $now) {
+            twu_ensure_site_event(
+                "Quarterly Management Review ({$qm[1]} $y)",
+                '<p>Quarterly management review meeting per ASA-100 management-review requirements. Agenda: training completion review, supplier quality, customer complaints, internal audit findings, CAPA status, resource needs. QA Manager facilitates; Accountable Manager chairs.</p>',
+                $ts, 90 * 60, 'site'
+            );
+        }
+    }
+}
+
+// Annual ASA-100 audit prep (~30 days before anniversary; placeholder Q1)
+$audit_prep = strtotime("$thisyear-02-01 09:00:00");
+if ($audit_prep && $audit_prep > $now) {
+    twu_ensure_site_event(
+        'Annual ASA Audit Preparation Window Opens',
+        '<p>30-day audit preparation window opens. Checklist: training records current for all employees, internal audit complete, CAPA log reviewed, supplier qualification list current, all SOPs at current revision. QA Manager owns prep.</p>',
+        $audit_prep, 30 * DAYSECS, 'site'
+    );
+}
+
+// Annual hazmat recurrent training deadline (DOT — every 3 years per
+// 49 CFR §172.704). Reminder placed annually as a "check status" event.
+$hazmat_check = strtotime("$thisyear-04-01 09:00:00");
+if ($hazmat_check && $hazmat_check > $now) {
+    twu_ensure_site_event(
+        'DOT Hazmat Certification Status Check',
+        '<p>Annual review of DOT Hazmat certifications for all hazmat-handling personnel. Per 49 CFR §172.704 — initial training plus recurrent every 3 years. Check the Certification Expiry Roster (Site Admin → TurbineWorks Reports) for any expirations within 90 days.</p>',
+        $hazmat_check, 60 * 60, 'site'
+    );
+}
+
+// Bi-annual IATA DGR check (24-month renewal cycle)
+$dgr_check = strtotime("$thisyear-05-01 09:00:00");
+if ($dgr_check && $dgr_check > $now) {
+    twu_ensure_site_event(
+        'IATA DGR Air-Shipper Certification Status Check',
+        '<p>Semi-annual review of IATA DGR certifications for personnel signing Shipper&apos;s Declarations. Per IATA DGR — initial training plus recurrent every 24 months. Check the Certification Expiry Roster.</p>',
+        $dgr_check, 60 * 60, 'site'
+    );
+}
+
+// 6-month recurring training cohort cycle reminders
+$semi1 = strtotime("$thisyear-01-15 09:00:00");
+$semi2 = strtotime("$thisyear-07-15 09:00:00");
+foreach ([$semi1, $semi2] as $ts) {
+    if ($ts && $ts > $now) {
+        twu_ensure_site_event(
+            '6-Month Recurring Training Window',
+            '<p>The 6-month recurring training reset task has run. Employees whose completions have expired are now showing as incomplete in their courses. Run the Recurring Training Due Tracker report to see status.</p>',
+            $ts, DAYSECS, 'site'
+        );
+    }
+}
+
+cli_writeln("[twu] site calendar events ensured (management reviews, hazmat/DGR checks, recurring windows)");
+
+// ---------------------------------------------------------------------------
 // 6c. Course completion criteria — every tracked activity must be completed
 // ---------------------------------------------------------------------------
 // Sets each Initial Training (and supplemental) course to "complete when all
@@ -2067,6 +2273,116 @@ foreach ($createdcourses as $idnumber => $course) {
     twu_ensure_cert_availability($course);
 }
 cli_writeln("[twu] certificate availability: gated behind completion of all lessons + quiz in " . count($createdcourses) . " Initial Training courses");
+
+// ---------------------------------------------------------------------------
+// 6e. Welcome HTML blocks on each Initial Training course page
+// ---------------------------------------------------------------------------
+function twu_ensure_course_html_block(stdClass $course, string $title, string $html,
+                                      string $region = 'side-post', int $weight = -10): void {
+    global $DB;
+    $context = context_course::instance($course->id);
+
+    // Idempotent: skip if an HTML block with this title already exists in
+    // this course context.
+    $existing = $DB->get_records('block_instances', [
+        'blockname'        => 'html',
+        'parentcontextid'  => $context->id,
+    ]);
+    foreach ($existing as $bi) {
+        // configdata is base64-encoded serialized; decode and compare title.
+        $cfg = unserialize(base64_decode($bi->configdata));
+        if (is_object($cfg) && !empty($cfg->title) && $cfg->title === $title) {
+            return;
+        }
+    }
+
+    $configobj = (object)[
+        'title'  => $title,
+        'text'   => $html,
+        'format' => FORMAT_HTML,
+        'classes' => '',
+    ];
+    $configdata = base64_encode(serialize($configobj));
+
+    $DB->insert_record('block_instances', (object)[
+        'blockname'         => 'html',
+        'parentcontextid'   => $context->id,
+        'showinsubcontexts' => 0,
+        'pagetypepattern'   => 'course-view-*',
+        'subpagepattern'    => null,
+        'defaultregion'     => $region,
+        'defaultweight'     => $weight,
+        'configdata'        => $configdata,
+        'timecreated'       => time(),
+        'timemodified'      => time(),
+    ]);
+}
+
+// Per-module welcome block content.
+$welcome_blocks = [
+    'TWF4-1' => [
+        'title' => 'Module 1 at a glance',
+        'time'  => '~1 hour core + ~20 min supplemental videos',
+        'about' => 'How to recognize Suspected Unapproved Parts (SUP) and counterfeit parts. The receiving-line discipline that protects TurbineWorks and our customers from non-conforming material in the supply chain.',
+    ],
+    'TWF4-2' => [
+        'title' => 'Module 2 at a glance',
+        'time'  => '~1 hour core + ~15 min supplemental',
+        'about' => 'Receiving inspection workflow, the FAA 8130-3 block-by-block, package integrity, and outbound shipping discipline. The two interfaces where most quality findings happen.',
+    ],
+    'TWF4-3' => [
+        'title' => 'Module 3 at a glance',
+        'time'  => '~1 hour',
+        'about' => 'Where ASA-100 fits in the FAA framework. The relationship between AC 00-56, ASA, ASA-100, and our QAM. Foundation for everything else in the curriculum.',
+    ],
+    'TWF4-4' => [
+        'title' => 'Module 4 at a glance',
+        'time'  => '~1 hour core + ~15 min supplemental',
+        'about' => 'Storage, segregation, FOD prevention per NAS 412, shelf-life control, and warehouse environmental discipline. Where most parts spend most of their TurbineWorks time.',
+    ],
+    'TWF4-5' => [
+        'title' => 'Module 5 at a glance',
+        'time'  => '~1 hour',
+        'about' => 'Recordkeeping discipline, document control, the 7+ year retention expectation, and AC 21-38 mutilation. The audit-evidence backbone of ASA-100.',
+    ],
+    'TWF4-6' => [
+        'title' => 'Module 6 at a glance',
+        'time'  => '~2 hours',
+        'about' => 'Deep dive on AC 00-56. Why it exists, what it does and does not require, how it flows down to ASA-100 and our QAM. Longest module by design.',
+    ],
+    'TWF4-7' => [
+        'title' => 'Module 7 at a glance',
+        'time'  => '~1 hour core + ~20 min supplemental',
+        'about' => 'ESD physics, ANSI/ESD S20.20 program elements, identification of ESD-sensitive parts, personnel grounding, and ESD-safe packaging. The latent-damage problem.',
+    ],
+    'TWF4-8' => [
+        'title' => 'Module 8 at a glance',
+        'time'  => '~1 hour core + ~20 min supplemental',
+        'about' => 'Hazmat identification, the 9 DOT classes, hidden hazmat in aviation parts, UN system, IATA DGR for air shipment, and the Shipper&apos;s Declaration.',
+    ],
+];
+
+foreach ($createdcourses as $idnumber => $course) {
+    if (!isset($welcome_blocks[$idnumber])) {
+        continue;
+    }
+    $w = $welcome_blocks[$idnumber];
+    $html = '<div style="font-size:0.95em;">';
+    $html .= '<p style="margin:0 0 8px 0;"><strong>Estimated time:</strong> ' . $w['time'] . '</p>';
+    $html .= '<p style="margin:0 0 8px 0;">' . $w['about'] . '</p>';
+    $html .= '<hr style="border:none; border-top:1px solid #ffc800; margin:10px 0;">';
+    $html .= '<p style="margin:0 0 6px 0;"><strong>How to complete this module:</strong></p>';
+    $html .= '<ol style="margin:0 0 10px 18px; padding:0;">';
+    $html .= '<li>Read each lesson in order</li>';
+    $html .= '<li>Review the supplemental videos page</li>';
+    $html .= '<li>Pass the end-of-module quiz (80% required)</li>';
+    $html .= '<li>Your certificate will become available automatically</li>';
+    $html .= '</ol>';
+    $html .= '<p style="margin:0; font-size:0.9em; opacity:0.85;">Questions? Post in the &ldquo;Ask the QA Manager&rdquo; forum.</p>';
+    $html .= '</div>';
+    twu_ensure_course_html_block($course, $w['title'], $html, 'side-post', -10);
+}
+cli_writeln("[twu] welcome HTML blocks added to " . count($createdcourses) . " Initial Training courses");
 
 // Rebuild course cache for all touched courses so completion / availability /
 // cohort-sync changes are visible immediately rather than after the next

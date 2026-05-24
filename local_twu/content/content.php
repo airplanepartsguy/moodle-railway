@@ -10371,6 +10371,122 @@ function local_twu_get_reference_library(): array {
                 ],
             ],
         ],
+        [
+            'shortname' => 'TWU-REF-AUDITOR',
+            'fullname'  => 'For Auditors and Inspectors',
+            'idnumber'  => 'TWU-REF-AUDITOR',
+            'summary'   => '<p>Resources for ASA inspectors, customer auditors, and internal auditors visiting TurbineWorks University. Cert verification, report access, training record location.</p>',
+            'lessons'   => [
+                [
+                    'name'  => 'Certificate Verification',
+                    'intro' => '<p>How to verify the authenticity of a TurbineWorks University Certificate of Completion.</p>',
+                    'content' => '<h3>Certificate Verification</h3>
+<p>Every TurbineWorks University Certificate of Completion includes a unique Verification Code at the bottom of the PDF. Use that code to confirm the certificate&apos;s authenticity.</p>
+
+<h4>How to verify</h4>
+<ol>
+  <li>Open the certificate PDF</li>
+  <li>Locate the Verification Code (printed below the date on the certificate)</li>
+  <li>Visit the public verification page: <code>/mod/customcert/verify_certificate.php</code> on this site (typically <code>https://learn.turbineworks.com/mod/customcert/verify_certificate.php</code>)</li>
+  <li>Enter the Verification Code in the form and submit</li>
+  <li>The page returns the certificate details: recipient name, course name, completion date, and validity status</li>
+</ol>
+
+<h4>What a valid result looks like</h4>
+<p>A valid certificate verification returns:</p>
+<ul>
+  <li>The recipient&apos;s full name as recorded in their TurbineWorks employee profile</li>
+  <li>The exact course name (e.g., &ldquo;Unapproved Parts, Counterfeit Parts and Materials&rdquo;)</li>
+  <li>The date of certificate issuance (matches course completion date)</li>
+  <li>Confirmation that the certificate is valid</li>
+</ul>
+
+<h4>What an invalid result looks like</h4>
+<p>If the verification code does not match any issued certificate, the page returns an &ldquo;Invalid verification code&rdquo; message. This indicates either:</p>
+<ul>
+  <li>The code was transcribed incorrectly</li>
+  <li>The certificate is counterfeit or fabricated</li>
+  <li>The original certificate was deleted (rare; only happens if the employee account was deleted)</li>
+</ul>
+
+<h4>For auditors</h4>
+<p>This verification mechanism provides the audit-evidence chain from a printed certificate back to the Moodle database record. An ASA inspector can request any employee&apos;s training history, retrieve the certificate PDFs, and verify each via the public verification page in the auditor&apos;s presence. This satisfies the &ldquo;auditable training records&rdquo; requirement of ASA-100.</p>',
+                ],
+                [
+                    'name'  => 'Auditor Account and Report Access',
+                    'intro' => '<p>Read-only auditor account access and the TurbineWorks Reports admin section.</p>',
+                    'content' => '<h3>Auditor Account and Report Access</h3>
+
+<h4>The Auditor role</h4>
+<p>TurbineWorks University defines a custom &ldquo;Auditor (Read-Only)&rdquo; role (shortname <code>twu_auditor</code>) for external auditor accounts. The role grants full read access to:</p>
+<ul>
+  <li>All user profiles (employee identities, certifications, training history)</li>
+  <li>All course content (lessons, quizzes, assignments)</li>
+  <li>All completion records (per-user, per-course)</li>
+  <li>All quiz attempts (including failed attempts)</li>
+  <li>All forum discussions</li>
+  <li>The TurbineWorks Reports admin section</li>
+</ul>
+<p>The role grants <strong>no write access</strong>. An auditor cannot modify any data, delete any record, or alter any content.</p>
+
+<h4>How to request access</h4>
+<p>The QA Manager creates an auditor account before the audit visit, sets a temporary password, communicates the credentials securely, and assigns the &ldquo;Auditor (Read-Only)&rdquo; role at the system context. The account is suspended after the audit unless the auditor will return.</p>
+
+<h4>The Reports section</h4>
+<p>Navigate to <strong>Site Admin → Reports → TurbineWorks Reports</strong>. Four reports are available:</p>
+
+<ul>
+  <li><strong>Initial Training Completion Roster</strong> — user × course matrix showing who has completed which of the eight TWF-4 Initial Training modules. CSV download available.</li>
+  <li><strong>Recurring Training Due Tracker</strong> — all completions sorted by days until the 180-day expiry threshold. Shows expired, expiring-within-30-days, and current. CSV download available.</li>
+  <li><strong>Certification Expiry Roster</strong> — DOT Hazmat (49 CFR §172.704), IATA DGR (§1.5), and ESD (per ANSI/ESD S20.20) certification expiry by employee. CSV download available.</li>
+  <li><strong>Failed Quiz Attempts</strong> — finished quiz attempts below the pass threshold. Useful for identifying coaching needs.</li>
+</ul>
+
+<h4>Direct database access (optional)</h4>
+<p>For auditors who wish to verify report data against underlying records, the relevant Moodle tables are:</p>
+<ul>
+  <li><code>mdl_course_completions</code> — course completion records (one per user per course)</li>
+  <li><code>mdl_course_modules_completion</code> — activity-level completion (one per user per lesson/quiz)</li>
+  <li><code>mdl_quiz_attempts</code> — quiz attempt records with scores</li>
+  <li><code>mdl_user_info_data</code> — custom profile field data (certification expiry dates)</li>
+  <li><code>mdl_logstore_standard_log</code> — all training events; retained indefinitely</li>
+</ul>
+<p>Database access requires admin coordination and is typically not granted to external auditors.</p>',
+                ],
+                [
+                    'name'  => 'Training Records Retention',
+                    'intro' => '<p>Records retention policy for training data — meets ASA-100 records retention expectations.</p>',
+                    'content' => '<h3>Training Records Retention</h3>
+
+<h4>Retention policy</h4>
+<p>TurbineWorks University retains all training records indefinitely. Moodle&apos;s standard log retention is configured to <code>loglifetime = 0</code> (never auto-purge) to satisfy and exceed ASA-100&apos;s 7+ year expectation for training records.</p>
+
+<h4>What is retained</h4>
+<ul>
+  <li>User accounts (including suspended accounts of former employees)</li>
+  <li>Course enrollments — historical and current</li>
+  <li>Course completion records (course_completions table)</li>
+  <li>Activity completion records (course_modules_completion table)</li>
+  <li>Quiz attempts and grades</li>
+  <li>Forum discussions</li>
+  <li>Issued certificates (recoverable via Moodle\'s file storage)</li>
+  <li>System logs (logstore_standard_log table)</li>
+</ul>
+
+<h4>How to retrieve historical records</h4>
+<p>For any employee, the QA Manager can produce:</p>
+<ol>
+  <li><strong>Training history report</strong> — Site Admin → Reports → Course completion → filter by user</li>
+  <li><strong>Issued certificates</strong> — recoverable from each course&apos;s customcert activity, even for ex-employees</li>
+  <li><strong>Quiz attempt records</strong> — Site Admin → Reports → query the quiz_attempts table directly</li>
+  <li><strong>Activity log</strong> — Site Admin → Reports → Logs → filter by user and date range</li>
+</ol>
+
+<h4>Privacy and data subject rights</h4>
+<p>TurbineWorks employees are notified at hire that training records will be retained indefinitely as part of the company\'s ASA-100 compliance program. This retention period is reasonable for the regulatory context. Privacy concerns or data-subject requests are routed through the QA Manager.</p>',
+                ],
+            ],
+        ],
     ];
 }
 
