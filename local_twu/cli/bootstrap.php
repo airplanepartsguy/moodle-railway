@@ -22,6 +22,8 @@ require_once($CFG->dirroot . '/cohort/lib.php');
 require_once($CFG->libdir . '/clilib.php');
 require_once($CFG->libdir . '/completionlib.php');
 require_once($CFG->libdir . '/filterlib.php');
+require_once($CFG->libdir . '/enrollib.php');       // enrol_get_plugin / ENROL_INSTANCE_ENABLED
+require_once($CFG->libdir . '/accesslib.php');      // create_role / assign_capability
 require_once($CFG->dirroot . '/question/engine/bank.php');
 require_once($CFG->dirroot . '/question/editlib.php');
 require_once(__DIR__ . '/../content/content.php');
