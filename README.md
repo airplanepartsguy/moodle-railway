@@ -1,6 +1,41 @@
-# Moodle on Railway
+# Moodle on Railway — TurbineWorks University fork
 
-Quickly spin up a [Moodle](https://moodle.org) LMS sandbox on [Railway](https://railway.com) (railway.com, formerly railway.app) using Docker — ideal for development, testing, and evaluation.
+This is a customized fork of [JesseZweers/moodle-railway](https://github.com/JesseZweers/moodle-railway), adapted to power **TurbineWorks University** — the LMS at [learn.turbineworks.com](https://learn.turbineworks.com) used for ASA-100 compliance training (initial + recurring) for TurbineWorks Aircraft Engine Parts & Components.
+
+Upstream gives you a Moodle sandbox. This fork hardens it enough to actually run a real training program on Railway without nightly footguns. See [What's different in this fork](#whats-different-in-this-fork) below.
+
+> The upstream template is explicitly "not for production." This fork closes the gaps that made that true on Railway specifically. It still isn't a multi-region, HA, fully-hardened Moodle install — but for a single-tenant compliance-training site behind Railway's edge, it's solid.
+
+---
+
+## What's different in this fork
+
+All changes live in `railway-entrypoint.sh` (no Moodle code modifications):
+
+| Fix | Why it matters |
+|-----|----------------|
+| **`config.php` persists to the Railway volume** (copy on boot + 30s background sync) | Upstream wipes `config.php` on every redeploy because `/var/www/html/` is not on a volume. You'd re-run the install wizard every deploy. Now the config survives. |
+| **`$CFG->reverseproxy = false`** (Railway-correct default) | Moodle's `reverseproxy = true` expects the proxy to *rewrite* the Host header. Railway (and most modern proxies) passes the public Host through unchanged → `reverseproxyabused` error on every request → site down. Disabled by default; set `MOODLE_REVERSEPROXY=1` only if you front Moodle with a Host-rewriting proxy. |
+| **`$CFG->sslproxy = true`** | Required so Moodle treats requests as HTTPS even though Apache itself is plain HTTP behind Railway's TLS terminator. Otherwise Moodle generates `http://` URLs and login cookies don't stick. |
+| **`$CFG->getremoteaddrconf = 1`** (`GETREMOTEADDR_SKIP_HTTP_CLIENT_IP`) | Moodle reads the real client IP from `X-Forwarded-For` instead of Railway's rotating internal proxy IP. Stops `installhijacked` from firing mid-install and stops session IP-flap from logging admins out. Uses the integer value (`1`) because the named constant isn't defined until `lib/setup.php` loads, after `config.php` is parsed. |
+| **Proxy block re-injected on every boot** (marker-bounded, idempotent) | Lets future config tweaks (env-var overrides, new defaults) propagate without manual `config.php` edits. |
+| **Auto-patches stale `__DIR__` in saved `config.php`** | An earlier version of this entrypoint symlinked `config.php` to the volume. PHP's `realpath()` resolved through the symlink, so `__DIR__` baked in the volume path and `require_once(__DIR__ . '/lib/setup.php')` looked in the wrong place. Old configs are auto-repaired in place; new configs are written directly to `/var/www/html/` and mirrored to the volume by the sync loop. |
+| **Versioned Moodle cache purge** (`PURGE_VERSION` marker) | Moodle caches `$CFG` to disk in `moodledata/muc/`. Direct SQL writes to `mdl_config` don't invalidate it. Bump `PURGE_VERSION` in the entrypoint (or set `MOODLE_PURGE_CACHE=1`) to force a one-shot wipe on the next boot. |
+
+### Env-var overrides
+
+| Variable | Default | Purpose |
+|----------|---------|---------|
+| `MOODLE_REVERSEPROXY` | `0` | Set to `1` only if you have a Host-rewriting proxy in front (not Railway's edge) |
+| `MOODLE_SSLPROXY` | `1` | Set to `0` if you ever run Moodle without TLS termination upstream |
+| `MOODLE_SKIP_HTTP_CLIENT_IP` | `1` | Set to `0` to allow `HTTP_CLIENT_IP` as a client-IP source (not recommended) |
+| `MOODLE_PURGE_CACHE` | `0` | Set to `1` to force a one-time cache wipe on the next boot |
+
+---
+
+## Quickly spin up a [Moodle](https://moodle.org) LMS sandbox on [Railway](https://railway.com)
+
+This fork still works as a generic Railway Moodle deployment — it's just a hardened version of the upstream template.
 
 > **This setup is intended for development and sandbox use only. It is not recommended for production. Use at your own risk.**
 
