@@ -98,6 +98,15 @@ a2enconf railway-proxy >/dev/null 2>&1 || true
 CONFIG_PHP=/var/www/html/config.php
 PROXY_MARKER_PREFIX="// BEGIN railway-entrypoint proxy block"
 if [ -f "$CONFIG_PHP" ]; then
+  # Older versions of this entrypoint injected a block that referenced the
+  # Moodle constant GETREMOTEADDR_SKIP_HTTP_CLIENT_IP, which is only defined
+  # inside lib/setup.php — but our block runs BEFORE the require_once, so PHP
+  # fatals on an undefined constant and Moodle can't bootstrap. Strip the
+  # broken block so the re-inject below runs with the fixed (integer) form.
+  if grep -qF "GETREMOTEADDR_SKIP_HTTP_CLIENT_IP" "$CONFIG_PHP"; then
+    sed -i '/\/\/ BEGIN railway-entrypoint proxy block/,/\/\/ END railway-entrypoint proxy block/d' "$CONFIG_PHP"
+    echo "[railway-entrypoint] removed broken proxy block (used undefined constant)"
+  fi
   if grep -qF "$PROXY_MARKER_PREFIX" "$CONFIG_PHP"; then
     echo "[railway-entrypoint] proxy block already present in config.php; skipping"
   else
@@ -110,7 +119,7 @@ if [ -f "$CONFIG_PHP" ]; then
         print "// BEGIN railway-entrypoint proxy block (managed by railway-entrypoint.sh)"
         if (rp == "1") print "$CFG->reverseproxy = true;"
         if (sp == "1") print "$CFG->sslproxy = true;"
-        if (sc == "1") print "$CFG->getremoteaddrconf = GETREMOTEADDR_SKIP_HTTP_CLIENT_IP;"
+        if (sc == "1") print "$CFG->getremoteaddrconf = 1; // GETREMOTEADDR_SKIP_HTTP_CLIENT_IP (constant not defined until lib/setup.php loads)"
         print "// END railway-entrypoint proxy block"
       }
       !done && /require_once.*setup\.php/ {
