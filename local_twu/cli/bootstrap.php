@@ -25,7 +25,7 @@ require_once(__DIR__ . '/../content/content.php');
 
 // Bump the suffix here (and in the entrypoint marker docs) when adding new
 // bootstrap steps that should run on existing sites.
-$marker = $CFG->dataroot . '/.twu-bootstrapped-v9';
+$marker = $CFG->dataroot . '/.twu-bootstrapped-v10';
 $force  = in_array('--force', $argv ?? [], true);
 if (file_exists($marker) && !$force) {
     cli_writeln("[twu] already bootstrapped (marker present at $marker). Pass --force to re-run.");
@@ -380,16 +380,66 @@ if (get_config('core', 'theme') !== $preferredtheme) {
 }
 
 // Snap-specific configuration (only applied if Snap is the active theme).
+//
+// Snap setting names (verified against MR-4.5 settings/*.php):
+//   themecolor       — primary brand color (purple by default)
+//   customisenavbar  — MUST be 1 before navbarbg / navbarlink apply
+//   navbarbg         — navbar background color
+//   navbarlink       — navbar text/link color
+//   customisenavbutton + navbarbuttoncolor + navbarbuttonlink — nav button colors
+//   footnote         — HTML replacing the default footer text ("Built with Open LMS")
+//   footerbg         — footer background color
+//   footertxt        — footer text color
+//   subtitle         — short site tagline
+//   customcss        — site-wide custom CSS injected at theme load
 if ($preferredtheme === 'snap') {
-    set_config('brandcolor', '#0d2240', 'theme_snap');
     set_config('themecolor', '#0d2240', 'theme_snap');
-    set_config('navbarbg', '#0d2240', 'theme_snap');
+
+    // Navbar customization MUST be enabled before color settings take effect.
+    set_config('customisenavbar', 1, 'theme_snap');
+    set_config('navbarbg',   '#0d2240', 'theme_snap');
     set_config('navbarlink', '#ffffff', 'theme_snap');
-    set_config('subheaderbg', '#0d2240', 'theme_snap');
-    set_config('subheadertextcolor', '#ffffff', 'theme_snap');
-    set_config('slogan', 'ASA-100 Compliance &amp; Engine-Parts Technical Training', 'theme_snap');
-    set_config('coursefootertoggle', 1, 'theme_snap');
-    set_config('cover_image_alttext', 'TurbineWorks University', 'theme_snap');
+
+    set_config('customisenavbutton',  1, 'theme_snap');
+    set_config('navbarbuttoncolor', '#ffc800', 'theme_snap');
+    set_config('navbarbuttonlink',  '#0d2240', 'theme_snap');
+
+    set_config('subtitle', 'ASA-100 Compliance & Engine-Parts Technical Training', 'theme_snap');
+
+    // Footer: override the "Built with Open LMS, a Moodle-based product"
+    // attribution with TurbineWorks footer content. Color it navy/gold.
+    set_config('footnote',
+        '<div style="text-align:center;">'
+        . '<p style="margin:0.5em 0;"><strong>TurbineWorks University</strong> &mdash; ASA-100 Compliance Training</p>'
+        . '<p style="margin:0.5em 0; font-size:0.85em; opacity:0.8;">For training records or audit-related inquiries, contact <a href="mailto:quality@turbineworks.com" style="color:#ffc800;">quality@turbineworks.com</a></p>'
+        . '<p style="margin:0.5em 0; font-size:0.75em; opacity:0.6;">&copy; ' . date('Y') . ' TurbineWorks Aircraft Engine Parts &amp; Components</p>'
+        . '</div>',
+        'theme_snap');
+    set_config('footerbg',  '#0d2240', 'theme_snap');
+    set_config('footertxt', '#ffffff', 'theme_snap');
+
+    // Custom CSS — additional polish that doesn't fit a setting:
+    // - hide the "Built with Open LMS, a Moodle-based product" line
+    //   (rendered outside the footnote area in some Snap layouts)
+    // - hide the "Copyright 2026 Open LMS, All Rights Reserved" line
+    // - hide any element with "powered-by" / "themecredits" classes
+    set_config('customcss', <<<CSS
+/* Hide Open LMS / theme attribution rendered outside footnote */
+.themecredits,
+.theme-credits,
+[class*="poweredby"],
+[class*="powered-by"],
+[class*="builtwith"],
+.snap-footer-poweredby,
+#snap-page-footer-copyright,
+.snap-credits {
+    display: none !important;
+}
+/* Hide any footer paragraph mentioning Open LMS explicitly */
+footer p:has-text("Open LMS"),
+footer p:has-text("Built with") { display: none !important; }
+CSS,
+    'theme_snap');
 
     // Snap logo: belt-and-suspenders.
     // Upload to BOTH core_admin (site-wide) AND theme_snap (theme-specific)

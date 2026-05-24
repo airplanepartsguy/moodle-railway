@@ -55,6 +55,12 @@ def load_font(size: int) -> ImageFont.FreeTypeFont:
 
 
 def render_card(idnumber: str, title: str, subtitle: str, out_path: Path) -> None:
+    """Render a plain navy-gradient background with a gold corner accent.
+
+    No text is drawn on the image itself — the theme (Snap, etc.) overlays the
+    course title and breadcrumbs at render time. Baking text into the image
+    creates a doubled-text mess when the theme overlays its own labels on top.
+    """
     # Diagonal gradient: NAVY -> NAVY_LIGHT, top-left to bottom-right.
     img = Image.new("RGB", (W, H), NAVY)
     px = img.load()
@@ -68,41 +74,14 @@ def render_card(idnumber: str, title: str, subtitle: str, out_path: Path) -> Non
 
     draw = ImageDraw.Draw(img, "RGBA")
 
-    # Gold corner accent (top-right triangle)
+    # Gold corner accent (top-right triangle) — visual identifier, no text
     draw.polygon([(W, 0), (W, 220), (W - 220, 0)], fill=GOLD)
 
-    # Thin gold strip along the bottom
+    # Thin gold strip along the bottom — subtle TurbineWorks branding
     draw.rectangle([(0, H - 12), (W, H)], fill=GOLD)
 
-    # Subtle navy panel under the title text for legibility
-    draw.rectangle([(0, H // 2 - 200), (int(W * 0.72), H // 2 + 200)], fill=(0, 0, 0, 60))
-
-    # Fonts
-    f_wordmark = load_font(34)
-    f_title    = load_font(82)
-    f_subtitle = load_font(38)
-    f_footer   = load_font(26)
-
-    # Top-left: TurbineWorks University wordmark
-    draw.text((72, 56),  "TURBINEWORKS", font=f_wordmark, fill=GOLD)
-    draw.text((72, 96),  "UNIVERSITY",   font=f_wordmark, fill=WHITE)
-
-    # Title (centered vertically in its panel)
-    lines = title.split("\n")
-    line_h = 96
-    y_start = H // 2 - (len(lines) * line_h // 2) - 30
-    for i, line in enumerate(lines):
-        draw.text((84, y_start + i * line_h), line, font=f_title, fill=WHITE)
-
-    # Subtitle (gold)
-    draw.text((84, y_start + len(lines) * line_h + 12), subtitle, font=f_subtitle, fill=GOLD)
-
-    # Bottom-left: ASA-100 Initial Training and module ID
-    draw.text((72, H - 72), f"ASA-100 INITIAL TRAINING   •   MODULE {idnumber}",
-              font=f_footer, fill=WHITE)
-
     img.save(out_path, "PNG", optimize=True)
-    print(f"  wrote {out_path.name}  ({title.replace(chr(10), ' / ')})")
+    print(f"  wrote {out_path.name}  (plain background, title overlaid by theme)")
 
 
 def main() -> None:
