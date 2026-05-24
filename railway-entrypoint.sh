@@ -15,6 +15,27 @@ mkdir -p /var/www/moodledata
 chown -R www-data:www-data /var/www/moodledata
 chmod -R 0775 /var/www/moodledata
 
+# Persist config.php to the Railway volume.
+# /var/www/html/ is part of the container image, so config.php is wiped on every
+# redeploy. Symlink it to moodledata so it survives. The install wizard's
+# file_put_contents() follows the symlink and creates the target on the volume;
+# on subsequent boots the symlink resolves to the saved file, so Moodle skips
+# the install wizard and uses the existing config.
+HTML_CONFIG=/var/www/html/config.php
+VOL_CONFIG=/var/www/moodledata/config.php
+if [ -L "$HTML_CONFIG" ] && [ "$(readlink "$HTML_CONFIG")" = "$VOL_CONFIG" ]; then
+  echo "[railway-entrypoint] config.php symlink already in place"
+else
+  rm -f "$HTML_CONFIG"
+  ln -s "$VOL_CONFIG" "$HTML_CONFIG"
+  chown -h www-data:www-data "$HTML_CONFIG"
+  if [ -f "$VOL_CONFIG" ]; then
+    echo "[railway-entrypoint] symlinked /var/www/html/config.php -> volume (existing config restored)"
+  else
+    echo "[railway-entrypoint] symlinked /var/www/html/config.php -> volume (dangling; install wizard will create target)"
+  fi
+fi
+
 # Moodle config / muc / localcache purge.
 # Moodle caches $CFG to disk in moodledata/muc; direct SQL writes to mdl_config
 # don't invalidate it. Bump PURGE_VERSION (or set MOODLE_PURGE_CACHE=1) to force
@@ -79,7 +100,7 @@ if [ -f "$CONFIG_PHP" ]; then
           emit_block()
         }
       }
-    ' "$CONFIG_PHP" > "$tmp" && mv "$tmp" "$CONFIG_PHP"
+    ' "$CONFIG_PHP" > "$tmp" && cat "$tmp" > "$CONFIG_PHP" && rm -f "$tmp"
     chown www-data:www-data "$CONFIG_PHP"
     echo "[railway-entrypoint] injected proxy block into config.php (reverseproxy=$reverseproxy sslproxy=$sslproxy skip_client_ip=$skipclientip)"
   fi
