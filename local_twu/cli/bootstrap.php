@@ -35,7 +35,7 @@ require_once(__DIR__ . '/../content/glossary.php');
 
 // Bump the suffix here (and in the entrypoint marker docs) when adding new
 // bootstrap steps that should run on existing sites.
-$marker = $CFG->dataroot . '/.twu-bootstrapped-v36';
+$marker = $CFG->dataroot . '/.twu-bootstrapped-v37';
 $force  = in_array('--force', $argv ?? [], true);
 if (file_exists($marker) && !$force) {
     cli_writeln("[twu] already bootstrapped (marker present at $marker). Pass --force to re-run.");
@@ -327,7 +327,21 @@ function twu_ensure_role(string $shortname, string $name, string $description,
     // the rest of the role's capability assignments.
     $assigned = 0;
     $skipped = 0;
+    $invalid = [];
     foreach ($capabilities as $capability => $permission) {
+        // Pre-validate: does this capability exist in the Moodle install?
+        // get_capability_info() returns null if the capability is unknown.
+        // Cheaper and cleaner than letting assign_capability throw.
+        try {
+            $capinfo = get_capability_info($capability);
+        } catch (Throwable $e) {
+            $capinfo = null;
+        }
+        if (!$capinfo) {
+            $invalid[] = $capability;
+            $skipped++;
+            continue;
+        }
         try {
             $current = $DB->get_record('role_capabilities',
                 ['roleid' => $roleid, 'capability' => $capability,
@@ -343,9 +357,10 @@ function twu_ensure_role(string $shortname, string $name, string $description,
             $skipped++;
         }
     }
-    if ($skipped > 0) {
-        cli_writeln("[twu]   role $shortname: $assigned capabilities assigned, $skipped skipped (invalid/renamed)");
+    if (!empty($invalid)) {
+        cli_writeln("[twu]   role $shortname: skipped " . count($invalid) . " unknown capabilities: " . implode(', ', $invalid));
     }
+    cli_writeln("[twu]   role $shortname: $assigned assigned, $skipped skipped");
     return $roleid;
 }
 
@@ -377,7 +392,7 @@ twu_ensure_role(
         // View users and their progress
         'moodle/user:viewdetails'              => CAP_ALLOW,
         'moodle/user:viewalldetails'           => CAP_ALLOW,
-        'moodle/user:viewuseridentity'         => CAP_ALLOW,
+        'moodle/site:viewuseridentity'         => CAP_ALLOW,
         'report/completion:view'               => CAP_ALLOW,
         'report/outline:view'                  => CAP_ALLOW,
         'report/log:view'                      => CAP_ALLOW,
@@ -456,7 +471,7 @@ twu_ensure_role(
         'moodle/site:viewparticipants'         => CAP_ALLOW,
         'moodle/user:viewdetails'              => CAP_ALLOW,
         'moodle/user:viewalldetails'           => CAP_ALLOW,
-        'moodle/user:viewuseridentity'         => CAP_ALLOW,
+        'moodle/site:viewuseridentity'         => CAP_ALLOW,
         'moodle/user:viewlastip'               => CAP_ALLOW,
         'moodle/course:view'                   => CAP_ALLOW,
         'moodle/course:viewparticipants'       => CAP_ALLOW,

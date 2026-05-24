@@ -161,18 +161,22 @@ if (!$cohorts) {
 }
 echo '</div>';
 
-// Custom roles
+// Custom roles + capability counts
 echo '<div class="diag-section">';
 echo '<h3>Custom roles</h3>';
 $roles = $DB->get_records_select('role', "shortname LIKE 'twu_%'", null, 'shortname');
 if (!$roles) {
     echo '<p class="warn">No custom roles. Either the role section failed or never ran.</p>';
 } else {
-    echo '<table class="diag-table"><thead><tr><th>Shortname</th><th>Name</th></tr></thead><tbody>';
+    echo '<table class="diag-table"><thead><tr><th>Shortname</th><th>Name</th><th>Capabilities assigned</th></tr></thead><tbody>';
     foreach ($roles as $r) {
-        echo '<tr><td><code>' . htmlspecialchars($r->shortname) . '</code></td><td>' . htmlspecialchars($r->name) . '</td></tr>';
+        $capcount = $DB->count_records('role_capabilities', ['roleid' => $r->id]);
+        echo '<tr><td><code>' . htmlspecialchars($r->shortname) . '</code></td>';
+        echo '<td>' . htmlspecialchars($r->name) . '</td>';
+        echo '<td>' . $capcount . '</td></tr>';
     }
     echo '</tbody></table>';
+    echo '<p><small>If a role exists but has 0 capabilities, every capability was rejected by Moodle. If it has fewer than expected, some capabilities were skipped (likely renamed/removed in this Moodle version) — the bootstrap log will show which.</small></p>';
 }
 echo '</div>';
 
