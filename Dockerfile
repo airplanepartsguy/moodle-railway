@@ -10,7 +10,9 @@ RUN git clone --depth 1 -b MOODLE_405_STABLE https://github.com/moodle/moodle.gi
 RUN git clone --depth 1 -b v4.4.9 https://github.com/markn86/moodle-mod_customcert.git /var/www/html/mod/customcert \
  && rm -rf /var/www/html/mod/customcert/.git \
  && git clone --depth 1 -b MOODLE_405_STABLE https://github.com/willianmano/moodle-theme_moove.git /var/www/html/theme/moove \
- && rm -rf /var/www/html/theme/moove/.git
+ && rm -rf /var/www/html/theme/moove/.git \
+ && git clone --depth 1 -b MR-4.5 https://github.com/open-lms-open-source/moodle-theme_snap.git /var/www/html/theme/snap \
+ && rm -rf /var/www/html/theme/snap/.git
 
 # Copy the local_twu plugin (TurbineWorks University bootstrap + CLI helpers)
 COPY local_twu/ /var/www/html/local/twu/

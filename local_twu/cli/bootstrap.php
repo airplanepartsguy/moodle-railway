@@ -25,7 +25,7 @@ require_once(__DIR__ . '/../content/content.php');
 
 // Bump the suffix here (and in the entrypoint marker docs) when adding new
 // bootstrap steps that should run on existing sites.
-$marker = $CFG->dataroot . '/.twu-bootstrapped-v7';
+$marker = $CFG->dataroot . '/.twu-bootstrapped-v8';
 $force  = in_array('--force', $argv ?? [], true);
 if (file_exists($marker) && !$force) {
     cli_writeln("[twu] already bootstrapped (marker present at $marker). Pass --force to re-run.");
@@ -364,15 +364,66 @@ foreach (local_twu_get_recurring_courses() as $coursedata) {
 }
 
 // ---------------------------------------------------------------------------
-// 6. Theme: activate Moove + brand colors + kill conecti.me footer + logo
+// 6. Theme: prefer Snap (modern, Pinterest-style cards). Fall back to Moove
+//          if Snap is not installed. Override via TWU_THEME env var.
 // ---------------------------------------------------------------------------
+$preferredtheme = getenv('TWU_THEME') ?: 'snap';
+if (!is_dir($CFG->dirroot . '/theme/' . $preferredtheme)) {
+    cli_writeln("[twu] preferred theme '$preferredtheme' not installed; falling back to moove");
+    $preferredtheme = 'moove';
+}
+if (get_config('core', 'theme') !== $preferredtheme) {
+    set_config('theme', $preferredtheme);
+    cli_writeln("[twu] activated theme: $preferredtheme");
+} else {
+    cli_writeln("[twu] theme already $preferredtheme; skipping");
+}
+
+// Snap-specific configuration (only applied if Snap is the active theme).
+if ($preferredtheme === 'snap') {
+    set_config('brandcolor', '#0d2240', 'theme_snap');
+    set_config('themecolor', '#0d2240', 'theme_snap');
+    set_config('navbarbg', '#0d2240', 'theme_snap');
+    set_config('navbarlink', '#ffffff', 'theme_snap');
+    set_config('subheaderbg', '#0d2240', 'theme_snap');
+    set_config('subheadertextcolor', '#ffffff', 'theme_snap');
+    set_config('slogan', 'ASA-100 Compliance &amp; Engine-Parts Technical Training', 'theme_snap');
+    set_config('coursefootertoggle', 1, 'theme_snap');
+    set_config('cover_image_alttext', 'TurbineWorks University', 'theme_snap');
+
+    // Snap uses its own logo upload mechanism — same approach as Moove.
+    $logosrc = $CFG->dirroot . '/local/twu/assets/logo.png';
+    if (file_exists($logosrc)) {
+        $fs = get_file_storage();
+        $syscontext = context_system::instance();
+        foreach (['logo', 'favicon'] as $filearea) {
+            $fs->delete_area_files($syscontext->id, 'theme_snap', $filearea);
+            try {
+                $fs->create_file_from_pathname([
+                    'contextid' => $syscontext->id,
+                    'component' => 'theme_snap',
+                    'filearea'  => $filearea,
+                    'itemid'    => 0,
+                    'filepath'  => '/',
+                    'filename'  => 'logo.png',
+                ], $logosrc);
+                cli_writeln("[twu] uploaded logo.png to theme_snap/$filearea");
+            } catch (Exception $e) {
+                cli_writeln("[twu] could not upload Snap logo to $filearea: " . $e->getMessage());
+            }
+        }
+    }
+
+    theme_reset_all_caches();
+    cli_writeln("[twu] purged theme caches (Snap active)");
+}
+
+// Keep the Moove configuration block below intact — it's a no-op when Snap is
+// active but lets you fall back to Moove (set TWU_THEME=moove env var) without
+// re-running this bootstrap.
 $themedir = $CFG->dirroot . '/theme/moove';
 if (is_dir($themedir)) {
-    // Activate Moove as the default theme.
-    if (get_config('core', 'theme') !== 'moove') {
-        set_config('theme', 'moove');
-        cli_writeln("[twu] activated theme: moove");
-    }
+    // (Moove config follows — only applies if Moove is the active theme)
 
     // Brand colors pulled from turbineworks.com:
     //   primary  = navy/blue header tone seen on the booklet
