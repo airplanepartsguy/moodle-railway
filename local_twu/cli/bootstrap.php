@@ -21,6 +21,7 @@ require_once($CFG->dirroot . '/course/modlib.php');
 require_once($CFG->dirroot . '/cohort/lib.php');
 require_once($CFG->libdir . '/clilib.php');
 require_once($CFG->libdir . '/completionlib.php');
+require_once($CFG->libdir . '/filterlib.php');
 require_once($CFG->dirroot . '/question/engine/bank.php');
 require_once($CFG->dirroot . '/question/editlib.php');
 require_once(__DIR__ . '/../content/content.php');
@@ -32,7 +33,7 @@ require_once(__DIR__ . '/../content/glossary.php');
 
 // Bump the suffix here (and in the entrypoint marker docs) when adding new
 // bootstrap steps that should run on existing sites.
-$marker = $CFG->dataroot . '/.twu-bootstrapped-v28';
+$marker = $CFG->dataroot . '/.twu-bootstrapped-v29';
 $force  = in_array('--force', $argv ?? [], true);
 if (file_exists($marker) && !$force) {
     cli_writeln("[twu] already bootstrapped (marker present at $marker). Pass --force to re-run.");
@@ -290,6 +291,290 @@ $cohort_dgd_signer = twu_ensure_cohort(
 );
 
 // ---------------------------------------------------------------------------
+// 4-pre. Custom roles — QA Manager / Trainer / Auditor
+// ---------------------------------------------------------------------------
+// Moodle's default roles (Manager / Course Creator / Teacher / Student) do not
+// quite map to TurbineWorks audit roles. Adding three custom roles:
+//   QA Manager — grades forums/assignments, sees all completion reports, can
+//                edit certificates. Site-wide.
+//   Trainer    — can edit/create course content. Course-level (not site-wide).
+//   Auditor    — read-only across the whole site; intended for ASA inspector
+//                or external auditor accounts during an audit visit.
+function twu_ensure_role(string $shortname, string $name, string $description,
+                         int $archetype, array $contexts, array $capabilities): int {
+    global $DB;
+    $existing = $DB->get_record('role', ['shortname' => $shortname]);
+    if ($existing) {
+        $roleid = (int)$existing->id;
+    } else {
+        $roleid = create_role($name, $shortname, $description, '');
+        cli_writeln("[twu] created role: $name ($shortname, id=$roleid)");
+    }
+    // Set context levels — where the role can be assigned.
+    set_role_contextlevels($roleid, $contexts);
+    // Apply capabilities (only if not already at this permission level).
+    foreach ($capabilities as $capability => $permission) {
+        $current = $DB->get_record('role_capabilities',
+            ['roleid' => $roleid, 'capability' => $capability,
+             'contextid' => context_system::instance()->id]);
+        if (!$current || (int)$current->permission !== $permission) {
+            assign_capability($capability, $permission, $roleid,
+                context_system::instance()->id, true);
+        }
+    }
+    return $roleid;
+}
+
+// QA Manager — site-wide oversight of training records and grading.
+twu_ensure_role(
+    'twu_qa_manager',
+    'QA Manager',
+    'TurbineWorks Quality Assurance Manager. Oversight of all training records, can grade forums and assignments, view all completion reports, manage certificates.',
+    0, // no archetype — clean slate
+    [CONTEXT_SYSTEM],
+    [
+        // View users and their progress
+        'moodle/user:viewdetails'              => CAP_ALLOW,
+        'moodle/user:viewalldetails'           => CAP_ALLOW,
+        'moodle/user:viewuseridentity'         => CAP_ALLOW,
+        'report/completion:view'               => CAP_ALLOW,
+        'report/outline:view'                  => CAP_ALLOW,
+        'report/log:view'                      => CAP_ALLOW,
+        'report/courseoverview:view'           => CAP_ALLOW,
+        'report/participation:view'            => CAP_ALLOW,
+        // Course-level oversight without owning content
+        'moodle/course:view'                   => CAP_ALLOW,
+        'moodle/course:viewhiddenactivities'   => CAP_ALLOW,
+        'moodle/course:viewhiddencourses'      => CAP_ALLOW,
+        'moodle/course:viewparticipants'       => CAP_ALLOW,
+        'moodle/course:viewscales'             => CAP_ALLOW,
+        // Grade everything
+        'moodle/grade:viewall'                 => CAP_ALLOW,
+        'moodle/grade:edit'                    => CAP_ALLOW,
+        // Forum moderation
+        'mod/forum:viewdiscussion'             => CAP_ALLOW,
+        'mod/forum:editanypost'                => CAP_ALLOW,
+        'mod/forum:replypost'                  => CAP_ALLOW,
+        'mod/forum:startdiscussion'            => CAP_ALLOW,
+        // Assignment grading
+        'mod/assign:grade'                     => CAP_ALLOW,
+        'mod/assign:view'                      => CAP_ALLOW,
+        'mod/assign:viewgrades'                => CAP_ALLOW,
+        // Quiz oversight
+        'mod/quiz:viewreports'                 => CAP_ALLOW,
+        'mod/quiz:grade'                       => CAP_ALLOW,
+        // Cohort viewing
+        'moodle/cohort:view'                   => CAP_ALLOW,
+        // Cert oversight
+        'mod/customcert:manage'                => CAP_ALLOW,
+        'mod/customcert:viewreport'            => CAP_ALLOW,
+        // TurbineWorks Reports admin pages
+        'local/twu:viewreports'                => CAP_ALLOW,
+    ]
+);
+
+// Trainer — can edit/create content but not see/grade student data.
+twu_ensure_role(
+    'twu_trainer',
+    'Trainer / Content Editor',
+    'TurbineWorks training content author. Can edit existing courses, create new lessons/quizzes, but is not part of the grading or reporting chain.',
+    0,
+    [CONTEXT_COURSE, CONTEXT_SYSTEM],
+    [
+        'moodle/course:view'                   => CAP_ALLOW,
+        'moodle/course:manageactivities'       => CAP_ALLOW,
+        'moodle/course:activityvisibility'     => CAP_ALLOW,
+        'moodle/course:sectionvisibility'      => CAP_ALLOW,
+        'moodle/course:update'                 => CAP_ALLOW,
+        'moodle/course:viewhiddenactivities'   => CAP_ALLOW,
+        'moodle/course:viewhiddensections'     => CAP_ALLOW,
+        'mod/page:addinstance'                 => CAP_ALLOW,
+        'mod/quiz:addinstance'                 => CAP_ALLOW,
+        'mod/quiz:manage'                      => CAP_ALLOW,
+        'mod/forum:addinstance'                => CAP_ALLOW,
+        'mod/assign:addinstance'               => CAP_ALLOW,
+        'mod/glossary:addinstance'             => CAP_ALLOW,
+        'mod/glossary:manageentries'           => CAP_ALLOW,
+        'moodle/question:add'                  => CAP_ALLOW,
+        'moodle/question:editmine'             => CAP_ALLOW,
+        'moodle/question:editall'              => CAP_ALLOW,
+        'moodle/question:viewall'              => CAP_ALLOW,
+        'moodle/question:usemine'              => CAP_ALLOW,
+        'moodle/question:useall'               => CAP_ALLOW,
+    ]
+);
+
+// Auditor — read-only across the whole site.
+twu_ensure_role(
+    'twu_auditor',
+    'Auditor (Read-Only)',
+    'External auditor (ASA inspector, customer auditor) or internal auditor. Read-only access to all training records, course content, completion reports, and certificates. Cannot modify any data.',
+    0,
+    [CONTEXT_SYSTEM],
+    [
+        'moodle/site:viewparticipants'         => CAP_ALLOW,
+        'moodle/user:viewdetails'              => CAP_ALLOW,
+        'moodle/user:viewalldetails'           => CAP_ALLOW,
+        'moodle/user:viewuseridentity'         => CAP_ALLOW,
+        'moodle/user:viewlastip'               => CAP_ALLOW,
+        'moodle/course:view'                   => CAP_ALLOW,
+        'moodle/course:viewparticipants'       => CAP_ALLOW,
+        'moodle/course:viewhiddencourses'      => CAP_ALLOW,
+        'moodle/course:viewhiddenactivities'   => CAP_ALLOW,
+        'moodle/course:viewhiddensections'     => CAP_ALLOW,
+        'report/completion:view'               => CAP_ALLOW,
+        'report/outline:view'                  => CAP_ALLOW,
+        'report/log:view'                      => CAP_ALLOW,
+        'report/courseoverview:view'           => CAP_ALLOW,
+        'report/participation:view'            => CAP_ALLOW,
+        'moodle/grade:viewall'                 => CAP_ALLOW,
+        'mod/forum:viewdiscussion'             => CAP_ALLOW,
+        'mod/quiz:viewreports'                 => CAP_ALLOW,
+        'mod/assign:view'                      => CAP_ALLOW,
+        'mod/assign:viewgrades'                => CAP_ALLOW,
+        'moodle/cohort:view'                   => CAP_ALLOW,
+        'mod/customcert:viewreport'            => CAP_ALLOW,
+        // TurbineWorks Reports admin pages — read-only
+        'local/twu:viewreports'                => CAP_ALLOW,
+    ]
+);
+
+cli_writeln("[twu] custom roles ensured: QA Manager, Trainer, Auditor");
+
+// ---------------------------------------------------------------------------
+// 4a. Custom user profile fields — TurbineWorks-specific HR / compliance data
+// ---------------------------------------------------------------------------
+// Stored in user_info_field; values per user in user_info_data. Drives the
+// TurbineWorks reports (completion roster, cert expiry tracker, etc.) and
+// makes role + certification status auditable per employee.
+function twu_ensure_profile_category(string $name, int $sortorder): int {
+    global $DB;
+    $cat = $DB->get_record('user_info_category', ['name' => $name]);
+    if ($cat) {
+        return (int)$cat->id;
+    }
+    $id = $DB->insert_record('user_info_category', (object)[
+        'name' => $name, 'sortorder' => $sortorder,
+    ]);
+    cli_writeln("[twu] created profile category: $name (id=$id)");
+    return $id;
+}
+
+function twu_ensure_profile_field(array $field): void {
+    global $DB;
+    $existing = $DB->get_record('user_info_field', ['shortname' => $field['shortname']]);
+    $record = (object)array_merge([
+        'description'       => '',
+        'descriptionformat' => FORMAT_HTML,
+        'datatype'          => 'text',
+        'required'          => 0,
+        'locked'            => 0,
+        'visible'           => 2,        // PROFILE_VISIBLE_ALL
+        'forceunique'       => 0,
+        'signup'            => 0,
+        'defaultdata'       => '',
+        'defaultdataformat' => FORMAT_HTML,
+        'param1'            => 30,
+        'param2'            => 2048,
+        'param3'            => 0,
+        'param4'            => '',
+        'param5'            => '',
+    ], $field);
+    if ($existing) {
+        $record->id = $existing->id;
+        $DB->update_record('user_info_field', $record);
+    } else {
+        $DB->insert_record('user_info_field', $record);
+        cli_writeln("[twu] created profile field: {$field['shortname']} ({$field['datatype']})");
+    }
+}
+
+$twcatid = twu_ensure_profile_category('TurbineWorks Employee Information', 10);
+
+twu_ensure_profile_field([
+    'shortname'  => 'twu_department',
+    'name'       => 'Department',
+    'datatype'   => 'menu',
+    'categoryid' => $twcatid,
+    'sortorder'  => 1,
+    'param1'     => "Warehouse\nQuality Assurance\nShipping &amp; Receiving\nEngineering\nManagement\nSales\nAdministration\nOther",
+    'description' => '<p>Primary department / functional area at TurbineWorks.</p>',
+]);
+twu_ensure_profile_field([
+    'shortname'  => 'twu_jobtitle',
+    'name'       => 'Job Title',
+    'categoryid' => $twcatid,
+    'sortorder'  => 2,
+    'description' => '<p>Job title as it appears on the employee\'s offer letter (e.g., "QA Inspector", "Warehouse Operator", "Operations Manager").</p>',
+]);
+twu_ensure_profile_field([
+    'shortname'  => 'twu_employeenum',
+    'name'       => 'Employee Number',
+    'categoryid' => $twcatid,
+    'sortorder'  => 3,
+    'description' => '<p>Internal TurbineWorks employee number — used in audit records to link Moodle training records to the company HR system.</p>',
+]);
+twu_ensure_profile_field([
+    'shortname'  => 'twu_hiredate',
+    'name'       => 'Hire Date',
+    'datatype'   => 'datetime',
+    'categoryid' => $twcatid,
+    'sortorder'  => 4,
+    'param1'     => 2010, // min year
+    'param2'     => 2050, // max year
+    'param3'     => 0,    // include time? no
+    'description' => '<p>Employee\'s date of hire. Drives initial training assignment timeline (Initial Training must be completed within 90 days of hire per company policy).</p>',
+]);
+twu_ensure_profile_field([
+    'shortname'  => 'twu_supervisor',
+    'name'       => 'Supervisor',
+    'categoryid' => $twcatid,
+    'sortorder'  => 5,
+    'description' => '<p>Name (or username) of the employee\'s direct supervisor. Used for training-completion notifications.</p>',
+]);
+twu_ensure_profile_field([
+    'shortname'  => 'twu_hazmat_expiry',
+    'name'       => 'DOT Hazmat Certification Expiry',
+    'datatype'   => 'datetime',
+    'categoryid' => $twcatid,
+    'sortorder'  => 10,
+    'param1'     => 2010,
+    'param2'     => 2050,
+    'param3'     => 0,
+    'description' => '<p>Date that the employee\'s DOT Hazmat certification expires (per 49 CFR §172.704 — initial training plus recurrent every 3 years). Required for any employee classifying, packaging, marking, or shipping hazmat. Blank if not certified.</p>',
+]);
+twu_ensure_profile_field([
+    'shortname'  => 'twu_dgr_expiry',
+    'name'       => 'IATA DGR Certification Expiry',
+    'datatype'   => 'datetime',
+    'categoryid' => $twcatid,
+    'sortorder'  => 11,
+    'param1'     => 2010,
+    'param2'     => 2050,
+    'param3'     => 0,
+    'description' => '<p>Date that the employee\'s IATA Dangerous Goods Regulations certification expires (per IATA DGR §1.5 — initial training plus recurrent every 24 months). Required for any employee signing Shipper&apos;s Declarations for air shipment. Blank if not certified.</p>',
+]);
+twu_ensure_profile_field([
+    'shortname'  => 'twu_esd_expiry',
+    'name'       => 'ESD Handler Certification Expiry',
+    'datatype'   => 'datetime',
+    'categoryid' => $twcatid,
+    'sortorder'  => 12,
+    'param1'     => 2010,
+    'param2'     => 2050,
+    'param3'     => 0,
+    'description' => '<p>Date that the employee\'s ANSI/ESD S20.20 handler certification expires (per TurbineWorks ESD program — typically annual). Required for any employee handling ESD-sensitive items within the EPA. Blank if not certified.</p>',
+]);
+twu_ensure_profile_field([
+    'shortname'  => 'twu_asa_cert',
+    'name'       => 'ASA Cert / Training ID',
+    'categoryid' => $twcatid,
+    'sortorder'  => 20,
+    'description' => '<p>Optional: external ASA-issued training-completion identifier, once TurbineWorks is accredited and ASA issues a training-program identifier.</p>',
+]);
+cli_writeln("[twu] custom profile fields ensured (9 fields across TurbineWorks Employee Information category)");
+
+// ---------------------------------------------------------------------------
 // 4b. Cohort sync — auto-enrol cohort members into their courses
 // ---------------------------------------------------------------------------
 function twu_ensure_cohort_sync(stdClass $course, int $cohortid, int $roleid = 5): void {
@@ -413,6 +698,244 @@ foreach ($createdcourses as $idnumber => $course) {
         twu_ensure_page_lesson($course, 0, $lesson['name'], $lesson['intro'], $lesson['content']);
     }
 }
+
+// ---------------------------------------------------------------------------
+// 5b2. Supplemental video resources per Initial Training module
+// ---------------------------------------------------------------------------
+// Curated video links from authoritative sources (FAA, NTSB, ESDA, IATA, etc.)
+// embedded as a Page activity at the end of each module. Moodle's
+// filter_mediaplugin auto-converts YouTube/Vimeo URLs in Page content to
+// embedded video players when the filter is enabled site-wide.
+//
+// IMPORTANT: specific video URLs change. The QA Manager curates these
+// quarterly — the lesson links to source CHANNELS (which are stable) rather
+// than specific video IDs (which break). The QA Manager replaces channel
+// links with specific video URLs as they identify good current content.
+
+// Ensure mediaplugin filter is enabled site-wide so YouTube/Vimeo URLs
+// render as embedded players inside Page activity HTML.
+$filters = filter_get_global_states();
+if (isset($filters['mediaplugin']) && (int)$filters['mediaplugin']->active !== TEXTFILTER_ON) {
+    filter_set_global_state('mediaplugin', TEXTFILTER_ON);
+    cli_writeln("[twu] enabled filter_mediaplugin globally (YouTube/Vimeo URL → embedded player)");
+}
+
+$videocatalog = [
+    'TWF4-1' => [
+        'name' => 'Supplemental Videos — SUP Awareness and Human Factors',
+        'intro' => '<p>Curated authoritative training videos supporting Module 1 (Unapproved Parts). Authoritative sources: FAA, NTSB, FAA Safety Team. These videos are supplemental to the lesson content.</p>',
+        'sections' => [
+            [
+                'heading' => 'FAA SUP Awareness',
+                'description' => 'The FAA Safety Team publishes periodic videos on Suspected Unapproved Parts identification and reporting. The official channel is the authoritative source for current content.',
+                'channels' => [
+                    ['label' => 'FAA Safety Team (FAASafety.gov)', 'url' => 'https://www.faasafety.gov/'],
+                    ['label' => 'FAA Official YouTube', 'url' => 'https://www.youtube.com/user/FAANews'],
+                ],
+                'curatednote' => '[QA Manager: insert URL of current FAA SUP awareness video]',
+            ],
+            [
+                'heading' => 'Human Factors / "Dirty Dozen"',
+                'description' => 'The FAA Human Factors in Aviation Maintenance course (AC 120-72) and the original Transport Canada "Dirty Dozen" framework are foundational. The Dirty Dozen identifies the 12 most common human-factor causes of maintenance errors (e.g., complacency, lack of communication, fatigue, lack of resources).',
+                'channels' => [
+                    ['label' => 'FAA Human Factors guidance', 'url' => 'https://www.faa.gov/regulations_policies/handbooks_manuals/aviation/'],
+                    ['label' => 'FAA YouTube (search "Human Factors")', 'url' => 'https://www.youtube.com/user/FAANews/search?query=human+factors'],
+                ],
+                'curatednote' => '[QA Manager: insert URL of current FAA Human Factors / Dirty Dozen video]',
+            ],
+            [
+                'heading' => 'Counterfeit Parts Case Studies',
+                'description' => 'SAE International and industry organizations publish case studies on counterfeit electronic parts discovery and consequences. The 2012 Senate Armed Services Committee report on DoD counterfeit parts is foundational reading paired with industry video case studies.',
+                'channels' => [
+                    ['label' => 'SAE International', 'url' => 'https://www.sae.org/'],
+                ],
+                'curatednote' => '[QA Manager: insert URL of recent industry counterfeit-parts case study video]',
+            ],
+        ],
+    ],
+    'TWF4-2' => [
+        'name' => 'Supplemental Videos — Receiving Inspection and Documentation',
+        'intro' => '<p>Curated training videos on FAA 8130-3 anatomy, receiving inspection technique, and packaging integrity.</p>',
+        'sections' => [
+            [
+                'heading' => 'FAA 8130-3 Walkthrough',
+                'description' => 'Block-by-block anatomy of the FAA Form 8130-3 Airworthiness Approval Tag. Industry-published walkthroughs are available from multiple training providers.',
+                'channels' => [
+                    ['label' => 'FAA Form 8130-3 reference page', 'url' => 'https://www.faa.gov/forms/'],
+                    ['label' => 'ASA training resources (members)', 'url' => 'https://www.aviationsuppliers.org/'],
+                ],
+                'curatednote' => '[QA Manager: insert URL of current 8130-3 walkthrough video]',
+            ],
+            [
+                'heading' => 'Packaging Integrity at Receiving',
+                'description' => 'Visual identification of damaged packaging, water staining, evidence of rough handling, and shipping carrier liability documentation.',
+                'channels' => [],
+                'curatednote' => '[QA Manager: insert URL of receiving inspection technique video]',
+            ],
+        ],
+    ],
+    'TWF4-3' => [
+        'name' => 'Supplemental Videos — ASA-100 Familiarization',
+        'intro' => '<p>Authoritative content from the Aviation Suppliers Association and FAA on the ASA-100 framework.</p>',
+        'sections' => [
+            [
+                'heading' => 'ASA-100 Program Overview',
+                'description' => 'The Aviation Suppliers Association publishes member and public content on the ASA-100 standard and accreditation process.',
+                'channels' => [
+                    ['label' => 'Aviation Suppliers Association', 'url' => 'https://www.aviationsuppliers.org/'],
+                ],
+                'curatednote' => '[QA Manager: insert URL of current ASA program overview video]',
+            ],
+        ],
+    ],
+    'TWF4-4' => [
+        'name' => 'Supplemental Videos — FOD Prevention and Warehouse Practice',
+        'intro' => '<p>FOD (Foreign Object Damage) prevention is operationally critical. NAS 412 is the consensus standard; the National Aerospace FOD Prevention organization (NAFPI) publishes extensive training material.</p>',
+        'sections' => [
+            [
+                'heading' => 'NAS 412 / FOD Prevention',
+                'description' => 'FOD has caused commercial aviation losses (Concorde Flight 4590, 2000 — tire debris caused fuel tank rupture). NAFPI publishes ongoing safety material and case studies.',
+                'channels' => [
+                    ['label' => 'National Aerospace FOD Prevention (NAFPI)', 'url' => 'https://www.nafpi.com/'],
+                    ['label' => 'FAA FOD Awareness', 'url' => 'https://www.faa.gov/airports/airport_safety/'],
+                ],
+                'curatednote' => '[QA Manager: insert URL of current FOD prevention training video]',
+            ],
+            [
+                'heading' => 'Warehouse Safety and Storage Discipline',
+                'description' => 'OSHA and NSC publish warehouse-safety training; aviation-specific content from MROs covers segregation, shelf life, and storage environment.',
+                'channels' => [
+                    ['label' => 'OSHA Warehousing eTool', 'url' => 'https://www.osha.gov/etools/warehousing'],
+                ],
+                'curatednote' => '[QA Manager: insert URL of warehouse safety/storage video]',
+            ],
+        ],
+    ],
+    'TWF4-5' => [
+        'name' => 'Supplemental Videos — Records and Document Control',
+        'intro' => '<p>Industry videos on records retention, document control, and the audit-evidence value of complete recordkeeping.</p>',
+        'sections' => [
+            [
+                'heading' => 'AC 21-38 Mutilation — Proper Disposition',
+                'description' => 'AC 21-38 covers mutilation of unsalvageable parts. Industry training videos demonstrate approved mutilation methods by part category.',
+                'channels' => [
+                    ['label' => 'FAA AC 21-38', 'url' => 'https://www.faa.gov/regulations_policies/advisory_circulars/'],
+                ],
+                'curatednote' => '[QA Manager: insert URL of mutilation demonstration video]',
+            ],
+        ],
+    ],
+    'TWF4-6' => [
+        'name' => 'Supplemental Videos — AC 00-56 and the Accreditation Framework',
+        'intro' => '<p>FAA and industry content on the voluntary industry distributor accreditation program.</p>',
+        'sections' => [
+            [
+                'heading' => 'FAA AC 00-56 Overview',
+                'description' => 'The FAA publishes guidance and explanatory content on the distributor accreditation framework. ASA publishes complementary training material.',
+                'channels' => [
+                    ['label' => 'FAA AC 00-56B (current revision)', 'url' => 'https://www.faa.gov/regulations_policies/advisory_circulars/'],
+                ],
+                'curatednote' => '[QA Manager: insert URL of AC 00-56 explainer video]',
+            ],
+        ],
+    ],
+    'TWF4-7' => [
+        'name' => 'Supplemental Videos — ESD Physics and Program Implementation',
+        'intro' => '<p>The ESD Association (ESDA) publishes extensive training material on ANSI/ESD S20.20 program implementation, ESD physics, and verification testing.</p>',
+        'sections' => [
+            [
+                'heading' => 'ESD Physics and Damage Mechanisms',
+                'description' => 'Visual demonstrations of triboelectric charge generation, body capacitance, and ESD damage at the semiconductor level. Aviation-specific case studies highlight latent damage.',
+                'channels' => [
+                    ['label' => 'Electrostatic Discharge Association (ESDA)', 'url' => 'https://www.esda.org/'],
+                    ['label' => 'ESDA YouTube', 'url' => 'https://www.youtube.com/user/EOSESDAssociation'],
+                ],
+                'curatednote' => '[QA Manager: insert URL of current ESDA training video]',
+            ],
+            [
+                'heading' => 'ANSI/ESD S20.20 Program Elements',
+                'description' => 'Detailed walkthroughs of the eight S20.20 program elements with EPA setup, personnel grounding verification, and ionizer balance testing.',
+                'channels' => [
+                    ['label' => 'ESDA training programs', 'url' => 'https://www.esda.org/training/'],
+                ],
+                'curatednote' => '[QA Manager: insert URL of S20.20 program walkthrough video]',
+            ],
+        ],
+    ],
+    'TWF4-8' => [
+        'name' => 'Supplemental Videos — Hazmat Identification and Air Shipment',
+        'intro' => '<p>FAA, IATA, and industry videos on hazmat classification, lithium battery air-transport hazards, and Shipper&apos;s Declaration completion.</p>',
+        'sections' => [
+            [
+                'heading' => 'ValuJet 592 — Chemical Oxygen Generator Lesson',
+                'description' => 'The 1996 ValuJet 592 crash is one of the most-cited aviation incidents driven by hazmat shipper misclassification. NTSB and aviation safety publishers maintain documentary content on the incident.',
+                'channels' => [
+                    ['label' => 'NTSB Aircraft Accident Reports', 'url' => 'https://www.ntsb.gov/investigations/AccidentReports/'],
+                ],
+                'curatednote' => '[QA Manager: insert URL of ValuJet 592 case study video]',
+            ],
+            [
+                'heading' => 'Lithium Battery Air-Transport Hazards',
+                'description' => 'UPS Flight 6 (2010) and Asiana Flight 991 (2011) drove the substantial tightening of lithium battery cargo rules. FAA and IATA publish ongoing training material on lithium battery handling.',
+                'channels' => [
+                    ['label' => 'FAA Lithium Battery Safety', 'url' => 'https://www.faa.gov/hazmat/'],
+                    ['label' => 'IATA Lithium Batteries', 'url' => 'https://www.iata.org/en/programs/cargo/dgr/'],
+                ],
+                'curatednote' => '[QA Manager: insert URL of current lithium battery hazard video]',
+            ],
+            [
+                'heading' => 'Shipper\'s Declaration Walkthrough',
+                'description' => 'Field-by-field completion of the Shipper&apos;s Declaration for Dangerous Goods. IATA-approved training providers publish this content as part of the DGR training program.',
+                'channels' => [
+                    ['label' => 'IATA DGR training', 'url' => 'https://www.iata.org/en/training/courses/dgr-courses/'],
+                ],
+                'curatednote' => '[QA Manager: insert URL of DGD walkthrough video]',
+            ],
+        ],
+    ],
+];
+
+function twu_render_video_section(array $section): string {
+    $html = '<h4>' . $section['heading'] . '</h4>';
+    $html .= '<p>' . $section['description'] . '</p>';
+    if (!empty($section['channels'])) {
+        $html .= '<p><strong>Authoritative sources:</strong></p><ul>';
+        foreach ($section['channels'] as $ch) {
+            $html .= '<li><a href="' . $ch['url'] . '" target="_blank" rel="noopener">' . $ch['label'] . '</a></li>';
+        }
+        $html .= '</ul>';
+    }
+    if (!empty($section['curatednote'])) {
+        $html .= '<p style="background:#fff8e1; border-left:4px solid #ffc800; padding:10px 14px; margin:10px 0; font-style:italic;">' . $section['curatednote'] . '</p>';
+    }
+    if (!empty($section['embed_url'])) {
+        // YouTube/Vimeo URLs are auto-converted by filter_mediaplugin if it
+        // appears as bare URL inside a paragraph.
+        $html .= '<p>' . $section['embed_url'] . '</p>';
+    }
+    return $html;
+}
+
+foreach ($videocatalog as $idnumber => $catalog) {
+    if (!isset($createdcourses[$idnumber])) {
+        continue;
+    }
+    $course = $createdcourses[$idnumber];
+    $content = '<p>' . $catalog['intro'] . '</p>';
+    $content .= '<div style="background:#f4f6fa; border-left:4px solid #0d2240; padding:14px 18px; margin:14px 0;">';
+    $content .= '<p style="margin:0;"><strong>How to use this page.</strong> The videos linked below are curated supplemental content from authoritative sources (FAA, NTSB, ESDA, IATA, industry organizations). Video URLs change over time — when a specific video link is broken, follow the channel link to find current content. Items marked <em>[QA Manager: insert URL]</em> are placeholders for the QA Manager to populate as authoritative content is identified.</p>';
+    $content .= '</div>';
+
+    foreach ($catalog['sections'] as $section) {
+        $content .= twu_render_video_section($section);
+    }
+
+    $content .= '<h4>Recording your video review</h4>';
+    $content .= '<p>If your training requires you to review a supplemental video as part of this module, note the video title, source, and date watched in your training log. Some videos may be assigned as required pre-reading by the QA Manager.</p>';
+
+    twu_ensure_page_lesson($course, 0, $catalog['name'], $catalog['intro'], $content);
+}
+cli_writeln("[twu] supplemental video resources page added to " . count($videocatalog) . " Initial Training modules");
 
 // ---------------------------------------------------------------------------
 // 5e2. Quizzes — multichoice knowledge-check at the end of each Initial Training module
