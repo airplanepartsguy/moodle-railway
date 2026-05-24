@@ -33,7 +33,7 @@ require_once(__DIR__ . '/../content/glossary.php');
 
 // Bump the suffix here (and in the entrypoint marker docs) when adding new
 // bootstrap steps that should run on existing sites.
-$marker = $CFG->dataroot . '/.twu-bootstrapped-v31';
+$marker = $CFG->dataroot . '/.twu-bootstrapped-v32';
 $force  = in_array('--force', $argv ?? [], true);
 if (file_exists($marker) && !$force) {
     cli_writeln("[twu] already bootstrapped (marker present at $marker). Pass --force to re-run.");
@@ -1156,52 +1156,49 @@ $finalcourse = twu_ensure_course($initialcat->id, $finalcoursedata);
 twu_ensure_cohort_sync($finalcourse, $cohort_all);
 twu_ensure_cohort_sync($finalcourse, $cohort_initial);
 
-// Gate availability — require completion of all 8 module courses.
-function twu_gate_course_availability(stdClass $course, array $prereqcourseids): void {
+// Gate availability — require each prerequisite module's QUIZ to be passing-
+// complete before the final exam content is accessible. Uses the standard
+// availability_completion condition (well-supported in Moodle 4.5) rather
+// than the less-standard "completion_course" type. The gate is applied to
+// section 0 of the final exam course, hiding all its activities until each
+// referenced quiz cm is complete.
+//
+// We defer the call until after per-module quizzes are created (their cm
+// ids do not exist yet here). The function is defined now and invoked later.
+function twu_gate_final_exam_section(stdClass $course, array $prereqcourseids): int {
     global $DB;
-    $conditions = [];
-    foreach ($prereqcourseids as $cid) {
-        // type=completion at course-level uses a "courseid" + "e"=COMPLETE
-        // via the "completion_course" type? Actually in availability JSON
-        // for course-completion prerequisites, the type is "grade" or
-        // "completion" with cm=course-level marker. Simpler: use the
-        // dedicated "completion_course" type from availability_completion.
-        $conditions[] = ['type' => 'profile', 'sf' => 'idnumber', 'op' => 'isnotempty', 'v' => ''];
+    if (!$prereqcourseids) {
+        return 0;
     }
-    // For course-completion prerequisite, the correct availability type is
-    // {"type":"completion_course","id":<courseid>,"e":1}. Use this instead.
+    // Find each prereq course's quiz cmid.
+    list($insql, $params) = $DB->get_in_or_equal($prereqcourseids, SQL_PARAMS_NAMED, 'c');
+    $cmids = $DB->get_fieldset_sql(
+        "SELECT cm.id
+           FROM {course_modules} cm
+           JOIN {modules} m ON m.id = cm.module AND m.name = 'quiz'
+          WHERE cm.course $insql",
+        $params
+    );
+    if (!$cmids) {
+        return 0;
+    }
     $conditions = [];
-    foreach ($prereqcourseids as $cid) {
-        $conditions[] = ['type' => 'completion_course', 'id' => (int)$cid, 'e' => 1];
+    foreach ($cmids as $cmid) {
+        // e=1 means COMPLETION_COMPLETE — module marked complete (which for
+        // a quiz with completionpassgrade requires a passing attempt).
+        $conditions[] = ['type' => 'completion', 'cm' => (int)$cmid, 'e' => 1];
     }
     $availability = json_encode([
-        'op' => '&', 'c' => $conditions, 'showc' => array_fill(0, count($conditions), true),
+        'op'    => '&',
+        'c'     => $conditions,
+        'showc' => array_fill(0, count($conditions), true),
     ]);
-    $existing = $DB->get_field('course', 'idnumber', ['id' => $course->id]); // sanity
-    $DB->set_field('course', 'visible', 1, ['id' => $course->id]);
-    // Course-level availability lives on the course's own course_modules row
-    // for the course itself? Actually for course-level availability, Moodle
-    // 4.x uses the course's enrolment access plus the "availability" field
-    // on the course itself isn't standard — instead each section/module
-    // can have availability. For a whole-course gate, the cleaner mechanism
-    // is to set the cohort enrol's availability or use the course's enrol_self
-    // settings — but our case is cohort sync.
-    //
-    // The simplest gate that works: set the course's category "Visible"
-    // status doesn't help. Instead we apply the availability condition
-    // to each section of the course (section 0 with course_modules), and
-    // also note in the description that it depends on module completion.
-    //
-    // Practical implementation: set availability on the section-0 record
-    // of the final exam course so its contents (including the quiz) are
-    // restricted.
     $sec0 = $DB->get_record('course_sections', ['course' => $course->id, 'section' => 0]);
-    if ($sec0) {
+    if ($sec0 && $sec0->availability !== $availability) {
         $DB->set_field('course_sections', 'availability', $availability, ['id' => $sec0->id]);
     }
+    return count($cmids);
 }
-
-twu_gate_course_availability($finalcourse, array_map(fn($c) => $c->id, $createdcourses));
 
 // Build the cumulative exam definition. Pull 5 random questions from each
 // of the 8 module question categories. The quiz module supports random
@@ -1320,7 +1317,51 @@ foreach ($createdcourses as $idnumber => $course) {
 // Now create the cumulative final exam — question categories exist as of
 // the per-module quiz creation above.
 cli_writeln("[twu] creating cumulative final exam in TWF4-FINAL");
+
+// Add an intro Page so the course has a visible "About the exam" entry
+// before the actual quiz. Acts as documentation when the quiz is gated.
+twu_ensure_page_lesson(
+    $finalcourse, 0, 'About the Cumulative Final Exam',
+    '<p>What you need to know before attempting the cumulative final exam.</p>',
+    '<h3>About the Cumulative Final Exam</h3>
+<p>This course contains the capstone assessment for the TurbineWorks University ASA-100 Initial Training program: a single 40-question exam drawing random questions from each of the eight Initial Training modules.</p>
+
+<h4>Prerequisites</h4>
+<p>Before this exam unlocks, you must have <strong>passed the end-of-module quiz</strong> in each of the eight Initial Training modules (TWF4-1 through TWF4-8). The exam content is locked until each module quiz is marked complete in your training record.</p>
+
+<h4>Exam structure</h4>
+<ul>
+  <li><strong>40 questions</strong> total — 5 randomly drawn from each of the 8 module question banks</li>
+  <li><strong>60 minutes</strong> to complete (one attempt session)</li>
+  <li><strong>80% pass mark</strong> — 32 of 40 correct</li>
+  <li><strong>Up to 3 attempts</strong> — best score counts</li>
+  <li><strong>Deferred feedback</strong> — full review of correct answers shown after each attempt</li>
+  <li><strong>Random shuffle</strong> — question order and answer order randomized per attempt</li>
+</ul>
+
+<h4>What you earn by passing</h4>
+<ul>
+  <li>TurbineWorks University Initial Training master certificate (branded PDF with unique verification code)</li>
+  <li>Your training record reflects "ASA-100 Initial Training Complete" status</li>
+  <li>You enter the 6-month recurring cycle (next recurring training due ~180 days from completion)</li>
+</ul>
+
+<h4>What if you do not pass</h4>
+<p>The system records the failed attempt and lets you try again (up to 3 total). After a third failure, contact the QA Manager. The QA Manager will review the per-question results, identify which module(s) need additional review, and may assign supplemental study or coaching before a fourth attempt is allowed.</p>
+
+<h4>Failed attempts are not punishment</h4>
+<p>The exam is hard by design. Passing it means you genuinely understand the material across all eight modules — that is the credential ASA accreditation requires. If you struggle on first attempt, that is normal and indicates the assessment is doing its job. Use the feedback after each attempt to study and re-attempt.</p>
+
+<h4>Recurring training cadence</h4>
+<p>Per TurbineWorks policy (more rigorous than ASA-100&apos;s annual minimum), the master training credential expires every 180 days. The recurring reset task will mark your module completions as expired automatically; you will need to re-take the modules and re-pass this exam to maintain currency.</p>'
+);
+
 twu_ensure_cumulative_exam($finalcourse, $createdcourses);
+
+// Now that per-module quizzes exist, gate the final exam section behind
+// passing-completion of each module quiz.
+$gated = twu_gate_final_exam_section($finalcourse, array_map(fn($c) => $c->id, $createdcourses));
+cli_writeln("[twu] final exam section gated behind $gated module quiz completions");
 
 // Issue a master cert on the final exam course.
 twu_ensure_customcert($finalcourse);
