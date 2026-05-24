@@ -2968,6 +2968,91 @@ function local_twu_get_engine_parts_courses(): array {
             'lessons'   => local_twu_module_tbo_lessons(),
         ],
         [
+            'shortname' => 'TWU-ENG-CFM56',
+            'fullname'  => 'CFM56 Family — Engine Familiarization',
+            'idnumber'  => 'TWU-ENG-CFM56',
+            'summary'   => '<p>The CFM56 family powers the 737 Classic/NG, A320ceo, KC-135R, and many other airframes. The world\'s most-produced turbofan, with deep aftermarket parts inventory.</p>',
+            'lessons'   => local_twu_engine_cfm56_lessons(),
+        ],
+        [
+            'shortname' => 'TWU-ENG-GE90-GENX',
+            'fullname'  => 'GE90 / GEnx Family — Engine Familiarization',
+            'idnumber'  => 'TWU-ENG-GE90-GENX',
+            'summary'   => '<p>GE\'s widebody twins: GE90 (777 Classic), GEnx (787, 747-8), GE9X (777X). High-thrust, high-bypass turbofans with composite fan blades.</p>',
+            'lessons'   => local_twu_engine_ge_widebody_lessons(),
+        ],
+        [
+            'shortname' => 'TWU-ENG-PW1100G',
+            'fullname'  => 'PW1000G GTF Family — Engine Familiarization',
+            'idnumber'  => 'TWU-ENG-PW1100G',
+            'summary'   => '<p>Pratt &amp; Whitney\'s geared turbofan family. PW1100G (A320neo), PW1500G (A220), PW1900G (E2). Different LLP cadence and parts mix than direct-drive turbofans.</p>',
+            'lessons'   => local_twu_engine_pw_gtf_lessons(),
+        ],
+        [
+            'shortname' => 'TWU-ENG-TRENT',
+            'fullname'  => 'Rolls-Royce Trent Family — Engine Familiarization',
+            'idnumber'  => 'TWU-ENG-TRENT',
+            'summary'   => '<p>Trent 700 (A330), Trent 1000 (787), Trent XWB (A350), Trent 900 (A380). Three-shaft architecture distinct from competitor two-shaft designs — affects modular maintenance.</p>',
+            'lessons'   => local_twu_engine_trent_lessons(),
+        ],
+        [
+            'shortname' => 'TWU-OPS-AS9120',
+            'fullname'  => 'AS9120 Familiarization (Aerospace QMS for Distributors)',
+            'idnumber'  => 'TWU-OPS-AS9120',
+            'summary'   => '<p>Overview of the SAE/IAQG aerospace QMS standard for distributors. Many ASA-100 distributors pursue AS9120 within 1-2 years of initial accreditation. ~70% training overlap with ASA-100.</p>',
+            'lessons'   => [local_twu_overview_lesson(
+                'AS9120 Familiarization',
+                'SAE AS9120 (current rev), ISO 9001 (underlying), AS9100 series (related)',
+                '1 hour',
+                [
+                    'Distinguish AS9120 from ASA-100 in scope, structure, and audit approach',
+                    'Recognize the ISO 9001 process-based QMS that AS9120 extends with aerospace-specific requirements',
+                    'Identify which TurbineWorks customer segments require AS9120 vs ASA-100 vs both',
+                    'Map ASA-100 controls already in place to AS9120 clauses — gap analysis for AS9120 readiness',
+                    'Understand AS9120 audit cadence and certification body options (BSI, DNV, NQA, etc.)',
+                ],
+                'AS9120 opens access to the OEM supply chain (Boeing tier-1/2, Airbus, GE Aerospace, Rolls-Royce direct programs). Many TurbineWorks customers will eventually require AS9120 in addition to ASA-100. Pre-positioning the training program to support both is the right long-term decision.'
+            )],
+        ],
+        [
+            'shortname' => 'TWU-OPS-CUSTOMER',
+            'fullname'  => 'Customer Relations &amp; Quality Communication',
+            'idnumber'  => 'TWU-OPS-CUSTOMER',
+            'summary'   => '<p>How to communicate quality status, non-conformance, and audit-relevant information to customers (airlines, MROs, OEMs, government).</p>',
+            'lessons'   => [local_twu_overview_lesson(
+                'Customer Relations &amp; Quality Communication',
+                'ASA-100 §10 (Customer Complaints), customer-specific contract terms',
+                '1 hour',
+                [
+                    'Recognize what customers expect from an ASA-100 distributor in routine and exception communications',
+                    'Handle customer complaints through the corrective-action system (not just sales channels)',
+                    'Disclose part condition accurately on quotes, COCs, and shipping documents',
+                    'Notify affected customers when a SUP, AD, or material recall affects shipped parts',
+                    'Respond to customer audits (some customers audit their accredited distributors directly)',
+                ],
+                'A customer-discovered quality issue that TurbineWorks did not disclose is the single fastest way to lose customer trust. The same issue disclosed proactively builds the trust that drives repeat business. Communication is part of quality, not separate from it.'
+            )],
+        ],
+        [
+            'shortname' => 'TWU-OPS-INTSHIP',
+            'fullname'  => 'International Shipping — ITAR, EAR, and Export Control',
+            'idnumber'  => 'TWU-OPS-INTSHIP',
+            'summary'   => '<p>U.S. export control regimes affecting aviation parts shipments overseas. Penalties for non-compliance include criminal prosecution.</p>',
+            'lessons'   => [local_twu_overview_lesson(
+                'International Shipping &amp; Export Control',
+                'ITAR (22 CFR 120-130), EAR (15 CFR 730-774), OFAC sanctions lists',
+                '1 hour',
+                [
+                    'Distinguish ITAR-controlled (military / defense article) from EAR-controlled (dual-use commercial) parts',
+                    'Recognize when a routine commercial aircraft part may be on the U.S. Munitions List (USML) or Commerce Control List (CCL)',
+                    'Screen end-users and end-uses against OFAC sanctioned-party lists before quoting or shipping',
+                    'Apply correct ECCN (Export Control Classification Number) and licensing requirements',
+                    'Document export determinations and licensing in TurbineWorks records (retained 5+ years per BIS rules)',
+                ],
+                'A single ITAR violation can result in personal criminal liability for the people involved, plus corporate penalties up to $1M per violation. Aviation parts are a high-scrutiny category — especially anything originally designed for military application that has commercial derivatives (engine parts shared with KC-135R, C-17, P-8, etc.).'
+            )],
+        ],
+        [
             'shortname' => 'TWU-ENG-ATASPEC2000',
             'fullname'  => 'ATA Spec 2000 — Electronic Data Interchange for Parts',
             'idnumber'  => 'TWU-ENG-ATASPEC2000',
@@ -2984,6 +3069,282 @@ function local_twu_get_engine_parts_courses(): array {
                 ],
                 'Most major airlines and MROs increasingly require ATA Spec 2000 EDI for parts procurement. A distributor without Spec 2000 capability is locked out of major customer pipelines. This module covers the framework; the operational implementation is in the TurbineWorks IT/ERP system documentation.'
             )],
+        ],
+    ];
+}
+
+// ============================================================================
+// ENGINE-MODEL COURSES — CFM56, GE90/GEnx, PW1000G GTF, Rolls-Royce Trent
+// ============================================================================
+
+function local_twu_engine_cfm56_lessons(): array {
+    return [
+        [
+            'name'  => 'CFM56 Family Overview',
+            'intro' => '<p>The most-produced turbofan in history. Why CFM56 dominates the secondary parts market.</p>',
+            'content' => <<<'HTML'
+<h3>CFM56 Family</h3>
+<p>The CFM56 is a family of high-bypass turbofan engines produced by CFM International, a 50/50 joint venture between GE Aerospace and Safran Aircraft Engines. Over 33,000 CFM56 engines have been delivered since 1982 — more than any other turbofan in history.</p>
+
+<h4>Variants and applications</h4>
+<table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse;">
+  <tr style="background:#0d2240; color:#fff;">
+    <th>Variant</th><th>Thrust</th><th>Primary Application</th>
+  </tr>
+  <tr><td>CFM56-2</td><td>22,000-24,000 lbf</td><td>KC-135R, DC-8, E-6</td></tr>
+  <tr><td>CFM56-3</td><td>18,500-23,500 lbf</td><td>737 Classic (300/400/500)</td></tr>
+  <tr><td>CFM56-5A/5B</td><td>22,000-33,000 lbf</td><td>A320 family (ceo)</td></tr>
+  <tr><td>CFM56-5C</td><td>31,200-34,000 lbf</td><td>A340-200/300</td></tr>
+  <tr><td>CFM56-7B</td><td>19,500-27,300 lbf</td><td>737NG (600/700/800/900)</td></tr>
+</table>
+
+<h4>Why CFM56 matters for TurbineWorks</h4>
+<ul>
+  <li>Largest installed base of any turbofan — biggest aftermarket parts demand</li>
+  <li>Long production run means well-developed shop infrastructure and parts availability</li>
+  <li>Many engines reaching mid-life and end-of-life retirement — strong used-parts market</li>
+  <li>Mature SB / AD history — most known issues have known solutions</li>
+</ul>
+
+<h4>Key CFM56 LLPs</h4>
+<p>The high-cycle life-limited parts that drive CFM56 inventory value:</p>
+<ul>
+  <li>Fan disk</li>
+  <li>Booster (LPC) disks (stages 1-3)</li>
+  <li>HPC disks (stages 3-9)</li>
+  <li>HPT disk</li>
+  <li>LPT disks (stages 1-4)</li>
+  <li>HPT and LPT shafts</li>
+</ul>
+<p>Life limits are published in the CFM56 ESM and vary by variant. Current OEM publication controls — limits have been adjusted over time as service data accumulated.</p>
+
+<h4>Common CFM56 ADs to watch</h4>
+<ul>
+  <li><strong>CFM56-7B fan blade AD (2018)</strong> — issued after Southwest 1380 in-flight fan blade failure. Triggered fleet-wide inspection.</li>
+  <li><strong>CFM56-5B HPT shroud cracking</strong> — recurrent inspection AD.</li>
+  <li><strong>CFM56-7B oil leak ADs</strong> — multiple over the years.</li>
+</ul>
+<p>The complete current AD list for the affected serial ranges is searchable in the FAA DRS (Dynamic Regulatory System).</p>
+
+<h4>What every TurbineWorks employee handling CFM56 parts should know</h4>
+<ul>
+  <li>CFM56 part numbers can be either CFM-prefixed or GE-prefixed depending on the component source — verify carefully</li>
+  <li>CFM56 ESM compliance is critical; CFM operates strict ESM revision control</li>
+  <li>Some "CFM56" parts are common with the LEAP family (the CFM56 successor) — confirm specific application via IPC</li>
+</ul>
+
+<p><em>[TurbineWorks Procedure Reference: insert link to TurbineWorks CFM56-specific receiving inspection notes and supplier qualification list here.]</em></p>
+HTML
+        ],
+        [
+            'name'  => 'CFM56 Module Architecture',
+            'intro' => '<p>How CFM56 breaks down into modules, and what that means for module-level trading.</p>',
+            'content' => <<<'HTML'
+<h3>CFM56 Module Architecture</h3>
+<p>The CFM56, like most modern turbofans, is built and maintained as a set of replaceable modules. Module-level architecture matters for the parts distribution market because modules can be traded independently of complete engines.</p>
+
+<h4>Standard module breakdown</h4>
+<ul>
+  <li><strong>Fan / Booster module</strong> — fan disk and blades, booster (LP compressor) section, fan case</li>
+  <li><strong>HPC (High-Pressure Compressor) module</strong> — 9-stage axial compressor</li>
+  <li><strong>Combustor module</strong> — combustion chamber, fuel nozzles, ignition system</li>
+  <li><strong>HPT (High-Pressure Turbine) module</strong> — single-stage HP turbine</li>
+  <li><strong>LPT (Low-Pressure Turbine) module</strong> — 4-stage LP turbine, LPT shaft</li>
+  <li><strong>AGB (Accessory Gearbox) module</strong> — driven accessories: fuel pump, oil pumps, generator drive, starter</li>
+</ul>
+
+<h4>Module trading economics</h4>
+<p>An operator removing a CFM56 from an aircraft has options beyond full-engine overhaul:</p>
+<ul>
+  <li><strong>Module exchange:</strong> the failed module is replaced with a serviceable one from inventory; the original is sent for overhaul</li>
+  <li><strong>Component exchange:</strong> if the failure is at component-level (a specific blade set), only the component is changed</li>
+  <li><strong>Whole-engine swap:</strong> entire engine replaced with another</li>
+</ul>
+<p>TurbineWorks participates in the module exchange market — buying and selling individual modules with their own LLP status, time/cycles, and shop visit history.</p>
+
+<h4>Module documentation requirements</h4>
+<p>Each module sold separately requires:</p>
+<ul>
+  <li>Module-level FAA 8130-3 (issued by an authorized organization)</li>
+  <li>LLP records for every LLP within the module</li>
+  <li>Build standard / SB compliance documentation for the module</li>
+  <li>Most recent BSI (where applicable)</li>
+  <li>Shop visit history of the module</li>
+</ul>
+
+<h4>Cross-module compatibility</h4>
+<p>Not every CFM56 module is compatible with every other CFM56 module. Variant differences (CFM56-3 vs -7B, etc.) drive incompatibility. Sub-variant build standards drive further constraints.</p>
+<p>The IPC and ESM define compatibility. Selling an HPT module from a CFM56-7B as if it were a CFM56-7B26 when it is actually a -7B27 is a misdeclaration — possibly fraud, depending on intent.</p>
+HTML
+        ],
+        [
+            'name'  => 'Module Summary',
+            'intro' => '<p>CFM56 familiarization recap.</p>',
+            'content' => '<h3>CFM56 Module Summary</h3><h4>Key takeaways</h4><ul><li>CFM56 is the largest installed-base turbofan — biggest aftermarket parts opportunity for TurbineWorks</li><li>Modular architecture (fan/booster, HPC, combustor, HPT, LPT, AGB) enables module-level trading</li><li>LLP set and current life limits per CFM ESM (current revision)</li><li>Cross-variant module compatibility is constrained — verify per IPC before any cross-application</li></ul><h4>References</h4><ul><li>CFM International ESM (CFM56 family, current revisions)</li><li>FAA Type Certificate Data Sheet E26NE (CFM56-7B) and related TCDS for other variants</li><li>FAA DRS — current AD list for affected CFM56 serial numbers</li></ul>',
+        ],
+    ];
+}
+
+function local_twu_engine_ge_widebody_lessons(): array {
+    return [
+        [
+            'name'  => 'GE Widebody Engines — GE90, GEnx, GE9X',
+            'intro' => '<p>GE\'s widebody turbofan family — large-thrust, high-bypass engines with composite fan blades.</p>',
+            'content' => <<<'HTML'
+<h3>GE Widebody Engine Family</h3>
+
+<h4>GE90</h4>
+<p>The GE90 family powers the Boeing 777 (Classic 200/300, 200ER/LR, 300ER, Freighter). Variants include:</p>
+<ul>
+  <li>GE90-77B / -85B / -90B / -94B — 777 Classic variants, 77,000-94,000 lbf thrust</li>
+  <li>GE90-110B1 / -115B — 777-200LR / -300ER, the highest-thrust certified turbofan (115,000 lbf)</li>
+</ul>
+<p>The GE90 introduced composite fan blades to large commercial turbofans — a major industry innovation that GE has carried forward to subsequent designs.</p>
+
+<h4>GEnx</h4>
+<p>The GEnx family powers the Boeing 787 (GEnx-1B variants) and 747-8 (GEnx-2B variants). Thrust range 53,000-76,000 lbf. Features:</p>
+<ul>
+  <li>Composite fan blades (carried forward from GE90)</li>
+  <li>Composite fan case (lighter than aluminum)</li>
+  <li>TAPS combustor (Twin Annular Pre-mixing Swirler) — improved emissions</li>
+  <li>10-stage HPC, 2-stage HPT, 7-stage LPT</li>
+</ul>
+
+<h4>GE9X</h4>
+<p>Newest GE widebody engine, exclusively for the 777X. Thrust 105,000+ lbf. Larger fan diameter than any prior turbofan. Lower in-service hours but growing — emerging aftermarket as fleet expands.</p>
+
+<h4>Distinguishing features for parts distribution</h4>
+<ul>
+  <li><strong>Composite fan blades</strong> — much higher unit value than metal blades, but also different failure modes and inspection criteria. Repair authority limited to specifically-trained shops.</li>
+  <li><strong>Composite fan case</strong> — distinctive appearance, different inspection</li>
+  <li><strong>High-value LLPs</strong> — GE90 / GEnx LLPs are among the highest-value rotables in the aftermarket</li>
+</ul>
+
+<h4>Common cross-shopping</h4>
+<p>Operators sometimes mix and match GE90 modules across variants (where permitted by certification). The certification basis for cross-mixing is defined in the Type Certificate Data Sheet and OEM service literature.</p>
+
+<h4>Key ADs</h4>
+<ul>
+  <li><strong>GE90 HPT issues</strong> — multiple ADs over the years addressing HPT durability</li>
+  <li><strong>GEnx PRT (Power Recovery Turbine) issues</strong> — early production fixes</li>
+  <li><strong>GEnx ice crystal icing</strong> — operational ADs and SBs after in-service icing events</li>
+</ul>
+
+<p><em>[TurbineWorks Procedure Reference: insert TurbineWorks GE90 / GEnx supplier qualification status and current parts inventory pointer here.]</em></p>
+HTML
+        ],
+        [
+            'name'  => 'Module Summary',
+            'intro' => '<p>GE widebody recap.</p>',
+            'content' => '<h3>GE Widebody Summary</h3><ul><li>GE90: 777 family, includes the highest-thrust certified turbofan (115K lbf)</li><li>GEnx: 787 and 747-8, composite fan blades + case, TAPS combustor</li><li>GE9X: 777X, newest entry, growing aftermarket</li><li>Composite components require specifically-authorized repair shops</li><li>High-value LLPs — careful back-to-birth verification critical</li></ul>',
+        ],
+    ];
+}
+
+function local_twu_engine_pw_gtf_lessons(): array {
+    return [
+        [
+            'name'  => 'PW1000G Geared Turbofan Family',
+            'intro' => '<p>Pratt &amp; Whitney\'s GTF — geared turbofan architecture that differs fundamentally from direct-drive turbofans.</p>',
+            'content' => <<<'HTML'
+<h3>PW1000G Geared Turbofan (GTF) Family</h3>
+<p>The PW1000G family represents a fundamental architectural change in turbofan design: a reduction gearbox between the fan and the LP turbine allows each to spin at its own optimum speed, improving fuel efficiency at the cost of additional mechanical complexity.</p>
+
+<h4>Variants and applications</h4>
+<ul>
+  <li><strong>PW1100G-JM</strong> — Airbus A320neo family. Thrust 24,000-33,000 lbf.</li>
+  <li><strong>PW1500G</strong> — Airbus A220 (formerly Bombardier CSeries). Thrust 19,000-24,000 lbf.</li>
+  <li><strong>PW1700G / PW1900G</strong> — Embraer E2 family.</li>
+  <li><strong>PW1200G</strong> — Mitsubishi SpaceJet (program suspended).</li>
+</ul>
+
+<h4>What "geared turbofan" means</h4>
+<p>In a direct-drive turbofan (CFM56, GE90, V2500), the fan is mechanically coupled to the LP turbine on the same shaft and rotates at the same speed. The fan must spin slowly enough to avoid supersonic tip speeds; the LP turbine must spin slowly along with it.</p>
+<p>In a GTF, a planetary reduction gearbox sits between the fan and the LP turbine. The LP turbine can spin much faster (more efficient) while the fan spins slowly (also more efficient). Result: ~15% better fuel efficiency than equivalent direct-drive designs.</p>
+
+<h4>Implications for the parts market</h4>
+<ul>
+  <li><strong>Gearbox is a new wear/maintenance item</strong> not present in direct-drive engines</li>
+  <li><strong>Different LLP set</strong> than CFM56 — the slower fan disk has different cyclic loading, the faster LPT disk has different thermal loading</li>
+  <li><strong>Newer fleet</strong> — fewer engines retired so far, smaller aftermarket parts pool</li>
+  <li><strong>Early-life durability issues</strong> — known issues with combustor liner cracking, bearing #3 wear, oil migration in early variants. Many addressed by SBs and PIPs (Performance Improvement Packages)</li>
+</ul>
+
+<h4>Build standard significance</h4>
+<p>The PW1100G has undergone multiple iterative improvements since entry into service. "Build standard" matters more for GTF than for mature direct-drive engines — a PW1100G with PIP-3 incorporated is operationally different from one with only PIP-1. Customers care about the build standard at sale.</p>
+
+<h4>Inspection considerations</h4>
+<p>Gearbox condition is checked via:</p>
+<ul>
+  <li>Oil debris monitoring (magnetic plug inspection, oil chip analysis)</li>
+  <li>Vibration trending (gearbox failures often manifest as specific vibration spectra)</li>
+  <li>Borescope inspection of accessible gearbox interior (limited compared to engine flow path)</li>
+</ul>
+
+<p><em>[TurbineWorks Procedure Reference: insert TurbineWorks PW1000G GTF parts inventory status, supplier list, and any GTF-specific receiving inspection notes here.]</em></p>
+HTML
+        ],
+        [
+            'name'  => 'Module Summary',
+            'intro' => '<p>PW1000G GTF recap.</p>',
+            'content' => '<h3>PW1000G GTF Summary</h3><ul><li>Geared architecture: reduction gearbox between fan and LP turbine, ~15% better fuel efficiency than direct-drive</li><li>PW1100G (A320neo), PW1500G (A220), PW1900G (E2) are the main variants</li><li>Gearbox is a new maintenance item not present in legacy engines</li><li>Build standard matters significantly — track PIP incorporation</li><li>Newer fleet means smaller aftermarket pool — opportunity as fleet matures</li></ul>',
+        ],
+    ];
+}
+
+function local_twu_engine_trent_lessons(): array {
+    return [
+        [
+            'name'  => 'Rolls-Royce Trent Family',
+            'intro' => '<p>Rolls-Royce three-shaft architecture — distinct from competitor two-shaft designs.</p>',
+            'content' => <<<'HTML'
+<h3>Rolls-Royce Trent Family</h3>
+<p>The Trent is Rolls-Royce\'s widebody turbofan family. Distinctive feature: three concentric shafts (LP, IP, HP) instead of the two-shaft architecture used by CFM, GE, and Pratt &amp; Whitney. This affects module structure, LLP set, and maintenance philosophy.</p>
+
+<h4>Variants and applications</h4>
+<table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse;">
+  <tr style="background:#0d2240; color:#fff;">
+    <th>Variant</th><th>Thrust</th><th>Primary Application</th>
+  </tr>
+  <tr><td>Trent 700</td><td>67,500-72,000 lbf</td><td>A330ceo</td></tr>
+  <tr><td>Trent 800</td><td>74,600-93,400 lbf</td><td>777 (some)</td></tr>
+  <tr><td>Trent 900</td><td>70,000-80,000 lbf</td><td>A380</td></tr>
+  <tr><td>Trent 1000</td><td>53,000-78,000 lbf</td><td>787</td></tr>
+  <tr><td>Trent XWB</td><td>74,200-97,000 lbf</td><td>A350</td></tr>
+  <tr><td>Trent 7000</td><td>68,000-72,000 lbf</td><td>A330neo</td></tr>
+</table>
+
+<h4>Three-shaft architecture</h4>
+<p>A Trent has:</p>
+<ul>
+  <li><strong>LP shaft</strong> — drives the fan and a 1-stage LP turbine</li>
+  <li><strong>IP (intermediate-pressure) shaft</strong> — drives the IPC (intermediate pressure compressor) and a 1-stage IP turbine</li>
+  <li><strong>HP shaft</strong> — drives the HPC (high pressure compressor) and a 1-stage HP turbine</li>
+</ul>
+<p>Each shaft runs at its own speed, optimized independently. Functionally similar to a GTF concept, but achieved with rotating shafts instead of a gearbox.</p>
+
+<h4>What this means for the parts market</h4>
+<ul>
+  <li><strong>Different module breakdown</strong> than CFM/GE/PW — Trent modules include the IPC and IPT</li>
+  <li><strong>Different LLP set</strong> — includes IP disks and IP shaft</li>
+  <li><strong>More LLPs per engine</strong> than two-shaft designs (three turbines, three compressor sections instead of two)</li>
+  <li><strong>OEM-controlled aftermarket</strong> — Rolls operates a tighter OEM aftermarket than CFM or GE. Independent MROs are fewer.</li>
+</ul>
+
+<h4>Trent 1000 specific notes</h4>
+<p>The Trent 1000 (787 application) has had well-publicized in-service durability issues — IPC blade cracking, IPT blade fatigue, others. These triggered ADs and SBs. Trent 1000 TEN (the post-issue improved variant) addresses many of the early issues.</p>
+<p>Trent 1000 inventory should be tracked carefully by build standard — TEN vs pre-TEN configurations have substantially different value and applicability.</p>
+
+<h4>Trent XWB</h4>
+<p>The Trent XWB (A350) has been one of the most reliable Trent variants in service. Strong aftermarket as the A350 fleet matures.</p>
+
+<p><em>[TurbineWorks Procedure Reference: insert Rolls-Royce TotalCare program implications for TurbineWorks aftermarket access here. Many Trent engines are under TotalCare power-by-the-hour contracts that may affect independent parts demand.]</em></p>
+HTML
+        ],
+        [
+            'name'  => 'Module Summary',
+            'intro' => '<p>Trent family recap.</p>',
+            'content' => '<h3>Trent Family Summary</h3><ul><li>Three-shaft architecture (LP / IP / HP) — distinct from competitor two-shaft designs</li><li>Trent 700 (A330), Trent 1000 (787), Trent XWB (A350), Trent 7000 (A330neo) are current applications</li><li>More LLPs per engine than two-shaft designs (3 sets of disks)</li><li>Rolls-Royce operates a tighter OEM aftermarket — independent distributor opportunities are narrower than CFM/GE</li><li>Trent 1000 TEN vs pre-TEN configurations: track build standard carefully</li></ul>',
         ],
     ];
 }

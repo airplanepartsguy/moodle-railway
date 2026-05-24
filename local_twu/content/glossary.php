@@ -94,5 +94,51 @@ function local_twu_get_glossary_entries(): array {
         ['concept' => 'CAO (Cargo Aircraft Only)', 'definition' => 'Restriction marking on certain hazmat air shipments — passenger aircraft prohibited.'],
         ['concept' => 'DGD', 'definition' => 'Shipper\'s Declaration for Dangerous Goods — the document accompanying every air hazmat shipment, signed by the shipper.'],
         ['concept' => 'SDS (Safety Data Sheet)', 'definition' => 'Document describing the properties, hazards, and handling of a hazmat. Required to be accessible where hazmat is stored or handled.'],
+
+        // Engine models / OEMs
+        ['concept' => 'CFM56', 'definition' => 'CFM International turbofan family — most-produced turbofan in history. Powers 737 Classic/NG, A320ceo, KC-135R. CFM56-3 (Classic), -5A/B (A320), -7B (NG) are the main commercial variants.'],
+        ['concept' => 'CFM International', 'definition' => '50/50 joint venture between GE Aerospace and Safran Aircraft Engines. Producer of the CFM56 and LEAP engine families.'],
+        ['concept' => 'LEAP', 'definition' => 'CFM\'s successor to the CFM56 — LEAP-1A (A320neo), LEAP-1B (737 MAX), LEAP-1C (C919). Direct-drive competitor to the PW1000G GTF.'],
+        ['concept' => 'GE90', 'definition' => 'GE Aerospace high-thrust widebody turbofan for 777 family. GE90-115B is the highest-thrust certified turbofan at 115,000 lbf. Introduced composite fan blades to large commercial turbofans.'],
+        ['concept' => 'GEnx', 'definition' => 'GE Aerospace turbofan for 787 (GEnx-1B) and 747-8 (GEnx-2B). Composite fan blades and fan case, TAPS combustor.'],
+        ['concept' => 'GE9X', 'definition' => 'GE Aerospace turbofan exclusively for the 777X. 105,000+ lbf thrust. Largest fan diameter of any commercial turbofan.'],
+        ['concept' => 'PW1000G', 'definition' => 'Pratt &amp; Whitney geared turbofan (GTF) family. PW1100G (A320neo), PW1500G (A220), PW1900G (E2). Reduction gearbox between fan and LP turbine for ~15% better fuel efficiency.'],
+        ['concept' => 'GTF (Geared Turbofan)', 'definition' => 'Turbofan architecture with a reduction gearbox between the fan and LP turbine, allowing each to spin at its own optimum speed. PW1000G is the primary commercial GTF family.'],
+        ['concept' => 'V2500', 'definition' => 'International Aero Engines (IAE) turbofan for A320 family. Direct competitor to CFM56-5B on the same airframe. Joint venture of Pratt &amp; Whitney and Rolls-Royce.'],
+        ['concept' => 'Trent', 'definition' => 'Rolls-Royce widebody turbofan family. Trent 700 (A330), Trent 1000 (787), Trent XWB (A350), Trent 7000 (A330neo), Trent 900 (A380). Three-shaft architecture distinguishes Trent from competitor two-shaft designs.'],
+        ['concept' => 'Trent 1000 TEN', 'definition' => 'Improved variant of the Trent 1000 (787) addressing in-service durability issues with the original variant. Build standard matters for valuation: TEN vs pre-TEN configurations differ substantially.'],
+        ['concept' => 'Three-shaft engine', 'definition' => 'Turbofan with three concentric shafts: LP (fan + LP turbine), IP (IPC + IPT), HP (HPC + HPT). Rolls-Royce Trent family is the major commercial three-shaft architecture. Different module breakdown and more LLPs than two-shaft designs.'],
+        ['concept' => 'IPC (Intermediate Pressure Compressor)', 'definition' => 'Compressor section unique to three-shaft engines (Rolls-Royce Trent family); sits between the booster (LPC) and HPC.'],
+        ['concept' => 'IPT (Intermediate Pressure Turbine)', 'definition' => 'Turbine section unique to three-shaft engines, driving the IPC via the IP shaft.'],
+        ['concept' => 'TotalCare', 'definition' => 'Rolls-Royce\'s power-by-the-hour service program for Trent engines. Operators pay per flight hour for guaranteed engine availability. Affects independent aftermarket parts demand because OEM controls more of the supply chain.'],
+        ['concept' => 'PIP (Performance Improvement Package)', 'definition' => 'OEM-issued package of modifications addressing in-service performance or durability issues. PW1000G GTF builds are typically identified by PIP level (PIP-1, PIP-2, PIP-3, etc.).'],
+
+        // Engine architecture
+        ['concept' => 'HPC (High Pressure Compressor)', 'definition' => 'Final compressor section before the combustor. Driven by the HP turbine via the HP shaft.'],
+        ['concept' => 'HPT (High Pressure Turbine)', 'definition' => 'First turbine section after the combustor. Receives hottest gas temperatures; drives the HPC.'],
+        ['concept' => 'LPT (Low Pressure Turbine)', 'definition' => 'Turbine section after the HPT (and IPT if three-shaft). Drives the fan (and booster in two-shaft designs) via the LP shaft.'],
+        ['concept' => 'LPC (Low Pressure Compressor) / Booster', 'definition' => 'Compressor stages upstream of the HPC, on the LP shaft (in two-shaft engines). Boost the air pressure before HPC entry.'],
+        ['concept' => 'Combustor', 'definition' => 'Section where compressed air is mixed with fuel and ignited. Hot section component subject to thermal cycling, cracking, and TBC degradation.'],
+        ['concept' => 'AGB (Accessory Gearbox)', 'definition' => 'Driven by the HP shaft (typically); drives fuel pumps, oil pumps, generators, starters, hydraulic pumps.'],
+        ['concept' => 'Fan blade', 'definition' => 'Large airfoil at the front of the engine. Modern designs use titanium or composite blades. Subject to FOD damage and bird strike events.'],
+        ['concept' => 'TAPS combustor', 'definition' => 'Twin Annular Pre-mixing Swirler — GE combustor design used on GEnx and other modern engines. Improved emissions through fuel pre-mixing.'],
+
+        // Export control
+        ['concept' => 'ITAR (International Traffic in Arms Regulations)', 'definition' => '22 CFR Parts 120-130. U.S. export control regime for defense articles (USML-listed items) and defense services. Aviation parts originally designed for military application may be ITAR-controlled. Violations carry criminal penalties.'],
+        ['concept' => 'EAR (Export Administration Regulations)', 'definition' => '15 CFR Parts 730-774. U.S. export control regime for dual-use commercial items (CCL-listed). Most commercial aviation parts fall under EAR, not ITAR.'],
+        ['concept' => 'USML (United States Munitions List)', 'definition' => 'ITAR list of defense articles. Items on USML require State Department licensing to export.'],
+        ['concept' => 'CCL (Commerce Control List)', 'definition' => 'EAR list of dual-use commercial items. Items on CCL have ECCN classifications driving export license requirements.'],
+        ['concept' => 'ECCN (Export Control Classification Number)', 'definition' => 'EAR classification code identifying a controlled item. Determines licensing requirements for export to specific destinations.'],
+        ['concept' => 'OFAC', 'definition' => 'U.S. Treasury Office of Foreign Assets Control. Maintains sanctioned-party lists (SDN list, etc.) against which all transactions must be screened — separate from ITAR/EAR licensing.'],
+        ['concept' => 'BIS (Bureau of Industry and Security)', 'definition' => 'U.S. Commerce Department bureau administering the EAR. Issues commercial export licenses and maintains the CCL.'],
+        ['concept' => 'EUC (End Use Certificate)', 'definition' => 'Document attesting to the intended use and end-user of an exported article. Required for many ITAR exports and for some EAR exports.'],
+
+        // Process / quality
+        ['concept' => 'NCR (Non-Conformance Report)', 'definition' => 'Documented record of a quality finding — a part, process, or document that does not meet requirements. Triggers the corrective-action process.'],
+        ['concept' => 'CAPA (Corrective and Preventive Action)', 'definition' => 'Quality system process for investigating non-conformances, identifying root cause, implementing corrective action, and verifying effectiveness.'],
+        ['concept' => 'Root Cause Analysis', 'definition' => 'Systematic investigation to identify the underlying cause of a non-conformance (vs. the symptom). Required by ASA-100 corrective action process.'],
+        ['concept' => 'MRB (Material Review Board)', 'definition' => 'Formal review process for disposition of non-conforming material. Distinct from Receiving Inspector quarantine — MRB makes the final use/repair/scrap decision on complex non-conformances.'],
+        ['concept' => 'AOG (Aircraft On Ground)', 'definition' => 'Customer urgency status indicating an aircraft is grounded waiting for the part. AOG shipments are highest priority — typically next-flight-out.'],
+        ['concept' => 'PMA-TC (Type Certificate)', 'definition' => 'FAA certification basis for an aircraft, engine, or component. The TC and the TCDS (Type Certificate Data Sheet) define what configuration is approved.'],
     ];
 }
