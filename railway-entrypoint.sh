@@ -87,57 +87,66 @@ echo "SetEnvIf X-Forwarded-Proto https HTTPS=on" > /etc/apache2/conf-available/r
 a2enconf railway-proxy >/dev/null 2>&1 || true
 
 # Railway reverse-proxy: patch Moodle config.php so it trusts the proxy headers.
-# Without this, $CFG->wwwroot mismatches, installhijacked fires because the
-# user's apparent IP rotates each request, and admin logins flap.
-# Runs idempotently every boot; only applies once config.php exists
-# (i.e. after the web installer has written it to the volume).
-# Env-var overrides (defaults are Railway-correct, leave unset to accept):
-#   MOODLE_REVERSEPROXY=1           -> $CFG->reverseproxy = true
-#   MOODLE_SSLPROXY=1               -> $CFG->sslproxy = true
-#   MOODLE_SKIP_HTTP_CLIENT_IP=1    -> $CFG->getremoteaddrconf = GETREMOTEADDR_SKIP_HTTP_CLIENT_IP
+# Without this, the user's apparent IP rotates each request (breaking sessions
+# and audit logs) and generated URLs end up http:// instead of https://.
+#
+# Defaults are tuned for Railway specifically:
+#   sslproxy = true            Moodle treats the request as HTTPS even though
+#                              Apache itself is plain HTTP behind Railway's TLS
+#                              terminator.
+#   getremoteaddrconf = 1      Moodle reads the client IP from X-Forwarded-For
+#                              (which Railway sets) and ignores HTTP_CLIENT_IP.
+#                              Works independently of $CFG->reverseproxy.
+#   reverseproxy = false       *Disabled* for Railway. Moodle's reverseproxy
+#                              flag expects the proxy to REWRITE the Host header
+#                              to an internal hostname (see lib/setuplib.php
+#                              comment around 'reverseproxyabused'). Railway
+#                              passes the public Host through unchanged, so
+#                              enabling reverseproxy fires reverseproxyabused
+#                              on every request and the site goes down.
+#
+# Env-var overrides (set to 1/0 on the Moodle service in Railway):
+#   MOODLE_REVERSEPROXY              default 0 (only enable behind a
+#                                    Host-rewriting proxy, NOT Railway's edge)
+#   MOODLE_SSLPROXY                  default 1
+#   MOODLE_SKIP_HTTP_CLIENT_IP       default 1
 CONFIG_PHP=/var/www/html/config.php
 PROXY_MARKER_PREFIX="// BEGIN railway-entrypoint proxy block"
 if [ -f "$CONFIG_PHP" ]; then
-  # Older versions of this entrypoint injected a block that referenced the
-  # Moodle constant GETREMOTEADDR_SKIP_HTTP_CLIENT_IP, which is only defined
-  # inside lib/setup.php — but our block runs BEFORE the require_once, so PHP
-  # fatals on an undefined constant and Moodle can't bootstrap. Strip the
-  # broken block so the re-inject below runs with the fixed (integer) form.
-  if grep -qF "GETREMOTEADDR_SKIP_HTTP_CLIENT_IP" "$CONFIG_PHP"; then
-    sed -i '/\/\/ BEGIN railway-entrypoint proxy block/,/\/\/ END railway-entrypoint proxy block/d' "$CONFIG_PHP"
-    echo "[railway-entrypoint] removed broken proxy block (used undefined constant)"
-  fi
+  # Always strip any pre-existing block before re-injecting. This lets us
+  # change what we put in the block (e.g. switching reverseproxy default to 0
+  # to fix reverseproxyabused) without needing manual config.php edits.
   if grep -qF "$PROXY_MARKER_PREFIX" "$CONFIG_PHP"; then
-    echo "[railway-entrypoint] proxy block already present in config.php; skipping"
-  else
-    reverseproxy="${MOODLE_REVERSEPROXY:-1}"
-    sslproxy="${MOODLE_SSLPROXY:-1}"
-    skipclientip="${MOODLE_SKIP_HTTP_CLIENT_IP:-1}"
-    tmp="$(mktemp)"
-    awk -v rp="$reverseproxy" -v sp="$sslproxy" -v sc="$skipclientip" '
-      function emit_block() {
-        print "// BEGIN railway-entrypoint proxy block (managed by railway-entrypoint.sh)"
-        if (rp == "1") print "$CFG->reverseproxy = true;"
-        if (sp == "1") print "$CFG->sslproxy = true;"
-        if (sc == "1") print "$CFG->getremoteaddrconf = 1; // GETREMOTEADDR_SKIP_HTTP_CLIENT_IP (constant not defined until lib/setup.php loads)"
-        print "// END railway-entrypoint proxy block"
-      }
-      !done && /require_once.*setup\.php/ {
-        emit_block()
-        print ""
-        done = 1
-      }
-      { print }
-      END {
-        if (!done) {
-          print ""
-          emit_block()
-        }
-      }
-    ' "$CONFIG_PHP" > "$tmp" && cat "$tmp" > "$CONFIG_PHP" && rm -f "$tmp"
-    chown www-data:www-data "$CONFIG_PHP"
-    echo "[railway-entrypoint] injected proxy block into config.php (reverseproxy=$reverseproxy sslproxy=$sslproxy skip_client_ip=$skipclientip)"
+    sed -i '/\/\/ BEGIN railway-entrypoint proxy block/,/\/\/ END railway-entrypoint proxy block/d' "$CONFIG_PHP"
+    echo "[railway-entrypoint] removed existing proxy block; will re-inject with current settings"
   fi
+  reverseproxy="${MOODLE_REVERSEPROXY:-0}"
+  sslproxy="${MOODLE_SSLPROXY:-1}"
+  skipclientip="${MOODLE_SKIP_HTTP_CLIENT_IP:-1}"
+  tmp="$(mktemp)"
+  awk -v rp="$reverseproxy" -v sp="$sslproxy" -v sc="$skipclientip" '
+    function emit_block() {
+      print "// BEGIN railway-entrypoint proxy block (managed by railway-entrypoint.sh)"
+      if (rp == "1") print "$CFG->reverseproxy = true;"
+      if (sp == "1") print "$CFG->sslproxy = true;"
+      if (sc == "1") print "$CFG->getremoteaddrconf = 1; // GETREMOTEADDR_SKIP_HTTP_CLIENT_IP (constant not defined until lib/setup.php loads)"
+      print "// END railway-entrypoint proxy block"
+    }
+    !done && /require_once.*setup\.php/ {
+      emit_block()
+      print ""
+      done = 1
+    }
+    { print }
+    END {
+      if (!done) {
+        print ""
+        emit_block()
+      }
+    }
+  ' "$CONFIG_PHP" > "$tmp" && cat "$tmp" > "$CONFIG_PHP" && rm -f "$tmp"
+  chown www-data:www-data "$CONFIG_PHP"
+  echo "[railway-entrypoint] injected proxy block into config.php (reverseproxy=$reverseproxy sslproxy=$sslproxy skip_client_ip=$skipclientip)"
 else
   echo "[railway-entrypoint] config.php not found yet; run the web installer, then redeploy to inject the proxy block"
 fi
