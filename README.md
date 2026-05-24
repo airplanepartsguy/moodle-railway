@@ -30,6 +30,62 @@ All changes live in `railway-entrypoint.sh` (no Moodle code modifications):
 | `MOODLE_SSLPROXY` | `1` | Set to `0` if you ever run Moodle without TLS termination upstream |
 | `MOODLE_SKIP_HTTP_CLIENT_IP` | `1` | Set to `0` to allow `HTTP_CLIENT_IP` as a client-IP source (not recommended) |
 | `MOODLE_PURGE_CACHE` | `0` | Set to `1` to force a one-time cache wipe on the next boot |
+| `TWU_THEME` | `snap` | Override the active theme. Set to `moove` to fall back to Moove. |
+
+---
+
+## TurbineWorks University content build
+
+The `local_twu` plugin is a TurbineWorks-specific Moodle local plugin that bootstraps the entire **TurbineWorks University** course structure, content, quizzes, glossary, and theme configuration on every redeploy. Idempotent — re-runs only when the marker version is bumped or `--force` is passed.
+
+### What the bootstrap creates
+
+- **Site identity**: renames the Moodle site to "TurbineWorks University," activates Snap theme with TurbineWorks navy (`#0d2240`) + gold (`#ffc800`) branding, suppresses the conecti.me theme attribution footer.
+- **Course category hierarchy**:
+  - `ASA-100 Compliance`
+    - `Initial Training` — 8 courses (TWF4-1 through TWF4-8) mirroring the TWF-4 training-record form
+    - `Recurring Training (6-month)` — 6-month refresher cycle
+    - `Reference Library` — FAA ACs, Industry Standards, Aviation Terminology Glossary
+    - `Engine-Parts Specific` — FAA 8130-3 deep dive, LLP, AD/SB, BSI, TBO, ATA Spec 2000, CFM56, GE90/GEnx, PW1000G GTF, Trent, LEAP, V2500
+- **Cohorts**: "Initial Trainees" and "Recurring Trainees (6-month)" for auto-enrollment workflows.
+- **Lesson content** (Moodle `mod_page` activities): deep-expanded substantive lessons for every module. Currently ~115,000 words across Modules 1–5 (Module 5 just completed); Modules 6–8 in progress.
+- **Quizzes** (`mod_quiz` with multichoice questions): per-module knowledge checks; 80% pass mark; 3 attempts max; question banks created in course context.
+- **Aviation Glossary** (`mod_glossary`): 98+ terms covering ASA-100 framework, FAA forms, SUP/counterfeit, engine architecture, OEMs (CFM56/LEAP/GE90/GEnx/PW1000G/Trent/V2500), warehousing (FOD/FIFO/mutilation), ESD, hazmat, export control.
+- **Custom Certificates** (`mod_customcert`): branded PDF certificates auto-issued on Initial Training course completion. Elements include TurbineWorks University header, recipient name, course name, completion date, unique verification code.
+- **Forums** (`mod_forum`): "Ask the QA Manager" Q&A forum in every Initial Training course.
+- **Branded course title cards**: navy gradient + gold corner accent PNG cards.
+- **Compliance defaults**: completion tracking on site-wide, log retention set to never auto-purge (7+ year ASA-100 expectation).
+
+### Files
+
+```
+local_twu/
+├── version.php                    — Moodle plugin metadata
+├── lang/en/local_twu.php          — Plugin name string
+├── cli/bootstrap.php              — The orchestration script run by the entrypoint
+├── content/content.php            — All lesson content (the big one)
+├── content/quizzes.php            — Quiz question banks per module
+├── content/glossary.php           — Aviation glossary entries
+└── assets/                        — Logo, favicon, branded course cards
+scripts/
+└── generate_course_cards.py       — Pillow-based generator for branded card images
+```
+
+### Marker version
+
+`local_twu/cli/bootstrap.php` defines `$marker = $CFG->dataroot . '/.twu-bootstrapped-vNN'`. Bump `NN` to force the bootstrap to re-run on next deploy. Each push that adds content or changes site config bumps the marker.
+
+### Domain-knowledge sources referenced in the training content
+
+The training material is grounded in the actual regulatory and industry-standard documents that govern aviation parts distribution:
+
+- **FAA**: AC 00-56B (Voluntary Industry Distributor Accreditation), AC 20-62E, AC 21-29D (SUP detection), AC 21-38 (unsalvageable parts disposition / mutilation), AC 120-77 (maintenance recordkeeping); 14 CFR Parts 21, 39, 43, 145; FAA Forms 8130-3 and 8120-11; FAA DRS; av-info.faa.gov certificate database.
+- **International equivalents**: EASA Form 1, TCCA Form One, IAQG OASIS.
+- **Industry standards**: ASA-100, AS9120 (and AS9100/AS9110 family), SAE AS5553 (counterfeit electronics), AS6174 (counterfeit materiel), ISO 9001, **NAS 412 (FOD prevention)**, **ATA Spec 300 (packaging)**, **ATA iSpec 2200 (technical publications)**, ATA Spec 2000 (EDI for parts).
+- **Hazmat**: 49 CFR Parts 100–185 (DOT), IATA DGR, IPC J-STD-033 (moisture-sensitive devices).
+- **ESD**: ANSI/ESD S20.20.
+- **Export control**: ITAR (22 CFR 120–130), EAR (15 CFR 730–774), OFAC sanctions screening, BIS, ECCN classification.
+- **DoD / procurement**: DFARS 252.246-7007 / -7008, 41 U.S.C. §4109.
 
 ---
 

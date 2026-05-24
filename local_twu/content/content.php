@@ -6384,132 +6384,651 @@ HTML
         ],
         [
             'name'  => 'Lesson 5.4 — FAA AC 21-38: Disposition of Unsalvageable Parts',
-            'intro' => '<p>How parts that cannot be used must be destroyed to prevent re-entry into the supply chain.</p>',
+            'intro' => '<p>The closing of the supply-chain integrity loop. How unsalvageable parts must be permanently destroyed so they cannot re-enter the supply chain. FAA AC 21-38 in operational depth — methods, witnesses, records, and why this is the single most-checked control in the SUP prevention chain.</p>',
             'content' => <<<'HTML'
 <h3>FAA AC 21-38: Disposition of Unsalvageable Aircraft Parts</h3>
-<p>When a part is determined to be unsalvageable — beyond economical repair, life-expired, or confirmed SUP after FAA investigation — it must be permanently destroyed so it cannot re-enter the supply chain. FAA Advisory Circular 21-38 specifies how.</p>
 
-<h4>Why mutilation is required</h4>
-<p>Without mutilation, a scrapped part can be picked out of a dumpster, re-cleaned, re-marked, and re-sold by someone willing to commit fraud. Mutilation makes the part physically unusable as an aircraft part.</p>
+<p>Module 1 Lesson 1.2 identified scrap diversion as the largest single pathway by which unapproved parts enter the aviation supply chain. The defense against scrap diversion is <strong>mutilation</strong> — permanently destroying unsalvageable parts so they physically cannot be re-installed on an aircraft, even by someone trying to commit fraud.</p>
 
-<h4>What "mutilation" means</h4>
-<p>AC 21-38 defines acceptable mutilation methods. The principle: the part must be damaged such that it cannot be returned to a serviceable condition by any reasonable repair process, AND such that critical features (markings, serial numbers, data plates) are destroyed.</p>
-<p>Common methods (vary by part type):</p>
+<p>This lesson covers FAA AC 21-38, the FAA guidance on disposition of unsalvageable parts. The standard establishes acceptable mutilation methods, witness and documentation requirements, and the destruction discipline that distributors must implement. Mutilation is operationally simple, but it is also the control most commonly skipped or done improperly — and the ASA auditor knows this. Mutilation gets disproportionate audit attention.</p>
+
+<h4>Why mutilation matters</h4>
+
+<p>An unsalvageable part — life-expired, beyond economical repair, confirmed unapproved — has finite physical existence. It is metal, ceramics, composites. Without intervention, the part will sit somewhere. Eventually someone will encounter it. If the part still looks like an installable aircraft part, the temptation to re-sell it is real. The economics are attractive: a scrapped turbine disk has thousands of dollars of resale value if someone is willing to misrepresent its history.</p>
+
+<p>Without mutilation:</p>
+
 <ul>
-  <li>Crushing under hydraulic press</li>
-  <li>Cutting into multiple pieces with a saw or shear</li>
-  <li>Melting (for some metals)</li>
-  <li>Drilling holes in critical surfaces</li>
-  <li>Removing or grinding off the data plate</li>
-  <li>Stamping "MUTILATED" or similar irreversible marking</li>
-  <li>Acid etching to destroy identifiers</li>
+  <li>A discarded part may be removed from the scrap container by someone — employee, contractor, scrap dealer, dumpster diver</li>
+  <li>The part may be re-cleaned, re-marked, given fabricated documentation</li>
+  <li>The part enters the supply chain through an unaccredited broker</li>
+  <li>Eventually the part reaches an unsuspecting distributor or installer</li>
+  <li>The part is installed on an aircraft, where it operates with unknown remaining life or unknown structural integrity</li>
+  <li>Eventually the part fails in service or is discovered during a subsequent inspection</li>
+  <li>The investigation traces back to the original disposer, who failed to mutilate</li>
 </ul>
-<p>The specific method depends on the part type. A turbine blade can be cut into pieces. A printed circuit board may be cut and have ICs delaminated. A composite panel may be ground or shredded.</p>
+
+<p>The chain breaks at mutilation. A part that has been cut into pieces cannot be re-installed regardless of how clever the subsequent fraud. A turbine disk with holes drilled through its rim cannot pass dimensional inspection at any downstream party. A blade cut at multiple locations is metal but no longer a blade.</p>
+
+<p>This is why mutilation is operationally critical. It is the only physical barrier against scrap diversion — the only way to make a scrapped part actually unusable rather than just "designated as scrapped."</p>
+
+<h4>When mutilation applies</h4>
+
+<p>Mutilation is required when a part is dispositioned as unsalvageable. The triggers for unsalvageable disposition:</p>
+
+<h5>Life-expired LLPs</h5>
+
+<p>An LLP that has reached its cycle limit cannot be installed. Mutilation prevents the part from being re-sold with falsified life records.</p>
+
+<h5>Beyond economical repair (BER)</h5>
+
+<p>A part damaged beyond economical repair — the cost of repair exceeds the value of the part. The decision to scrap rather than repair is documented. Once dispositioned as BER, mutilation follows.</p>
+
+<h5>Confirmed unapproved parts</h5>
+
+<p>SUP investigations that conclude the part is unapproved (Module 1 Lesson 1.5) result in mutilation. The part cannot be returned to the supplier (which would just transfer the SUP). The part cannot remain in inventory. The part is destroyed.</p>
+
+<h5>Counterfeit parts</h5>
+
+<p>Confirmed counterfeit parts are mutilated, often after the FAA or law enforcement has obtained the evidence they need. Mutilation prevents the counterfeit from re-entering the supply chain.</p>
+
+<h5>Customer return of failed parts</h5>
+
+<p>Some customers return parts that failed in service. If the part is unsalvageable, mutilation follows.</p>
+
+<h5>Damaged parts beyond repair</h5>
+
+<p>Parts damaged during TurbineWorks storage or handling that exceed repair limits.</p>
+
+<h5>Expired shelf-life parts</h5>
+
+<p>Elastomers, sealants, batteries, pyrotechnics — when their shelf life expires and they cannot be re-life\'d, mutilation follows (Module 4 Lesson 4.3 covers the disposition pathway).</p>
+
+<h4>What "mutilation" means — the technical requirement</h4>
+
+<p>AC 21-38 defines acceptable mutilation methods. The principle: <strong>the part must be damaged such that it cannot be returned to a serviceable condition by any reasonable repair process, AND such that critical features (markings, serial numbers, data plates) are destroyed.</strong></p>
+
+<p>"Reasonable repair process" is the operative phrase. A small dent isn\'t mutilation — the part could be straightened. A bent edge isn\'t mutilation — the part could be re-shaped. Mutilation requires damage beyond what any authorized repair process could correct.</p>
+
+<h4>Acceptable mutilation methods</h4>
+
+<p>AC 21-38 lists acceptable methods. The specific method appropriate to a part depends on the part type, material, size, and condition. Common methods:</p>
+
+<h5>Cutting into multiple pieces</h5>
+
+<p>The most common method for many part categories. Use a saw, shear, plasma cutter, or other cutting tool to divide the part into pieces. Each piece is small enough that it cannot be reassembled and used.</p>
+
+<p>For turbine blades: typically cut through the airfoil at two or more locations, creating pieces that cannot be combined into a blade.</p>
+
+<p>For turbine disks: typically cut radial slots through the disk, or cut the disk into segments.</p>
+
+<p>For shafts: cut at intervals along the length.</p>
+
+<p>For housings and casings: cut through the main structure.</p>
+
+<h5>Crushing or compression</h5>
+
+<p>Hydraulic press deforms the part beyond use. Effective for relatively soft materials and for distorting structures that need geometric accuracy.</p>
+
+<h5>Melting</h5>
+
+<p>For some metals — particularly aluminum, magnesium, and softer alloys. Re-melts the part into a different physical form. Less common for high-temperature engine parts (titanium, nickel-base superalloys) which require very high temperatures to melt.</p>
+
+<h5>Drilling holes in critical surfaces</h5>
+
+<p>Drill holes through bearing races, sealing surfaces, structural sections, or other critical features. The holes destroy the functional integrity of the part. For some parts, drilling alone is sufficient; for others, drilling is combined with cutting.</p>
+
+<h5>Removing or destroying the data plate</h5>
+
+<p>The data plate carries the part identification. Mutilation requires that the data plate be destroyed, not just removed. A removed-but-intact data plate can be re-applied to a different part — a known fraud pattern.</p>
+
+<p>Acceptable data-plate destruction:</p>
+<ul>
+  <li>Grinding the plate down to remove all readable markings</li>
+  <li>Melting or destroying the plate after removal</li>
+  <li>Striking the plate with a stamping die that obliterates the markings while still attached</li>
+</ul>
+
+<h5>Acid etching to destroy identifiers</h5>
+
+<p>Chemical etching can destroy markings on the part itself or on the data plate. Used in combination with physical destruction for high-value parts where identification removal is critical.</p>
+
+<h5>Stamping with "MUTILATED" or equivalent</h5>
+
+<p>Some operations stamp the destroyed part with "MUTILATED" or similar marking. This is supplementary to physical destruction — not a substitute. A stamped marking can be ground off; only physical destruction is permanent.</p>
 
 <h4>What does NOT count as mutilation</h4>
+
+<p>Methods that are commonly attempted but do not satisfy AC 21-38:</p>
+
 <ul>
-  <li>"Painting over" the data plate (paint comes off)</li>
-  <li>Removing the data plate and discarding it (someone could find it and stamp it onto a different part)</li>
-  <li>Stamping "NOT FOR FLIGHT" on the part (stamping can be ground off)</li>
-  <li>Storing in a "scrap" area without destruction (parts can be diverted out)</li>
+  <li><strong>"Painting over" the data plate.</strong> Paint comes off with solvent or abrasion. The underlying identifiers remain intact and visible after cleaning.</li>
+  <li><strong>Removing the data plate and discarding it.</strong> The plate could be retrieved from trash, or could be re-applied to a similar part as part of a re-marking fraud. Removal alone is insufficient; the plate must be destroyed.</li>
+  <li><strong>Stamping "NOT FOR FLIGHT" or similar on the part without physical destruction.</strong> Stamping can be ground off. A determined fraud operator will grind the marking off and re-mark the part.</li>
+  <li><strong>Storing in a "scrap" area without actual destruction.</strong> Storage is not destruction. Parts in scrap awaiting destruction are subject to diversion until they are actually destroyed.</li>
+  <li><strong>Disposing in regular trash without first mutilating.</strong> Aviation parts in dumpsters are routinely picked up by people who recognize their value. Trash is not destruction.</li>
+  <li><strong>"Light" damage that could be repaired.</strong> A part with a small dent is not mutilated. The damage must be beyond authorized repair limits.</li>
 </ul>
 
 <h4>Who performs mutilation</h4>
-<p>Mutilation is performed by trained personnel under QA Manager oversight. The QA Manager (or designate) witnesses or verifies the mutilation. A part cannot be designated "mutilated" without verification.</p>
 
-<h4>Documentation</h4>
-<p>Every mutilation generates a record:</p>
+<p>Mutilation is performed by trained personnel under QA Manager oversight. Specific roles:</p>
+
 <ul>
-  <li>Part number, serial number (or lot number)</li>
-  <li>Reason for mutilation (life-expired, BER, SUP, etc.)</li>
-  <li>Method of mutilation</li>
-  <li>Date mutilated</li>
-  <li>Personnel who performed mutilation</li>
-  <li>QA Manager (or designate) certification of mutilation</li>
-  <li>Photographs (recommended) showing the mutilated state</li>
+  <li><strong>The person physically performing the mutilation.</strong> Trained on safe operation of cutting/crushing/destroying equipment. May be warehouse personnel, a designated mutilation technician, or in some cases the QA Manager personally for high-value items.</li>
+  <li><strong>The witness or verifier.</strong> The QA Manager (or designate) is present during mutilation or verifies completion immediately afterward. The witness confirms that the mutilation was done properly and that the part is no longer usable.</li>
 </ul>
-<p>The mutilation record is retained per the records retention schedule (typically 7+ years). The record is the evidence that the part will not re-enter the supply chain.</p>
+
+<p>The principle: a part cannot be designated "mutilated" without independent verification. The person performing mutilation could (theoretically) cut corners or skip steps. The witness ensures the destruction is real. This is the same independence principle that applies to receiving inspection — quality decisions are made by multiple parties to prevent any single person\'s error or bad intent from compromising the system.</p>
+
+<h4>The mutilation record</h4>
+
+<p>Every mutilation generates a record. The record is the audit evidence that the part was destroyed:</p>
+
+<ul>
+  <li><strong>Part identification.</strong> Part number, serial number (or lot number for non-serialized), description.</li>
+  <li><strong>Reason for mutilation.</strong> Life-expired, BER, confirmed unapproved, customer return, etc.</li>
+  <li><strong>Reference to the disposition decision.</strong> The NCR or QA Manager disposition record that authorized scrap.</li>
+  <li><strong>Method of mutilation.</strong> Specific technique used (cut, crush, melt, etc.).</li>
+  <li><strong>Date mutilated.</strong></li>
+  <li><strong>Personnel who performed mutilation.</strong> Name and signature.</li>
+  <li><strong>QA Manager (or designate) certification.</strong> Name and signature of the verifier.</li>
+  <li><strong>Photographs.</strong> Strongly recommended. Show the mutilated state of the part. Photos serve as additional evidence that mutilation was performed.</li>
+</ul>
+
+<p>The mutilation record is retained per the records retention schedule (Lesson 5.2). It serves multiple purposes:</p>
+
+<ul>
+  <li>Audit evidence at ASA audits</li>
+  <li>Customer notification if a customer asks "what happened to this part?"</li>
+  <li>FAA evidence if a SUP investigation is connected to the part</li>
+  <li>Operational record proving that the supply-chain integrity loop closed</li>
+</ul>
+
+<h4>Component-level "identity mutilation" — scrapping the assembly while preserving serviceable sub-parts</h4>
+
+<p>For assembly-level components (a starter, a fuel control unit, a hydraulic pump, an accessory gearbox), the mutilation discipline applies to the <em>identity</em> of the component, not necessarily to every internal sub-part. The principle:</p>
+
+<blockquote style="background:#f4f6fa; border-left:4px solid #0d2240; padding:14px 18px; margin:14px 0;">
+<p>Once a component has been formally logged as scrap, the original Part Number and Serial Number (typically on the data plate) must be destroyed such that <strong>that specific component identity cannot be returned to service.</strong> Internal sub-components that are themselves separately tracked and remain serviceable may be retained for use, provided they are properly identified and entered into inventory on their own.</p>
+</blockquote>
+
+<p>Example: a starter assembly fails final test. The starter is condemned. Mutilation of the starter\'s identity is accomplished by:</p>
+
+<ul>
+  <li>Destroying the starter data plate (grinding off or stamping over the PN/SN so they cannot be read)</li>
+  <li>Logging the starter PN/SN as scrap in the mutilation record</li>
+</ul>
+
+<p>The starter\'s identity is now mutilated — no one can take that starter housing, polish it up, and represent it as the original PN/SN starter.</p>
+
+<p>Inside the starter, individual sub-components may be in serviceable condition:</p>
+
+<ul>
+  <li>Bearings (separately serialized or lot-traceable, in service-life)</li>
+  <li>Brush sets</li>
+  <li>Solenoid (separately serialized)</li>
+  <li>Drive gears</li>
+  <li>Housings (separately serialized in some designs)</li>
+</ul>
+
+<p>Each sub-component that has its own identity (separately serialized, with traceable records) and is in serviceable condition can be removed from the condemned assembly and entered into inventory as a serviceable part on its own. The sub-component is now a serviceable inventory item with its own PN/SN, its own back-to-birth (if applicable), and its own receiving inspection record.</p>
+
+<h5>The discipline that makes this work</h5>
+
+<ol>
+  <li><strong>The assembly\'s identity is formally scrapped first.</strong> The scrap disposition is recorded, the data plate destroyed, the assembly PN/SN logged as scrap.</li>
+  <li><strong>Sub-component removal is documented.</strong> Which sub-components were removed, their PN/SN/lot, their condition, their inspection status.</li>
+  <li><strong>Each sub-component is received into inventory as a serviceable part.</strong> Treated like any incoming serviceable part — receiving inspection, documentation verification, tagging.</li>
+  <li><strong>The assembly housing (or whatever component carried the data plate) is fully mutilated.</strong> Physical destruction prevents the housing from being reused as a counterfeit "rebuild."</li>
+  <li><strong>The disposition record links them.</strong> Source assembly PN/SN scrapped → sub-components recovered → each tagged as serviceable.</li>
+</ol>
+
+<h5>What this prevents</h5>
+
+<p>Without identity mutilation: someone could take a condemned starter, "refurbish" it (clean it up, possibly replace internals), and resell it under the original PN/SN. The unsuspecting customer installs what they believe is the original certified assembly with its full traceability — but the assembly\'s identity has been compromised. The PN/SN no longer reliably traces back to certified manufacturing.</p>
+
+<p>With identity mutilation: the data plate is destroyed. The PN/SN is formally logged as scrap. Any "refurbished" starter someone might try to sell under that PN/SN would lack the original data plate (mutilated) and would be inconsistent with the scrap record on file. Fraud is detectable.</p>
+
+<h5>What this enables</h5>
+
+<p>The sub-component pathway captures real value. A failed starter assembly might cost $15,000 to overhaul. If the bearings, solenoid, and other internals are serviceable, those sub-components have market value independently — possibly several thousand dollars in aggregate. The identity-mutilation discipline lets TurbineWorks recover that value without compromising supply-chain integrity.</p>
+
+<h5>When this approach applies</h5>
+
+<p>This discipline applies to assemblies where:</p>
+<ul>
+  <li>The assembly itself carries a unique identifying PN/SN (typically on a data plate)</li>
+  <li>Internal sub-components are separately identifiable and traceable</li>
+  <li>The internal sub-components have their own service-life status (not life-expired LLPs in a condemned assembly)</li>
+  <li>The internal sub-components were not the cause of the assembly\'s condemnation</li>
+</ul>
+
+<p>This does NOT apply to:</p>
+<ul>
+  <li>Confirmed unapproved parts at any level (everything in the chain is suspect)</li>
+  <li>Sub-components that themselves failed or are life-expired</li>
+  <li>Sub-components whose traceability cannot be established</li>
+  <li>Assemblies where the OEM specifies the assembly is non-divisible (some sealed units)</li>
+</ul>
+
+<p>The QA Manager dispositions case-by-case. The TurbineWorks QAM should specify which assembly types and which sub-components are eligible for this pathway, and the procedure for executing it.</p>
+
+<h4>The mutilation area</h4>
+
+<p>A designated area for mutilation operations:</p>
+
+<ul>
+  <li>Physically separate from serviceable inventory and from quarantine</li>
+  <li>Equipped with appropriate cutting/crushing/destruction tools</li>
+  <li>Has containment for fragments and debris (cutting produces sharp pieces; crushing produces fragments)</li>
+  <li>Has appropriate safety equipment for personnel (eye protection, gloves, hearing protection if power tools are used)</li>
+  <li>Has access controls — only authorized personnel</li>
+  <li>Has documented procedures for each part category\'s mutilation method</li>
+</ul>
+
+<p>Some smaller distributors don\'t have a full dedicated mutilation area but instead schedule mutilation operations at intervals using shared workspace. This is acceptable if the workspace is appropriately controlled during mutilation operations and if the discipline is rigorous.</p>
+
+<h4>Cadence of mutilation</h4>
+
+<p>Mutilation should occur on a regular cadence, not on an "when we get around to it" basis. Parts in scrap awaiting mutilation are at risk of diversion until destroyed. Typical cadence:</p>
+
+<ul>
+  <li>Weekly for high-volume operations</li>
+  <li>Monthly for moderate-volume</li>
+  <li>Quarterly minimum — parts shouldn\'t sit in scrap for longer than this</li>
+</ul>
+
+<p>The cadence is documented in the QAM. Each mutilation session is recorded. Aged scrap items (parts in scrap longer than the defined cadence allows) trigger investigation — why hasn\'t mutilation happened?</p>
 
 <h4>Disposal of mutilated parts</h4>
-<p>After mutilation, the part can be disposed of as scrap metal or general waste. Some materials (cadmium plating, beryllium, hazardous coatings) require hazardous-waste disposal. Some high-value materials (titanium, nickel-base superalloys) have salvage value as scrap — sell to a scrap dealer with documentation.</p>
+
+<p>After mutilation, the destroyed part can be disposed of. Disposal options depend on the materials involved:</p>
+
+<h5>Standard scrap metal disposal</h5>
+
+<p>Most mutilated aviation parts can be sold to a scrap metal dealer or disposed of as recycling. The material has value — particularly titanium, nickel-base superalloys, and other aerospace-grade alloys. Scrap dealers pay by weight for the material.</p>
+
+<p>Document the disposal: who took it, when, weight or quantity, where it went. The receipt or weighing record is retained as part of the disposal documentation.</p>
+
+<h5>Hazardous waste disposal</h5>
+
+<p>Some parts contain hazardous materials:</p>
+<ul>
+  <li>Cadmium plating</li>
+  <li>Beryllium components</li>
+  <li>Chromium-containing alloys</li>
+  <li>Lead-based solder</li>
+  <li>PCB-containing capacitors (rare but possible in old electronics)</li>
+  <li>Asbestos (in some legacy brake materials or insulation)</li>
+</ul>
+
+<p>These require hazardous waste disposal per EPA and applicable state regulations. A licensed hazardous waste contractor handles the disposal. Documentation includes manifests showing chain of custody to final disposal.</p>
+
+<h5>Hazmat disposal</h5>
+
+<p>Pyrotechnics, batteries, oxidizers, and other hazmat require disposal per 49 CFR and specific manufacturer guidance. Often handled by specialized contractors. Documentation per hazmat shipping requirements.</p>
 
 <h4>The supply-chain integrity loop</h4>
-<p>Mutilation is the closing of the loop. Without it, the SUP-prevention work at the front of the operation is undone at the back. ASA auditors specifically check mutilation handling because they understand it is the single point at which an inadequate process most directly causes SUP re-entry to the supply chain.</p>
 
-<p><em>[TurbineWorks Procedure Reference: insert TurbineWorks mutilation SOP, including approved methods per part category and the designated mutilation area location.]</em></p>
+<p>Mutilation closes the loop. Module 1 Lesson 1.2 established that scrap diversion is the largest single SUP pathway. Module 1 Lesson 1.5 covered SUP reporting. Module 5 Lesson 5.4 (this lesson) covers the destruction that prevents the diverted-scrap pathway.</p>
+
+<p>From the supply-chain perspective:</p>
+
+<ul>
+  <li>Receiving inspection identifies parts coming in — gate at the front</li>
+  <li>Storage discipline maintains integrity during inventory time</li>
+  <li>Shipping inspection ensures correct parts go out</li>
+  <li>Mutilation ensures unsalvageable parts cannot re-enter — gate at the back</li>
+</ul>
+
+<p>Without mutilation, the SUP-prevention work at the front of the operation is undone at the back. ASA auditors specifically check mutilation handling because they understand it is the single point at which an inadequate process most directly causes SUP re-entry to the supply chain.</p>
+
+<h4>What the auditor checks</h4>
+
+<p>Mutilation-related audit activities:</p>
+
+<ul>
+  <li>Random pull of a mutilation record from the past 6-12 months. Verify completeness — all required elements present, photographs if applicable, witness signature present.</li>
+  <li>Walk the mutilation area. Are there parts awaiting mutilation? How long have they been waiting?</li>
+  <li>Review the mutilation schedule. Is mutilation occurring on the QAM-defined cadence?</li>
+  <li>Inspect scrap pile (mutilated parts not yet disposed). Are they actually mutilated, or are some intact parts mixed in?</li>
+  <li>Trace a specific mutilation: starting from the NCR that disposed the part to scrap, verify the mutilation record exists and is complete.</li>
+  <li>Review disposal records. Are mutilated parts being disposed of with documentation?</li>
+  <li>Interview the personnel who perform mutilation. Are they trained? Do they know the methods? Do they know the documentation requirements?</li>
+</ul>
+
+<h5>Common mutilation audit findings</h5>
+
+<ul>
+  <li>Mutilation records missing the witness signature or photograph documentation</li>
+  <li>Parts in scrap for longer than the QAM-defined cadence</li>
+  <li>Mutilation method not appropriate to the part — too light, easily reversible</li>
+  <li>Data plates removed but not destroyed (stored separately)</li>
+  <li>Mutilation performed without QA Manager involvement</li>
+  <li>Disposal records missing for previously-mutilated parts</li>
+  <li>"Mutilation" consisting only of stamps or paint markings without physical destruction</li>
+</ul>
+
+<h4>References</h4>
+
+<ul>
+  <li><strong>FAA AC 21-38</strong> — Disposition of Unsalvageable Aircraft Parts (the primary reference)</li>
+  <li><strong>ASA-100 §8</strong> — Records retention for mutilation records</li>
+  <li><strong>EPA hazardous waste regulations (40 CFR Parts 260-279)</strong> — for hazardous material disposal</li>
+  <li><strong>49 CFR</strong> — for hazmat disposal</li>
+  <li>TurbineWorks QAM Section [TBD] — Mutilation procedure, approved methods per part category, designated mutilation area</li>
+</ul>
+
+<h4>Self-check</h4>
+
+<ol>
+  <li>Why is mutilation operationally critical to the supply-chain integrity loop?</li>
+  <li>Name 7 triggers for unsalvageable disposition that require mutilation.</li>
+  <li>What is the core technical requirement for valid mutilation per AC 21-38?</li>
+  <li>Name 5 acceptable mutilation methods.</li>
+  <li>List 4 methods that do NOT satisfy mutilation requirements (commonly attempted but inadequate).</li>
+  <li>Who must be involved in performing mutilation, and why is independent verification required?</li>
+  <li>What 8 elements does a mutilation record contain?</li>
+  <li>What is the typical cadence for mutilation operations and why does cadence matter?</li>
+  <li>What are 3 disposal pathways for mutilated parts depending on material?</li>
+  <li>Why is mutilation the most-checked control in the SUP prevention chain?</li>
+</ol>
+
+<p><em>[TurbineWorks Procedure Reference: insert TurbineWorks mutilation SOP including approved methods per part category, designated mutilation area location, and the mutilation schedule.]</em></p>
 HTML
         ],
         [
             'name'  => 'Lesson 5.5 — Document Control and Revision Management',
-            'intro' => '<p>Keeping the documents that govern operations current and approved.</p>',
+            'intro' => '<p>Keeping every document that governs operations current, approved, and consistently distributed. Document control is a quality system within the quality system — the discipline that ensures everyone is operating from the same current playbook, not from a mix of old and new versions.</p>',
             'content' => <<<'HTML'
-<h3>Document Control</h3>
-<p>The QAM, SOPs, work instructions, forms, and procedures that govern TurbineWorks operations are themselves controlled documents. Document control ensures that everyone is working from the current revision, that obsolete revisions are retrieved, and that changes are reviewed and approved.</p>
+<h3>Document Control and Revision Management</h3>
 
-<h4>What is a "controlled document"</h4>
-<p>A controlled document is one that:</p>
+<p>Every document at TurbineWorks that governs operations — the QAM, SOPs, work instructions, forms, training materials, even external references like FAA Advisory Circulars and OEM publications — is a controlled document. Document control is the discipline that ensures:</p>
+
 <ul>
-  <li>Has a unique identifier (document number)</li>
-  <li>Has a revision number or letter</li>
-  <li>Has an effective date</li>
-  <li>Has been formally approved (signature of authorized person)</li>
-  <li>Is distributed to all who need it</li>
-  <li>Has obsolete revisions retrieved when superseded</li>
+  <li>Everyone is working from the current revision</li>
+  <li>Obsolete revisions are retrieved when superseded</li>
+  <li>Changes are reviewed and approved before becoming effective</li>
+  <li>The history of changes is preserved</li>
+  <li>Personnel are trained on revisions affecting their work</li>
 </ul>
-<p>An uncontrolled copy (someone's printout from 6 months ago kept in a desk drawer) is not the current revision. Working from an uncontrolled copy is a finding.</p>
+
+<p>This lesson covers what makes a document "controlled," the TurbineWorks document hierarchy, the revision lifecycle, form-specific considerations, external reference management, and the audit verification of document control.</p>
+
+<h4>Why document control matters</h4>
+
+<p>Consider an operation without document control. Multiple versions of the receiving inspection procedure exist around the facility — one in the QA Manager\'s binder, one printed and pinned at each receiving station, several on individual workstation computers. When the procedure is updated, the QA Manager\'s binder is current but the printed copies still show the old steps. Receiving inspectors continue performing the old procedure because that\'s what their printed reference shows. Months pass. An auditor pulls the procedure as referenced by the inspectors and finds it differs from the QAM. Finding.</p>
+
+<p>Or worse: the inspector follows a procedure that has been updated specifically because the old version had a gap that let SUPs through. The inspector\'s working copy doesn\'t reflect the update. The inspector misses the SUP. The customer receives the unapproved part.</p>
+
+<p>Document control prevents this by enforcing that the current revision is the only revision in use. The discipline is operationally simple but consistently fails when treated as administrative overhead rather than a core quality control.</p>
+
+<h4>What is a controlled document</h4>
+
+<p>A document is "controlled" when it has these characteristics:</p>
+
+<ul>
+  <li><strong>Unique identifier.</strong> Document number (e.g., TWP-06 for Receiving Inspection Procedure, TWF-4 for Training Log Form). The identifier is unique and stable across revisions.</li>
+  <li><strong>Revision number or letter.</strong> Distinguishes the current version from previous. Common conventions: numeric (Rev 1, Rev 2, Rev 3) or alphabetic (Rev A, Rev B, Rev C).</li>
+  <li><strong>Effective date.</strong> The date from which this revision is the authoritative version. Personnel must follow this revision starting on the effective date.</li>
+  <li><strong>Formal approval.</strong> Signature(s) of the authorized approver(s). Typically the QA Manager for procedures and forms; the Accountable Manager for the QAM itself.</li>
+  <li><strong>Distribution list.</strong> Who receives the document and where. Controlled copies are tracked.</li>
+  <li><strong>Retrieval of obsolete revisions.</strong> When a new revision is released, the previous revision\'s copies are retrieved from circulation (or stamped OBSOLETE if kept for historical reference).</li>
+</ul>
+
+<p>A document without these characteristics is uncontrolled. An uncontrolled copy is, by definition, not the current revision regardless of what it actually says — because there\'s no system ensuring it stays current.</p>
+
+<h5>The "uncontrolled copy" problem</h5>
+
+<p>Personnel often create their own working copies of procedures — print outs, photocopies, notes on the procedure. These uncontrolled copies are problematic because:</p>
+
+<ul>
+  <li>When the procedure is revised, the uncontrolled copy doesn\'t automatically update</li>
+  <li>The employee may continue following the old procedure without realizing it</li>
+  <li>An auditor finding the uncontrolled copy treats it as a finding even if the content happens to be current</li>
+</ul>
+
+<p>The discipline: if you need a working copy, get it from the controlled source. If you make a physical printout for reference, mark it "UNCONTROLLED — VERIFY CURRENT REVISION BEFORE USE" and check the controlled source periodically. Or use only the controlled electronic copy.</p>
 
 <h4>The TurbineWorks document hierarchy</h4>
+
+<p>Documents are organized in a hierarchy from top-level policy down to operational forms:</p>
+
 <pre>
-QAM                  — Quality Assurance Manual (top-level)
-├── Procedures (TWP-xx)   — Process-level (Receiving, Storage, Shipping, etc.)
-├── Work Instructions     — Step-by-step task instructions
-├── Forms (TWF-xx)        — Records templates (TWF-4 training log, etc.)
-└── External references   — FAA ACs, ASA-100, OEM publications
+QAM (Quality Assurance Manual)
+  └─ Top-level. Describes how TurbineWorks complies with ASA-100.
+     Approved by Accountable Manager. Owns highest revision authority.
+
+Procedures (TWP-XX)
+  └─ Process-level. Receiving, storage, shipping, recordkeeping, etc.
+     Approved by QA Manager. Reference back to QAM sections.
+
+Work Instructions
+  └─ Task-level. Step-by-step for specific activities.
+     Approved by QA Manager or designated process owner.
+
+Forms (TWF-XX)
+  └─ Records templates. The blank forms used to capture work performed.
+     Approved by QA Manager.
+
+External references
+  └─ FAA Advisory Circulars, ASA-100 standard, OEM publications.
+     Not TurbineWorks-controlled but managed for currency.
+
+Records
+  └─ Completed forms and other artifacts proving work was done.
+     Subject to retention schedule (Lesson 5.2).
 </pre>
 
-<h4>Revision control</h4>
-<p>When a document is revised:</p>
-<ol>
-  <li>The change is proposed (revision request)</li>
-  <li>The change is reviewed by appropriate authority (typically QA Manager + affected process owner)</li>
-  <li>The change is approved</li>
-  <li>The new revision number/letter is assigned</li>
-  <li>The effective date is set</li>
-  <li>The new revision is distributed to all controlled locations</li>
-  <li>Obsolete copies are retrieved (or marked OBSOLETE if kept for historical reference)</li>
-  <li>Training on the change is delivered to affected personnel (and documented)</li>
-</ol>
+<h5>Each level\'s authority</h5>
 
-<h4>Form control</h4>
-<p>Forms (like TWF-4 — Training Log) are documents too. Every blank form in use should be the current revision. When a form is revised:</p>
 <ul>
-  <li>Old blank forms are retrieved from circulation</li>
-  <li>The new form is distributed</li>
-  <li>Records created on old forms remain valid (they document the work done at the time)</li>
+  <li><strong>QAM</strong> — Accountable Manager signs. The Accountable Manager\'s commitment to the quality system is the QAM\'s authority. Revisions require Accountable Manager re-approval.</li>
+  <li><strong>Procedures</strong> — QA Manager signs. The QA Manager is authorized to revise procedures that implement the QAM. Significant procedural changes may require Accountable Manager review.</li>
+  <li><strong>Work instructions</strong> — QA Manager or designated process owner. Lower-level changes can be revised more frequently as operational learning accumulates.</li>
+  <li><strong>Forms</strong> — QA Manager. Forms changes are routine as forms evolve.</li>
 </ul>
 
-<h4>Document control register</h4>
-<p>A register lists every controlled document, its current revision, effective date, owner, and distribution list. The register is itself a controlled document — kept current.</p>
+<p>The authority hierarchy parallels the document hierarchy. Higher-level documents require higher-level approval.</p>
 
-<h4>Why this matters</h4>
-<p>ASA auditors test document control rigorously. They will:</p>
+<h4>The revision lifecycle</h4>
+
+<p>When a document is revised, a defined lifecycle applies:</p>
+
+<h5>Step 1 — Revision proposed</h5>
+
+<p>The need for revision is identified. Sources of revision proposals:</p>
+
 <ul>
-  <li>Pull a form used recently and verify it was the current revision at the time</li>
-  <li>Check the QAM revision on file against the QAM the QA Manager refers to</li>
-  <li>Ask employees to produce the procedure they follow for a specific task and verify it is current</li>
-  <li>Look for uncontrolled copies in work areas (a printed SOP at someone's workstation that is one revision behind is a finding)</li>
+  <li>Corrective action — an NCR identifies that a procedure caused a finding; the procedure needs adjustment</li>
+  <li>Internal audit finding — auditor notes the procedure doesn\'t reflect actual practice</li>
+  <li>ASA-100 revision — the underlying standard changes; downstream procedures must adapt</li>
+  <li>OEM publication change — new requirements flow down</li>
+  <li>Customer contract change — new customer-specific requirements</li>
+  <li>Operational learning — personnel identify that the procedure has gaps or could be clearer</li>
+  <li>Periodic review — every controlled document is reviewed periodically (typically every 2-3 years) regardless of whether changes are obvious</li>
+</ul>
+
+<p>A revision request is created identifying what change is proposed and why.</p>
+
+<h5>Step 2 — Revision reviewed</h5>
+
+<p>The proposed change is reviewed by appropriate authority:</p>
+
+<ul>
+  <li>QA Manager review for procedures and forms</li>
+  <li>Affected process owner review (e.g., the warehouse manager for storage procedure changes)</li>
+  <li>Cross-reference check — does the proposed change conflict with other procedures or with ASA-100?</li>
+  <li>Implementation feasibility — can operations actually execute the new procedure?</li>
+</ul>
+
+<p>The review may result in modifications to the proposed change before approval.</p>
+
+<h5>Step 3 — Revision approved</h5>
+
+<p>The approver signs the new revision. Approval is documented with date.</p>
+
+<h5>Step 4 — New revision number/letter assigned</h5>
+
+<p>The revision identifier is updated. Document control register reflects the new revision.</p>
+
+<h5>Step 5 — Effective date set</h5>
+
+<p>The effective date may be the approval date, or it may be set forward to allow time for distribution and training. Setting effective date in advance avoids confusion about which revision applies on which day.</p>
+
+<h5>Step 6 — New revision distributed</h5>
+
+<p>Controlled copies of the new revision are distributed to all controlled locations. The distribution list defines where each controlled copy goes.</p>
+
+<p>Distribution is documented — who received the new revision, when. The recipients confirm receipt (signature or electronic acknowledgment).</p>
+
+<h5>Step 7 — Obsolete revisions retrieved</h5>
+
+<p>Previous revisions are retrieved from circulation. Options for handling retrieved copies:</p>
+
+<ul>
+  <li>Destroyed (most common for paper)</li>
+  <li>Marked OBSOLETE and kept in historical archive (for the controlling-copy archive)</li>
+  <li>Returned to QA for destruction or archival</li>
+</ul>
+
+<p>The retrieval is documented — what was retrieved, when, by whom.</p>
+
+<h5>Step 8 — Training on the change</h5>
+
+<p>Personnel affected by the change receive training. The training is documented. For significant procedural changes (a new requirement added, a step removed, a tool change), formal training is appropriate. For minor changes (wording updates, format improvements), a notification may suffice.</p>
+
+<p>Training records are part of the personnel training file. If an auditor later asks "when was this employee trained on the current revision of this procedure," the records support the answer.</p>
+
+<h4>Form control specifics</h4>
+
+<p>Forms (TWF-XX series) are documents subject to the same revision control as procedures, with some specific considerations:</p>
+
+<h5>Form revisions affect blank forms in circulation</h5>
+
+<p>Unlike a procedure that\'s typically a stack of paper or a PDF, blank forms are physical pre-printed pages stocked at various stations for use. When a form is revised:</p>
+
+<ul>
+  <li>Old blank forms are retrieved from circulation</li>
+  <li>The new form is printed/distributed</li>
+  <li>Personnel are notified of the change</li>
+</ul>
+
+<h5>Records created on old forms remain valid</h5>
+
+<p>A record completed on an older revision of a form is still a valid record — it documents the work done at the time. The record doesn\'t become invalid because the form was subsequently revised. The revision affects new records going forward, not existing records.</p>
+
+<p>This matters for retention: a 5-year-old receiving inspection record on Rev A of TWF-06 is still the audit-evidence record of that 5-year-old inspection. Don\'t re-create on Rev B just because Rev B is now current.</p>
+
+<h5>Form revision marking</h5>
+
+<p>Each form indicates its revision (typically in a footer: "TWF-06 Rev C, Effective 2024-03-15"). When personnel pull a blank form from a stock, the revision is visible. Pickers can confirm they\'re using the current revision before completing a record.</p>
+
+<h4>The document control register</h4>
+
+<p>The register lists every controlled document. The register is itself a controlled document.</p>
+
+<h5>What the register contains</h5>
+
+<ul>
+  <li>Document identifier (TWP-XX, TWF-XX, etc.)</li>
+  <li>Document title</li>
+  <li>Current revision number or letter</li>
+  <li>Effective date</li>
+  <li>Document owner (responsible person)</li>
+  <li>Distribution list (where controlled copies are located)</li>
+  <li>Last reviewed date and next review due date</li>
+</ul>
+
+<p>The register is updated whenever a document is created, revised, or retired. The register is the master inventory of TurbineWorks controlled documents.</p>
+
+<h5>Why the register matters at audit</h5>
+
+<p>The auditor uses the register to verify document control:</p>
+
+<ul>
+  <li>Sample a document from the register, verify the current revision in the field matches the register</li>
+  <li>Check that the next-review-due dates aren\'t overdue (significantly overdue suggests the document control system isn\'t actively managed)</li>
+  <li>Verify that every document referenced from the QAM is in the register</li>
+  <li>Verify that distribution lists in the register match actual distribution</li>
+</ul>
+
+<h4>External reference management</h4>
+
+<p>TurbineWorks operations also depend on external documents not under TurbineWorks control:</p>
+
+<ul>
+  <li>FAA Advisory Circulars (AC 00-56B, AC 21-29D, AC 21-38, AC 20-62E, AC 120-77)</li>
+  <li>ASA-100 standard (the version TurbineWorks is accredited against)</li>
+  <li>FAA regulations (14 CFR Parts 21, 39, 43, etc.)</li>
+  <li>OEM Engine Shop Manuals and Component Maintenance Manuals</li>
+  <li>OEM Service Bulletins and Airworthiness Directives</li>
+  <li>Industry standards (ATA Spec 300, NAS 412, ANSI/ESD S20.20, IATA DGR, etc.)</li>
+</ul>
+
+<p>External references aren\'t TurbineWorks-controlled, but they are managed:</p>
+
+<ul>
+  <li>The current revision of each is identified</li>
+  <li>Source for obtaining current revision is identified (FAA website, ASA member portal, OEM technical publication portal, etc.)</li>
+  <li>TurbineWorks personnel reference the current external source — not an old cached copy</li>
+  <li>When an external reference is revised, downstream TurbineWorks documents are reviewed for impact</li>
+</ul>
+
+<p>For the most-referenced externals (ASA-100 itself, primary FAA ACs), TurbineWorks may maintain copies in the document control system with explicit notation about which revision is the controlling version.</p>
+
+<h4>Why this matters at audit</h4>
+
+<p>ASA auditors test document control rigorously. They will:</p>
+
+<ul>
+  <li>Pull a form used recently and verify it was the current revision at the time the work was performed</li>
+  <li>Check the QAM revision on file against the QAM the QA Manager refers to during the audit</li>
+  <li>Ask employees to produce the procedure they follow for a specific task and verify it is the current revision</li>
+  <li>Look for uncontrolled copies in work areas (a printed SOP at someone\'s workstation that is one revision behind is a finding)</li>
+  <li>Review the document control register</li>
+  <li>Spot-check the document control workflow on a recent revision</li>
+  <li>Verify external references are current — particularly check that the ASA-100 revision TurbineWorks operates against matches what ASA published as the current accreditation criteria</li>
 </ul>
 
 <h4>Common document control failures</h4>
+
 <ul>
-  <li>SOP revised but the revision date never set</li>
-  <li>New revision distributed but old copies still in use because no one retrieved them</li>
-  <li>Forms revised but printed stockpiles still circulating</li>
-  <li>Document register out of date — current revision in register doesn't match the actual current revision</li>
-  <li>External references (FAA ACs) not updated when FAA issues a new revision</li>
+  <li><strong>SOP revised but the effective date never set or set in the past.</strong> When did the new revision actually start applying? Ambiguity is a finding.</li>
+  <li><strong>New revision distributed but old copies still in use because no one retrieved them.</strong> Distribution list incomplete or retrieval not enforced.</li>
+  <li><strong>Forms revised but printed stockpiles still circulating.</strong> Personnel use up old forms because no one removed them.</li>
+  <li><strong>Document register out of date.</strong> Current revision in register doesn\'t match the actual current revision in the field.</li>
+  <li><strong>External references not updated.</strong> FAA AC referenced by an old revision number that has since been superseded.</li>
+  <li><strong>Personnel can\'t locate the controlled copy.</strong> The QAM is "around here somewhere" rather than at a defined location.</li>
+  <li><strong>Uncontrolled photocopies in work areas without proper marking.</strong></li>
+  <li><strong>Training on a revision not documented.</strong> Personnel were notified but the training record doesn\'t exist.</li>
 </ul>
 
-<p><em>[TurbineWorks Procedure Reference: insert TurbineWorks document control SOP and register location here.]</em></p>
+<h4>References</h4>
+
+<ul>
+  <li><strong>ASA-100</strong> — Document control requirements (typically in early sections covering general QMS)</li>
+  <li><strong>ISO 9001 §7.5</strong> — Documented information (the underlying QMS principles)</li>
+  <li>TurbineWorks QAM Section [TBD] — Document Control SOP, document control register location, revision approval workflow</li>
+</ul>
+
+<h4>Self-check</h4>
+
+<ol>
+  <li>Why does document control matter — what failure mode does it prevent?</li>
+  <li>What 6 characteristics make a document "controlled"?</li>
+  <li>What is the "uncontrolled copy" problem?</li>
+  <li>Describe the TurbineWorks document hierarchy from QAM down to forms.</li>
+  <li>What is the 8-step revision lifecycle?</li>
+  <li>Why do records created on old form revisions remain valid even after the form is revised?</li>
+  <li>What does the document control register contain?</li>
+  <li>How are external references (FAA ACs, ASA-100, OEM publications) managed?</li>
+  <li>What 7 things does an auditor specifically check for document control?</li>
+  <li>List 6 common document control failures.</li>
+</ol>
+
+<p><em>[TurbineWorks Procedure Reference: insert TurbineWorks document control SOP reference, the document control register location, the revision approval workflow, and the controlled-document distribution list location.]</em></p>
 HTML
         ],
         [
