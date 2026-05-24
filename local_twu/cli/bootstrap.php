@@ -21,11 +21,18 @@ require_once($CFG->dirroot . '/course/modlib.php');
 require_once($CFG->dirroot . '/cohort/lib.php');
 require_once($CFG->libdir . '/clilib.php');
 require_once($CFG->libdir . '/completionlib.php');
+require_once($CFG->dirroot . '/question/engine/bank.php');
+require_once($CFG->dirroot . '/question/editlib.php');
 require_once(__DIR__ . '/../content/content.php');
+require_once(__DIR__ . '/../content/quizzes.php');
+require_once(__DIR__ . '/../content/glossary.php');
+
+// Run CLI as admin so question_save_from_form() etc. have proper $USER context.
+\core\session\manager::set_user(get_admin());
 
 // Bump the suffix here (and in the entrypoint marker docs) when adding new
 // bootstrap steps that should run on existing sites.
-$marker = $CFG->dataroot . '/.twu-bootstrapped-v10';
+$marker = $CFG->dataroot . '/.twu-bootstrapped-v12';
 $force  = in_array('--force', $argv ?? [], true);
 if (file_exists($marker) && !$force) {
     cli_writeln("[twu] already bootstrapped (marker present at $marker). Pass --force to re-run.");
@@ -179,34 +186,17 @@ foreach ($initialmodules as $mod) {
     $createdcourses[$mod['idnumber']] = twu_ensure_course($initialcat->id, $mod);
 }
 
-// Attach the generated course title cards (or whatever PNG is on disk with
-// that name — replace with photorealistic AI-generated images later by
-// overwriting local_twu/assets/courses/TWF4-X.png in the repo).
+// Clear course overview/cover images. Snap renders overviewfiles as a
+// full-width banner at the top of every course page AND as the catalog
+// thumbnail — there's no setting to use it as thumbnail only. Letting
+// Snap auto-generate placeholder tiles (colored by category) gives a
+// cleaner look than the duplicated wordmark + title overlay we had.
 $fs = get_file_storage();
-foreach ($initialmodules as $mod) {
-    $idnumber  = $mod['idnumber'];
-    $course    = $createdcourses[$idnumber];
-    $cardpath  = $CFG->dirroot . "/local/twu/assets/courses/{$idnumber}.png";
-    if (!file_exists($cardpath)) {
-        cli_writeln("[twu] no card image for $idnumber; skipping (expected $cardpath)");
-        continue;
-    }
+foreach ($createdcourses as $idnumber => $course) {
     $coursecontext = context_course::instance($course->id);
     $fs->delete_area_files($coursecontext->id, 'course', 'overviewfiles', 0);
-    try {
-        $fs->create_file_from_pathname([
-            'contextid' => $coursecontext->id,
-            'component' => 'course',
-            'filearea'  => 'overviewfiles',
-            'itemid'    => 0,
-            'filepath'  => '/',
-            'filename'  => "{$idnumber}.png",
-        ], $cardpath);
-        cli_writeln("[twu] attached course card {$idnumber}.png to course id={$course->id}");
-    } catch (Exception $e) {
-        cli_writeln("[twu] could not attach card for $idnumber: " . $e->getMessage());
-    }
 }
+cli_writeln("[twu] cleared course overview images for Initial Training courses (Snap will auto-tile)");
 
 // ---------------------------------------------------------------------------
 // 4. Cohorts (site-wide, used for auto-enrollment workflows)
@@ -325,6 +315,213 @@ foreach ($createdcourses as $idnumber => $course) {
 }
 
 // ---------------------------------------------------------------------------
+// 5e2. Quizzes — multichoice knowledge-check at the end of each Initial Training module
+// ---------------------------------------------------------------------------
+function twu_ensure_question_category(stdClass $course, string $name): stdClass {
+    global $DB;
+    $coursecontext = context_course::instance($course->id);
+    $existing = $DB->get_record('question_categories',
+        ['name' => $name, 'contextid' => $coursecontext->id]);
+    if ($existing) {
+        return $existing;
+    }
+    // Ensure top-level category exists in this context.
+    $top = $DB->get_record('question_categories',
+        ['contextid' => $coursecontext->id, 'parent' => 0]);
+    if (!$top) {
+        $top = new stdClass();
+        $top->name = 'top';
+        $top->contextid = $coursecontext->id;
+        $top->info = '';
+        $top->infoformat = FORMAT_HTML;
+        $top->parent = 0;
+        $top->sortorder = 0;
+        $top->stamp = make_unique_id_code();
+        $top->idnumber = null;
+        $top->id = $DB->insert_record('question_categories', $top);
+    }
+    $cat = new stdClass();
+    $cat->name = $name;
+    $cat->contextid = $coursecontext->id;
+    $cat->info = '';
+    $cat->infoformat = FORMAT_HTML;
+    $cat->parent = $top->id;
+    $cat->sortorder = 999;
+    $cat->stamp = make_unique_id_code();
+    $cat->idnumber = null;
+    $cat->id = $DB->insert_record('question_categories', $cat);
+    return $cat;
+}
+
+function twu_create_multichoice(stdClass $qcategory, array $qdata, int $contextid): ?int {
+    global $DB;
+
+    // Check by question name within the category — idempotent.
+    $existing = $DB->get_record_sql(
+        "SELECT q.id FROM {question} q
+           JOIN {question_versions} qv ON qv.questionid = q.id
+           JOIN {question_bank_entries} qbe ON qbe.id = qv.questionbankentryid
+          WHERE qbe.questioncategoryid = :catid AND q.name = :name",
+        ['catid' => $qcategory->id, 'name' => $qdata['name']]
+    );
+    if ($existing) {
+        return (int)$existing->id;
+    }
+
+    $qtype = \question_bank::get_qtype('multichoice');
+
+    $form = new stdClass();
+    $form->category = $qcategory->id . ',' . $contextid;
+    $form->name = $qdata['name'];
+    $form->questiontext = ['text' => $qdata['question'], 'format' => FORMAT_HTML, 'itemid' => 0];
+    $form->generalfeedback = ['text' => $qdata['explain'] ?? '', 'format' => FORMAT_HTML, 'itemid' => 0];
+    $form->defaultmark = 1.0;
+    $form->penalty = 0.3333333;
+    $form->qtype = 'multichoice';
+    $form->single = 1;
+    $form->shuffleanswers = 1;
+    $form->answernumbering = 'abc';
+    $form->showstandardinstruction = 0;
+    $form->correctfeedback = ['text' => '<p>Correct.</p>', 'format' => FORMAT_HTML, 'itemid' => 0];
+    $form->partiallycorrectfeedback = ['text' => '', 'format' => FORMAT_HTML, 'itemid' => 0];
+    $form->incorrectfeedback = ['text' => '<p>Not quite — review the explanation and the corresponding lesson.</p>', 'format' => FORMAT_HTML, 'itemid' => 0];
+    $form->shownumcorrect = 0;
+    $form->status = \core_question\local\bank\question_version_status::QUESTION_STATUS_READY;
+    $form->idnumber = '';
+    $form->tags = [];
+
+    $opts = $qdata['options'];
+    $correct = (int)$qdata['correct'];
+    $form->answer = [];
+    $form->fraction = [];
+    $form->feedback = [];
+    foreach ($opts as $i => $opttext) {
+        $form->answer[$i]   = ['text' => $opttext, 'format' => FORMAT_HTML, 'itemid' => 0];
+        $form->fraction[$i] = ($i === $correct) ? '1.0' : '0';
+        $form->feedback[$i] = ['text' => '', 'format' => FORMAT_HTML, 'itemid' => 0];
+    }
+
+    $stub = new stdClass();
+    $stub->createdby = 2; // admin user
+    $stub->idnumber = null;
+    $stub->id = 0;
+
+    try {
+        $question = $qtype->save_question($stub, $form);
+        return (int)$question->id;
+    } catch (Throwable $e) {
+        cli_writeln("[twu]     could not save question '{$qdata['name']}': " . $e->getMessage());
+        return null;
+    }
+}
+
+function twu_ensure_quiz(stdClass $course, array $quizdef): ?int {
+    global $DB, $CFG;
+    require_once($CFG->dirroot . '/mod/quiz/locallib.php');
+
+    // Idempotency: skip if a Quiz with this name already exists in the course.
+    $existing = $DB->get_record_sql(
+        "SELECT cm.id, q.id AS quizid
+           FROM {course_modules} cm
+           JOIN {modules} m ON m.id = cm.module AND m.name = 'quiz'
+           JOIN {quiz} q ON q.id = cm.instance
+          WHERE cm.course = :courseid AND q.name = :name",
+        ['courseid' => $course->id, 'name' => $quizdef['name']]
+    );
+    if ($existing) {
+        cli_writeln("[twu]   quiz exists: {$quizdef['name']} (cmid={$existing->id})");
+        return (int)$existing->id;
+    }
+
+    // 1. Question category in course context.
+    $qcategory = twu_ensure_question_category($course, $quizdef['name'] . ' — Question Bank');
+    $coursecontext = context_course::instance($course->id);
+
+    // 2. Create the questions.
+    $questionids = [];
+    foreach ($quizdef['questions'] as $qdata) {
+        $qid = twu_create_multichoice($qcategory, $qdata, $coursecontext->id);
+        if ($qid) {
+            $questionids[] = $qid;
+        }
+    }
+    if (!$questionids) {
+        cli_writeln("[twu]   no questions created for {$quizdef['name']}; skipping quiz creation");
+        return null;
+    }
+
+    // 3. Create the quiz module via add_moduleinfo.
+    $moduleinfo = (object)[
+        'modulename'          => 'quiz',
+        'course'              => $course->id,
+        'section'             => 0,
+        'visible'             => 1,
+        'visibleoncoursepage' => 1,
+        'name'                => $quizdef['name'],
+        'intro'               => $quizdef['intro'] ?? '',
+        'introformat'         => FORMAT_HTML,
+        'timeopen'            => 0,
+        'timeclose'           => 0,
+        'timelimit'           => 0,
+        'overduehandling'     => 'autosubmit',
+        'graceperiod'         => 0,
+        'preferredbehaviour'  => 'deferredfeedback',
+        'attempts'            => 3,
+        'attemptonlast'       => 0,
+        'grademethod'         => QUIZ_GRADEHIGHEST,
+        'questionsperpage'    => 1,
+        'navmethod'           => 'free',
+        'shuffleanswers'      => 1,
+        'sumgrades'           => count($questionids),
+        'grade'               => 100,
+        'gradepass'           => 80,
+        'decimalpoints'       => 2,
+        'questiondecimalpoints' => -1,
+        'showuserpicture'     => 0,
+        'showblocks'          => 0,
+        'reviewattempt'       => 0x10000 + 0x01000 + 0x00100 + 0x00010 + 0x00001,
+        'reviewcorrectness'   => 0x10000 + 0x01000,
+        'reviewmarks'         => 0x10000 + 0x01000,
+        'reviewspecificfeedback' => 0x10000 + 0x01000,
+        'reviewgeneralfeedback'  => 0x10000 + 0x01000,
+        'reviewrightanswer'   => 0x10000,
+        'reviewoverallfeedback' => 0x10000 + 0x01000,
+        'completion'          => COMPLETION_TRACKING_AUTOMATIC,
+        'completionview'      => 0,
+        'completionpassgrade' => 1,
+        'completionattemptsexhausted' => 0,
+    ];
+
+    try {
+        $cm = add_moduleinfo($moduleinfo, $course);
+    } catch (Throwable $e) {
+        cli_writeln("[twu]   could not create quiz module: " . $e->getMessage());
+        return null;
+    }
+
+    // 4. Attach each question to the quiz.
+    $quiz = $DB->get_record('quiz', ['id' => $cm->instance], '*', MUST_EXIST);
+    foreach ($questionids as $qid) {
+        try {
+            quiz_add_quiz_question($qid, $quiz, 0);
+        } catch (Throwable $e) {
+            cli_writeln("[twu]     could not attach question $qid: " . $e->getMessage());
+        }
+    }
+    cli_writeln("[twu]   created quiz: {$quizdef['name']} (cmid={$cm->coursemodule}, " . count($questionids) . " questions)");
+    return (int)$cm->coursemodule;
+}
+
+$allquizzes = local_twu_get_quizzes();
+foreach ($createdcourses as $idnumber => $course) {
+    if (!isset($allquizzes[$idnumber])) {
+        continue;
+    }
+    cli_writeln("[twu] seeding quiz for $idnumber");
+    twu_ensure_quiz($course, $allquizzes[$idnumber]);
+}
+
+// ---------------------------------------------------------------------------
 // 5c. Reference Library courses + lessons (fills the empty Reference category)
 // ---------------------------------------------------------------------------
 foreach (local_twu_get_reference_library() as $coursedata) {
@@ -362,6 +559,115 @@ foreach (local_twu_get_recurring_courses() as $coursedata) {
         twu_ensure_page_lesson($course, 0, $lesson['name'], $lesson['intro'], $lesson['content']);
     }
 }
+
+// ---------------------------------------------------------------------------
+// 5f. Aviation Terminology Glossary (in Reference Library)
+// ---------------------------------------------------------------------------
+function twu_ensure_glossary(stdClass $course, string $name, string $intro, array $entries): ?int {
+    global $DB, $CFG;
+    require_once($CFG->dirroot . '/mod/glossary/lib.php');
+
+    // Idempotency: skip if a Glossary with this name already exists.
+    $existing = $DB->get_record_sql(
+        "SELECT cm.id, g.id AS glossaryid
+           FROM {course_modules} cm
+           JOIN {modules} m ON m.id = cm.module AND m.name = 'glossary'
+           JOIN {glossary} g ON g.id = cm.instance
+          WHERE cm.course = :courseid AND g.name = :name",
+        ['courseid' => $course->id, 'name' => $name]
+    );
+
+    if ($existing) {
+        $glossaryid = $existing->glossaryid;
+        cli_writeln("[twu]   glossary exists: $name (cmid={$existing->id}); will add only missing entries");
+    } else {
+        $moduleinfo = (object)[
+            'modulename'          => 'glossary',
+            'course'              => $course->id,
+            'section'             => 0,
+            'visible'             => 1,
+            'visibleoncoursepage' => 1,
+            'name'                => $name,
+            'intro'               => $intro,
+            'introformat'         => FORMAT_HTML,
+            'globalglossary'      => 1, // site-wide auto-link if enabled
+            'mainglossary'        => 1,
+            'defaultapproval'     => 1,
+            'displayformat'       => 'dictionary',
+            'showspecial'         => 1,
+            'showalphabet'        => 1,
+            'showall'             => 1,
+            'allowduplicatedentries' => 0,
+            'allowcomments'       => 0,
+            'allowprintview'      => 1,
+            'usedynalink'         => 1,
+            'entbypage'           => 25,
+            'rsstype'             => 0,
+            'rssarticles'         => 0,
+            'assessed'            => 0,
+            'scale'               => 0,
+            'editalways'          => 0,
+            'completion'          => COMPLETION_TRACKING_AUTOMATIC,
+            'completionview'      => 1,
+        ];
+        try {
+            $cm = add_moduleinfo($moduleinfo, $course);
+            $glossaryid = $cm->instance;
+            cli_writeln("[twu]   created glossary: $name (cmid={$cm->coursemodule})");
+        } catch (Throwable $e) {
+            cli_writeln("[twu]   could not create glossary: " . $e->getMessage());
+            return null;
+        }
+    }
+
+    // Insert any missing entries (idempotent by concept).
+    $now = time();
+    $admin = get_admin();
+    $added = 0;
+    foreach ($entries as $entry) {
+        $exists = $DB->record_exists('glossary_entries',
+            ['glossaryid' => $glossaryid, 'concept' => $entry['concept']]);
+        if ($exists) {
+            continue;
+        }
+        $record = (object)[
+            'glossaryid'      => $glossaryid,
+            'userid'          => $admin->id,
+            'concept'         => $entry['concept'],
+            'definition'      => $entry['definition'],
+            'definitionformat' => FORMAT_HTML,
+            'definitiontrust' => 0,
+            'attachment'      => '',
+            'timecreated'     => $now,
+            'timemodified'    => $now,
+            'teacherentry'    => 1,
+            'sourceglossaryid' => 0,
+            'usedynalink'     => 1,
+            'casesensitive'   => 0,
+            'fullmatch'       => 0,
+            'approved'        => 1,
+        ];
+        $DB->insert_record('glossary_entries', $record);
+        $added++;
+    }
+    cli_writeln("[twu]   glossary $name: added $added new entries (" . count($entries) . " defined)");
+    return null;
+}
+
+// Find or create the host course for the glossary inside Reference Library.
+$glossarycoursedata = [
+    'shortname' => 'TWU-REF-GLOSSARY',
+    'fullname'  => 'Aviation Terminology &amp; ASA-100 Glossary',
+    'idnumber'  => 'TWU-REF-GLOSSARY',
+    'summary'   => '<p>Searchable glossary of aviation, ASA-100, and compliance terminology used throughout TurbineWorks University. Terms are auto-linked from any text on the site when the auto-link filter is enabled.</p>',
+];
+$glossarycourse = twu_ensure_course($refcat->id, $glossarycoursedata);
+twu_ensure_glossary(
+    $glossarycourse,
+    'Aviation Terminology &amp; ASA-100 Glossary',
+    '<p>Search or browse aviation parts distribution, ASA-100, FAA, ESD, hazmat, and engine-specific terminology. Click any term for its definition.</p>',
+    local_twu_get_glossary_entries()
+);
 
 // ---------------------------------------------------------------------------
 // 6. Theme: prefer Snap (modern, Pinterest-style cards). Fall back to Moove
