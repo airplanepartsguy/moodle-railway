@@ -20,7 +20,9 @@ require_once($CFG->dirroot . '/course/lib.php');
 require_once($CFG->dirroot . '/cohort/lib.php');
 require_once($CFG->libdir . '/clilib.php');
 
-$marker = $CFG->dataroot . '/.twu-bootstrapped-v1';
+// Bump the suffix here (and in the entrypoint marker docs) when adding new
+// bootstrap steps that should run on existing sites.
+$marker = $CFG->dataroot . '/.twu-bootstrapped-v2';
 $force  = in_array('--force', $argv ?? [], true);
 if (file_exists($marker) && !$force) {
     cli_writeln("[twu] already bootstrapped (marker present at $marker). Pass --force to re-run.");
@@ -199,7 +201,91 @@ if ((int)get_config('logstore_standard', 'loglifetime') !== 0) {
 }
 
 // ---------------------------------------------------------------------------
-// 6. Mark done
+// 6. Theme: activate Moove + brand colors + kill conecti.me footer + logo
+// ---------------------------------------------------------------------------
+$themedir = $CFG->dirroot . '/theme/moove';
+if (is_dir($themedir)) {
+    // Activate Moove as the default theme.
+    if (get_config('core', 'theme') !== 'moove') {
+        set_config('theme', 'moove');
+        cli_writeln("[twu] activated theme: moove");
+    }
+
+    // Brand colors pulled from turbineworks.com:
+    //   primary  = navy/blue header tone seen on the booklet
+    //   gold     = #ffc800 accent (matches the booklet underline)
+    set_config('brandcolor', '#0d2240', 'theme_moove');
+    cli_writeln("[twu] set Moove brandcolor = #0d2240 (TurbineWorks navy)");
+
+    // Moove's "secondary" colors live under several keys depending on the
+    // theme version; set the common ones harmlessly.
+    foreach (['secondarycolor' => '#ffc800', 'navbarbg' => '#0d2240', 'navbarcolor' => '#ffffff'] as $key => $val) {
+        set_config($key, $val, 'theme_moove');
+    }
+    cli_writeln("[twu] set Moove secondary/navbar colors (gold accent, navy nav)");
+
+    // Strip the orange "This theme was proudly developed by conecti.me" footer
+    // bar by hiding the link and its containing block via custom CSS.
+    // Hidden three ways for resilience across Moove versions:
+    //   1. direct link selector
+    //   2. parent-of-link via :has() (modern browsers)
+    //   3. common wrapper classes Moove uses for theme credits
+    $customcss = <<<CSS
+/* === TurbineWorks University: strip third-party theme credits === */
+a[href*="conecti.me"],
+a[href*="conecti.me"] img,
+*:has(> a[href*="conecti.me"]),
+.theme-credits,
+.theme-credit,
+.theme-footer-credit,
+.bg-warning:has(a[href*="conecti.me"]),
+.moove-footer-credits {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+}
+CSS;
+    set_config('customcss', $customcss, 'theme_moove');
+    cli_writeln("[twu] injected customcss to hide conecti.me footer block");
+
+    // Upload TurbineWorks logo if we shipped one in the local_twu plugin.
+    $logosrc = $CFG->dirroot . '/local/twu/assets/NewTurbine.png';
+    if (file_exists($logosrc)) {
+        $fs = get_file_storage();
+        $syscontext = context_system::instance();
+        foreach (['logo', 'favicon'] as $filearea) {
+            // Wipe existing files in this filearea so re-runs don't pile up.
+            $fs->delete_area_files($syscontext->id, 'theme_moove', $filearea);
+            try {
+                $fs->create_file_from_pathname([
+                    'contextid' => $syscontext->id,
+                    'component' => 'theme_moove',
+                    'filearea'  => $filearea,
+                    'itemid'    => 0,
+                    'filepath'  => '/',
+                    'filename'  => 'NewTurbine.png',
+                ], $logosrc);
+                cli_writeln("[twu] uploaded NewTurbine.png to theme_moove/$filearea");
+            } catch (Exception $e) {
+                cli_writeln("[twu] could not upload logo to $filearea: " . $e->getMessage());
+            }
+        }
+    } else {
+        cli_writeln("[twu] no logo file at $logosrc; skipping upload");
+    }
+
+    // Bust theme caches so the CSS/logo changes apply immediately.
+    theme_reset_all_caches();
+    cli_writeln("[twu] purged theme caches");
+} else {
+    cli_writeln("[twu] theme_moove directory missing; skipping theme config");
+}
+
+// ---------------------------------------------------------------------------
+// 7. Mark done
 // ---------------------------------------------------------------------------
 file_put_contents($marker, date('c') . "\n");
 cli_writeln("[twu] bootstrap complete; marker written to $marker");
