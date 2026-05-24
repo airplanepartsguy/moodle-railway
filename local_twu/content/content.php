@@ -5541,181 +5541,845 @@ function local_twu_module_5_lessons(): array {
     return [
         [
             'name'  => 'Lesson 5.1 — ASA-100 §8 Recordkeeping Overview',
-            'intro' => '<p>Why recordkeeping is the audit-evidence backbone of an ASA-100 distributor.</p>',
+            'intro' => '<p>The framework section that governs every record TurbineWorks creates, retains, and produces during an audit. Why recordkeeping is the audit-evidence backbone — the system that turns daily work into provable compliance — and what ASA-100 §8 actually requires.</p>',
             'content' => <<<'HTML'
 <h3>ASA-100 §8 Recordkeeping</h3>
-<p>The entire ASA-100 quality system rests on records. A receiving inspection that wasn't documented didn't happen, as far as an auditor is concerned. A SUP that was caught and reported but where the report wasn't filed is indistinguishable from a SUP that was caught and ignored.</p>
 
-<h4>What records are required</h4>
-<p>ASA-100 §8 requires retention of records covering every quality-system activity:</p>
+<p>The entire ASA-100 quality system rests on records. The procedures matter; the people matter; the physical facility matters. But the audit-evidence proof that the procedures were followed, that the people did their work correctly, and that the facility operated as intended is the records. A receiving inspection that wasn\'t documented didn\'t happen, as far as an auditor is concerned. A SUP that was caught and reported but where the report wasn\'t filed is indistinguishable from a SUP that was caught and ignored.</p>
+
+<p>This module covers §8 — what records are required, how long they\'re retained, in what form, where they\'re kept, how they\'re retrieved, and how they\'re protected against alteration. The discipline is operational simplicity, but the failure modes are subtle and consistently caught at audits.</p>
+
+<h4>The recordkeeping principle</h4>
+
+<p>The ASA-100 §8 framework rests on a single principle: <strong>the records ARE the proof.</strong></p>
+
+<p>You may have performed every receiving inspection correctly. You may have caught every SUP. You may have trained every employee, mutilated every scrap part, segregated every quarantine item. But if the records don\'t exist or can\'t be produced, an auditor — or a customer, or the FAA — has no basis to confirm any of that happened. The auditor doesn\'t fail you for not doing the work; the auditor fails you for not being able to prove the work was done.</p>
+
+<p>This is sometimes counterintuitive to operators who think of records as administrative overhead separate from real work. In an ASA-100 context, records ARE real work. Every receiving inspector\'s real output is two things: the disposition decision AND the record proving the disposition decision was made for valid reasons. The record is not an afterthought.</p>
+
+<h4>The categories of records required</h4>
+
+<p>ASA-100 §8 requires retention of records covering essentially every quality-system activity. The standard doesn\'t exhaustively list every record type, but the substantive categories are clear from the operational requirements. The TurbineWorks records system covers, at minimum:</p>
+
+<h5>Receiving inspection records</h5>
+
+<p>For every part received, a record exists documenting:</p>
 <ul>
-  <li>Receiving inspection records (every part, every receipt)</li>
-  <li>Original 8130-3 tags (or equivalents)</li>
-  <li>Certificates of Conformance</li>
-  <li>Material test reports</li>
-  <li>Non-conformance reports and corrective actions</li>
-  <li>SUP reports and FAA filings</li>
-  <li>Mutilation records for scrapped parts</li>
-  <li>Internal audit records and findings</li>
-  <li>Management review minutes</li>
-  <li>Training records (initial and recurring, per employee)</li>
-  <li>Supplier qualification and re-evaluation records</li>
-  <li>Customer complaint records</li>
-  <li>Outbound shipping documentation (what went to whom, when)</li>
-  <li>Calibration records for inspection tools</li>
+  <li>What was received (part number, serial, supplier, PO)</li>
+  <li>When (date and time)</li>
+  <li>Who performed the inspection</li>
+  <li>What documents were verified</li>
+  <li>Physical inspection findings</li>
+  <li>Disposition (accept/quarantine/reject)</li>
+  <li>Cross-references to related records (NCR if quarantined, return-to-supplier record if rejected)</li>
 </ul>
 
-<h4>Retention period</h4>
-<p>The ASA-100 standard sets minimum retention periods. The typical baseline is <strong>7 years</strong>, but for some records (LLP traceability, for example) the retention is effectively forever — the back-to-birth record must be available for the entire service life of the part.</p>
-<p>Customer contracts may impose longer retention requirements. The retention schedule in the TurbineWorks QAM is the controlling document — when in doubt, longer is safer.</p>
+<p>The receiving inspection record is the single most-checked record category at ASA audits. When the auditor pulls a random part, this is the first record they look at.</p>
 
-<h4>Format: physical or electronic</h4>
-<p>Records may be paper or electronic. Electronic records are acceptable if:</p>
+<h5>Original 8130-3 tags and equivalents</h5>
+
+<p>The original airworthiness approval tag that accompanied each part is retained by TurbineWorks. When the part ships to a customer, a copy may travel with the part (or the original ships with True Copy attestation retained by TurbineWorks). Either way, TurbineWorks retains the controlled record.</p>
+
+<h5>Certificates of Conformance</h5>
+
+<p>COCs received from suppliers AND COCs issued by TurbineWorks to customers. Both directions of the document flow are records.</p>
+
+<h5>Material test reports and supporting documentation</h5>
+
+<p>For parts where material conformance matters, the MTR or equivalent. Country-of-origin documentation. Specific compliance attestations required by customer contract.</p>
+
+<h5>Non-conformance reports (NCRs) and corrective actions</h5>
+
+<p>Every quality finding generates an NCR. The NCR file documents:</p>
 <ul>
-  <li>The format is durable (PDF, TIFF, etc. — not proprietary formats that may become unreadable)</li>
-  <li>The records are backed up against loss</li>
-  <li>Electronic signatures, where used, are verifiable and tamper-evident</li>
-  <li>The records can be retrieved for an auditor in reasonable time</li>
+  <li>The non-conformance — what was found, when, who found it</li>
+  <li>The investigation — what was determined</li>
+  <li>The disposition — what happened to the non-conforming material</li>
+  <li>The root cause — why did this happen</li>
+  <li>The corrective action — what changes prevent recurrence</li>
+  <li>The verification — is the corrective action effective</li>
+  <li>The closure — formal completion of the NCR</li>
 </ul>
-<p>Originals of FAA 8130-3 tags are sometimes required to be retained in physical form depending on customer or regulatory requirement. The TurbineWorks document control system specifies which records require physical originals.</p>
 
-<h4>Accessibility</h4>
-<p>Records must be retrievable on demand. An auditor asking for the records on a specific part should receive them within minutes, not days. This requires:</p>
+<h5>SUP reports and FAA filings</h5>
+
+<p>Every Form 8120-11 filing, along with the supporting investigation evidence. SUP files may be retained longer than standard 7 years because they may become evidence in FAA enforcement or criminal investigations years after filing.</p>
+
+<h5>Mutilation records</h5>
+
+<p>For every part destroyed via mutilation per FAA AC 21-38: when, how, who witnessed, what was destroyed. Mutilation records are the audit evidence that scrap was actually destroyed — Module 1 Lesson 1.2 covers why this matters for supply-chain integrity.</p>
+
+<h5>Internal audit records and findings</h5>
+
+<p>TurbineWorks performs internal audits on a defined cadence (typically annually). The audit findings, the corrective actions in response, and the verification of effectiveness are all retained.</p>
+
+<h5>Management review minutes</h5>
+
+<p>The Accountable Manager and QA Manager meet at defined intervals (typically annually, sometimes more often) for formal management review. The minutes document QMS performance review, decisions made, resource commitments.</p>
+
+<h5>Training records</h5>
+
+<p>Per-employee training history — TurbineWorks University completions, on-the-job training documented on TWF-4 (or its digital equivalent), recurring training completions. The training record is part of the audit evidence that personnel are qualified for their roles.</p>
+
+<h5>Supplier qualification and performance records</h5>
+
+<p>For each approved supplier: the initial qualification record, periodic re-evaluations, performance data (defect rates, on-time delivery, customer complaints), corrective actions on supplier-related findings. When a supplier is removed from the Approved-Supplier List, the removal decision and supporting evidence are retained.</p>
+
+<h5>Customer complaint records</h5>
+
+<p>Every customer complaint enters the formal records system through the NCR process. The complaint, the investigation, the resolution, and any corrective actions are documented and retained.</p>
+
+<h5>Outbound shipping records</h5>
+
+<p>For every customer shipment: what shipped, to whom, when, with what documentation. Cross-referenced to the customer PO and to the inventory records for the specific serial numbers shipped.</p>
+
+<h5>Calibration records</h5>
+
+<p>Inspection tools requiring calibration (calipers, micrometers, torque wrenches, electronic measurement equipment, environmental sensors) have calibration records showing the calibration date, the calibration result, the next due date, and the calibrating party. Out-of-cal tools cannot be used for quality decisions — and the calibration record is the proof.</p>
+
+<h5>Other records as applicable</h5>
+
 <ul>
-  <li>Consistent organization (by part serial number, by date, by purchase order)</li>
-  <li>Index or search capability</li>
-  <li>Cross-references (the receiving inspection record links to the 8130-3 links to the COC links to the shipping record)</li>
-  <li>Personnel trained on retrieval</li>
+  <li>Hazmat training and certification records</li>
+  <li>Export-control transaction records</li>
+  <li>Document control records (revisions, distribution, retrieval of obsolete copies)</li>
+  <li>Records of disposition for environmental excursions</li>
+  <li>Inventory cycle count records</li>
+  <li>Pest control records (for warehouses where applicable)</li>
+  <li>Building security and access records</li>
 </ul>
 
-<h4>Tamper evidence</h4>
-<p>Records cannot be altered after the fact. If a record contains an error:</p>
+<h4>The retention period — typical minimums</h4>
+
+<p>ASA-100 §8 sets minimum retention periods. The typical baseline is <strong>7 years</strong> for most records. Some records have longer requirements:</p>
+
 <ul>
-  <li>Do not erase, white-out, or overwrite the original entry</li>
-  <li>Draw a single line through the error so it remains legible</li>
-  <li>Write the correction beside it</li>
-  <li>Initial and date the correction</li>
+  <li><strong>LLP traceability records:</strong> effectively forever. Must be available for the entire service life of the part, which may extend decades.</li>
+  <li><strong>Records related to in-service incidents or accidents:</strong> retained indefinitely as evidence. Even past the retention period, records that have been subpoenaed, that relate to litigation, or that have been requested by investigators are preserved.</li>
+  <li><strong>SUP reports:</strong> while the minimum is 7 years, most distributors retain longer (10+ years) given the potential for delayed investigation.</li>
+  <li><strong>Calibration records for inspection tools:</strong> retained for the life of the tool plus 7 years, so that a measurement performed years ago can be traced to a calibrated tool.</li>
+  <li><strong>Training records:</strong> retained for the employee\'s employment plus 7 years, so that a finding traced back to an employee\'s work years prior can verify the employee\'s training status at that time.</li>
 </ul>
-<p>Electronic systems with audit trails (every change logged with who/when) satisfy this requirement automatically. Direct database edits that bypass the audit trail are a finding.</p>
 
-<p><em>[TurbineWorks Procedure Reference: insert TurbineWorks records-retention schedule and document-control SOP here.]</em></p>
+<p>Customer contracts may impose longer retention. The TurbineWorks retention schedule in the QAM is the controlling document — when in doubt, longer is safer.</p>
+
+<h4>Records format — physical or electronic</h4>
+
+<p>Records may be paper or electronic. Electronic records are acceptable if they satisfy four conditions:</p>
+
+<h5>Durability of format</h5>
+
+<p>The electronic format must remain readable over the retention period. PDF, TIFF, and similar standardized formats are acceptable. Proprietary formats that may become unreadable when software is no longer supported are problematic. Modern records systems address this through periodic format migration — converting older records to current formats as software evolves.</p>
+
+<h5>Backup against loss</h5>
+
+<p>Electronic records must be backed up. Catastrophic loss (server failure, ransomware, fire) cannot destroy the records. Typical backup approach: continuous local backup, off-site replication (cloud or secondary facility), periodic tested restore.</p>
+
+<h5>Electronic signatures verifiable</h5>
+
+<p>Where electronic signatures replace wet-ink signatures, the signature must be:</p>
+<ul>
+  <li>Linked to the specific document being signed (not a generic signature image pasted across many documents)</li>
+  <li>Linked to the specific signer (not a shared credential)</li>
+  <li>Time-stamped with reliable time source</li>
+  <li>Protected against post-signing alteration</li>
+  <li>Verifiable later by inspection of the audit trail</li>
+</ul>
+
+<p>Generic electronic signature platforms (DocuSign, Adobe Sign, etc.) satisfy these requirements if properly configured. Less rigorous approaches (a PDF with a typed name in the signature field) do not.</p>
+
+<h5>Retrievable for auditor inspection</h5>
+
+<p>The auditor must be able to inspect records efficiently. "We have them but it takes a week to find them" is not acceptable. Records must be retrievable within minutes for any audit query.</p>
+
+<h5>When physical originals are required</h5>
+
+<p>Some records may be required to be retained in physical form:</p>
+<ul>
+  <li>Original FAA 8130-3 tags, particularly for high-value LLPs (customer or contract requirement)</li>
+  <li>Original COCs in some applications</li>
+  <li>Records that customers specifically require in physical form</li>
+</ul>
+
+<p>The TurbineWorks QAM specifies which records have physical-original requirements. The default for most categories is that scanned-and-stored-electronically with original disposal after a defined period is acceptable.</p>
+
+<h4>Accessibility — the "show me" test</h4>
+
+<p>The ASA auditor\'s most common request is "show me." Show me this part\'s receiving inspection record. Show me the corrective action for the last quarantine. Show me your internal audit findings from last year. The records system must support rapid retrieval.</p>
+
+<h5>What enables rapid retrieval</h5>
+
+<ul>
+  <li><strong>Consistent organization.</strong> Records filed by predictable criteria — part serial number, date, PO number, employee, NCR number. Auditors can find records without insider knowledge of the system.</li>
+  <li><strong>Index or search capability.</strong> Electronic systems with full-text search; paper systems with comprehensive indexes; hybrid systems with electronic indexes pointing to paper locations.</li>
+  <li><strong>Cross-references.</strong> Records link to related records. The receiving inspection record links to the 8130-3 record links to the COC record links to the shipping record. The auditor can follow the chain.</li>
+  <li><strong>Personnel trained on retrieval.</strong> Multiple people know how to find records. The system doesn\'t depend on one person\'s memory.</li>
+  <li><strong>Tested retrieval.</strong> Periodic mock-audit drills where staff is asked to retrieve specific records — to identify weaknesses in the system before an actual audit exposes them.</li>
+</ul>
+
+<h5>The "5-minute" target</h5>
+
+<p>A reasonable target: any audit query should be answerable with records produced within 5 minutes. If an auditor asks about a part by serial number and it takes 30 minutes to find the receiving inspection record, the records system is not adequate. The slow retrieval is itself a finding even if the record eventually appears.</p>
+
+<h4>Tamper evidence and record alteration</h4>
+
+<p>Records cannot be altered after the fact. The integrity of the record IS the audit evidence; altered records destroy that integrity.</p>
+
+<h5>Correcting errors on paper records</h5>
+
+<p>When a paper record contains an error:</p>
+
+<ul>
+  <li><strong>Do NOT erase, white-out, or overwrite the original entry.</strong> The original entry must remain legible.</li>
+  <li><strong>Draw a single line through the error</strong> so it can still be read.</li>
+  <li><strong>Write the correction beside it</strong> in legible handwriting.</li>
+  <li><strong>Initial and date the correction.</strong> The person making the correction is identifiable, and the date of correction is recorded.</li>
+</ul>
+
+<p>This is a fundamental discipline. An employee who white-outs an error and writes over it has destroyed the audit trail. The auditor sees the resulting record as suspect — what else might have been quietly corrected without trace?</p>
+
+<h5>Corrections in electronic systems</h5>
+
+<p>Electronic records systems should maintain audit trails — every change is logged with who, when, and what was changed. The original entry remains in the database; the change is recorded as an additional entry, not a replacement.</p>
+
+<p>Direct database edits that bypass the audit trail are a finding. If the records system permits administrative changes that don\'t leave audit trails, those administrative privileges are a control weakness.</p>
+
+<h5>What counts as "the original record"</h5>
+
+<p>For a record to serve as audit evidence, it must be the original or a verifiable copy of the original. If TurbineWorks has scanned 8130-3 tags and disposed of the physical originals after a defined period, the scan IS the original record from that point forward. The scanning process must be:</p>
+
+<ul>
+  <li>Performed in a controlled procedure (not casually)</li>
+  <li>Producing a verifiable image of the original</li>
+  <li>Recorded — when scanned, by whom, with what device</li>
+  <li>Indexed for retrieval</li>
+</ul>
+
+<p>An auditor examining a scanned 8130-3 wants to confirm that the scan is a faithful image of an actual original document that existed at one point. The scanning procedure provides that assurance.</p>
+
+<h4>Records destruction</h4>
+
+<p>Records past the retention period can be disposed of, but the disposition itself is recorded. Don\'t just delete files or shred paper without a record. The disposition record shows:</p>
+
+<ul>
+  <li>What records were disposed of</li>
+  <li>When (date)</li>
+  <li>By whom (authorization)</li>
+  <li>Under what authority (retention schedule reference)</li>
+</ul>
+
+<p>This is itself a record retained for audit evidence — proof that the records existed for their full required period and were disposed of according to a controlled process.</p>
+
+<h5>When to retain past minimum</h5>
+
+<p>Some records that have technically reached their minimum retention period are still worth retaining:</p>
+<ul>
+  <li>SUP investigations — may become evidence years later</li>
+  <li>Records related to parts that ended up in incidents or accidents</li>
+  <li>Records related to litigation or regulatory inquiries</li>
+  <li>Records that may have ongoing customer relevance</li>
+</ul>
+
+<p>When in doubt, retain. The cost of retaining is small (especially electronically); the cost of destroying records that turn out to be needed is large.</p>
+
+<h4>What the auditor checks</h4>
+
+<p>ASA auditors give §8 substantial attention because so much else flows through records. Typical audit activities:</p>
+
+<ul>
+  <li>Pull random parts and request their complete record packages</li>
+  <li>Review the records-retention schedule and confirm practice matches</li>
+  <li>Review correction practices on paper records — find a corrected record and verify it follows the line-through-and-initial discipline</li>
+  <li>For electronic records, review audit trails — confirm changes are logged</li>
+  <li>Test retrieval — request records by various access paths (by serial, by date, by NCR number) to verify multiple search paths work</li>
+  <li>Review records disposal records — confirm aged records were disposed of with documentation</li>
+  <li>Backup verification — confirm electronic records are backed up and that backups have been tested</li>
+  <li>Interview personnel about records retrieval — multiple people should be able to find records</li>
+</ul>
+
+<h4>References</h4>
+
+<ul>
+  <li><strong>ASA-100 §8</strong> — Recordkeeping requirements</li>
+  <li><strong>FAA AC 21-38</strong> — Mutilation records specifically (Lesson 5.4)</li>
+  <li><strong>FAA AC 120-77</strong> — Maintenance Recordkeeping (related guidance)</li>
+  <li><strong>14 CFR §43.10</strong> — Maintenance records (cited for traceability principles)</li>
+  <li>TurbineWorks QAM Section [TBD] — Records-Retention Schedule and Document-Control SOP</li>
+</ul>
+
+<h4>Self-check</h4>
+
+<ol>
+  <li>What is the recordkeeping principle (the relationship between records and audit evidence)?</li>
+  <li>Name 8 major categories of records ASA-100 requires.</li>
+  <li>What is the typical baseline retention period? What records require longer retention?</li>
+  <li>What 4 conditions make an electronic record acceptable?</li>
+  <li>Why is the "5-minute target" for record retrieval important?</li>
+  <li>What is the correct discipline for correcting an error on a paper record?</li>
+  <li>What is the difference between editing a record and adding a correction in an electronic system?</li>
+  <li>Why are records disposal records themselves retained?</li>
+  <li>What 8 things does an ASA auditor check during §8 audit activities?</li>
+</ol>
+
+<p><em>[TurbineWorks Procedure Reference: insert TurbineWorks records-retention schedule, document-control SOP, and records retrieval workflow here.]</em></p>
 HTML
         ],
         [
             'name'  => 'Lesson 5.2 — Records Retention Schedule',
-            'intro' => '<p>What gets kept, for how long, and how it ages out.</p>',
+            'intro' => '<p>The detailed retention schedule that governs what gets kept, for how long, and how it ages out. The schedule is the audit-evidence proof that TurbineWorks retains required records consistently — and the practical operational tool that lets the records system function without indefinite storage growth.</p>',
             'content' => <<<'HTML'
 <h3>Records Retention Schedule</h3>
-<p>The records-retention schedule defines, for every record category, the minimum retention period. ASA-100 §8 provides the baseline; customer contracts and TurbineWorks policy may impose longer requirements.</p>
 
-<h4>Typical retention periods</h4>
+<p>The records-retention schedule defines, for every record category, the minimum retention period. ASA-100 §8 provides the baseline; customer contracts and TurbineWorks policy may impose longer requirements. The schedule is a controlled document in the QAM — auditors review it as evidence that TurbineWorks operates a deliberate, consistent records policy rather than ad-hoc retention.</p>
+
+<p>This lesson covers the standard retention periods by record category, the records lifecycle from creation through disposal, electronic backup and disaster recovery requirements, and what auditors specifically check.</p>
+
+<h4>The retention schedule as a controlled document</h4>
+
+<p>The retention schedule exists in the QAM (or in a supporting document referenced by the QAM). It is:</p>
+
+<ul>
+  <li><strong>Comprehensive.</strong> Every record category produced at TurbineWorks has a defined retention period.</li>
+  <li><strong>Specific.</strong> Periods are stated in concrete terms (7 years from creation, life of the part plus 7 years, etc.) — not "as needed" or "permanent."</li>
+  <li><strong>Justified.</strong> Each retention period traces to a source — ASA-100 minimum, FAA regulation, customer contract, or TurbineWorks policy.</li>
+  <li><strong>Reviewed periodically.</strong> When ASA-100 is revised, when customer requirements change, when business circumstances evolve — the schedule is reviewed and updated.</li>
+  <li><strong>Distributed.</strong> Personnel responsible for any record category have access to the schedule and know what applies to their work.</li>
+</ul>
+
+<p>The schedule is a Quality Manual artifact under document control. Revisions follow the document control process — proposed, reviewed, approved, distributed, with obsolete revisions retrieved.</p>
+
+<h4>Standard retention periods at TurbineWorks</h4>
+
 <table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse;">
   <tr style="background:#0d2240; color:#fff;">
-    <th>Record Type</th><th>Minimum Retention</th><th>Notes</th>
+    <th>Record Type</th>
+    <th>Minimum Retention</th>
+    <th>Notes / Driver</th>
   </tr>
-  <tr><td>Receiving inspection records</td><td>7 years from inspection date</td><td>Tied to the part record</td></tr>
-  <tr><td>Original 8130-3 tags</td><td>7 years from receipt</td><td>Some customers require originals</td></tr>
-  <tr><td>Outbound shipping records</td><td>7 years from shipment</td><td>Includes the customer's COC issued by TurbineWorks</td></tr>
-  <tr><td>LLP back-to-birth records</td><td>Service life of the part (effectively forever)</td><td>Cannot be aged out while the part may still be in service</td></tr>
-  <tr><td>Non-conformance / corrective action</td><td>7 years from closure</td><td>Some persistent issues retained longer</td></tr>
-  <tr><td>SUP reports and FAA filings</td><td>7 years (10+ recommended)</td><td>May be subject to FAA subpoena beyond standard retention</td></tr>
-  <tr><td>Mutilation records</td><td>7 years</td><td>Evidence that the part was destroyed and cannot re-enter supply</td></tr>
-  <tr><td>Internal audit records</td><td>2 audit cycles minimum</td><td>So next-cycle auditor sees previous findings and resolutions</td></tr>
-  <tr><td>Training records</td><td>Employment + 7 years</td><td>Per-employee training history</td></tr>
-  <tr><td>Supplier qualification</td><td>While supplier is approved + 7 years after removal</td><td>Removed-supplier records justify the removal decision</td></tr>
-  <tr><td>Calibration records (inspection tools)</td><td>Life of the tool + 7 years</td><td>Proves that tools used in past inspections were calibrated</td></tr>
-  <tr><td>Management review minutes</td><td>5 years minimum</td><td>Shows the system is being actively managed</td></tr>
+  <tr>
+    <td>Receiving inspection records</td>
+    <td>7 years from inspection date</td>
+    <td>ASA-100 §8 baseline. Tied to the part record.</td>
+  </tr>
+  <tr>
+    <td>Original 8130-3 tags (or copies with True Copy attestation)</td>
+    <td>7 years from receipt or shipment, whichever later</td>
+    <td>Some customer contracts require longer. Some require physical originals.</td>
+  </tr>
+  <tr>
+    <td>Outbound shipping records and TurbineWorks COCs</td>
+    <td>7 years from shipment</td>
+    <td>Includes everything that documents what went to which customer.</td>
+  </tr>
+  <tr>
+    <td>LLP back-to-birth records</td>
+    <td>Service life of the part (effectively indefinite)</td>
+    <td>Cannot be aged out while the part may still be in service. May extend decades.</td>
+  </tr>
+  <tr>
+    <td>NCRs and corrective actions</td>
+    <td>7 years from closure</td>
+    <td>Some persistent or significant issues retained longer.</td>
+  </tr>
+  <tr>
+    <td>SUP reports and FAA Form 8120-11 filings</td>
+    <td>7 years minimum; 10+ years recommended</td>
+    <td>May be subject to FAA subpoena beyond standard retention. Practice: retain indefinitely.</td>
+  </tr>
+  <tr>
+    <td>Mutilation records (FAA AC 21-38)</td>
+    <td>7 years from mutilation</td>
+    <td>Evidence the part was destroyed and cannot re-enter supply chain.</td>
+  </tr>
+  <tr>
+    <td>Internal audit records</td>
+    <td>2 audit cycles minimum (typically 6 years for 3-year cycles)</td>
+    <td>So next-cycle auditor sees previous findings and corrective action verification.</td>
+  </tr>
+  <tr>
+    <td>Management review minutes</td>
+    <td>5 years minimum, 7 typical</td>
+    <td>Shows the QMS is being actively managed at senior level.</td>
+  </tr>
+  <tr>
+    <td>Training records — per employee</td>
+    <td>Employment duration + 7 years</td>
+    <td>So findings traced to past work can verify training status at the time.</td>
+  </tr>
+  <tr>
+    <td>Supplier qualification records</td>
+    <td>While supplier is approved + 7 years after removal</td>
+    <td>Removed-supplier records justify the removal decision if challenged.</td>
+  </tr>
+  <tr>
+    <td>Calibration records (inspection tools)</td>
+    <td>Life of the tool + 7 years</td>
+    <td>Proves tools used in past inspections were calibrated.</td>
+  </tr>
+  <tr>
+    <td>Customer complaints</td>
+    <td>7 years from resolution</td>
+    <td>Tied to NCR if the complaint became a quality finding.</td>
+  </tr>
+  <tr>
+    <td>Environmental excursion records and dispositions</td>
+    <td>7 years</td>
+    <td>Tied to NCRs for parts affected.</td>
+  </tr>
+  <tr>
+    <td>Inventory cycle count records</td>
+    <td>3-5 years (operational records)</td>
+    <td>Discrepancy investigation NCRs retained longer.</td>
+  </tr>
+  <tr>
+    <td>Hazmat training and certification</td>
+    <td>3 years per DOT 49 CFR §172.704; longer for TurbineWorks practice</td>
+    <td>DOT minimum is 3 years; TurbineWorks retention typically 7.</td>
+  </tr>
+  <tr>
+    <td>Export control records</td>
+    <td>5 years per BIS (EAR); 5 years per DDTC (ITAR)</td>
+    <td>U.S. export control minimum. Some contracts require longer.</td>
+  </tr>
+  <tr>
+    <td>Records of records disposal</td>
+    <td>7 years from disposal action</td>
+    <td>Proof that aged records were properly disposed of, not improperly destroyed.</td>
+  </tr>
 </table>
 
-<h4>Aging records out</h4>
-<p>Records past the retention period may be disposed of — but the disposal itself should be documented (what was disposed of, when, by whom, under what authority). Don't just delete or shred without a record.</p>
-<p>Some records that have technically aged out may still be worth retaining: SUP investigations, major non-conformance corrective actions, anything related to a part that ended up in an accident or incident.</p>
+<h4>The records lifecycle — creation through disposal</h4>
 
-<h4>Records lifecycle</h4>
-<ol>
-  <li><strong>Creation</strong> — record generated as part of the workflow (receiving inspection, shipment, etc.)</li>
-  <li><strong>Filing</strong> — record placed in its retention location (paper file, electronic system) with cross-references</li>
-  <li><strong>Active retention</strong> — record is in the active records system, retrievable on demand</li>
-  <li><strong>Archive</strong> — record moves to archive storage (less-frequently accessed) but still retrievable</li>
-  <li><strong>Disposal</strong> — record past retention is disposed of per the schedule, with disposal documented</li>
-</ol>
+<p>Every record moves through a lifecycle. The records system tracks records at each stage and ensures appropriate handling.</p>
+
+<h5>Stage 1 — Creation</h5>
+
+<p>Record is generated as part of operational workflow:</p>
+
+<ul>
+  <li>Receiving inspector completes the receiving inspection record on a current shipment</li>
+  <li>Quality manager closes an NCR with corrective action verification</li>
+  <li>Shipping personnel complete the shipping inspection record</li>
+  <li>Mutilation is performed and the witness certifies the mutilation record</li>
+</ul>
+
+<p>At creation, the record is contemporaneous with the work it documents. Records created days or weeks after the fact "from memory" are unreliable — the auditor will spot the timestamp discrepancy.</p>
+
+<h5>Stage 2 — Filing</h5>
+
+<p>Record is placed in its retention location and indexed:</p>
+
+<ul>
+  <li>Paper records: filed in the appropriate physical filing system with cross-references</li>
+  <li>Electronic records: stored in the records system with metadata enabling search</li>
+  <li>Cross-referenced to related records (a receiving inspection record references the 8130-3, the COC, the supplier qualification record)</li>
+</ul>
+
+<p>Filing is when the record becomes part of the retrievable system. Records that exist but aren\'t filed are effectively missing — they can\'t be produced for an auditor.</p>
+
+<h5>Stage 3 — Active retention</h5>
+
+<p>Record is in the active records system, retrievable on demand within minutes. This is the longest phase for most records — the period during which audits and customer inquiries may request the record.</p>
+
+<p>Active retention typically uses the primary records system — the inventory ERP, the document management platform, the physical filing cabinets at the QA Manager\'s office. Records here are accessed routinely.</p>
+
+<h5>Stage 4 — Archive</h5>
+
+<p>Older records (still within retention) may be moved to archive storage:</p>
+
+<ul>
+  <li>Less-frequently accessed</li>
+  <li>May be stored at lower cost (off-site, cold storage, slower-access electronic systems)</li>
+  <li>Still retrievable on demand, but with longer lead time acceptable</li>
+  <li>Indexed so that retrieval, when needed, is straightforward</li>
+</ul>
+
+<p>Archived records remain part of the records system. They\'re not "stored out of sight." An auditor asking for records that turn out to be archived gets them — perhaps after an hour rather than minutes, but the auditor knows in advance the archive lead time and accepts it within reason.</p>
+
+<h5>Stage 5 — Disposal</h5>
+
+<p>Records past their retention period are disposed of:</p>
+
+<ul>
+  <li>Paper records: shredded or otherwise destroyed in a controlled manner</li>
+  <li>Electronic records: deleted with confirmation of removal from all backups</li>
+  <li>Disposal record created — what was disposed, when, by whom, under what schedule authority</li>
+</ul>
+
+<p>The disposal record is itself retained. The audit evidence is not just that records existed — it\'s that they existed for their required period AND were disposed of per a controlled process when retention ended.</p>
 
 <h4>Backup and disaster recovery</h4>
-<p>Electronic records require a backup strategy. ASA-100 doesn't specify the technical implementation but expects that a fire, hardware failure, or ransomware attack would not destroy the records the audit relies on.</p>
+
+<p>Electronic records require backup strategy. ASA-100 doesn\'t specify the technical implementation but expects that catastrophic events (fire, ransomware, hardware failure) would not destroy the records audit-evidence trail.</p>
+
+<h5>Backup architecture elements</h5>
+
 <ul>
-  <li>Off-site backup or cloud replication</li>
-  <li>Tested restore procedures (regularly verify backups are usable)</li>
-  <li>Documented recovery time objective (how quickly can records be restored after a loss?)</li>
+  <li><strong>Primary system.</strong> The records system used in daily operations. Backed up continuously or at frequent intervals.</li>
+  <li><strong>Off-site backup.</strong> Backup copies stored at a different physical location (cloud replication is the modern approach; off-site media is the traditional approach).</li>
+  <li><strong>Backup retention.</strong> Backups themselves are retained — multiple historical backup points so that recovery from a slowly-developing problem (corruption that wasn\'t detected immediately) is possible.</li>
+  <li><strong>Backup encryption.</strong> If backups contain sensitive customer information or proprietary data, they\'re encrypted in transit and at rest.</li>
+  <li><strong>Access controls on backups.</strong> Backups are not openly accessible — they\'re a system administration resource.</li>
 </ul>
 
-<h4>What the auditor checks</h4>
+<h5>Tested restore procedures</h5>
+
+<p>The critical discipline that fails most often: backups must be tested. A backup that has never been restored may turn out to be unusable when the actual disaster strikes. Periodic restore tests:</p>
+
 <ul>
-  <li>Retention schedule documented and current</li>
-  <li>Random pull of an old record (within retention): can it be produced?</li>
-  <li>Aged-out records: were they disposed of per schedule with disposal documented?</li>
-  <li>Backup strategy in place and tested?</li>
+  <li>Test environment (not production) where backups can be restored without affecting live operations</li>
+  <li>Periodic schedule — typically quarterly or annually depending on backup volume</li>
+  <li>Documented results — was the restore successful? How long did it take? Were all records recovered?</li>
+  <li>Failed restores trigger investigation and corrective action — what\'s wrong with the backup process?</li>
 </ul>
+
+<h5>Recovery time objective (RTO)</h5>
+
+<p>The RTO is the maximum acceptable time between a disaster and operations being restored. For an ASA-100 distributor, the relevant RTO is for records access:</p>
+
+<ul>
+  <li>Can TurbineWorks produce a receiving inspection record after a primary-system failure? How quickly?</li>
+  <li>If a customer asks for records during a disaster recovery period, can TurbineWorks respond?</li>
+  <li>What\'s the alternative path to records access if the primary system is down?</li>
+</ul>
+
+<p>TurbineWorks RTO for critical records should be measured in hours, not days. Auditors will ask about disaster recovery and may probe specific scenarios.</p>
+
+<h4>Records past minimum retention — when to keep longer</h4>
+
+<p>Some records that have technically reached their minimum retention period are still worth retaining:</p>
+
+<ul>
+  <li><strong>SUP investigations and FAA filings.</strong> FAA investigators may need them years later. Industry-wide consensus is to retain indefinitely.</li>
+  <li><strong>Records related to parts in incidents or accidents.</strong> If a part TurbineWorks shipped was involved in an in-service incident, records related to that part are kept indefinitely as potential evidence.</li>
+  <li><strong>Records subject to litigation or regulatory inquiry.</strong> Any record that has been subpoenaed, requested by investigators, or that may relate to active legal matters is held pending resolution.</li>
+  <li><strong>Records with ongoing customer relevance.</strong> If a customer relationship is active and the records may be needed for the customer\'s operations, retention extends.</li>
+  <li><strong>Records related to major corrective actions or process changes.</strong> The history of a significant QMS evolution may be useful for context years later.</li>
+</ul>
+
+<p>The principle: when in doubt, retain. Electronic retention cost is minimal; the cost of having destroyed records that turn out to be needed is large. The QA Manager has authority to extend retention beyond the schedule when judgment warrants.</p>
+
+<h4>Litigation hold</h4>
+
+<p>If TurbineWorks becomes aware of pending or threatened litigation, a litigation hold is implemented. The hold:</p>
+
+<ul>
+  <li>Suspends normal retention disposal for all relevant records</li>
+  <li>Is communicated to all personnel who may have relevant records</li>
+  <li>Is documented (when implemented, what records are affected, when released)</li>
+  <li>Is released only after legal counsel confirms the litigation matter is resolved</li>
+</ul>
+
+<p>Destroying records during a litigation hold can result in spoliation findings — adverse inference at trial, civil sanctions, criminal exposure for willful destruction of evidence. This is a discipline the QA Manager handles in coordination with legal counsel.</p>
+
+<h4>What the auditor checks</h4>
+
+<p>Retention-related audit activities:</p>
+
+<ul>
+  <li>Review the retention schedule document — current, complete, reflective of ASA-100 expectations</li>
+  <li>Random pull of an old record (within retention) — can it be produced? Within minutes?</li>
+  <li>Aged-out records — were they disposed of per schedule with disposal documented?</li>
+  <li>Backup strategy in place and documented?</li>
+  <li>When was the last tested restore? What were the results?</li>
+  <li>What\'s the longest record currently retained? Why?</li>
+  <li>Any litigation holds active? When implemented, on what scope?</li>
+  <li>Records related to a specific recent SUP filing — can the complete file be produced?</li>
+</ul>
+
+<h5>Common audit findings on retention</h5>
+
+<ul>
+  <li>Retention schedule not current — references obsolete record types or omits new ones</li>
+  <li>Backup tested-restore not performed within recent past</li>
+  <li>Aged-out records disposed of without documented disposal records</li>
+  <li>Some record categories not addressed in the schedule (gaps)</li>
+  <li>Retention periods shorter than ASA-100 baseline</li>
+  <li>LLP records not retained at the part-life level (treated as 7-year retention only)</li>
+  <li>Litigation hold not in place when one should be</li>
+</ul>
+
+<h4>References</h4>
+
+<ul>
+  <li><strong>ASA-100 §8</strong> — Recordkeeping baseline</li>
+  <li><strong>49 CFR §172.704</strong> — DOT hazmat training records (3-year retention minimum)</li>
+  <li><strong>15 CFR §762.2</strong> — EAR (Export) records retention (5 years)</li>
+  <li><strong>22 CFR §122.5</strong> — ITAR records retention (5 years)</li>
+  <li>TurbineWorks QAM Section [TBD] — Records Retention Schedule (the controlling internal document)</li>
+</ul>
+
+<h4>Self-check</h4>
+
+<ol>
+  <li>What is the records-retention schedule and why is it a controlled QAM document?</li>
+  <li>What is the typical baseline retention period for most ASA-100 records?</li>
+  <li>What records have effectively indefinite retention, and why?</li>
+  <li>What are the 5 stages of the records lifecycle?</li>
+  <li>What 5 elements make up a credible backup architecture?</li>
+  <li>Why must backup restores be tested periodically?</li>
+  <li>When is a litigation hold appropriate, and what does it do?</li>
+  <li>What 7 common audit findings does this lesson identify?</li>
+  <li>Why is "when in doubt, retain" the right default?</li>
+</ol>
+
+<p><em>[TurbineWorks Procedure Reference: insert the current retention schedule and backup architecture details here.]</em></p>
 HTML
         ],
         [
             'name'  => 'Lesson 5.3 — Back-to-Birth Traceability for Life Limited Parts',
-            'intro' => '<p>The unbroken record chain that lets an LLP be installed on an aircraft.</p>',
+            'intro' => '<p>The most-stakes records discipline at an engine-parts distributor. LLP traceability is the records chain that determines whether a high-value turbine disk can be sold for installation or is scrap. Get this right and TurbineWorks captures the value; get this wrong and the part is unusable regardless of physical condition.</p>',
             'content' => <<<'HTML'
 <h3>Back-to-Birth Traceability for Life Limited Parts</h3>
-<p>Life Limited Parts (LLPs) are critical engine components — turbine disks, compressor disks, shafts, certain bearings — with a defined retirement life (typically expressed in cycles, sometimes hours). An LLP installed past its life limit is a guaranteed catastrophic failure mode.</p>
 
-<h4>What "back-to-birth" means</h4>
-<p>An LLP's traceability must reach back to its manufacture ("birth"). The record chain must show:</p>
+<p>Life Limited Parts (LLPs) are the highest-stakes records discipline at TurbineWorks. The part itself may be a turbine disk worth $80,000 in remaining-life value. The records that prove the remaining life are what makes the part saleable. Without the records, the part is scrap regardless of physical condition. With incomplete records, the part is sellable only with disclosure that significantly reduces its market value.</p>
+
+<p>This lesson covers what LLPs are, what back-to-birth means in operational depth, what documents make up the chain, how TurbineWorks handles LLPs at receiving, how TurbineWorks sells LLPs, what OEM life-limit changes mean, and what happens when a gap is identified. By the end, you should understand why LLP records are managed differently than other records — and why the back-to-birth principle is non-negotiable.</p>
+
+<h4>What an LLP is</h4>
+
+<p>A Life Limited Part is an engine component with a defined retirement life — a maximum number of operating cycles (sometimes hours) beyond which the part cannot be installed on an aircraft engine. The life limit is established by the OEM based on engineering analysis of fatigue and other failure modes. When the part reaches its life limit, it must be retired regardless of physical condition.</p>
+
+<h5>Typical LLP categories in turbofan engines</h5>
+
 <ul>
-  <li>Original manufacturer, part number, serial number, date of manufacture</li>
-  <li>Every installation on an aircraft engine, with TSN/CSN (time/cycles since new) at installation</li>
-  <li>Every removal, with TSN/CSN at removal</li>
-  <li>Every overhaul or repair</li>
-  <li>Cumulative TSN/CSN throughout life</li>
-  <li>Current TSN/CSN and remaining life at the present time</li>
+  <li>HPT disks (High-Pressure Turbine disks) — single-stage in many designs, two-stage in some</li>
+  <li>LPT disks (Low-Pressure Turbine disks) — multiple stages</li>
+  <li>HPC disks (High-Pressure Compressor disks) — multiple stages</li>
+  <li>LPC / Booster disks — multiple stages</li>
+  <li>Fan disk</li>
+  <li>HPT and LPT shafts</li>
+  <li>Certain critical bearings (less common but exists)</li>
+  <li>Three-shaft engines also have IP disks and IP shaft</li>
 </ul>
-<p>An LLP with a gap in this chain — a period of unknown history, an undocumented installation, an unverified TSN/CSN value — cannot be sold for installation. It is effectively scrap, even if physically perfect.</p>
 
-<h4>Why the chain matters</h4>
-<p>Consider a turbine disk with a life limit of 20,000 cycles. Currently shows 8,000 cycles. Remaining life: 12,000 cycles. Customer pays for that remaining life.</p>
-<p>Now suppose the disk's records have a 3-year gap when it was at an unidentified repair facility. Maybe it accumulated 5,000 more cycles in that period. Maybe it didn't. There is no way to know. The disk's effective remaining life is unknown — possibly zero, possibly the full 12,000 cycles. <em>You cannot sell unknown remaining life on an LLP.</em></p>
+<h5>Why these specific parts have life limits</h5>
 
-<h4>What documents make up the chain</h4>
+<p>Each LLP is a rotating component subject to:</p>
+
 <ul>
-  <li>Original birth certificate or manufacturer's release</li>
-  <li>Engine log book entries from each operator the part has been on</li>
-  <li>Repair station release certificates from each overhaul</li>
-  <li>Removal documentation (when, why, TSN/CSN)</li>
-  <li>FAA 8130-3 tags from each transition of ownership</li>
-  <li>OEM authorized repair documentation</li>
+  <li><strong>Low-cycle fatigue (LCF)</strong> from thermal and centrifugal load cycling at start/shutdown</li>
+  <li><strong>High-cycle fatigue (HCF)</strong> from operating vibrations</li>
+  <li><strong>Creep</strong> from sustained high temperatures combined with centrifugal stress</li>
+  <li><strong>Oxidation and corrosion</strong> from hot gas exposure</li>
+  <li><strong>Material property degradation</strong> from prolonged thermal cycling</li>
 </ul>
+
+<p>The OEM\'s life limit is the calculated number of cycles at which fatigue cracking probability becomes unacceptably high. The number is conservative — it assumes the part has experienced typical operating loads. A part operated under unusually severe conditions may have effectively less remaining life than its accumulated cycles suggest; the OEM accounts for this with conservatism in the published limit.</p>
+
+<h4>Why LLP traceability is non-negotiable</h4>
+
+<p>Consider a turbine disk with an OEM life limit of 20,000 cycles. Currently shows 8,000 cycles. Remaining life: 12,000 cycles. At market pricing of perhaps $4–6 per cycle on used LLPs, the disk has $48,000–72,000 of remaining-life value. The customer pays for that remaining life.</p>
+
+<p>Now suppose the disk\'s records have a 3-year gap during which the disk was at an unidentified repair facility. Maybe it accumulated 5,000 more cycles during that period (running on a different engine). Maybe it accumulated 100 cycles (sitting in storage). Maybe it accumulated 15,000 cycles. There is no way to know without records.</p>
+
+<p>The disk\'s effective remaining life is now <strong>unknown</strong>. It could be 12,000 cycles. It could be zero. It could be negative — exceeded life already and continued running. <strong>You cannot sell unknown remaining life on an LLP.</strong> The customer paying for remaining life is paying for a number, not for a guess. An LLP with unknown remaining life cannot be installed because the installer has no defensible basis for the cycle-tracking that maintains airworthiness.</p>
+
+<p>The part is therefore effectively scrap, even though physically perfect. The mutilation per FAA AC 21-38 follows. The customer who would have paid $50,000 for the disk pays nothing — and TurbineWorks loses the entire potential value.</p>
+
+<p>This is why LLP records are managed with disproportionate rigor compared to other records.</p>
+
+<h4>What back-to-birth means in detail</h4>
+
+<p>Back-to-birth means the documentation chain reaches back to the part\'s manufacture and continuously documents the part\'s life from manufacture to the present. Every cycle the part has experienced is accounted for; every period the part has spent (in service, in storage, in overhaul) is documented; no unexplained gaps exist.</p>
+
+<h5>The required record elements</h5>
+
+<ul>
+  <li><strong>Manufacturer\'s release.</strong> Original birth certificate, OEM 8130-3 from the manufacturing facility, or equivalent. Identifies the part as manufactured to type design, with manufacturing date, part number, serial number, material heat code.</li>
+  <li><strong>Engine installation history.</strong> Every aircraft engine the part has been installed on, with the engine\'s serial number, the operator who flew it, the installation date and TSN/CSN at installation.</li>
+  <li><strong>Operating-time documentation.</strong> Engine log book entries showing the part accumulated time and cycles during installation. The engine log book is the operator\'s record — copies or summaries flow with the part.</li>
+  <li><strong>Removal documentation.</strong> When the part came off each engine, why (reached intermediate inspection, engine teardown, removed for damage, etc.), and TSN/CSN at removal.</li>
+  <li><strong>Overhaul / repair history.</strong> If the part has been overhauled or repaired, the repair-station release certificate from each event. The release documents what work was performed and that the part remains within life limits.</li>
+  <li><strong>Storage periods.</strong> Periods when the part was out of service. Documented so the cycle clock can confirm no accumulation during storage.</li>
+  <li><strong>Ownership transitions.</strong> Each time the part changed hands (operator to broker, broker to distributor, etc.), a documentation transfer occurred. The chain of custody is verifiable.</li>
+  <li><strong>Cumulative TSN/CSN.</strong> The running total from manufacture to current state.</li>
+  <li><strong>Current remaining life.</strong> OEM life limit minus current TSN/CSN.</li>
+</ul>
+
+<h5>How the chain is documented</h5>
+
+<p>The chain is documented across multiple physical documents that together tell the part\'s story:</p>
+
+<ul>
+  <li><strong>Original birth certificate or manufacturer\'s 8130-3</strong> — typically the oldest document in the file</li>
+  <li><strong>Engine log book extracts or copies</strong> — for periods the part was installed</li>
+  <li><strong>Repair station release certificates</strong> — for each overhaul</li>
+  <li><strong>Operator removal certificates</strong> — for each removal</li>
+  <li><strong>Distributor 8130-3 transitions</strong> — for each ownership transfer through the distribution chain</li>
+  <li><strong>Storage certifications</strong> — when the part was in non-operating storage, the storing party may have issued documentation confirming the storage and that no cycles accumulated</li>
+</ul>
+
+<p>The total documentation set for a single LLP can be substantial — for an LLP that has been in service for 20 years across multiple operators with multiple overhauls, the file may run to 50+ pages. TurbineWorks retains the complete file when an LLP is in inventory; the file accompanies the part to the customer at sale.</p>
 
 <h4>Receiving an LLP at TurbineWorks</h4>
-<p>LLP receiving inspection has extra steps beyond standard receiving:</p>
+
+<p>LLP receiving inspection includes everything in standard receiving (Module 2) plus extensive additional verification:</p>
+
+<h5>Documentation completeness verification</h5>
+
+<p>The receiving inspector confirms that the documentation chain is complete:</p>
+
 <ul>
-  <li>Verify the back-to-birth documentation is complete (no gaps)</li>
-  <li>Verify TSN/CSN values are consistent across documents</li>
-  <li>Verify against OEM's current life limit (life limits can change — current OEM publication wins)</li>
-  <li>Calculate remaining life and document</li>
-  <li>If documentation is incomplete or shows gaps, the part is quarantined and the supplier is contacted for additional history</li>
+  <li>Reaches back to manufacture</li>
+  <li>Documents every installation</li>
+  <li>Documents every removal</li>
+  <li>Documents every overhaul</li>
+  <li>Has no unexplained gaps</li>
+  <li>Has internally consistent dates (one document\'s "removal date" matches the next document\'s "receipt date")</li>
 </ul>
 
-<h4>Selling an LLP</h4>
-<p>TurbineWorks' COC accompanying the sale documents the remaining life as of date of shipment. The customer's installer will further document installation TSN/CSN against their engine.</p>
+<p>If gaps exist, the part is quarantined pending investigation. The supplier is contacted for additional documentation. If the supplier cannot produce the missing history, the part cannot be accepted for serviceable inventory.</p>
 
-<h4>OEM life limit changes</h4>
-<p>OEMs occasionally revise life limits — sometimes upward (better data shows the part lasts longer than originally certified), sometimes downward (in-service failures or new analysis show the original limit was too generous). The currently-published life limit at time of installation controls. A part previously sold with "8,000 cycles remaining" may have a different remaining life if the OEM lowered the limit between sale and installation.</p>
+<h5>TSN/CSN value verification</h5>
+
+<p>The TSN/CSN values across documents must be internally consistent. Each document\'s "current TSN" should be the previous document\'s "current TSN" plus the cycles accumulated during the intervening period. Inconsistencies — values that decrease, values that don\'t match across documents, calculations that don\'t add up — are flags requiring investigation.</p>
+
+<h5>Life-limit verification against current OEM publication</h5>
+
+<p>OEM life limits can change. TurbineWorks verifies the current OEM-published life limit at receiving. If the OEM has reduced the life limit since the part was manufactured, the part\'s remaining life is calculated against the current limit, not the original.</p>
+
+<h5>Remaining life calculation and documentation</h5>
+
+<p>TurbineWorks calculates remaining life: current OEM life limit minus cumulative TSN/CSN. The calculation is documented and verified. The TurbineWorks inventory record shows the remaining life as of receipt date.</p>
+
+<h5>Photographic documentation</h5>
+
+<p>High-value LLPs typically receive photographic documentation at receiving — multiple views of the part including markings, data plate, any service-related markings. The photographs become part of the part\'s permanent file.</p>
+
+<h4>Selling an LLP from TurbineWorks</h4>
+
+<p>When TurbineWorks sells an LLP, the COC accompanying the sale documents the remaining life as of date of shipment. The customer\'s installer further documents installation TSN/CSN against their specific engine.</p>
+
+<h5>The complete documentation package shipped to the customer</h5>
+
+<ul>
+  <li>The TurbineWorks COC stating the remaining life</li>
+  <li>The original FAA 8130-3 (or True Copy if customer agreement allows)</li>
+  <li>The complete back-to-birth file — all the supporting documentation</li>
+  <li>TurbineWorks photographs from receiving (if customer has requested)</li>
+  <li>Customer-specific documents per contract</li>
+</ul>
+
+<p>The complete file is what makes the LLP saleable at full remaining-life value. Sending the part without the complete file (e.g., "the back-to-birth file is in our records; we can send it later") results in customer rejection — they cannot install the part without the documentation.</p>
+
+<h5>Customer\'s downstream verification</h5>
+
+<p>The customer\'s receiving inspector performs LLP verification using the documentation TurbineWorks provided. The customer confirms the chain is complete and the remaining life matches what TurbineWorks attested. Customers find documentation discrepancies regularly — every gap in TurbineWorks\' verification creates a downstream customer rejection.</p>
+
+<h4>OEM life-limit changes</h4>
+
+<p>OEMs occasionally revise life limits as in-service data accumulates. Changes can go in either direction:</p>
+
+<h5>Life-limit increases</h5>
+
+<p>Sometimes OEMs find that parts last longer than originally certified. Improved analysis, better in-service data, or updated material understanding may justify increasing the life limit. When this happens, parts previously near retirement may suddenly have additional remaining life.</p>
+
+<p>The current OEM-published limit controls. A part previously at "near zero remaining life" against an old 18,000-cycle limit may be at 5,000 remaining cycles against a new 23,000-cycle limit. The part\'s value increases accordingly.</p>
+
+<h5>Life-limit reductions</h5>
+
+<p>More commonly, in-service failures or new analysis reveal that the original life limit was too generous. The OEM publishes a reduced limit, sometimes via AD action.</p>
+
+<p>The reduced limit applies to the affected part numbers and serial number ranges. Parts in service may need to be removed earlier than originally planned. Parts in distributor inventory have less remaining life than calculated against the original limit.</p>
+
+<p>For TurbineWorks: when an OEM reduces a life limit on a part type in inventory, every affected LLP is re-evaluated. The remaining life is recalculated; the inventory record updated; customers previously notified of higher remaining life are re-notified.</p>
+
+<h5>The current-publication rule</h5>
+
+<p>The OEM-published life limit at the time of installation controls. A part previously sold with documentation showing "8,000 cycles remaining" may need its documentation updated if the OEM has reduced the limit before the customer installs the part. TurbineWorks tracks OEM publication changes affecting parts in inventory and updates inventory records accordingly.</p>
+
+<h4>Gap handling — what happens when documentation is incomplete</h4>
+
+<p>When a TurbineWorks receiving inspector or QA Manager identifies a gap in an LLP\'s documentation chain, the response is structured:</p>
+
+<h5>Step 1 — Quarantine</h5>
+
+<p>The LLP and its incomplete documentation move to Quarantine. The part cannot enter serviceable inventory until the gap is resolved.</p>
+
+<h5>Step 2 — Supplier engagement</h5>
+
+<p>The supplier from whom TurbineWorks received the LLP is contacted. The specific gap is identified. Can the supplier produce the missing documentation? Often the gap exists because the supplier received the part with incomplete documentation and didn\'t investigate before reselling. Pushing on the supplier may result in the supplier obtaining additional history from their upstream source.</p>
+
+<h5>Step 3 — Operator and OEM engagement</h5>
+
+<p>If the gap involves a specific operator who had the part installed during the gap period, the operator may have engine log book records that fill the gap. The OEM may have manufacturing records or original release records that establish the part\'s history.</p>
+
+<h5>Step 4 — Gap resolution outcomes</h5>
+
+<p>The investigation can conclude in several ways:</p>
+
+<ul>
+  <li><strong>Gap resolved — complete history reconstructed.</strong> The missing documentation is obtained from upstream sources. The chain is restored. Part moves to serviceable inventory with full traceability.</li>
+  <li><strong>Gap partially resolved.</strong> Some additional history obtained, but not complete reconstruction. The part may be sold with disclosure of the partial gap, at a reduced price reflecting the uncertainty. Customer must accept the gap explicitly. Documentation discloses the gap and its character.</li>
+  <li><strong>Gap unresolved.</strong> No additional documentation obtainable. The part cannot be sold as a serviceable LLP. The QA Manager dispositions to Unserviceable / Scrap. Mutilation per AC 21-38 follows.</li>
+</ul>
 
 <h4>The cost of a missed gap</h4>
-<p>Selling an LLP with incomplete back-to-birth records is one of the most serious findings a distributor can have. It compromises every customer that installed parts from the affected lot. It may trigger a fleet-wide inspection by the operator. It is grounds for accreditation suspension.</p>
+
+<p>If TurbineWorks sells an LLP with an undetected gap in back-to-birth — sells the part as having full remaining life when the records are actually incomplete — the consequences cascade:</p>
+
+<ul>
+  <li>The customer\'s receiving inspector may detect the gap and reject the shipment. Cost: return logistics, customer relationship damage, lost sale.</li>
+  <li>The customer\'s receiving inspector may miss the gap. The part installs. Eventually someone discovers the gap (audit, sale, incident). Now every customer who has parts from that lot needs re-inspection. The customer notifications cascade.</li>
+  <li>If a part with an unrecognized gap fails in service, the investigation will trace back to the original sale and to TurbineWorks. Legal liability exposure is significant.</li>
+  <li>The ASA may suspend or withdraw accreditation. Loss of accreditation has the market consequences covered in Module 6.</li>
+</ul>
+
+<p>This is why LLP receiving inspection is performed with extra rigor — the QA Manager is involved, multiple verification steps are required, and the part doesn\'t move to serviceable inventory until everyone agrees the chain is complete.</p>
 
 <h4>What the auditor checks</h4>
+
+<p>LLP traceability gets specific audit attention:</p>
+
 <ul>
-  <li>Random LLP pull: produce the complete back-to-birth chain</li>
-  <li>LLP COCs issued: do they document remaining life consistently with the records?</li>
-  <li>LLP receiving: how does TurbineWorks verify back-to-birth on incoming LLPs?</li>
-  <li>Gap handling: when has TurbineWorks identified a gap, and what was the disposition?</li>
+  <li>Random LLP pull — produce the complete back-to-birth file</li>
+  <li>For each TurbineWorks-issued LLP COC, verify the remaining-life statement is supported by the documentation</li>
+  <li>For each LLP in inventory, verify the remaining-life record in inventory matches the documentation</li>
+  <li>Review recent LLP receiving — what verification steps did the inspector perform?</li>
+  <li>Review LLPs currently in Quarantine — what is the gap and how is it being investigated?</li>
+  <li>Review LLPs disposed of as scrap due to gaps — what was the disposition documented?</li>
+  <li>Review OEM publication tracking — how does TurbineWorks know when life limits change?</li>
 </ul>
+
+<h5>Common LLP audit findings</h5>
+
+<ul>
+  <li>LLP file incomplete; key documents missing</li>
+  <li>TSN/CSN values inconsistent across documents in the file</li>
+  <li>Life limit calculation against an old OEM publication revision</li>
+  <li>No verification that current OEM publication was checked at receiving</li>
+  <li>LLPs sold without the complete back-to-birth file accompanying the part</li>
+  <li>Customer-side documentation gaps not investigated when raised</li>
+  <li>Documentation file maintained electronically without verification trail</li>
+</ul>
+
+<h4>References</h4>
+
+<ul>
+  <li><strong>14 CFR §43.10</strong> — Maintenance records, including LLP traceability requirements</li>
+  <li><strong>FAA AC 120-77</strong> — Maintenance recordkeeping</li>
+  <li><strong>OEM Engine Manuals and IPCs</strong> — authoritative life-limit data per part</li>
+  <li><strong>ASA-100 §8</strong> — Recordkeeping baseline (LLPs have extended retention)</li>
+  <li><strong>Operator engine log books</strong> — primary record of in-service operation</li>
+  <li>TurbineWorks QAM Section [TBD] — LLP receiving inspection and traceability verification SOP</li>
+</ul>
+
+<h4>Self-check</h4>
+
+<ol>
+  <li>What is an LLP and why does it have a life limit?</li>
+  <li>Name 5 typical LLP categories in a turbofan engine.</li>
+  <li>What does "back-to-birth" mean operationally?</li>
+  <li>What 9 record elements make up a complete back-to-birth chain?</li>
+  <li>What extra verification steps does TurbineWorks perform at LLP receiving?</li>
+  <li>What is the "current-publication rule" for OEM life limits?</li>
+  <li>Describe the 4-step gap handling procedure when documentation is incomplete.</li>
+  <li>What are the 4 possible outcomes of a gap investigation?</li>
+  <li>Why is selling an LLP with an undetected gap such a serious risk?</li>
+</ol>
+
+<p><em>[TurbineWorks Procedure Reference: insert TurbineWorks LLP receiving inspection SOP, the OEM publication tracking system, and the LLP gap investigation procedure here.]</em></p>
 HTML
         ],
         [

@@ -32,7 +32,7 @@ require_once(__DIR__ . '/../content/glossary.php');
 
 // Bump the suffix here (and in the entrypoint marker docs) when adding new
 // bootstrap steps that should run on existing sites.
-$marker = $CFG->dataroot . '/.twu-bootstrapped-v21';
+$marker = $CFG->dataroot . '/.twu-bootstrapped-v22';
 $force  = in_array('--force', $argv ?? [], true);
 if (file_exists($marker) && !$force) {
     cli_writeln("[twu] already bootstrapped (marker present at $marker). Pass --force to re-run.");
