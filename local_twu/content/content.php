@@ -2946,6 +2946,766 @@ function local_twu_get_engine_parts_courses(): array {
                 'A turbine disk installed past its life limit is a guaranteed catastrophic failure. The LLP traceability system is what prevents this. A turbine disk without back-to-birth records is effectively scrap — it cannot be installed legally. This module exists because engine parts are TurbineWorks\' core business.'
             )],
         ],
+        [
+            'shortname' => 'TWU-ENG-AD-SB',
+            'fullname'  => 'Airworthiness Directives, Service Bulletins, and OEM Publications',
+            'idnumber'  => 'TWU-ENG-AD-SB',
+            'summary'   => '<p>How to read AD/SB/ASB/OSB publications, when each applies, and how compliance affects parts in TurbineWorks inventory.</p>',
+            'lessons'   => local_twu_module_ad_sb_lessons(),
+        ],
+        [
+            'shortname' => 'TWU-ENG-BSI',
+            'fullname'  => 'Borescope Inspection (BSI) Familiarization',
+            'idnumber'  => 'TWU-ENG-BSI',
+            'summary'   => '<p>What borescope inspection is, what it can and cannot find, and how BSI reports affect the saleability of engine modules and rotables.</p>',
+            'lessons'   => local_twu_module_bsi_lessons(),
+        ],
+        [
+            'shortname' => 'TWU-ENG-TBO',
+            'fullname'  => 'TBO, Hard Time, On-Condition, and Engine Time Tracking',
+            'idnumber'  => 'TWU-ENG-TBO',
+            'summary'   => '<p>The maintenance philosophies that govern engine and engine-component overhaul timing, and how each affects the value and saleability of inventory.</p>',
+            'lessons'   => local_twu_module_tbo_lessons(),
+        ],
+        [
+            'shortname' => 'TWU-ENG-ATASPEC2000',
+            'fullname'  => 'ATA Spec 2000 — Electronic Data Interchange for Parts',
+            'idnumber'  => 'TWU-ENG-ATASPEC2000',
+            'summary'   => '<p>The aviation industry standard for electronic exchange of parts data: RFQ, ordering, invoicing, and traceability.</p>',
+            'lessons'   => [local_twu_overview_lesson(
+                'ATA Spec 2000 — Electronic Data Interchange for Parts',
+                'ATA Spec 2000 (current edition), ATA iSpec 2200 (tech pubs)',
+                '1 hour',
+                [
+                    'Recognize ATA Spec 2000 chapters relevant to parts distribution (Chapter 9 - Procurement Planning, Chapter 12 - Inventory)',
+                    'Use spec-compliant electronic RFQ and ordering with airlines and MROs',
+                    'Map TurbineWorks inventory data to Spec 2000 EDI message formats',
+                    'Distinguish Spec 2000 (operational data) from iSpec 2200 (technical publications)',
+                ],
+                'Most major airlines and MROs increasingly require ATA Spec 2000 EDI for parts procurement. A distributor without Spec 2000 capability is locked out of major customer pipelines. This module covers the framework; the operational implementation is in the TurbineWorks IT/ERP system documentation.'
+            )],
+        ],
+    ];
+}
+
+// ============================================================================
+// ENGINE-PARTS COURSE: Airworthiness Directives, Service Bulletins, OEM Pubs
+// ============================================================================
+function local_twu_module_ad_sb_lessons(): array {
+    return [
+        [
+            'name'  => 'Lesson 1 — The OEM Publication Family',
+            'intro' => '<p>The hierarchy of documents published by engine OEMs (CFM, GE, Pratt &amp; Whitney, Rolls-Royce, Honeywell) and which apply to which parts.</p>',
+            'content' => <<<'HTML'
+<h3>The OEM Publication Family</h3>
+<p>Every engine OEM maintains a family of technical publications that govern how their engines and components are maintained, modified, and operated. As a parts distributor, TurbineWorks does not perform maintenance — but the OEM publications still matter because they determine what condition a part must be in to be saleable.</p>
+
+<h4>The major publication types</h4>
+<dl>
+  <dt><strong>ESM — Engine Shop Manual</strong></dt>
+  <dd>The master document for engine-level overhaul and shop work. Contains assembly drawings, dimensional limits, repair procedures, inspection requirements. Used by repair stations. TurbineWorks references ESM for inspection limits when evaluating a used part.</dd>
+
+  <dt><strong>CMM — Component Maintenance Manual</strong></dt>
+  <dd>Component-level equivalent of the ESM. One CMM per major component (fuel control, gearbox, accessory, etc.). Defines what the component is, how it&apos;s tested, and the maintenance allowed.</dd>
+
+  <dt><strong>IPC / IPL — Illustrated Parts Catalog / Illustrated Parts List</strong></dt>
+  <dd>The OEM&apos;s authoritative list of every part in the engine or component, with current part numbers, supersedure history, applicability, and exploded views. Foundational reference for parts distribution.</dd>
+
+  <dt><strong>SB — Service Bulletin</strong></dt>
+  <dd>OEM-issued instructions describing a modification, inspection, or operational change. Numbered (e.g., CFM SB 72-1234). Categorized by urgency: Mandatory, Recommended, Informational. May be incorporated into the engine via "SB compliance" with documentation.</dd>
+
+  <dt><strong>ASB — Alert Service Bulletin</strong></dt>
+  <dd>Higher-priority SB issued to address a safety concern. Often the document that the FAA later codifies as an Airworthiness Directive.</dd>
+
+  <dt><strong>OSB — Optional Service Bulletin</strong></dt>
+  <dd>Operator-choice modification. Common for improvements that aren&apos;t safety-critical (longer-life parts, better materials).</dd>
+
+  <dt><strong>ATA 100 / ATA 2200 chapter numbering</strong></dt>
+  <dd>The OEM publications follow ATA chapter numbering (Chapter 70 — Engine, Chapter 71 — Powerplant, Chapter 72 — Engine itself, Chapter 73 — Fuel and control, Chapter 74 — Ignition, Chapter 75 — Bleed air, etc.). The chapter tells you what the document covers.</dd>
+</dl>
+
+<h4>The TurbineWorks position</h4>
+<p>TurbineWorks does not maintain a full library of every OEM publication for every engine. Instead, TurbineWorks:</p>
+<ul>
+  <li>Subscribes to the IPC/IPL for engines actively traded</li>
+  <li>Has access to SB / ASB databases (typically via OEM portal or third-party service)</li>
+  <li>Refers customers to the OEM&apos;s authoritative current data for installation guidance</li>
+</ul>
+<p>The reason: OEM publications change frequently. Maintaining a current local copy of every publication for every engine model is impractical. Instead, TurbineWorks verifies critical data (life limits, applicability, supersedures) against the current OEM source at the time of inventory evaluation and sale.</p>
+
+<h4>Why this matters at receiving</h4>
+<p>A received part&apos;s 8130-3 may reference SB compliance status (e.g., "SB 72-1234 incorporated, post-mod configuration"). The receiving inspector verifies that the part&apos;s configuration matches what the SB describes for "post-mod" — the SB itself defines what changed and what the post-mod state looks like.</p>
+<p>This requires either having the SB or knowing how to retrieve it. The TurbineWorks Quality Assurance Manager owns the OEM publication subscription policy.</p>
+HTML
+        ],
+        [
+            'name'  => 'Lesson 2 — Airworthiness Directives (ADs)',
+            'intro' => '<p>The FAA-mandated changes that override OEM optional bulletins and have legal force.</p>',
+            'content' => <<<'HTML'
+<h3>Airworthiness Directives (ADs)</h3>
+<p>An Airworthiness Directive is a legally binding FAA order requiring action on an aircraft or component. Unlike a Service Bulletin (which is OEM guidance), an AD has the force of law under 14 CFR Part 39. Non-compliance with an applicable AD makes the affected aircraft not airworthy.</p>
+
+<h4>Where ADs come from</h4>
+<p>An AD is issued when the FAA determines that an unsafe condition exists in an aircraft, engine, or appliance. Common sources of AD initiation:</p>
+<ul>
+  <li>OEM-issued ASB (Alert Service Bulletin) that the FAA elevates to mandatory status</li>
+  <li>NTSB accident/incident investigation findings</li>
+  <li>FAA Safety Team or AVS Office findings</li>
+  <li>International authority (EASA, TCCA) ADs that the FAA mirrors</li>
+  <li>Service-difficulty reports (SDRs) showing a pattern of failures</li>
+</ul>
+
+<h4>Anatomy of an AD</h4>
+<p>An AD typically contains:</p>
+<ul>
+  <li><strong>Applicability</strong> — exactly which engine models, serial number ranges, or part numbers are affected</li>
+  <li><strong>Unsafe condition</strong> — what failure mode the AD addresses</li>
+  <li><strong>Required actions</strong> — what must be done (inspect, replace, modify, retire)</li>
+  <li><strong>Compliance time</strong> — when the action must be completed (immediately, within X flight hours, within X calendar months, before next flight, etc.)</li>
+  <li><strong>Alternative methods of compliance (AMOC)</strong> — variations the FAA may accept</li>
+  <li><strong>Effective date</strong> — when the AD becomes legally binding</li>
+</ul>
+
+<h4>AD numbering</h4>
+<p>ADs are numbered YYYY-NN-NN. Example: AD 2024-15-08 — the 8th AD adopted in the 15th biweekly issue of 2024. Plus a sequence within the year. The number is the legal citation.</p>
+
+<h4>AD vs SB — the practical difference</h4>
+<table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse;">
+  <tr style="background:#0d2240; color:#fff;">
+    <th>Aspect</th><th>Service Bulletin</th><th>Airworthiness Directive</th>
+  </tr>
+  <tr><td>Issuer</td><td>OEM (engine manufacturer)</td><td>FAA</td></tr>
+  <tr><td>Legal force</td><td>Recommendation (unless contractually binding)</td><td>Mandatory under 14 CFR Part 39</td></tr>
+  <tr><td>Penalty for non-compliance</td><td>Loss of OEM warranty, possibly customer contract issue</td><td>Aircraft is not airworthy; cannot fly legally</td></tr>
+  <tr><td>Compliance verification</td><td>Operator/repair station logbook entries</td><td>Logbook entries plus availability to FAA inspectors</td></tr>
+  <tr><td>Supersedure</td><td>OEM may revise or withdraw at any time</td><td>FAA action required to revise or withdraw</td></tr>
+</table>
+
+<h4>How ADs affect TurbineWorks inventory</h4>
+<p>When a new AD is issued affecting parts TurbineWorks stocks or trades:</p>
+<ol>
+  <li>Identify affected serial numbers / part numbers in current inventory</li>
+  <li>Identify affected parts already shipped to customers (so they can be notified)</li>
+  <li>Determine the AD compliance status of each affected part (pre-AD configuration vs post-AD; if action required to comply, is the part still saleable)</li>
+  <li>Update inventory records with AD applicability</li>
+  <li>Notify affected customers per contractual or regulatory requirement</li>
+</ol>
+
+<h4>Example: AD that requires parts replacement</h4>
+<p>FAA issues AD 2024-XX-XX requiring replacement of certain turbine blade part numbers (specific serial ranges) on engines that have accumulated more than 5,000 cycles. Effective immediately.</p>
+<p>TurbineWorks impact:</p>
+<ul>
+  <li>Affected blades currently in inventory: if pre-AD configuration, they can still be sold AS-IS only to customers who will retire them; cannot be installed without immediate replacement after install</li>
+  <li>Replacement blades (post-AD configuration): demand spike</li>
+  <li>Customer notification: any blade in the affected serial range shipped in the last [X] years needs to be communicated</li>
+</ul>
+
+<h4>Where to find ADs</h4>
+<ul>
+  <li><a href="https://drs.faa.gov/" target="_blank" rel="noopener">FAA Dynamic Regulatory System (DRS)</a> — official AD database, searchable</li>
+  <li>The Federal Register — where ADs are first published</li>
+  <li>Third-party AD-tracking subscription services</li>
+</ul>
+
+<h4>What every TurbineWorks employee should know</h4>
+<ul>
+  <li>An AD is law. SB is guidance.</li>
+  <li>An AD&apos;s applicability statement is exact. A part one serial number outside the range is not affected.</li>
+  <li>AD compliance status follows the part — it must be documented through the supply chain.</li>
+  <li>New ADs affecting inventory require immediate action: inventory review, customer notification, sales hold if appropriate.</li>
+</ul>
+HTML
+        ],
+        [
+            'name'  => 'Lesson 3 — Service Bulletins: Mandatory, Alert, Recommended, Optional',
+            'intro' => '<p>The OEM bulletin categories and how each affects inventory value and customer disclosure.</p>',
+            'content' => <<<'HTML'
+<h3>Service Bulletin Categories</h3>
+<p>Engine OEMs issue thousands of Service Bulletins over the life of an engine program. Not all SBs are equal. Understanding the categories is essential to assessing inventory value and to disclosing accurately to customers.</p>
+
+<h4>Category 1: Mandatory Service Bulletin (MSB)</h4>
+<p>The OEM mandates compliance. Typically these address safety, reliability, or operational issues that the OEM considers critical.</p>
+<ul>
+  <li>Compliance is required to maintain warranty</li>
+  <li>Often becomes an FAA AD within months of issuance</li>
+  <li>Often time-limited (must comply within X flight hours / X months)</li>
+</ul>
+<p>From a distribution standpoint: a part subject to a mandatory SB that has not been complied with is significantly devalued. Customers will require either a discount or post-SB configuration.</p>
+
+<h4>Category 2: Alert Service Bulletin (ASB)</h4>
+<p>Higher urgency than a routine SB. The OEM has identified a specific failure mode or safety concern. Often:</p>
+<ul>
+  <li>Issued in response to in-service failures or incidents</li>
+  <li>Frequently leads to AD action by FAA</li>
+  <li>Time-critical compliance</li>
+</ul>
+<p>When an ASB is issued, monitor for FAA AD action. The lag is typically 30-180 days.</p>
+
+<h4>Category 3: Recommended Service Bulletin</h4>
+<p>OEM-recommended but not mandatory. Examples: improved-material upgrades, fuel-economy improvements, life-extension modifications.</p>
+<ul>
+  <li>Compliance is operator choice</li>
+  <li>Does not affect airworthiness</li>
+  <li>May affect OEM warranty for certain failure modes</li>
+</ul>
+<p>From a distribution standpoint: pre-modification and post-modification configurations may have different demand and pricing. Both are saleable.</p>
+
+<h4>Category 4: Optional Service Bulletin (OSB)</h4>
+<p>Operator-choice modifications. Examples: aesthetic changes, customer-convenience options, alternative-vendor parts.</p>
+<ul>
+  <li>Pure operator preference</li>
+  <li>No airworthiness implications</li>
+  <li>Pre/post configurations equally saleable</li>
+</ul>
+
+<h4>Reading an SB</h4>
+<p>A typical SB structure:</p>
+<ol>
+  <li><strong>SB Number and Category</strong> (e.g., "Mandatory" or "Alert")</li>
+  <li><strong>Effectivity</strong> — which engine serial numbers / part numbers are affected</li>
+  <li><strong>Reason for Issue</strong> — what problem the SB addresses</li>
+  <li><strong>Description</strong> — what the modification or inspection involves</li>
+  <li><strong>Compliance</strong> — when and how compliance must be achieved</li>
+  <li><strong>Material/Parts Required</strong> — new parts needed for compliance</li>
+  <li><strong>Accomplishment Instructions</strong> — step-by-step procedure</li>
+  <li><strong>Recording Requirements</strong> — what records must be created showing compliance</li>
+  <li><strong>Revision History</strong> — SBs are revised; current revision matters</li>
+</ol>
+
+<h4>SB compliance documentation</h4>
+<p>When an SB is incorporated on a part, the compliance is documented:</p>
+<ul>
+  <li>Logbook entry citing the SB by number and revision</li>
+  <li>Date of compliance</li>
+  <li>Time/cycles on the part at compliance</li>
+  <li>Possibly a new tag or stamp on the part indicating post-mod configuration</li>
+  <li>Updated part number if the SB changed the part number</li>
+</ul>
+<p>The receiving inspector verifies these records when receiving a part that has been subject to an SB.</p>
+
+<h4>SB supersedure</h4>
+<p>SBs are revised. A part complied with Rev A of an SB may need to be re-evaluated against Rev B or Rev C if the SB was later revised. Current revision of the SB governs.</p>
+
+<h4>SBs that change part numbers</h4>
+<p>Some SBs change a part&apos;s part number to distinguish pre-mod from post-mod (e.g., "Old PN 1234-001, New PN 1234-002 after SB 72-9876 incorporation"). The IPC (Illustrated Parts Catalog) tracks these supersedures. A current IPC is essential for accurate parts identification.</p>
+
+<h4>What this means at TurbineWorks</h4>
+<ul>
+  <li>Know the SB compliance status of every serialized part in inventory</li>
+  <li>Disclose SB status accurately to customers in quotes and on COCs</li>
+  <li>For pre-mod parts, the customer should know what would be required to comply post-installation</li>
+  <li>Maintain access to current SB documents for engines actively traded</li>
+</ul>
+HTML
+        ],
+        [
+            'name'  => 'Lesson 4 — Module Summary',
+            'intro' => '<p>AD / SB / OEM publication recap.</p>',
+            'content' => <<<'HTML'
+<h3>AD / SB Module Summary</h3>
+
+<h4>What you should now be able to answer</h4>
+<ol>
+  <li>What is the difference between an AD and an SB in terms of legal force?</li>
+  <li>What are the four common SB categories (Mandatory, Alert, Recommended, Optional)?</li>
+  <li>What documents should accompany a part that has had an SB incorporated?</li>
+  <li>Where do you look up current ADs?</li>
+  <li>Why does an SB sometimes change a part&apos;s part number?</li>
+</ol>
+
+<h4>Key Terms</h4>
+<dl>
+  <dt><strong>AD</strong></dt><dd>Airworthiness Directive — FAA-mandated action under 14 CFR Part 39.</dd>
+  <dt><strong>SB / ASB / OSB</strong></dt><dd>Service Bulletin variants — OEM-issued guidance with varying urgency.</dd>
+  <dt><strong>ESM / CMM</strong></dt><dd>Engine Shop Manual / Component Maintenance Manual.</dd>
+  <dt><strong>IPC / IPL</strong></dt><dd>Illustrated Parts Catalog / List — OEM authoritative parts list.</dd>
+  <dt><strong>AMOC</strong></dt><dd>Alternative Method of Compliance — FAA-accepted alternative to the literal AD action.</dd>
+  <dt><strong>Post-mod / Pre-mod</strong></dt><dd>Configuration state of a part before or after a modification per SB.</dd>
+</dl>
+
+<h4>References</h4>
+<ul>
+  <li>14 CFR Part 39 — Airworthiness Directives</li>
+  <li><a href="https://drs.faa.gov/" target="_blank" rel="noopener">FAA Dynamic Regulatory System (DRS)</a> — AD search</li>
+  <li>OEM technical publication portals (CFM, GE Aerospace, Pratt &amp; Whitney, Rolls-Royce, Honeywell, etc.)</li>
+  <li>ATA Spec 100 — chapter numbering convention</li>
+</ul>
+HTML
+        ],
+    ];
+}
+
+// ============================================================================
+// ENGINE-PARTS COURSE: Borescope Inspection (BSI)
+// ============================================================================
+function local_twu_module_bsi_lessons(): array {
+    return [
+        [
+            'name'  => 'Lesson 1 — What is Borescope Inspection?',
+            'intro' => '<p>The non-destructive technique that allows internal engine inspection without disassembly.</p>',
+            'content' => <<<'HTML'
+<h3>Borescope Inspection (BSI) Familiarization</h3>
+<p>A borescope is a flexible or rigid optical instrument that allows visual inspection of engine internals without disassembling the engine. The probe enters through dedicated borescope ports designed into modern engines, and the inspector views the internal components on a screen — including turbine blades, combustor liners, compressor stages, and seals.</p>
+<p>TurbineWorks employees are not typically borescope inspectors — that&apos;s an MRO or operator function. But borescope inspection reports are documents TurbineWorks regularly encounters, particularly when:</p>
+<ul>
+  <li>Buying engines or modules that have recent BSI reports</li>
+  <li>Selling engines or modules whose value depends on the BSI condition</li>
+  <li>Evaluating LLPs that have remaining life but were removed because of BSI findings</li>
+</ul>
+
+<h4>Why borescope inspection exists</h4>
+<p>Engine internals are subject to high-temperature, high-stress, oxidizing environment that produces predictable wear and damage patterns. Identifying these patterns early allows maintenance to be scheduled before failure. Without borescope inspection, you would have to disassemble the engine to look — which is expensive and itself a maintenance event.</p>
+
+<h4>What a BSI can see</h4>
+<ul>
+  <li><strong>Combustor liner condition</strong> — cracks, missing pieces, thermal barrier coating loss</li>
+  <li><strong>Turbine blade airfoils</strong> — burn-through, tip rub, edge erosion, FOD damage</li>
+  <li><strong>Compressor blade leading edges</strong> — FOD damage from ingested debris</li>
+  <li><strong>Vane shrouds and platforms</strong> — cracks, distortion</li>
+  <li><strong>Seal land condition</strong> — wear, damage</li>
+  <li><strong>Fuel nozzle condition</strong> — carbon buildup, erosion</li>
+  <li><strong>Internal foreign objects</strong> — bolts, nuts, fragments left from prior maintenance</li>
+</ul>
+
+<h4>What a BSI cannot see</h4>
+<ul>
+  <li>Internal bores of disks (need ultrasonic or fluorescent penetrant)</li>
+  <li>Subsurface cracks</li>
+  <li>Dimensional measurements (BSI is visual only)</li>
+  <li>Material properties</li>
+  <li>Areas not accessible through borescope ports (always some hidden areas)</li>
+</ul>
+
+<h4>BSI tools</h4>
+<ul>
+  <li><strong>Rigid borescope</strong> — straight optical tube. Best image quality but limited reach.</li>
+  <li><strong>Flexible borescope (fiberscope)</strong> — fiber-optic bundle. Reaches around bends. Lower resolution than rigid.</li>
+  <li><strong>Video borescope</strong> — digital camera at the probe tip. Modern standard. High resolution, articulating tip for steering.</li>
+  <li><strong>Measurement borescopes</strong> — calibrated borescopes that estimate damage size using stereo imaging or known reference dimensions.</li>
+</ul>
+
+<h4>The BSI report</h4>
+<p>A BSI inspection produces a written report and (typically) photographs or video. The report documents:</p>
+<ul>
+  <li>Engine identification (serial number, model)</li>
+  <li>BSI date, inspector, port(s) used</li>
+  <li>Findings: location, type, dimensions of any damage observed</li>
+  <li>Disposition: acceptable, monitor at next BSI, action required</li>
+  <li>Reference to applicable inspection criteria (ESM section)</li>
+</ul>
+<p>The BSI report follows the engine. When TurbineWorks buys or sells an engine or module, BSI reports are part of the technical record package and affect value substantially.</p>
+HTML
+        ],
+        [
+            'name'  => 'Lesson 2 — Reading a BSI Report',
+            'intro' => '<p>How to interpret findings without being a borescope inspector yourself.</p>',
+            'content' => <<<'HTML'
+<h3>Reading a BSI Report</h3>
+<p>TurbineWorks employees evaluating engine inventory often see BSI reports without performing the inspections themselves. Understanding what a report says is key to pricing, disclosure, and customer communication.</p>
+
+<h4>Standard finding categories</h4>
+<dl>
+  <dt><strong>"Within limits"</strong></dt>
+  <dd>Damage observed but acceptable per the ESM. Engine continues in service. Most BSI reports have some "within limits" findings — most engines have some accumulated minor damage.</dd>
+
+  <dt><strong>"Monitor"</strong></dt>
+  <dd>Damage approaches limits. To be re-inspected at the next scheduled BSI interval. Documented so the rate of growth can be tracked.</dd>
+
+  <dt><strong>"Repair required"</strong></dt>
+  <dd>Damage exceeds in-service limits. Engine must be removed for shop visit to address. Or specific repair authorized per OEM data.</dd>
+
+  <dt><strong>"Reject / scrap"</strong></dt>
+  <dd>Damage exceeds repairable limits. Component must be replaced.</dd>
+</dl>
+
+<h4>Typical findings and meaning</h4>
+<table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse;">
+  <tr style="background:#0d2240; color:#fff;">
+    <th>Finding</th><th>What it means</th><th>Typical impact on saleability</th>
+  </tr>
+  <tr>
+    <td>HPT blade tip wear (within limits)</td>
+    <td>Normal wear at high-pressure turbine blade tips from rubbing on shroud during thermal cycling</td>
+    <td>Acceptable; common; minimal value impact</td>
+  </tr>
+  <tr>
+    <td>Combustor liner crack (within limits)</td>
+    <td>Cracks at known stress concentrations; growth monitored</td>
+    <td>Common; affects life expectancy disclosure</td>
+  </tr>
+  <tr>
+    <td>FOD damage on compressor blades</td>
+    <td>Ingested foreign object (sand, ice, bird, runway debris) struck blade leading edges</td>
+    <td>Depends on size and location; may require blade blending or replacement</td>
+  </tr>
+  <tr>
+    <td>Burn-through in combustor</td>
+    <td>Local overheating burned through liner material</td>
+    <td>Repair required; significant value impact</td>
+  </tr>
+  <tr>
+    <td>Missing thermal barrier coating (TBC)</td>
+    <td>Ceramic coating on hot-section parts has spalled</td>
+    <td>Reduces parent metal protection; OEM limits vary on how much TBC loss is acceptable</td>
+  </tr>
+  <tr>
+    <td>Cracked turbine vane</td>
+    <td>Crack in fixed vane between turbine stages</td>
+    <td>Repair or replace depending on location and length</td>
+  </tr>
+</table>
+
+<h4>Photographic documentation</h4>
+<p>Modern BSI reports include photographs or video of every significant finding. Photos provide:</p>
+<ul>
+  <li>Evidence the finding was actually observed</li>
+  <li>Reference for tracking growth at subsequent BSIs</li>
+  <li>Documentation for customer disclosure when selling the engine</li>
+</ul>
+<p>A BSI report without photos is less authoritative than one with photos. Customers buying high-value engines typically require photo/video documentation.</p>
+
+<h4>Inspection criteria reference</h4>
+<p>Every BSI finding is evaluated against a specific section of the ESM. The report should cite the ESM section. Example: "Crack 0.150 inch in combustor liner panel 3 — within limit per ESM 72-00-00, Inspection Limits Section, allowable to 0.250 inch."</p>
+<p>Without this reference, the "within limits" assessment is unsupportable. A finding asserted as "within limits" with no ESM citation is weak documentation.</p>
+
+<h4>BSI vs disassembly</h4>
+<p>BSI is non-destructive and faster than disassembly. But disassembly inspection is more thorough. An engine that "passes BSI" may still have issues that only disassembly reveals (subsurface cracks, dimensional wear, bearing wear). When TurbineWorks sells an engine with BSI documentation only (no recent shop visit), that should be disclosed to the buyer.</p>
+
+<h4>BSI report retention</h4>
+<p>BSI reports become part of the engine&apos;s permanent maintenance history. They follow the engine through ownership changes and are retained per maintenance record requirements (effectively the life of the engine).</p>
+HTML
+        ],
+        [
+            'name'  => 'Lesson 3 — BSI and TurbineWorks Inventory Valuation',
+            'intro' => '<p>How BSI condition affects what a part or module is worth.</p>',
+            'content' => <<<'HTML'
+<h3>BSI and Inventory Valuation</h3>
+<p>The economic value of an engine, module, or rotable is heavily influenced by its condition as documented by recent BSI. TurbineWorks employees involved in purchasing or valuation need to understand this relationship.</p>
+
+<h4>What buyers care about</h4>
+<ul>
+  <li><strong>Time until next BSI</strong> — how long the engine can be operated before the buyer pays for the next inspection</li>
+  <li><strong>Current condition margin</strong> — how much wear/damage has accumulated; how close to next-action thresholds</li>
+  <li><strong>LLP remaining life</strong> — also influenced by BSI findings on hot-section components</li>
+  <li><strong>Estimated time to next shop visit</strong> — biggest cost in engine operation; BSI condition is a leading indicator</li>
+</ul>
+
+<h4>Pricing framework (high level)</h4>
+<p>Engine and module pricing typically uses a "green time" framework:</p>
+<ul>
+  <li>Engine value at zero hours / zero cycles since last shop visit = baseline market value</li>
+  <li>Each accumulated cycle reduces value</li>
+  <li>BSI findings beyond normal wear reduce value further</li>
+  <li>Approaching LLP retirement reduces value steeply (an LLP at 95% of life limit has near-zero remaining value)</li>
+  <li>"Half-life" pricing splits the difference between zero-time and at-overhaul value</li>
+</ul>
+
+<h4>BSI report freshness</h4>
+<ul>
+  <li>A BSI report less than 100 flight hours old is "current" — buyers can rely on it</li>
+  <li>A BSI report 500+ flight hours old reflects an earlier engine condition; buyer may want a fresh BSI before purchase</li>
+  <li>A BSI report 1,000+ flight hours old is largely informational; cannot be relied on for current condition</li>
+</ul>
+<p>The age of the BSI report at time of sale is a critical disclosure. TurbineWorks should always disclose the BSI date and total time accumulated since the BSI.</p>
+
+<h4>"Test cell" alternative</h4>
+<p>For engines being prepared for sale, some sellers run them in a test cell (controlled engine test facility) and document the test data. Test cell data is more comprehensive than BSI (includes performance parameters, vibration data, oil consumption) and may be more valuable to a buyer than recent BSI alone.</p>
+
+<h4>Disclosure obligations</h4>
+<p>TurbineWorks must accurately disclose:</p>
+<ul>
+  <li>Date of most recent BSI</li>
+  <li>Findings of most recent BSI (or a summary; full report on request)</li>
+  <li>Total time / cycles accumulated since most recent BSI</li>
+  <li>Known issues identified in any BSI in the engine&apos;s history</li>
+  <li>Whether the engine has been "preserved" (long-term storage with corrosion inhibitor) since the most recent BSI</li>
+</ul>
+<p>Misrepresenting BSI condition to make a sale is fraud. ASA-100 distributor accreditation is built on accurate disclosure.</p>
+
+<h4>BSI for module-level transactions</h4>
+<p>TurbineWorks often trades engine modules (HPC, HPT, LPT modules) rather than whole engines. BSI for modules:</p>
+<ul>
+  <li>Module BSI is a subset of full-engine BSI — only the components within that module are inspected</li>
+  <li>Module BSI reports look similar to full-engine reports but with limited scope</li>
+  <li>Module pricing follows the same green-time framework but applied to the module&apos;s own LLP set</li>
+</ul>
+
+<h4>When BSI is not available</h4>
+<p>Some inventory arrives with no recent BSI documentation. This affects pricing and saleability:</p>
+<ul>
+  <li>"Sold AS-IS, no BSI" pricing is typically substantially below pricing with current BSI</li>
+  <li>Buyer may require BSI before installation (at their cost or by contract)</li>
+  <li>Disclosure as "no current BSI" is essential</li>
+</ul>
+HTML
+        ],
+        [
+            'name'  => 'Lesson 4 — Module Summary',
+            'intro' => '<p>BSI familiarization recap.</p>',
+            'content' => <<<'HTML'
+<h3>BSI Module Summary</h3>
+
+<h4>What you should now be able to answer</h4>
+<ol>
+  <li>What is borescope inspection and what does it allow operators to do without disassembly?</li>
+  <li>What types of damage can BSI see, and what can it not see?</li>
+  <li>What are the standard BSI finding categories (within limits, monitor, repair, reject)?</li>
+  <li>How does BSI condition affect the market value of an engine or module?</li>
+  <li>What must be disclosed to a customer regarding BSI status of inventory being sold?</li>
+</ol>
+
+<h4>Key Terms</h4>
+<dl>
+  <dt><strong>BSI</strong></dt><dd>Borescope Inspection — visual inspection of engine internals via optical probe.</dd>
+  <dt><strong>HPT / LPT / HPC / LPC</strong></dt><dd>High-Pressure Turbine / Low-Pressure Turbine / High-Pressure Compressor / Low-Pressure Compressor — major engine modules.</dd>
+  <dt><strong>TBC</strong></dt><dd>Thermal Barrier Coating — ceramic coating on hot-section parts that protects parent metal.</dd>
+  <dt><strong>FOD damage</strong></dt><dd>Damage to internal components from ingested objects.</dd>
+  <dt><strong>Green time</strong></dt><dd>Operating time/cycles remaining before the next major maintenance event.</dd>
+</dl>
+
+<h4>References</h4>
+<ul>
+  <li>OEM Engine Shop Manuals — borescope inspection sections (per engine model)</li>
+  <li>FAA AC 43-204 — Visual Inspection for Aircraft</li>
+  <li>ATA Spec 105 — borescope inspection terminology</li>
+</ul>
+HTML
+        ],
+    ];
+}
+
+// ============================================================================
+// ENGINE-PARTS COURSE: TBO, Hard Time, On-Condition, Engine Time
+// ============================================================================
+function local_twu_module_tbo_lessons(): array {
+    return [
+        [
+            'name'  => 'Lesson 1 — Maintenance Philosophies: Hard Time, On-Condition, Condition Monitoring',
+            'intro' => '<p>The three maintenance approaches that determine when engines and components come off-wing.</p>',
+            'content' => <<<'HTML'
+<h3>Engine Maintenance Philosophies</h3>
+<p>Engines and engine components come off-wing for maintenance based on one of three philosophies. Understanding which applies to a given part is essential to valuing it accurately and to communicating with customers.</p>
+
+<h4>Hard Time (HT)</h4>
+<p>The component has a fixed retirement or overhaul time. At that time, regardless of condition, the component must be removed and either retired or sent for overhaul.</p>
+<ul>
+  <li>Applied to most LLPs (Life Limited Parts) — turbine and compressor disks, certain shafts</li>
+  <li>Applied to some non-LLP components per OEM mandate</li>
+  <li>Time expressed in cycles, flight hours, or calendar time (sometimes all three; whichever comes first)</li>
+  <li>The clock cannot be reset — accumulated time is permanent</li>
+</ul>
+<p>From a distribution standpoint: hard-time components have predictable remaining value. A turbine disk with 60% of its hard-time life used has 40% of its value (very roughly — the relationship is not perfectly linear).</p>
+
+<h4>On-Condition (OC)</h4>
+<p>The component is operated until its condition (determined by inspection, monitoring, or operational performance) indicates maintenance is needed. No fixed retirement time.</p>
+<ul>
+  <li>Applied to many engine components: combustor liners, turbine blades and vanes, bearings, seals</li>
+  <li>Condition is determined by BSI, oil analysis, vibration monitoring, performance trending</li>
+  <li>Component is replaced or repaired when condition criteria are exceeded</li>
+</ul>
+<p>From a distribution standpoint: on-condition parts have value determined by their current condition, not by an accumulated time clock. A used HPT blade in good condition (recent BSI clean) has higher value than the same blade with marginal BSI findings, even if both have similar time-since-new.</p>
+
+<h4>Condition Monitoring (CM)</h4>
+<p>A more sophisticated form of on-condition that uses systematic data collection to predict maintenance needs. Used for systems where performance can be trended (engine performance parameters, oil consumption, vibration spectra).</p>
+<ul>
+  <li>No fixed maintenance schedule</li>
+  <li>Maintenance triggered by trended data exceeding thresholds</li>
+  <li>Increasingly the dominant philosophy for engines with comprehensive monitoring (modern FADEC-equipped engines)</li>
+</ul>
+
+<h4>The mix in modern engines</h4>
+<p>A modern turbofan engine uses all three philosophies simultaneously:</p>
+<ul>
+  <li><strong>Hard time</strong>: LLPs (turbine and compressor disks, certain shafts)</li>
+  <li><strong>On-condition</strong>: Hot-section airfoils (blades, vanes), combustor, bearings, seals</li>
+  <li><strong>Condition monitoring</strong>: Overall engine performance, oil system, vibration</li>
+</ul>
+<p>The engine itself doesn&apos;t have a fixed TBO (Time Between Overhauls) in the way piston engines once did — it comes off-wing when condition monitoring or specific component limits indicate maintenance is needed.</p>
+
+<h4>TBO (legacy concept)</h4>
+<p><strong>TBO — Time Between Overhauls</strong> — was the dominant philosophy for piston engines and early turbines. The OEM specified a fixed overhaul interval (e.g., 2,000 flight hours for some piston engines). Modern turbofans have largely moved past TBO in favor of on-condition + hard-time-for-LLPs.</p>
+<p>You still hear "TBO" used loosely to mean "expected time until next major shop visit," even for engines that don&apos;t have a formal TBO. Be precise when using the term.</p>
+
+<h4>What this means for TurbineWorks valuation</h4>
+<ul>
+  <li>LLP value = a function of remaining hard-time life</li>
+  <li>Hot-section component value = a function of current condition (BSI, etc.)</li>
+  <li>Whole-engine value = function of LLP remaining life + hot-section condition + accessories condition + recent shop-visit history</li>
+</ul>
+HTML
+        ],
+        [
+            'name'  => 'Lesson 2 — Engine Time Tracking: TSN, CSN, TSO, CSO',
+            'intro' => '<p>The time-and-cycle accounting that determines remaining value and life.</p>',
+            'content' => <<<'HTML'
+<h3>Engine Time Tracking</h3>
+<p>Aviation time tracking uses a small set of standard abbreviations. They apply at the engine level and at the component level. Confusion among them causes pricing errors and traceability gaps.</p>
+
+<h4>The standard terms</h4>
+<dl>
+  <dt><strong>TSN — Time Since New</strong></dt>
+  <dd>Total operating time since the engine or component was manufactured. Expressed in flight hours. Always increases.</dd>
+
+  <dt><strong>CSN — Cycles Since New</strong></dt>
+  <dd>Total operating cycles since manufacture. A cycle = one takeoff/landing (or one start/shutdown for some applications). Used primarily for hot-section life tracking. Always increases.</dd>
+
+  <dt><strong>TSO — Time Since Overhaul</strong></dt>
+  <dd>Operating time since the most recent overhaul. Resets to zero at each overhaul. Used to assess current wear state.</dd>
+
+  <dt><strong>CSO — Cycles Since Overhaul</strong></dt>
+  <dd>Cycles since most recent overhaul. Resets at each overhaul.</dd>
+
+  <dt><strong>TSI / CSI — Time / Cycles Since Inspection</strong></dt>
+  <dd>Since most recent specified inspection (BSI, shop visit, scheduled check). Resets at each inspection.</dd>
+
+  <dt><strong>TSR / CSR — Time / Cycles Since Repair</strong></dt>
+  <dd>Since most recent repair event.</dd>
+</dl>
+
+<h4>Why both time AND cycles</h4>
+<p>Different failure modes track to different parameters:</p>
+<ul>
+  <li><strong>Thermal cycling damage</strong> tracks with cycles (each takeoff/landing is a thermal cycle of heating and cooling)</li>
+  <li><strong>Steady-state wear</strong> tracks with time (continuous operation)</li>
+  <li><strong>Calendar damage</strong> (corrosion, elastomer degradation) tracks with calendar time independent of operation</li>
+</ul>
+<p>OEM life limits typically express as "X cycles or Y hours, whichever comes first" — the limit is whichever is reached first.</p>
+
+<h4>The TSN/CSN relationship</h4>
+<p>For a given engine in regular service: CSN is typically a small fraction of TSN (a long-haul widebody might fly 14 hours per cycle; a regional jet might fly 1 hour per cycle). The TSN/CSN ratio reveals operating profile.</p>
+<ul>
+  <li>High TSN, low CSN: long-haul service (oceanic widebody operation)</li>
+  <li>Low TSN, high CSN: short-haul service (regional or shuttle operation)</li>
+</ul>
+<p>For pricing: high CSN tends to indicate more hot-section wear and less remaining life per accumulated time. Two engines with identical TSN may have very different CSN and very different remaining value.</p>
+
+<h4>Recording time at TurbineWorks</h4>
+<p>When TurbineWorks receives an engine or component, the current TSN/CSN/TSO/CSO is recorded based on the documentation that arrived with the part. Going forward:</p>
+<ul>
+  <li>If the part remains in storage at TurbineWorks: TSN/CSN do not increase (no operation)</li>
+  <li>Calendar time still increases — relevant for parts with calendar limits</li>
+  <li>If the part is shipped to a customer: time tracking transfers to the customer&apos;s records</li>
+</ul>
+
+<h4>Time data integrity</h4>
+<p>TSN/CSN values come from operator logbooks. If logbooks show inconsistencies (calculated time doesn&apos;t match recorded time, or values decrease between consecutive entries) — that&apos;s a traceability flag.</p>
+<p>An engine arriving with a "gap" in its time records (period of unknown operation) is similar to an LLP with a gap in back-to-birth — the unknown period may have accumulated unknown time. Treat as a documentation flag.</p>
+
+<h4>Time data on the 8130-3</h4>
+<p>Block 12 (Remarks) of an 8130-3 for a serialized component typically includes:</p>
+<ul>
+  <li>TSN, CSN at time of release</li>
+  <li>TSO, CSO if applicable (since most recent overhaul)</li>
+  <li>Statement of LLP remaining life if applicable</li>
+</ul>
+<p>Verify these values are internally consistent (TSO ≤ TSN) and consistent with the supplier&apos;s logbook data.</p>
+HTML
+        ],
+        [
+            'name'  => 'Lesson 3 — Shop Visits, Overhauls, and Engine Build Standards',
+            'intro' => '<p>What happens when an engine goes "off-wing" and what comes back differs.</p>',
+            'content' => <<<'HTML'
+<h3>Shop Visits and Build Standards</h3>
+<p>An engine removed from an aircraft and sent to an MRO for maintenance is said to have a "shop visit." The scope of work and the resulting engine configuration vary widely. Understanding shop visit terminology is essential to evaluating engines.</p>
+
+<h4>Shop visit scope categories</h4>
+<dl>
+  <dt><strong>Minor repair</strong></dt>
+  <dd>Limited-scope work, often addressing a specific finding (a damaged component, an SB compliance). Engine is partially disassembled, work performed, reassembled. TSN/CSN continues; TSO/CSO does not reset.</dd>
+
+  <dt><strong>Performance restoration</strong></dt>
+  <dd>Significant work to restore engine performance. May include hot-section refurbishment, replacement of consumable hot-section parts, but not full overhaul of LLPs.</dd>
+
+  <dt><strong>Heavy maintenance / Full Overhaul</strong></dt>
+  <dd>Engine fully disassembled, every component inspected and either repaired, replaced, or restored. New or refurbished LLPs as needed. The engine returns essentially as a new build (within the limits of remaining LLP life).</dd>
+
+  <dt><strong>Module exchange</strong></dt>
+  <dd>Specific modules (HPC, HPT, LPT) swapped instead of overhauling the engine as a unit. Module exchange is faster and cheaper than full overhaul but requires careful tracking of which modules are now in this engine vs. their original engines.</dd>
+</dl>
+
+<h4>Build standards</h4>
+<p>An engine emerging from a shop visit is built to a specific "build standard" — a defined configuration:</p>
+<ul>
+  <li>Which SBs are incorporated</li>
+  <li>Which OEM modifications are present</li>
+  <li>Which optional features are included</li>
+  <li>What thrust rating (engines come in multiple thrust variants)</li>
+</ul>
+<p>The build standard is documented and follows the engine. When TurbineWorks buys or sells an engine, the build standard is part of the disclosed configuration.</p>
+
+<h4>Shop visit documentation</h4>
+<p>A shop visit produces extensive documentation:</p>
+<ul>
+  <li>Workscope document — what was done</li>
+  <li>Parts list — what was replaced (with serial numbers in/out)</li>
+  <li>SB compliance updates</li>
+  <li>AD compliance verification</li>
+  <li>Test cell results — post-build performance verification</li>
+  <li>Final airworthiness release (often an 8130-3 for the engine as released from shop)</li>
+</ul>
+<p>This package is the "shop visit report" and follows the engine permanently.</p>
+
+<h4>Green-time pricing relevance</h4>
+<p>An engine just out of full overhaul: maximum green time (cycles remaining until next planned shop visit). Highest market value.</p>
+<p>An engine approaching its next planned shop visit: minimum green time. Lowest market value relative to its post-overhaul value.</p>
+<p>Pricing typically expressed in dollars per cycle of green time, or as a total dollar value reflecting the green time remaining.</p>
+
+<h4>"Half-life" engines</h4>
+<p>An engine roughly midway between overhauls is sometimes priced at "half-life" — half-way between the post-overhaul value and the at-overhaul value. The concept is loose but commonly used in informal market discussion.</p>
+
+<h4>Module-level shop visits</h4>
+<p>Some shop visits address only one module (e.g., HPT module exchange). The other modules remain unaffected. After such a shop visit:</p>
+<ul>
+  <li>The exchanged module has reset TSO/CSO</li>
+  <li>The retained modules have continued TSO/CSO from their previous state</li>
+  <li>The engine as a whole has a mixed state</li>
+</ul>
+<p>This significantly complicates valuation — different parts of the same engine have different remaining life. Module-level tracking and pricing becomes essential.</p>
+
+<h4>What every TurbineWorks employee should know</h4>
+<ul>
+  <li>"Shop visit" is a broad term — always confirm scope</li>
+  <li>"Just overhauled" requires verification — what specifically was done?</li>
+  <li>Build standard affects value and customer compatibility (a customer wanting post-SB configuration won&apos;t accept pre-SB even if recently overhauled)</li>
+  <li>Module-level exchange complicates traceability — verify each module&apos;s individual records</li>
+</ul>
+HTML
+        ],
+        [
+            'name'  => 'Lesson 4 — Module Summary',
+            'intro' => '<p>TBO / Time tracking recap.</p>',
+            'content' => <<<'HTML'
+<h3>TBO and Engine Time Module Summary</h3>
+
+<h4>What you should now be able to answer</h4>
+<ol>
+  <li>What are the three maintenance philosophies (Hard Time, On-Condition, Condition Monitoring)?</li>
+  <li>What does TSN, CSN, TSO, CSO each mean and when does each reset?</li>
+  <li>Why do OEMs express life limits as both cycles AND hours, whichever comes first?</li>
+  <li>What are the major categories of shop visit scope, and how do they affect engine configuration?</li>
+  <li>What is "green time" and why does it determine inventory pricing?</li>
+</ol>
+
+<h4>Key Terms</h4>
+<dl>
+  <dt><strong>Hard Time</strong></dt><dd>Fixed retirement or overhaul time, regardless of condition.</dd>
+  <dt><strong>On-Condition</strong></dt><dd>Maintenance triggered by inspected or monitored condition, no fixed time.</dd>
+  <dt><strong>Condition Monitoring</strong></dt><dd>Data-driven maintenance triggered by trended performance.</dd>
+  <dt><strong>TSN / CSN</strong></dt><dd>Total Time / Cycles Since New (manufacture).</dd>
+  <dt><strong>TSO / CSO</strong></dt><dd>Time / Cycles Since (most recent) Overhaul.</dd>
+  <dt><strong>Build Standard</strong></dt><dd>Defined configuration of an engine — SBs incorporated, mods, thrust rating.</dd>
+  <dt><strong>Green Time</strong></dt><dd>Remaining operating time / cycles before next planned maintenance event.</dd>
+  <dt><strong>Module Exchange</strong></dt><dd>Swap of a complete engine module instead of full-engine overhaul.</dd>
+</dl>
+
+<h4>References</h4>
+<ul>
+  <li>OEM Engine Shop Manuals — maintenance philosophy sections per engine model</li>
+  <li>FAA AC 120-77 — Maintenance Recordkeeping</li>
+  <li>ATA MSG-3 — Maintenance Steering Group methodology (the framework that drives maintenance philosophy decisions)</li>
+</ul>
+HTML
+        ],
     ];
 }
 
