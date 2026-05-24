@@ -32,7 +32,7 @@ require_once(__DIR__ . '/../content/glossary.php');
 
 // Bump the suffix here (and in the entrypoint marker docs) when adding new
 // bootstrap steps that should run on existing sites.
-$marker = $CFG->dataroot . '/.twu-bootstrapped-v13';
+$marker = $CFG->dataroot . '/.twu-bootstrapped-v14';
 $force  = in_array('--force', $argv ?? [], true);
 if (file_exists($marker) && !$force) {
     cli_writeln("[twu] already bootstrapped (marker present at $marker). Pass --force to re-run.");
@@ -519,6 +519,180 @@ foreach ($createdcourses as $idnumber => $course) {
     }
     cli_writeln("[twu] seeding quiz for $idnumber");
     twu_ensure_quiz($course, $allquizzes[$idnumber]);
+}
+
+// ---------------------------------------------------------------------------
+// 5e3. Custom Certificate — auto-issued PDF on Initial Training course completion
+// ---------------------------------------------------------------------------
+function twu_ensure_customcert(stdClass $course): ?int {
+    global $DB, $CFG;
+    require_once($CFG->dirroot . '/mod/customcert/locallib.php');
+
+    $certname = 'Certificate of Completion';
+    $intro = '<p>Your TurbineWorks University Certificate of Completion will be available here once you have finished all required activities in this module. The certificate is a branded PDF with a unique verification serial and may be used as audit evidence of training completion.</p>';
+
+    // Idempotency: skip if a customcert with this name already exists in the course.
+    $existing = $DB->get_record_sql(
+        "SELECT cm.id, cc.id AS certid, cm.id AS cmid
+           FROM {course_modules} cm
+           JOIN {modules} m ON m.id = cm.module AND m.name = 'customcert'
+           JOIN {customcert} cc ON cc.id = cm.instance
+          WHERE cm.course = :courseid AND cc.name = :name",
+        ['courseid' => $course->id, 'name' => $certname]
+    );
+    if ($existing) {
+        cli_writeln("[twu]   certificate exists for course $course->id (cmid={$existing->cmid})");
+        return (int)$existing->cmid;
+    }
+
+    $moduleinfo = (object)[
+        'modulename'        => 'customcert',
+        'course'            => $course->id,
+        'section'           => 0,
+        'visible'           => 1,
+        'visibleoncoursepage' => 1,
+        'name'              => $certname,
+        'intro'             => $intro,
+        'introformat'       => FORMAT_HTML,
+        'requiredtime'      => 0,
+        'emailteachers'     => 0,
+        'emailothers'       => '',
+        'verifyany'         => 1,
+        'protection_print'  => 0,
+        'protection_modify' => 0,
+        'protection_copy'   => 0,
+        'deliveryoption'    => 0,
+        'completion'        => 0,
+    ];
+
+    try {
+        $cm = add_moduleinfo($moduleinfo, $course);
+    } catch (Throwable $e) {
+        cli_writeln("[twu]   could not create customcert: " . $e->getMessage());
+        return null;
+    }
+
+    // Each customcert activity has its own template. Find it (auto-created
+    // on activity creation by mod_customcert) or create one.
+    $ctxid = context_module::instance($cm->coursemodule)->id;
+    $template = $DB->get_record('customcert_templates', ['contextid' => $ctxid]);
+    if (!$template) {
+        $template = (object)[
+            'name'         => $certname,
+            'contextid'    => $ctxid,
+            'timecreated'  => time(),
+            'timemodified' => time(),
+        ];
+        $template->id = $DB->insert_record('customcert_templates', $template);
+        // Link the template to the customcert instance.
+        $DB->set_field('customcert', 'templateid', $template->id, ['id' => $cm->instance]);
+    }
+
+    // Default page: A4 landscape, 297 x 210 mm.
+    $page = $DB->get_record('customcert_pages', ['templateid' => $template->id]);
+    if (!$page) {
+        $page = (object)[
+            'templateid'  => $template->id,
+            'width'       => 297,
+            'height'      => 210,
+            'leftmargin'  => 0,
+            'rightmargin' => 0,
+            'sequence'    => 1,
+            'timecreated' => time(),
+            'timemodified' => time(),
+        ];
+        $page->id = $DB->insert_record('customcert_pages', $page);
+    }
+
+    // Wipe any pre-existing elements so re-runs converge to the current layout.
+    $DB->delete_records('customcert_elements', ['pageid' => $page->id]);
+
+    // Branded layout (A4 landscape, all positions in mm, refpoint=1 = top-center).
+    $now = time();
+    $elements = [
+        ['element' => 'text',        'name' => 'Header',       'data' => json_encode(['text' => 'TurbineWorks University']),                              'font' => 'helveticab', 'fontsize' => 30, 'colour' => '#0d2240', 'posx' => 148, 'posy' => 30,  'width' => 250, 'alignment' => 'C', 'refpoint' => 1, 'sequence' => 1],
+        ['element' => 'text',        'name' => 'Subtitle',     'data' => json_encode(['text' => 'Certificate of Completion']),                            'font' => 'helvetica',  'fontsize' => 18, 'colour' => '#ffc800', 'posx' => 148, 'posy' => 50,  'width' => 250, 'alignment' => 'C', 'refpoint' => 1, 'sequence' => 2],
+        ['element' => 'text',        'name' => 'GoldBar',      'data' => json_encode(['text' => '_____________________________________________']),         'font' => 'helvetica',  'fontsize' => 16, 'colour' => '#ffc800', 'posx' => 148, 'posy' => 62,  'width' => 250, 'alignment' => 'C', 'refpoint' => 1, 'sequence' => 3],
+        ['element' => 'text',        'name' => 'IntroLine',    'data' => json_encode(['text' => 'This is to certify that']),                              'font' => 'helvetica',  'fontsize' => 14, 'colour' => '#333333', 'posx' => 148, 'posy' => 80,  'width' => 250, 'alignment' => 'C', 'refpoint' => 1, 'sequence' => 4],
+        ['element' => 'studentname', 'name' => 'Recipient',    'data' => '',                                                                              'font' => 'helveticab', 'fontsize' => 26, 'colour' => '#0d2240', 'posx' => 148, 'posy' => 95,  'width' => 250, 'alignment' => 'C', 'refpoint' => 1, 'sequence' => 5],
+        ['element' => 'text',        'name' => 'CompletedLine','data' => json_encode(['text' => 'has successfully completed the ASA-100 training module']), 'font' => 'helvetica',  'fontsize' => 14, 'colour' => '#333333', 'posx' => 148, 'posy' => 120, 'width' => 250, 'alignment' => 'C', 'refpoint' => 1, 'sequence' => 6],
+        ['element' => 'coursename',  'name' => 'CourseName',   'data' => '',                                                                              'font' => 'helveticab', 'fontsize' => 18, 'colour' => '#0d2240', 'posx' => 148, 'posy' => 135, 'width' => 270, 'alignment' => 'C', 'refpoint' => 1, 'sequence' => 7],
+        ['element' => 'text',        'name' => 'On',           'data' => json_encode(['text' => 'on']),                                                   'font' => 'helvetica',  'fontsize' => 12, 'colour' => '#666666', 'posx' => 148, 'posy' => 155, 'width' => 250, 'alignment' => 'C', 'refpoint' => 1, 'sequence' => 8],
+        ['element' => 'date',        'name' => 'Date',         'data' => json_encode(['dateitem' => -1, 'dateformat' => 'F j, Y']),                       'font' => 'helveticab', 'fontsize' => 14, 'colour' => '#0d2240', 'posx' => 148, 'posy' => 165, 'width' => 250, 'alignment' => 'C', 'refpoint' => 1, 'sequence' => 9],
+        ['element' => 'text',        'name' => 'VerifyLabel',  'data' => json_encode(['text' => 'Verification Code:']),                                   'font' => 'helvetica',  'fontsize' => 10, 'colour' => '#999999', 'posx' => 148, 'posy' => 188, 'width' => 250, 'alignment' => 'C', 'refpoint' => 1, 'sequence' => 10],
+        ['element' => 'code',        'name' => 'VerifyCode',   'data' => '',                                                                              'font' => 'courier',    'fontsize' => 12, 'colour' => '#0d2240', 'posx' => 148, 'posy' => 195, 'width' => 250, 'alignment' => 'C', 'refpoint' => 1, 'sequence' => 11],
+    ];
+    foreach ($elements as $el) {
+        $record = (object)$el;
+        $record->pageid = $page->id;
+        $record->timecreated = $now;
+        $record->timemodified = $now;
+        $DB->insert_record('customcert_elements', $record);
+    }
+
+    cli_writeln("[twu]   created customcert for course $course->id (cmid={$cm->coursemodule}, " . count($elements) . " elements)");
+    return (int)$cm->coursemodule;
+}
+
+foreach ($createdcourses as $idnumber => $course) {
+    twu_ensure_customcert($course);
+}
+
+// ---------------------------------------------------------------------------
+// 5e4. Forum — "Ask the QA Manager" Q&A in each Initial Training course
+// ---------------------------------------------------------------------------
+function twu_ensure_forum(stdClass $course, string $name, string $intro): ?int {
+    global $DB, $CFG;
+    require_once($CFG->dirroot . '/mod/forum/lib.php');
+
+    $existing = $DB->get_record_sql(
+        "SELECT cm.id, f.id AS forumid
+           FROM {course_modules} cm
+           JOIN {modules} m ON m.id = cm.module AND m.name = 'forum'
+           JOIN {forum} f ON f.id = cm.instance
+          WHERE cm.course = :courseid AND f.name = :name",
+        ['courseid' => $course->id, 'name' => $name]
+    );
+    if ($existing) {
+        cli_writeln("[twu]   forum exists: $name (cmid={$existing->id})");
+        return (int)$existing->id;
+    }
+
+    $moduleinfo = (object)[
+        'modulename'          => 'forum',
+        'course'              => $course->id,
+        'section'             => 0,
+        'visible'             => 1,
+        'visibleoncoursepage' => 1,
+        'name'                => $name,
+        'intro'               => $intro,
+        'introformat'         => FORMAT_HTML,
+        'type'                => 'general',
+        'assessed'            => 0,
+        'scale'               => 0,
+        'maxbytes'            => 0,
+        'maxattachments'      => 3,
+        'forcesubscribe'      => FORUM_FORCESUBSCRIBE,
+        'trackingtype'        => FORUM_TRACKING_OPTIONAL,
+        'completion'          => 0,
+    ];
+
+    try {
+        $cm = add_moduleinfo($moduleinfo, $course);
+        cli_writeln("[twu]   created forum: $name (cmid={$cm->coursemodule})");
+        return (int)$cm->coursemodule;
+    } catch (Throwable $e) {
+        cli_writeln("[twu]   could not create forum: " . $e->getMessage());
+        return null;
+    }
+}
+
+foreach ($createdcourses as $idnumber => $course) {
+    twu_ensure_forum(
+        $course,
+        'Ask the QA Manager',
+        '<p>Post questions about the module content or how it applies to TurbineWorks procedures. The QA Manager (or designate) will respond. Threads stay visible to all employees so common questions become reference material.</p>'
+    );
 }
 
 // ---------------------------------------------------------------------------

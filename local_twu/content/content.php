@@ -2999,58 +2999,36 @@ function local_twu_get_engine_parts_courses(): array {
             'shortname' => 'TWU-OPS-AS9120',
             'fullname'  => 'AS9120 Familiarization (Aerospace QMS for Distributors)',
             'idnumber'  => 'TWU-OPS-AS9120',
-            'summary'   => '<p>Overview of the SAE/IAQG aerospace QMS standard for distributors. Many ASA-100 distributors pursue AS9120 within 1-2 years of initial accreditation. ~70% training overlap with ASA-100.</p>',
-            'lessons'   => [local_twu_overview_lesson(
-                'AS9120 Familiarization',
-                'SAE AS9120 (current rev), ISO 9001 (underlying), AS9100 series (related)',
-                '1 hour',
-                [
-                    'Distinguish AS9120 from ASA-100 in scope, structure, and audit approach',
-                    'Recognize the ISO 9001 process-based QMS that AS9120 extends with aerospace-specific requirements',
-                    'Identify which TurbineWorks customer segments require AS9120 vs ASA-100 vs both',
-                    'Map ASA-100 controls already in place to AS9120 clauses — gap analysis for AS9120 readiness',
-                    'Understand AS9120 audit cadence and certification body options (BSI, DNV, NQA, etc.)',
-                ],
-                'AS9120 opens access to the OEM supply chain (Boeing tier-1/2, Airbus, GE Aerospace, Rolls-Royce direct programs). Many TurbineWorks customers will eventually require AS9120 in addition to ASA-100. Pre-positioning the training program to support both is the right long-term decision.'
-            )],
+            'summary'   => '<p>The SAE/IAQG aerospace QMS standard for distributors. Many ASA-100 distributors pursue AS9120 within 1-2 years of initial accreditation. ~70% training overlap with ASA-100.</p>',
+            'lessons'   => local_twu_as9120_lessons(),
         ],
         [
             'shortname' => 'TWU-OPS-CUSTOMER',
             'fullname'  => 'Customer Relations &amp; Quality Communication',
             'idnumber'  => 'TWU-OPS-CUSTOMER',
             'summary'   => '<p>How to communicate quality status, non-conformance, and audit-relevant information to customers (airlines, MROs, OEMs, government).</p>',
-            'lessons'   => [local_twu_overview_lesson(
-                'Customer Relations &amp; Quality Communication',
-                'ASA-100 §10 (Customer Complaints), customer-specific contract terms',
-                '1 hour',
-                [
-                    'Recognize what customers expect from an ASA-100 distributor in routine and exception communications',
-                    'Handle customer complaints through the corrective-action system (not just sales channels)',
-                    'Disclose part condition accurately on quotes, COCs, and shipping documents',
-                    'Notify affected customers when a SUP, AD, or material recall affects shipped parts',
-                    'Respond to customer audits (some customers audit their accredited distributors directly)',
-                ],
-                'A customer-discovered quality issue that TurbineWorks did not disclose is the single fastest way to lose customer trust. The same issue disclosed proactively builds the trust that drives repeat business. Communication is part of quality, not separate from it.'
-            )],
+            'lessons'   => local_twu_customer_relations_lessons(),
         ],
         [
             'shortname' => 'TWU-OPS-INTSHIP',
             'fullname'  => 'International Shipping — ITAR, EAR, and Export Control',
             'idnumber'  => 'TWU-OPS-INTSHIP',
             'summary'   => '<p>U.S. export control regimes affecting aviation parts shipments overseas. Penalties for non-compliance include criminal prosecution.</p>',
-            'lessons'   => [local_twu_overview_lesson(
-                'International Shipping &amp; Export Control',
-                'ITAR (22 CFR 120-130), EAR (15 CFR 730-774), OFAC sanctions lists',
-                '1 hour',
-                [
-                    'Distinguish ITAR-controlled (military / defense article) from EAR-controlled (dual-use commercial) parts',
-                    'Recognize when a routine commercial aircraft part may be on the U.S. Munitions List (USML) or Commerce Control List (CCL)',
-                    'Screen end-users and end-uses against OFAC sanctioned-party lists before quoting or shipping',
-                    'Apply correct ECCN (Export Control Classification Number) and licensing requirements',
-                    'Document export determinations and licensing in TurbineWorks records (retained 5+ years per BIS rules)',
-                ],
-                'A single ITAR violation can result in personal criminal liability for the people involved, plus corporate penalties up to $1M per violation. Aviation parts are a high-scrutiny category — especially anything originally designed for military application that has commercial derivatives (engine parts shared with KC-135R, C-17, P-8, etc.).'
-            )],
+            'lessons'   => local_twu_export_control_lessons(),
+        ],
+        [
+            'shortname' => 'TWU-ENG-LEAP',
+            'fullname'  => 'CFM LEAP Family — Engine Familiarization',
+            'idnumber'  => 'TWU-ENG-LEAP',
+            'summary'   => '<p>CFM\'s successor to the CFM56. LEAP-1A (A320neo), LEAP-1B (737 MAX), LEAP-1C (COMAC C919). Direct-drive competitor to the PW1000G GTF.</p>',
+            'lessons'   => local_twu_engine_leap_lessons(),
+        ],
+        [
+            'shortname' => 'TWU-ENG-V2500',
+            'fullname'  => 'IAE V2500 Family — Engine Familiarization',
+            'idnumber'  => 'TWU-ENG-V2500',
+            'summary'   => '<p>International Aero Engines (IAE) V2500 — the alternative powerplant on the A320ceo family. Joint venture of Pratt &amp; Whitney and Rolls-Royce. Strong aftermarket inventory base.</p>',
+            'lessons'   => local_twu_engine_v2500_lessons(),
         ],
         [
             'shortname' => 'TWU-ENG-ATASPEC2000',
@@ -4087,6 +4065,745 @@ function local_twu_get_recurring_courses(): array {
                     'content' => '<h3>ASA-100 Recurring Training</h3><h4>Cadence</h4><p>Every employee with quality-system responsibilities completes recurring training <strong>every 6 months</strong>. This is more frequent than the ASA-100 annual minimum, reflecting TurbineWorks\' decision to prioritize fresh familiarity over minimum compliance.</p><h4>Auto-enrollment</h4><p>TurbineWorks University enrolls you in this course automatically <strong>30 days before</strong> your last completion turns 6 months old. You will receive a notification email and the course will appear on your dashboard.</p><h4>What is covered</h4><p>Recurring training is intentionally narrower than initial training. It focuses on:</p><ul><li><strong>SUP detection</strong> — the highest-risk receiving-inspection failure mode</li><li><strong>Recordkeeping and traceability</strong> — the most common audit finding industry-wide</li><li><strong>Hazmat refresher</strong> — DOT and IATA require recurrent hazmat training every 24 months minimum; we exceed it with every-6-month exposure</li><li><strong>Any TurbineWorks procedure changes</strong> since your last training cycle</li><li><strong>Any new FAA Advisory Circulars or ASA-100 revisions</strong> since your last training cycle</li></ul><h4>Completion</h4><p>Pass each module quiz with 80% or better. Your recurring training completion is documented in your training record alongside your initial training, and feeds the audit reports the QA Manager produces for ASA inspections.</p><h4>Status</h4><p style="background:#fff8e1; border:1px solid #ffc800; padding:10px 14px; border-radius:4px;"><strong>Recurring module content is being authored.</strong> The structure and cadence are in place; content for each refresher module will track each completed initial-training module.</p>',
                 ],
             ],
+        ],
+    ];
+}
+
+// ============================================================================
+// OPERATIONS COURSE: AS9120 Familiarization (4 lessons)
+// ============================================================================
+function local_twu_as9120_lessons(): array {
+    return [
+        [
+            'name'  => 'Lesson 1 — What is AS9120 and Where It Fits',
+            'intro' => '<p>Origin of AS9120, its relationship to ISO 9001 and the AS9100 series, and why it matters for aviation parts distributors.</p>',
+            'content' => <<<'HTML'
+<h3>What is AS9120?</h3>
+<p><strong>AS9120</strong> is the aerospace quality management system standard for distributors of aviation, space, and defense parts. Published by SAE International on behalf of the International Aerospace Quality Group (IAQG), AS9120 extends the general ISO 9001 QMS framework with aerospace-specific requirements.</p>
+
+<h4>The AS9100 family of standards</h4>
+<ul>
+  <li><strong>AS9100</strong> — Aerospace QMS for design and manufacturing organizations (OEMs, tier-1 suppliers)</li>
+  <li><strong>AS9110</strong> — Aerospace QMS for maintenance organizations (MROs, repair stations)</li>
+  <li><strong>AS9120</strong> — Aerospace QMS for distributors (parts brokers, stockists, traders)</li>
+</ul>
+<p>All three share the ISO 9001 foundation and add aerospace requirements appropriate to the type of work being done. AS9120 is the right standard for TurbineWorks because TurbineWorks does not design, manufacture, or repair — it stocks, inspects, and distributes.</p>
+
+<h4>Why AS9120 exists alongside ASA-100</h4>
+<p>ASA-100 and AS9120 cover overlapping ground but serve different markets:</p>
+<table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse;">
+  <tr style="background:#0d2240; color:#fff;">
+    <th>Aspect</th><th>ASA-100</th><th>AS9120</th>
+  </tr>
+  <tr><td>Primary customer base</td><td>Aftermarket: airlines, MROs, parts brokers</td><td>OEM supply chain: Boeing, Airbus, GE, Rolls-Royce tier-1/2</td></tr>
+  <tr><td>Approach</td><td>Prescriptive — specific requirements per section</td><td>QMS-process-based — requirements expressed as process outcomes</td></tr>
+  <tr><td>Foundation</td><td>FAA AC 00-56B framework</td><td>ISO 9001 + AS9100 family</td></tr>
+  <tr><td>Audit organization</td><td>ASA-recognized auditors</td><td>IAQG-recognized registrars (BSI, DNV, NQA, SAI Global, etc.)</td></tr>
+  <tr><td>Recognition</td><td>FAA recognized under AC 00-56</td><td>IAQG OASIS database; industry-recognized</td></tr>
+</table>
+
+<h4>Which customers care about AS9120</h4>
+<ul>
+  <li>OEM direct programs (e.g., Boeing 787 supplier program participants)</li>
+  <li>Tier-1 aerospace manufacturers (Spirit AeroSystems, Triumph, Collins)</li>
+  <li>Defense primes for non-ITAR commercial parts (Raytheon Technologies, Northrop Grumman commercial work)</li>
+  <li>Some major MROs that align supplier requirements to AS9120</li>
+</ul>
+
+<h4>Why pre-position for AS9120 now</h4>
+<p>~70% of the controls required by AS9120 are already required by ASA-100 — receiving inspection, traceability, records retention, training, internal audits, corrective action. Implementing TurbineWorks University to support both training programs is roughly 30% more work than ASA-100 alone, but it positions TurbineWorks to add AS9120 certification without rebuilding the training program later.</p>
+
+<p><em>[TurbineWorks Procedure Reference: insert the QA Manager\'s assessment of customer demand for AS9120 vs ASA-100, and the target date (if any) for AS9120 certification pursuit.]</em></p>
+HTML
+        ],
+        [
+            'name'  => 'Lesson 2 — Key AS9120 Clauses',
+            'intro' => '<p>The aerospace-specific additions that distinguish AS9120 from generic ISO 9001.</p>',
+            'content' => <<<'HTML'
+<h3>Key AS9120 Clauses</h3>
+<p>AS9120 follows the ISO 9001 clause structure (clauses 4-10) and adds aerospace-specific requirements within each clause. The aerospace additions are where AS9120 differs meaningfully from generic ISO 9001 — and where TurbineWorks needs to do work beyond what ASA-100 already requires.</p>
+
+<h4>Configuration management (AS9120 §8.1.2 area)</h4>
+<p>Configuration management is the discipline of identifying, controlling, and tracking the configuration of products throughout their lifecycle. For a distributor, this means:</p>
+<ul>
+  <li>Knowing exactly which revision of a part you have in stock (not just the part number, but the dash number, modification status, SB compliance state)</li>
+  <li>Tracking part-number supersedures (when an OEM updates a part number to indicate a configuration change)</li>
+  <li>Documenting build standard transitions clearly to customers</li>
+</ul>
+<p>ASA-100 touches on traceability but AS9120 demands more explicit configuration tracking.</p>
+
+<h4>Risk-based thinking (ISO 9001 + AS9120 §6.1)</h4>
+<p>AS9120 requires identifying risks and opportunities affecting the QMS and planning actions to address them. For a distributor:</p>
+<ul>
+  <li>Supplier risk (key supplier loss, supplier quality failures)</li>
+  <li>Counterfeit parts risk (supply chain integrity)</li>
+  <li>Customer concentration risk (heavy dependence on a few customers)</li>
+  <li>Regulatory risk (AD impact on inventory)</li>
+</ul>
+<p>Documented risk assessment is required. The auditor will ask to see how risks were identified, evaluated, and addressed.</p>
+
+<h4>Supply chain control (AS9120 §8.4)</h4>
+<p>Heavier focus on supplier qualification than ASA-100:</p>
+<ul>
+  <li>Documented supplier-approval process</li>
+  <li>Initial qualification: supplier QMS evaluation, sample inspection, performance commitments</li>
+  <li>Ongoing performance monitoring (PPM defect rates, on-time delivery, quality findings)</li>
+  <li>Periodic re-evaluation</li>
+  <li>Removal process for under-performing suppliers</li>
+</ul>
+
+<h4>Special processes</h4>
+<p>If TurbineWorks performs any "special processes" — processes whose results cannot be fully verified by subsequent inspection (e.g., kitting that combines multiple parts, repackaging that affects traceability) — those processes need validation and qualified personnel.</p>
+
+<h4>Counterfeit parts prevention (AS9120 §8.1.4)</h4>
+<p>Explicit AS9120 clause requiring documented counterfeit-parts prevention program. Aligns with SAE AS5553 / AS6174. This is also covered by ASA-100 SUP procedures — overlap is heavy here.</p>
+
+<h4>Configuration and change control on QMS itself</h4>
+<p>Changes to procedures, work instructions, and the QMS structure itself must be controlled — proposed, reviewed, approved, communicated, and effectiveness verified. The QMS evolves; AS9120 requires that evolution itself be controlled.</p>
+HTML
+        ],
+        [
+            'name'  => 'Lesson 3 — AS9120 vs ASA-100: Gap Analysis',
+            'intro' => '<p>Where ASA-100 and AS9120 align, where they don\'t, and what TurbineWorks would need to add for AS9120 certification.</p>',
+            'content' => <<<'HTML'
+<h3>AS9120 vs ASA-100 Gap Analysis</h3>
+<p>Practical view: if TurbineWorks holds ASA-100 today, what additional work would AS9120 certification require?</p>
+
+<h4>Areas of high overlap (do once, satisfy both)</h4>
+<ul>
+  <li>Receiving inspection (ASA-100 §6 ≈ AS9120 §8.6)</li>
+  <li>Records retention (ASA-100 §8 ≈ AS9120 §7.5)</li>
+  <li>Personnel training (ASA-100 training requirements ≈ AS9120 §7.2)</li>
+  <li>Storage and handling (ASA-100 §7 ≈ AS9120 §8.5.4)</li>
+  <li>Counterfeit prevention (ASA-100 SUP procedures ≈ AS9120 §8.1.4)</li>
+  <li>Calibration of inspection tools (both require)</li>
+  <li>Document control (both require)</li>
+</ul>
+<p>Estimated ~70% of total work is shared.</p>
+
+<h4>AS9120 additions beyond ASA-100</h4>
+<ul>
+  <li><strong>Documented risk management process</strong> with periodic review and action tracking</li>
+  <li><strong>Quality objectives</strong> with measurable KPIs (on-time delivery, defect PPM, customer satisfaction) tracked over time</li>
+  <li><strong>Customer satisfaction measurement</strong> — formal process, not just informal feedback</li>
+  <li><strong>Management review</strong> with explicit agenda items: QMS performance, audit findings, customer feedback, risks, opportunities, resource needs</li>
+  <li><strong>Internal audit program</strong> — both ASA-100 and AS9120 require, but AS9120 is more prescriptive about scope, frequency, auditor qualification, and follow-up</li>
+  <li><strong>Configuration management</strong> as explicit discipline</li>
+  <li><strong>Process-based QMS structure</strong> — AS9120 expects you to define your QMS as a set of processes with inputs, outputs, controls, and measurements (ISO 9001 process approach)</li>
+</ul>
+
+<h4>Things ASA-100 has that AS9120 doesn\'t emphasize</h4>
+<ul>
+  <li>Specific FAA references (FAA ACs, FAA forms like 8120-11)</li>
+  <li>Specific FAA 8130-3 verification procedures (AS9120 references airworthiness documents more generically)</li>
+  <li>Tight links to FAA AC 00-56 framework</li>
+</ul>
+
+<h4>The certification process for AS9120</h4>
+<ol>
+  <li>Select a registrar (IAQG-recognized certification body: BSI, DNV, NQA, SAI Global, LRQA, etc.)</li>
+  <li>Pre-assessment (optional but recommended): registrar reviews QMS for readiness</li>
+  <li>Stage 1 audit: document review</li>
+  <li>Stage 2 audit: on-site implementation audit</li>
+  <li>Corrective action on findings</li>
+  <li>Certification granted, listed in <a href="https://www.iaqg.org/oasis/" target="_blank" rel="noopener">IAQG OASIS database</a></li>
+  <li>Surveillance audits at intervals (typically annually) plus recertification at 3 years</li>
+</ol>
+
+<h4>The dual-accreditation reality</h4>
+<p>Many aerospace distributors hold both ASA-100 and AS9120. ASA-100 satisfies the aftermarket / FAA-recognized side; AS9120 satisfies the OEM / IAQG side. Customers either side check the respective database (ASA accredited list, IAQG OASIS) before placing orders.</p>
+
+<p><em>[TurbineWorks Procedure Reference: insert TurbineWorks QA Manager\'s gap analysis result and target AS9120 readiness date here.]</em></p>
+HTML
+        ],
+        [
+            'name'  => 'Lesson 4 — Module Summary',
+            'intro' => '<p>AS9120 recap and references.</p>',
+            'content' => '<h3>AS9120 Module Summary</h3><h4>What you should know</h4><ol><li>AS9120 is the aerospace QMS standard for distributors, published by SAE/IAQG, based on ISO 9001 with aerospace additions</li><li>AS9120 and ASA-100 overlap ~70% — same receiving inspection, traceability, training, counterfeit prevention</li><li>AS9120 adds: explicit risk management, KPIs, customer satisfaction measurement, configuration management, process-based QMS structure</li><li>AS9120 certification is via IAQG-recognized registrars (BSI, DNV, NQA, etc.), not ASA</li><li>Many distributors hold both ASA-100 (aftermarket) and AS9120 (OEM supply chain)</li></ol><h4>References</h4><ul><li>SAE AS9120 (current revision)</li><li>ISO 9001 (foundational QMS standard)</li><li>AS9100 (related — manufacturing) and AS9110 (related — maintenance)</li><li><a href="https://www.iaqg.org/oasis/" target="_blank" rel="noopener">IAQG OASIS</a> — certified supplier database</li></ul>',
+        ],
+    ];
+}
+
+// ============================================================================
+// OPERATIONS COURSE: Customer Relations & Quality Communication (4 lessons)
+// ============================================================================
+function local_twu_customer_relations_lessons(): array {
+    return [
+        [
+            'name'  => 'Lesson 1 — Who Your Customers Are and What They Need',
+            'intro' => '<p>The five customer segments TurbineWorks sells to, and what each segment expects.</p>',
+            'content' => <<<'HTML'
+<h3>The Five Customer Segments</h3>
+<p>TurbineWorks customers fall into roughly five segments. Each segment has different procurement processes, different risk tolerances, and different communication expectations.</p>
+
+<h4>1. Commercial airlines</h4>
+<p>Airlines buy parts to maintain their own fleet (in-house maintenance) or to support their MROs. Characteristics:</p>
+<ul>
+  <li>Procurement teams that work from approved-supplier lists — vendor qualification typically required</li>
+  <li>Often require ASA-100 accreditation as a contractual prerequisite</li>
+  <li>AOG (Aircraft On Ground) urgency is real — a grounded aircraft costs $30k-$200k/hour in lost revenue</li>
+  <li>Tight focus on traceability documentation; require COCs and complete back-to-birth for LLPs</li>
+  <li>Pricing pressure significant; pre-qualified suppliers compete on quality + speed + price</li>
+</ul>
+
+<h4>2. MROs (Maintenance, Repair, Overhaul)</h4>
+<p>Independent MROs (Lufthansa Technik, ST Engineering, AAR, MTU Maintenance) buy parts to perform maintenance for airlines.</p>
+<ul>
+  <li>Similar requirements to airlines but with higher volume per relationship</li>
+  <li>Often run shop-level inventory and need broad parts coverage from suppliers</li>
+  <li>May have their own QMS requirements (AS9110 for the MRO itself, suppliers expected to align)</li>
+</ul>
+
+<h4>3. OEMs (Original Equipment Manufacturers)</h4>
+<p>Boeing, Airbus, Lockheed Martin, GE Aerospace, Pratt &amp; Whitney, Rolls-Royce. The OEM direct supply chain.</p>
+<ul>
+  <li>Usually require AS9120 in addition to ASA-100</li>
+  <li>Configuration management is heavy — they care about exact build-standard alignment</li>
+  <li>Long-term contracts, formal supplier programs</li>
+  <li>Lower volume, higher requirements, longer sales cycles</li>
+</ul>
+
+<h4>4. Government and defense</h4>
+<p>U.S. military, allied military, U.S. government agencies (NASA, etc.).</p>
+<ul>
+  <li>DFARS compliance for DoD work</li>
+  <li>QSLD (Qualified Suppliers List of Distributors) or similar approval may be required</li>
+  <li>ITAR scrutiny for ITAR-controlled parts</li>
+  <li>Contract Data Requirements Lists (CDRLs) drive specific documentation deliverables</li>
+</ul>
+
+<h4>5. Other distributors / brokers</h4>
+<p>Some TurbineWorks customers are themselves distributors who buy from TurbineWorks to fill orders to their own customers.</p>
+<ul>
+  <li>Pricing-sensitive, volume-oriented</li>
+  <li>Generally less rigorous documentation expectations</li>
+  <li>Higher risk of downstream SUP issues — the broker chain can obscure original provenance</li>
+</ul>
+
+<h4>What every customer expects</h4>
+<ul>
+  <li>Accurate quoting (price, lead time, configuration)</li>
+  <li>Honest condition disclosure</li>
+  <li>Complete documentation accompanying every shipment</li>
+  <li>Proactive notification when something changes (AD issued, recall, error discovered)</li>
+  <li>Timely response to inquiries — same business day for routine, ~immediate for AOG</li>
+</ul>
+HTML
+        ],
+        [
+            'name'  => 'Lesson 2 — Communicating Quality: Quotes, COCs, Disclosure',
+            'intro' => '<p>How to communicate part condition and traceability accurately at every customer touchpoint.</p>',
+            'content' => <<<'HTML'
+<h3>Communicating Quality at Every Touchpoint</h3>
+<p>The quality system is invisible to the customer — they see only what TurbineWorks communicates. Quotes, COCs, shipping documents, and follow-up emails are where the quality system becomes visible.</p>
+
+<h4>Quote-stage communication</h4>
+<p>A quote sent to a customer should disclose:</p>
+<ul>
+  <li>Part number and dash number (exactly as in TurbineWorks inventory)</li>
+  <li>Condition (NEW / NE / OH / SV / AR — using industry-standard terms)
+    <ul>
+      <li>NEW: never installed</li>
+      <li>NE: new equivalent — never installed, may have been in OEM inventory long-term</li>
+      <li>OH: overhauled</li>
+      <li>SV: serviceable (inspected, no overhaul performed)</li>
+      <li>AR: as-removed (no shop work since removal)</li>
+    </ul>
+  </li>
+  <li>Trace (where the part came from — operator, OEM direct, etc.)</li>
+  <li>For LLP: current TSN/CSN, remaining life</li>
+  <li>For modules / engines: build standard, SB compliance status, recent BSI</li>
+  <li>Documentation included (8130-3, EASA Form 1, COC, etc.)</li>
+  <li>Lead time and shipping mode</li>
+</ul>
+<p>A quote that leaves any of these vague creates downstream problems. "AR with 8130-3" doesn\'t answer questions about LLP life remaining.</p>
+
+<h4>TurbineWorks COC (Certificate of Conformance)</h4>
+<p>Issued with every outbound shipment. Attests:</p>
+<ul>
+  <li>Part was received and inspected per ASA-100 procedures</li>
+  <li>Documentation has been verified</li>
+  <li>Storage met requirements (ESD, hazmat, environmental)</li>
+  <li>Part is in the disclosed condition</li>
+</ul>
+<p>The COC is a TurbineWorks legal attestation — issued under the signature of an authorized person. Misrepresentation on the COC has legal consequences.</p>
+
+<h4>What you cannot say in writing to a customer</h4>
+<ul>
+  <li>"This part is FAA-approved" — accurate is "This part has an 8130-3 from [organization]"; only the issuing org\'s tag is the approval evidence, not TurbineWorks\' statement</li>
+  <li>"Like new condition" — use the actual ATA condition code (NEW, NE, OH, SV, AR)</li>
+  <li>"As good as OEM" — only OEM-source parts are OEM parts; PMA or used-OEM has different status</li>
+  <li>Specifications that contradict the OEM\'s published data without OEM authorization</li>
+</ul>
+
+<h4>Communication failures that hurt</h4>
+<ul>
+  <li>Late notification of shipping delay — customer plans around the original commitment, has to scramble when reality differs</li>
+  <li>Documentation arriving separately from the part (paper trail and physical part should travel together)</li>
+  <li>Quoting a part that turns out not to be in inventory ("phantom inventory") — accurate inventory is foundational</li>
+  <li>Forwarding customer questions to an unstaffed inbox</li>
+</ul>
+
+<h4>Proactive disclosure protects everyone</h4>
+<p>When something goes wrong — wrong part shipped, AD affects a part already shipped, supplier discovered to have provided suspect documentation — the right answer is to call the customer first. Customer-discovered problems erode trust permanently. Vendor-disclosed problems build trust by demonstrating the quality system actually works.</p>
+HTML
+        ],
+        [
+            'name'  => 'Lesson 3 — Complaints, Corrective Action, and Customer Audits',
+            'intro' => '<p>What to do when a customer reports a problem, and how to handle customer audits.</p>',
+            'content' => <<<'HTML'
+<h3>When Things Go Wrong</h3>
+
+<h4>The complaint workflow</h4>
+<p>A customer reports a problem with a part TurbineWorks shipped. The ASA-100 §10 complaint-handling process kicks in:</p>
+<ol>
+  <li><strong>Acknowledge receipt</strong> within one business day. The customer needs to know the issue is being investigated, even before TurbineWorks knows what happened.</li>
+  <li><strong>Open a Non-Conformance Report (NCR)</strong> in the corrective action system. The complaint enters the formal quality process, not just an email thread.</li>
+  <li><strong>Investigate</strong> — pull TurbineWorks receiving inspection record, shipping record, supplier records. Was the part as TurbineWorks shipped? If not, where did the divergence happen?</li>
+  <li><strong>Containment</strong> — if the issue may affect other inventory or other customers, identify and contain. Hold any inventory of the same supplier lot pending investigation.</li>
+  <li><strong>Root cause</strong> — why did this happen? Receiving inspection process gap? Supplier issue? Storage handling? Documentation error?</li>
+  <li><strong>Corrective action</strong> — what specifically changes to prevent recurrence?</li>
+  <li><strong>Verification</strong> — confirm the corrective action is effective (not just implemented, but actually working)</li>
+  <li><strong>Customer follow-up</strong> — close the loop with the customer. Reimbursement, replacement, credit, formal apology as appropriate.</li>
+  <li><strong>Record retention</strong> — the complete complaint and corrective action file is retained per records schedule</li>
+</ol>
+
+<h4>What you cannot do</h4>
+<ul>
+  <li>Settle the complaint informally outside the corrective action system (auditor cannot verify; root cause never identified)</li>
+  <li>Push back on the customer that the complaint is invalid before investigating</li>
+  <li>Refuse to disclose investigation findings to the customer</li>
+  <li>Suppress the complaint to protect TurbineWorks reputation in the moment (this always backfires later)</li>
+</ul>
+
+<h4>Customer audits</h4>
+<p>Some customers (especially large OEMs and major airlines) audit their distributors directly, separate from the ASA-100 accreditation audit. A customer audit is similar to but typically narrower than an ASA audit.</p>
+
+<h5>What customer auditors typically check</h5>
+<ul>
+  <li>Specific shipments — pull records for parts shipped to the customer, trace through receiving / storage / shipping</li>
+  <li>How non-conformances were handled if any occurred</li>
+  <li>Storage area where the customer\'s part types are stored</li>
+  <li>Customer-specific contract requirements compliance</li>
+</ul>
+
+<h5>How to host a customer audit</h5>
+<ul>
+  <li>Assign a single TurbineWorks point of contact for the audit</li>
+  <li>Pre-prepare records the auditor will likely want (shipping history with the customer, NCR history, training records)</li>
+  <li>Have the QA Manager present</li>
+  <li>Be transparent — auditors will probe for hidden issues if they sense evasiveness</li>
+  <li>Document audit findings the same way as ASA findings; corrective actions feed the same system</li>
+</ul>
+
+<h4>When a complaint escalates</h4>
+<p>If a customer believes TurbineWorks delivered a SUP, the complaint may trigger:</p>
+<ul>
+  <li>FAA notification by the customer (which becomes an FAA inquiry to TurbineWorks)</li>
+  <li>ASA inquiry (the customer can complain to ASA about an accredited distributor)</li>
+  <li>Loss of customer\'s approved-vendor status</li>
+  <li>In extreme cases, litigation</li>
+</ul>
+<p>Proactive cooperation, complete documentation, and demonstrating the quality system\'s root-cause / corrective action work are how distributors recover from these situations. Denial and obstruction guarantee escalation.</p>
+HTML
+        ],
+        [
+            'name'  => 'Lesson 4 — Module Summary',
+            'intro' => '<p>Customer relations recap.</p>',
+            'content' => '<h3>Customer Relations Summary</h3><h4>What you should know</h4><ol><li>Five customer segments (airlines, MROs, OEMs, gov/defense, distributors) each with different expectations</li><li>Communicate quality at every touchpoint — quote, COC, shipping docs, follow-up</li><li>Use industry-standard ATA condition codes (NEW, NE, OH, SV, AR)</li><li>Customer complaints go through the formal corrective-action system, not informal email</li><li>Customer audits are common from large OEMs and major airlines — prepare and be transparent</li><li>Proactive disclosure protects trust; cover-ups always backfire</li></ol>',
+        ],
+    ];
+}
+
+// ============================================================================
+// OPERATIONS COURSE: Export Control / ITAR / EAR (4 lessons)
+// ============================================================================
+function local_twu_export_control_lessons(): array {
+    return [
+        [
+            'name'  => 'Lesson 1 — Export Control Overview: ITAR vs EAR',
+            'intro' => '<p>The two U.S. export control regimes — when each applies and why the distinction matters.</p>',
+            'content' => <<<'HTML'
+<h3>U.S. Export Control: The Two Regimes</h3>
+<p>U.S. export control is divided between two regulatory regimes administered by different agencies. Knowing which applies to a given part is the foundational export-control decision.</p>
+
+<h4>ITAR — International Traffic in Arms Regulations</h4>
+<ul>
+  <li><strong>22 CFR Parts 120-130</strong></li>
+  <li>Administered by the U.S. Department of State, Directorate of Defense Trade Controls (DDTC)</li>
+  <li>Controls "defense articles" listed on the <strong>U.S. Munitions List (USML)</strong></li>
+  <li>Controls "defense services" — assistance, training, or technical data related to defense articles</li>
+  <li>Controls "brokering" — facilitating transactions involving defense articles</li>
+</ul>
+
+<h4>EAR — Export Administration Regulations</h4>
+<ul>
+  <li><strong>15 CFR Parts 730-774</strong></li>
+  <li>Administered by the U.S. Department of Commerce, Bureau of Industry and Security (BIS)</li>
+  <li>Controls "dual-use" items — those with both commercial and potential military application</li>
+  <li>Items listed on the <strong>Commerce Control List (CCL)</strong></li>
+  <li>Each listed item has an <strong>ECCN (Export Control Classification Number)</strong></li>
+</ul>
+
+<h4>How a part gets classified</h4>
+<p>Three possible classifications:</p>
+<ol>
+  <li><strong>ITAR-controlled (USML)</strong> — most restrictive. Export licensing through State Department. Generally cannot be exported to ITAR-prohibited destinations (China, Russia, Iran, North Korea, others).</li>
+  <li><strong>EAR-controlled (CCL with specific ECCN)</strong> — restrictions depend on the ECCN and the destination. Some destinations require licensing; others may be license-exception eligible.</li>
+  <li><strong>EAR99</strong> — EAR jurisdiction but not on the CCL. Lowest restriction level. Most commercial aviation parts fall here.</li>
+</ol>
+
+<h4>Why aviation parts are complicated</h4>
+<p>Many commercial aviation parts have military equivalents or military origins:</p>
+<ul>
+  <li>CFM56 powers both A320ceo (commercial) and KC-135R (military tanker) — some parts cross over</li>
+  <li>GE F110 (F-16 engine) shares technology with GE90 (commercial)</li>
+  <li>Pratt &amp; Whitney F100 (F-15, F-16) shares heritage with PW2000 / PW4000 (commercial)</li>
+  <li>Helicopter engines used by both civil operators and military</li>
+</ul>
+<p>A part originally designed for military application is presumptively ITAR-controlled even if it has a commercial part number, unless and until it has been formally re-classified.</p>
+
+<h4>Penalties for getting it wrong</h4>
+<ul>
+  <li>Civil penalties: up to $1M per violation</li>
+  <li>Criminal penalties: up to $1M and 20 years imprisonment per willful violation</li>
+  <li>Debarment: loss of export privileges, often for years</li>
+  <li>Personal liability: officers and employees can be individually prosecuted, not just the corporation</li>
+</ul>
+<p>The U.S. government takes export control extremely seriously, especially when ITAR is involved. "I didn\'t know" is not a defense — companies are expected to know the classification of what they ship.</p>
+HTML
+        ],
+        [
+            'name'  => 'Lesson 2 — ITAR Specifics',
+            'intro' => '<p>How to recognize ITAR-controlled parts and what to do when one shows up.</p>',
+            'content' => <<<'HTML'
+<h3>ITAR Specifics</h3>
+
+<h4>What\'s on the U.S. Munitions List</h4>
+<p>The USML has 21 categories. The aviation-relevant categories include:</p>
+<ul>
+  <li><strong>Category VIII</strong> — Aircraft and Related Articles (military aircraft, military helicopters, related parts and components)</li>
+  <li><strong>Category XIX</strong> — Gas Turbine Engines and Associated Equipment (military engines; some commercial engines may be partially ITAR if militarily-derived)</li>
+  <li><strong>Category IV</strong> — Launch Vehicles, Guided Missiles, Ballistic Missiles (rocket engines, related)</li>
+  <li><strong>Category XV</strong> — Spacecraft Systems and Associated Equipment</li>
+</ul>
+
+<h4>The technical data trap</h4>
+<p>ITAR doesn\'t just control hardware. It controls:</p>
+<ul>
+  <li>Drawings, specifications, technical manuals related to defense articles</li>
+  <li>Software for design, manufacture, or operation of defense articles</li>
+  <li>Training related to defense articles</li>
+  <li>Defense services performed for foreign entities</li>
+</ul>
+<p>Emailing a spec sheet for an ITAR-controlled part to a foreign person — even one in the U.S. — is itself an export under ITAR. "Deemed exports" to foreign nationals on U.S. soil are real and prosecutable.</p>
+
+<h4>Brokering</h4>
+<p>ITAR §129 covers "brokering" — facilitating transactions involving defense articles. A distributor that merely sources and resells ITAR-controlled parts may be a "broker" under ITAR even without taking physical possession. Brokering activities require ITAR registration with DDTC.</p>
+
+<h4>If TurbineWorks identifies an ITAR-controlled part</h4>
+<ol>
+  <li><strong>Stop the transaction.</strong> Do not ship without ITAR licensing in place.</li>
+  <li><strong>Notify the QA Manager and the Accountable Manager.</strong> ITAR decisions are made above the operational level.</li>
+  <li><strong>Determine TurbineWorks\' ITAR registration status.</strong> If not registered, the appropriate path may be to decline the transaction entirely.</li>
+  <li><strong>If proceeding, obtain a license.</strong> Apply through DDTC for export authorization for the specific transaction.</li>
+  <li><strong>End-use and end-user verification.</strong> The license application requires identification of who will receive the part and what they will do with it.</li>
+  <li><strong>Documentation.</strong> ITAR transactions have specific record requirements (typically retained 5 years).</li>
+</ol>
+
+<h4>Common scenarios at TurbineWorks</h4>
+<ul>
+  <li><strong>KC-135R operator inquiry:</strong> the KC-135R is a military aircraft using CFM56 engines. KC-135R-specific parts may be ITAR. Commercial CFM56 parts that happen to be also installable on KC-135R may or may not be ITAR — fact-specific determination required.</li>
+  <li><strong>Foreign military buyer:</strong> foreign government attempting to buy parts, possibly for a US-supplied aircraft. Even commercial-origin parts may require FMS (Foreign Military Sales) channel, not commercial export.</li>
+  <li><strong>U.S. customer requesting export-ready stock:</strong> customer in the U.S. but parts will be re-exported by them. Re-export controls apply even though TurbineWorks ships domestically.</li>
+</ul>
+
+<p><em>[TurbineWorks Procedure Reference: insert TurbineWorks ITAR registration status, designated Empowered Official, and the procedure for handling potential ITAR-controlled inquiries here.]</em></p>
+HTML
+        ],
+        [
+            'name'  => 'Lesson 3 — EAR, ECCN Classification, and OFAC Screening',
+            'intro' => '<p>The EAR regime, how to classify a part by ECCN, and the OFAC sanctions screening that applies to every transaction.</p>',
+            'content' => <<<'HTML'
+<h3>EAR, ECCN, and OFAC</h3>
+
+<h4>ECCN classification</h4>
+<p>Every CCL-listed item has an ECCN. The format is alphanumeric (e.g., 9A991, 9E991). The structure encodes:</p>
+<ul>
+  <li><strong>First digit (0-9)</strong>: Category (9 = Aerospace and Propulsion)</li>
+  <li><strong>Letter (A-E)</strong>: Type (A = Equipment, B = Test equipment, C = Materials, D = Software, E = Technology)</li>
+  <li><strong>Next digits</strong>: Specific entry within category</li>
+</ul>
+
+<h4>Determining the ECCN</h4>
+<p>For aviation parts, common ECCNs include:</p>
+<ul>
+  <li><strong>9A991</strong> — "Aircraft and components" not specified elsewhere. Many commercial aviation parts fall here.</li>
+  <li><strong>9A610</strong> — Military aircraft and related items (mostly redirected to ITAR)</li>
+  <li><strong>9E991</strong> — Technology for aircraft</li>
+  <li><strong>EAR99</strong> — Not specifically listed; lowest restriction</li>
+</ul>
+<p>The classification process:</p>
+<ol>
+  <li>Determine if the item is ITAR (USML) — if yes, ITAR applies, not EAR</li>
+  <li>If not ITAR, check the CCL for specific listing</li>
+  <li>If on CCL, the ECCN determines restrictions per destination country</li>
+  <li>If not on CCL but otherwise subject to EAR, classify as EAR99</li>
+</ol>
+
+<h4>License exceptions</h4>
+<p>EAR has license exceptions that allow export without a license under specific conditions:</p>
+<ul>
+  <li><strong>License Exception STA</strong> (Strategic Trade Authorization): exports to allied countries</li>
+  <li><strong>License Exception RPL</strong> (Servicing and Replacement of Parts and Equipment): replacement parts for previously exported items</li>
+  <li><strong>License Exception ENC</strong>: certain encryption</li>
+  <li>Several others, each with specific eligibility rules</li>
+</ul>
+<p>Using a license exception requires documenting the basis at the time of export.</p>
+
+<h4>OFAC screening (separate from EAR/ITAR)</h4>
+<p>OFAC administers U.S. sanctions programs. OFAC restrictions apply to TRANSACTIONS, not just exports — even shipping domestically to a sanctioned party is prohibited.</p>
+<p>Maintained lists:</p>
+<ul>
+  <li><strong>SDN list</strong> (Specially Designated Nationals) — comprehensive sanctioned-party list</li>
+  <li>Country-specific sanctions (Iran, Russia, North Korea, others)</li>
+  <li>Sectoral sanctions (specific industries within otherwise non-sanctioned countries)</li>
+</ul>
+<p>Every customer, every consignee, every intermediary must be screened against current OFAC lists before TurbineWorks transacts. Screening is automated in modern ERP systems but the underlying obligation is TurbineWorks\'.</p>
+
+<h4>Recordkeeping</h4>
+<p>BIS requires retention of export records for 5 years from date of export. TurbineWorks records typically retain longer (ASA-100 retention schedule), which satisfies the 5-year minimum.</p>
+
+<h4>What every TurbineWorks employee should know</h4>
+<ul>
+  <li>Even a casual email reply to a foreign inquiry about a part can be an "export of technical data"</li>
+  <li>Quotes are not exempt — quoting a foreign party for an ITAR-controlled part may itself be a violation</li>
+  <li>"Hold the shipment, check with QA Manager / Empowered Official" is always the right answer when export status is unclear</li>
+  <li>Internal documentation of the export decision is mandatory — verbal classifications are not sufficient</li>
+</ul>
+HTML
+        ],
+        [
+            'name'  => 'Lesson 4 — Module Summary',
+            'intro' => '<p>Export control recap.</p>',
+            'content' => '<h3>Export Control Summary</h3><h4>What you should know</h4><ol><li>Two regimes: ITAR (State, defense articles, USML) and EAR (Commerce, dual-use, CCL)</li><li>Most commercial aviation parts are EAR (often EAR99) but military-derivative parts may be ITAR</li><li>ITAR violations carry criminal penalties — personal and corporate</li><li>ECCN drives EAR licensing — license exceptions may apply for some destinations</li><li>OFAC sanctions screening is mandatory for every transaction regardless of export status</li><li>Records retained 5+ years (BIS minimum; ASA-100 retention exceeds)</li></ol><h4>When in doubt</h4><p>Hold the shipment. Notify the QA Manager and the designated Empowered Official. "I checked with the EO and we determined X" is defensible. "I shipped it without checking because I assumed it was fine" is not.</p>',
+        ],
+    ];
+}
+
+// ============================================================================
+// ENGINE-MODEL COURSE: CFM LEAP (3 lessons)
+// ============================================================================
+function local_twu_engine_leap_lessons(): array {
+    return [
+        [
+            'name'  => 'Lesson 1 — LEAP Family Overview',
+            'intro' => '<p>The CFM successor to the CFM56 — direct-drive turbofan competing with the PW1000G GTF.</p>',
+            'content' => <<<'HTML'
+<h3>CFM LEAP Family</h3>
+<p>LEAP is CFM International\'s successor to the CFM56, introduced into service starting 2016. While the PW1000G GTF approached the next-generation efficiency target with a geared architecture, CFM took a different path: keep the direct-drive architecture but push it harder with composites, ceramics, and additive manufacturing.</p>
+
+<h4>Variants and applications</h4>
+<ul>
+  <li><strong>LEAP-1A</strong> — Airbus A320neo family. Thrust 24,500-32,900 lbf. Competes head-to-head with PW1100G.</li>
+  <li><strong>LEAP-1B</strong> — Boeing 737 MAX. Thrust 23,000-28,000 lbf. Sole-source on 737 MAX (PW does not offer for MAX).</li>
+  <li><strong>LEAP-1C</strong> — COMAC C919. Thrust ~30,000 lbf. Chinese narrowbody.</li>
+</ul>
+
+<h4>Architectural choices vs. CFM56</h4>
+<ul>
+  <li><strong>Higher bypass ratio</strong> (~11:1 vs ~5.5:1 for CFM56-7B). Larger fan, smaller core.</li>
+  <li><strong>Composite fan blades</strong> with 3D woven preform (carried forward from GE90/GEnx)</li>
+  <li><strong>Composite fan case</strong></li>
+  <li><strong>Ceramic Matrix Composite (CMC) HPT shrouds</strong> — first commercial use of CMC in a hot-section component. Allows higher operating temperatures.</li>
+  <li><strong>3D-printed fuel nozzle</strong> — DMLS (direct metal laser sintering) consolidates 18 conventional parts into 1. First commercial 3D-printed engine part in production volume.</li>
+  <li><strong>TAPS combustor</strong> (similar to GEnx) — improved emissions</li>
+</ul>
+
+<h4>What this means for the aftermarket</h4>
+<ul>
+  <li><strong>Newer fleet</strong> — limited aftermarket parts pool yet, but growing rapidly</li>
+  <li><strong>Composite + ceramic + 3D-printed components</strong> are new — repair authority limited to specifically-authorized facilities</li>
+  <li><strong>CFM56 successor inventory</strong> — as CFM56 fleets retire, capital may move to LEAP. Position now.</li>
+</ul>
+
+<h4>In-service issues to know</h4>
+<ul>
+  <li><strong>LEAP-1A HPC blade durability</strong> — early in-service issues addressed by SBs and subsequent build improvements</li>
+  <li><strong>LEAP-1B HPT issues</strong> on early production — addressed by HPT module improvements</li>
+  <li><strong>Combustor durability</strong> on both variants in early production</li>
+  <li><strong>Time-on-wing shorter than promised</strong> early in service — improving as PIPs are incorporated</li>
+</ul>
+
+<p><em>[TurbineWorks Procedure Reference: insert TurbineWorks LEAP inventory status, supplier qualification, and any LEAP-specific receiving notes here.]</em></p>
+HTML
+        ],
+        [
+            'name'  => 'Lesson 2 — LEAP Modules and LLPs',
+            'intro' => '<p>LEAP module breakdown and the LLP set that drives inventory value.</p>',
+            'content' => <<<'HTML'
+<h3>LEAP Modules and LLPs</h3>
+
+<h4>Module breakdown</h4>
+<p>LEAP follows the standard CFM modular architecture:</p>
+<ul>
+  <li><strong>Fan / Booster module</strong> — composite fan blades, composite fan case, 3-stage booster (LPC)</li>
+  <li><strong>HPC module</strong> — 10-stage high-pressure compressor (one more stage than CFM56)</li>
+  <li><strong>Combustor module</strong> — TAPS combustor, 3D-printed fuel nozzles</li>
+  <li><strong>HPT module</strong> — 2-stage HPT (CFM56 was single-stage); CMC shrouds</li>
+  <li><strong>LPT module</strong> — 7-stage LPT (CFM56 was 4-stage; LEAP needs more stages to drive the larger fan slowly)</li>
+  <li><strong>AGB / accessory module</strong></li>
+</ul>
+
+<h4>Major LLPs</h4>
+<ul>
+  <li>Fan disk</li>
+  <li>Booster disks (stages 1-3)</li>
+  <li>HPC disks (multiple stages)</li>
+  <li>HPT disks (stages 1-2)</li>
+  <li>LPT disks (multiple stages)</li>
+  <li>HPT and LPT shafts</li>
+</ul>
+<p>Life limits per current CFM ESM. As with all newly-introduced engines, life limits may be revised as in-service data accumulates.</p>
+
+<h4>Module-level trading considerations</h4>
+<ul>
+  <li>LEAP module exchange market is nascent — fewer used modules available than for CFM56</li>
+  <li>OEM (CFM) operates a structured aftermarket — independent module trading less common than for CFM56</li>
+  <li>Build standard tracking is critical — LEAP has had multiple PIP incorporations addressing in-service issues; pre-PIP modules have different value than post-PIP</li>
+</ul>
+
+<h4>Composite blade handling</h4>
+<p>LEAP composite fan blades have different handling considerations than metal blades:</p>
+<ul>
+  <li>Cannot be blended on-wing the way metal blades sometimes can — composite repair authority is specifically restricted</li>
+  <li>Impact damage assessment is different — visible damage may or may not correlate with structural damage</li>
+  <li>Storage requirements include UV protection and humidity control</li>
+</ul>
+HTML
+        ],
+        [
+            'name'  => 'Lesson 3 — Module Summary',
+            'intro' => '<p>LEAP recap.</p>',
+            'content' => '<h3>LEAP Summary</h3><ul><li>CFM successor to CFM56 — direct-drive architecture (vs PW GTF approach)</li><li>LEAP-1A (A320neo), LEAP-1B (737 MAX sole-source), LEAP-1C (C919)</li><li>Composite fan blades + case, CMC HPT shrouds, 3D-printed fuel nozzles</li><li>Higher bypass ratio (~11:1 vs CFM56 ~5.5:1)</li><li>Newer fleet — aftermarket emerging; CFM operates structured aftermarket so independent trade narrower than CFM56</li><li>Build standard / PIP tracking critical — multiple in-service issues addressed iteratively</li></ul>',
+        ],
+    ];
+}
+
+// ============================================================================
+// ENGINE-MODEL COURSE: V2500 (3 lessons)
+// ============================================================================
+function local_twu_engine_v2500_lessons(): array {
+    return [
+        [
+            'name'  => 'Lesson 1 — V2500 Family Overview',
+            'intro' => '<p>The IAE V2500 — the alternative engine on A320ceo, with a strong installed base and parts aftermarket.</p>',
+            'content' => <<<'HTML'
+<h3>V2500 Family</h3>
+<p>The V2500 is a high-bypass turbofan produced by International Aero Engines (IAE), a multi-national joint venture led by Pratt &amp; Whitney and Rolls-Royce. It powers the A320ceo family (A319/A320/A321) as the alternative to CFM\'s CFM56-5B. Approximately 7,800 engines produced.</p>
+
+<h4>Variants</h4>
+<ul>
+  <li><strong>V2500-A1</strong> — original variant, A320</li>
+  <li><strong>V2500-A5</strong> — main current variant, A320ceo family. Multiple thrust ratings (V2522-A5, V2524-A5, V2527-A5, V2530-A5, V2533-A5).</li>
+  <li><strong>V2500-E5</strong> — for Embraer KC-390 military application</li>
+</ul>
+
+<h4>IAE consortium history</h4>
+<p>The IAE consortium has shifted over the years. Original partners included Pratt &amp; Whitney, Rolls-Royce, MTU, and Japanese Aero Engines Corporation (JAEC). As of recent years, Pratt &amp; Whitney holds majority interest. This matters for aftermarket sourcing — different consortium members produced different components.</p>
+
+<h4>Architecture</h4>
+<ul>
+  <li>2-shaft direct-drive turbofan (contrast: PW1100G GTF, Trent 3-shaft)</li>
+  <li>Single-stage fan</li>
+  <li>4-stage LPC (booster)</li>
+  <li>10-stage HPC</li>
+  <li>Single annular combustor</li>
+  <li>2-stage HPT</li>
+  <li>5-stage LPT</li>
+</ul>
+
+<h4>Why V2500 matters for TurbineWorks</h4>
+<ul>
+  <li>Large installed base — ~7,800 engines, much of which is mid-to-late life</li>
+  <li>Strong used-parts market as A320ceo fleets transition to A320neo</li>
+  <li>Reliable engine with mature SB / AD history — most known issues have established solutions</li>
+  <li>Direct competitor to CFM56-5B in the aftermarket; some operators have both</li>
+</ul>
+
+<h4>Common ADs and SBs</h4>
+<ul>
+  <li>HPT durability ADs over the years addressing turbine blade and disk life limits</li>
+  <li>HPC airfoil cracking SBs/ADs</li>
+  <li>Bearing-related ADs</li>
+</ul>
+<p>Current AD list searchable in FAA DRS for V2500 serial number ranges.</p>
+
+<h4>Aftermarket dynamics</h4>
+<p>The A320ceo fleet is being retired in significant numbers as operators upgrade to A320neo. This creates:</p>
+<ul>
+  <li>Increasing supply of used V2500 engines and parts</li>
+  <li>Lower per-cycle pricing as supply increases relative to demand</li>
+  <li>Opportunity for distributors holding inventory at the right price point</li>
+</ul>
+
+<p><em>[TurbineWorks Procedure Reference: insert TurbineWorks V2500 inventory and supplier status here.]</em></p>
+HTML
+        ],
+        [
+            'name'  => 'Lesson 2 — V2500 LLPs and Module Trading',
+            'intro' => '<p>V2500 LLP set, module breakdown, and used-engine market considerations.</p>',
+            'content' => <<<'HTML'
+<h3>V2500 LLPs and Module Trading</h3>
+
+<h4>Major LLPs</h4>
+<ul>
+  <li>Fan disk</li>
+  <li>LPC (booster) disks (stages 1-4)</li>
+  <li>HPC disks (stages 1-10)</li>
+  <li>HPT disks (stages 1-2)</li>
+  <li>LPT disks (stages 1-5)</li>
+  <li>HPT and LPT shafts</li>
+</ul>
+<p>Life limits per current IAE ESM. The number of LLPs per V2500 engine is relatively high compared to two-shaft engines with fewer compressor stages — drives both inspection burden and parts opportunity.</p>
+
+<h4>Module breakdown</h4>
+<ul>
+  <li>Fan / LPC module</li>
+  <li>HPC module</li>
+  <li>Combustion section</li>
+  <li>HPT module</li>
+  <li>LPT module</li>
+  <li>Turbine exhaust case</li>
+  <li>Accessory drive</li>
+</ul>
+<p>V2500 is a maintainable engine with established module-level trade — used HPT modules, LPT modules, and fan/LPC modules are all market commodities.</p>
+
+<h4>Build standards</h4>
+<p>The V2500-A5 has undergone multiple PIP (Performance Improvement Package) incorporations. PIP level matters for valuation:</p>
+<ul>
+  <li>Original A5 build vs Select One vs Select Two configurations have different fuel-burn performance and durability</li>
+  <li>Customer interest in specific build standards (operators value newer PIP levels)</li>
+  <li>Build standard documented on the 8130-3 and in the engine logbook</li>
+</ul>
+
+<h4>End-of-fleet considerations</h4>
+<p>As A320ceo operators retire their V2500-powered aircraft:</p>
+<ul>
+  <li>Large engines and modules become available at falling prices</li>
+  <li>Many engines have substantial green time remaining when retired (the airframe is retired before the engine reaches its next shop visit)</li>
+  <li>LLPs from retired engines feed the parts market as components</li>
+  <li>Some engines repurposed for non-aviation uses (industrial power generation) — those parts then aren\'t available for aviation</li>
+</ul>
+
+<h4>Common cross-shopping with CFM56-5B</h4>
+<p>A320ceo operators often have mixed fleets — some V2500-powered, some CFM56-5B-powered. The engines are NOT interchangeable — the FADEC, accessory locations, and mounting are different — but operators of both have requirements for both. A distributor with inventory in both is more valuable to mixed-fleet operators.</p>
+HTML
+        ],
+        [
+            'name'  => 'Lesson 3 — Module Summary',
+            'intro' => '<p>V2500 recap.</p>',
+            'content' => '<h3>V2500 Summary</h3><ul><li>IAE V2500 — joint venture engine for A320ceo, ~7,800 engines installed</li><li>2-shaft direct-drive architecture, competitor to CFM56-5B on same airframe</li><li>Build standards (PIP levels) significantly affect performance and valuation</li><li>End-of-fleet dynamics create strong used-parts supply as A320ceo retirement accelerates</li><li>Mixed-fleet operators value distributors with both V2500 and CFM56-5B inventory</li></ul>',
         ],
     ];
 }
