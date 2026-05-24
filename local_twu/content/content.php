@@ -628,36 +628,234 @@ HTML
         ],
         [
             'name'  => 'Lesson 1.2 — How SUP Enters the Supply Chain',
-            'intro' => '<p>The five main pathways unapproved parts use to reach distributors, and which ones to watch for.</p>',
+            'intro' => '<p>The recurring pathways unapproved parts use to reach distributors. Why understanding the pathway matters more than understanding the part: the pathway tells you where the defense has to live, and where TurbineWorks fits in the chain.</p>',
             'content' => <<<'HTML'
-<h3>How SUP enters the aviation supply chain</h3>
-<p>To stop unapproved parts, you need to understand how they get into the supply chain in the first place. There are five recurring pathways.</p>
+<h3>How Unapproved Parts Reach the Supply Chain</h3>
 
-<h4>1. Scrap diversion</h4>
-<p>The most common pathway. An MRO or operator scraps a part — typically because it has reached its life limit, failed inspection, or been damaged. The part is supposed to be mutilated per <strong>FAA AC 21-38</strong> so it physically cannot be reinstalled. Instead, someone diverts it: takes the part out of the scrap bin, re-cleans it, re-marks it, and sells it to an unsuspecting distributor.</p>
-<p>Defense: verify supplier provenance. Parts from unknown brokers should trace back to an identifiable approved source.</p>
+<p>Lesson 1.1 established what unapproved, SUP, and counterfeit parts <em>are</em>. This lesson covers how they <em>get into the supply chain</em>. The distinction matters because preventing a SUP from entering TurbineWorks inventory requires understanding the pathway — where the part came from, what failure of controls allowed it to reach you, and what defenses interrupt that pathway.</p>
 
-<h4>2. Theft from OEM or MRO facilities</h4>
-<p>Parts are physically stolen from production lines or repair facilities — sometimes by employees, sometimes by organized theft rings. The stolen part may be technically conforming (it's a real part), but its documentation is missing or fabricated, and the OEM has no record of its release.</p>
-<p>Defense: the FAA 8130-3 must trace back to an issuing organization that confirms it issued the tag for this part.</p>
+<p>There are six recurring pathways. The first five are the historical industry pattern. The sixth is emerging and increasingly important. Every receiving-inspection control TurbineWorks operates is, ultimately, defense against one or more of these pathways.</p>
 
-<h4>3. Manufacturing without authorization</h4>
-<p>A machine shop produces a part — possibly to legitimate dimensions — without PMA (Parts Manufacturer Approval) or TSO (Technical Standard Order) authorization from the FAA. The part is then sold with fabricated paperwork or no paperwork at all.</p>
-<p>Defense: confirm the manufacturer holds the appropriate FAA approval. Cross-check against the FAA's public certificate database.</p>
+<h4>Why understanding pathways is operationally critical</h4>
 
-<h4>4. Documentation fraud</h4>
-<p>The part is real but the paperwork is fake. Photocopied 8130-3 tags, forged signatures, made-up certificate numbers, altered dates. Sometimes the original tag was for a different part and has been "reassigned."</p>
-<p>Defense: every block of the 8130-3 must be verifiable. Block 15 certificate numbers must exist in the FAA database. Issuing organizations should be contactable to verify they issued the tag.</p>
+<p>It is tempting to think of SUP defense as a series of checks performed on an arriving part: verify the 8130-3, inspect the part, validate the supplier. That checklist works. But it works <em>better</em> if the inspector understands why each check exists. A check performed without understanding becomes mechanical — easy to skip when time pressure rises, and easy to satisfy with the appearance of compliance rather than actual scrutiny.</p>
 
-<h4>5. Counterfeit manufacture</h4>
-<p>A part is deliberately fabricated to look like a legitimate OEM part — same markings, same finish, same packaging — but produced by an unauthorized source. Common in electronic components and high-value bearings.</p>
-<p>Defense: visual inspection comparing against known-good samples. Markings should match exactly in font, depth, position, and color. Suspicious-looking parts go to a metallurgical or dimensional check.</p>
+<p>An inspector who understands that scrap diversion is the largest single SUP pathway will treat parts from unfamiliar brokers with particular skepticism, because broker chains are the natural delivery mechanism for diverted scrap. An inspector who understands that documentation fraud is the easiest form of SUP to attempt will verify Block 15 against the FAA database without exception, because that single check breaks the most common fraud pattern. Operational understanding is force-multiplied by pathway awareness.</p>
 
-<h4>Why aviation is a target</h4>
-<p>Aviation parts have unusually high margins (a turbine blade can sell for tens of thousands of dollars) and the documentation infrastructure (8130-3 tags) is not always rigorously verified by buyers under cost pressure. This is exactly the market profile that attracts fraud.</p>
+<h4>Pathway 1 — Scrap diversion</h4>
 
-<h4>The TurbineWorks position</h4>
-<p>As an accredited distributor, TurbineWorks is one of the lines of defense between the broker market and the operators flying aircraft. The customer is paying for our verification of provenance and documentation. If we accept a SUP into inventory, we are the failure point.</p>
+<p>The single most common pathway. The mechanics:</p>
+
+<ol>
+  <li>An operator or MRO determines that a part has reached the end of its useful life. The part may have reached its hard-time cycle limit (LLPs), may have failed inspection beyond economical repair, may have been damaged in service. Whatever the cause, the operator decides the part will not be installed on another aircraft.</li>
+  <li>The part is supposed to be <strong>mutilated</strong> — physically destroyed per FAA AC 21-38 — so it cannot re-enter the supply chain. Mutilation might involve cutting the part into pieces, drilling holes in critical surfaces, removing and destroying the data plate, or other irreversible damage.</li>
+  <li>The part is supposed to be <strong>documented as destroyed</strong> — a mutilation record retained in the operator/MRO\'s quality system.</li>
+  <li>Instead, somewhere between the scrap-decision and the mutilation, the part is <strong>diverted</strong>. Someone in the disposal chain takes the part out of the scrap bin before it is destroyed. They re-clean it, possibly re-mark it with a different serial number, and reintroduce it into the supply chain — often through a broker who buys "surplus" or "salvage" inventory.</li>
+  <li>The diverted part is then sold, typically through one or more intermediary brokers, eventually reaching a distributor who may not realize the part should not be in service.</li>
+</ol>
+
+<p><strong>Why scrap diversion is the largest pathway:</strong> the volume is enormous. Every year, thousands of aviation parts are scrapped — turbine disks reaching life limits, blades damaged by FOD events, bearings replaced as preventive maintenance, sensors with cumulative drift. Each scrapped part is a candidate for diversion. The economic incentive is large: a scrapped turbine disk might sell on the gray market for $5,000-$15,000 even though it has no remaining service life. Multiply by the number of operators and the number of parts and the financial opportunity is significant.</p>
+
+<p><strong>Industry case:</strong> in the 1990s and 2000s, multiple FAA SUP investigations traced fraudulent turbine blades and disks back to operators who failed to enforce mutilation. The parts were sold through broker chains across multiple distributors before being identified — often only after in-service incidents. Some of these cases reached criminal prosecution.</p>
+
+<p><strong>TurbineWorks defense against scrap diversion:</strong></p>
+
+<ul>
+  <li><strong>Approved-supplier qualification.</strong> The first line of defense is who TurbineWorks buys from. Suppliers on the approved list have been qualified — facility verified, references checked, history examined. Suppliers not on the list go through qualification before any parts are accepted.</li>
+  <li><strong>Provenance documentation.</strong> The 8130-3 chain should trace back to an identifiable approved source — an OEM, an authorized repair station, or an operator releasing parts under proper records. A part whose history starts with an unfamiliar broker and no traceable origin is a strong scrap-diversion indicator.</li>
+  <li><strong>LLP back-to-birth verification.</strong> For life-limited parts, the complete cycle history must be documentable. A part whose claimed cycles are inconsistent with its visible wear, or whose records contain a gap, is suspect. LLPs are the highest-value target for scrap diversion because the part may look fine while having no remaining life.</li>
+  <li><strong>Anomalous-pricing flagging.</strong> Scrap-diverted parts can be sold below market because the diverter didn\'t pay market for the input — they took it from someone else\'s scrap bin. Pricing significantly below market is a flag, not by itself proof, but combined with other indicators it is significant.</li>
+</ul>
+
+<h4>Pathway 2 — Theft from OEM, MRO, or operator facilities</h4>
+
+<p>Parts are physically stolen — either from production lines (in the case of OEMs), from repair facilities (MROs), or from operator inventories. The mechanics:</p>
+
+<ol>
+  <li>A part with legitimate identity is stolen — the part is a real OEM part, with real markings, real material conformance, possibly real performance.</li>
+  <li>The OEM, MRO, or operator from whom the part was stolen has no record of releasing it. They may not realize it was stolen until inventory reconciliation, which can lag the theft by weeks or months.</li>
+  <li>The thief sells the part on the gray market, typically through one or more brokers, with either no documentation or fabricated documentation.</li>
+  <li>An unsuspecting distributor accepts the part, perhaps believing the broker\'s explanation of source ("surplus from an aircraft retirement," "obtained from a closing repair facility").</li>
+</ol>
+
+<p><strong>Theft cases TurbineWorks has visibility into typically come from:</strong></p>
+
+<ul>
+  <li>Employee theft from production lines — a worker takes parts home and sells them privately</li>
+  <li>Organized theft rings targeting MRO inventories — break-ins, insider cooperation</li>
+  <li>Operator-side inventory loss — parts disappear from operator warehouses, sometimes through staff and sometimes through external theft</li>
+  <li>Transit theft — parts disappear during shipping, especially in regions with weak logistics security</li>
+</ul>
+
+<p><strong>The thing that distinguishes theft from scrap diversion:</strong> the part itself is typically conforming. The theft pathway delivers <em>real</em> parts. The problem is provenance — the operator who originally had the part has no record of releasing it, so the 8130-3 trail is either missing entirely or fabricated to fill the gap.</p>
+
+<p><strong>TurbineWorks defense:</strong></p>
+
+<ul>
+  <li><strong>The 8130-3 chain must trace back to the issuing organization\'s confirmation.</strong> If TurbineWorks contacts the issuing organization listed in Block 4 and they confirm having issued the tag for this part on the indicated date, the chain is verified. If they have no record, the tag is fabricated and the part may be stolen.</li>
+  <li><strong>Independent contact with the issuing organization.</strong> Contact information from the FAA database or other independent source — not from the shipping documents that came with the part. If the part is fraudulent, the supplier may have provided a fake "verification" phone number.</li>
+  <li><strong>Operator-side notification systems.</strong> Major OEMs maintain stolen-part databases that distributors can query. If the part\'s serial number appears in a stolen-parts notification, that is dispositive.</li>
+</ul>
+
+<h4>Pathway 3 — Manufacturing without authorization</h4>
+
+<p>A machine shop produces a part to OEM specifications without holding FAA authority to produce it. The shop may have legitimate capabilities — CNC machines, materials, heat treatment — but it has no PMA (Parts Manufacturer Approval), no TSO authorization, no production certificate. The part it produces is unapproved by definition under 14 CFR §21.502, regardless of how well it performs.</p>
+
+<p>The mechanics:</p>
+
+<ol>
+  <li>The shop obtains OEM drawings, samples, or reverse-engineered specifications.</li>
+  <li>The shop produces the part. Quality may range from excellent (true counterfeit) to poor (cheap knockoff).</li>
+  <li>The shop fabricates documentation — typically a fake 8130-3 referencing a nonexistent or stolen FAA certificate.</li>
+  <li>The part enters the supply chain through brokers willing to source from non-approved manufacturers, or through documentation laundering that obscures the source.</li>
+</ol>
+
+<p><strong>Why this happens:</strong> the economics of aviation parts are attractive. A turbine blade may have a manufacturing cost of $200-500 and a market price of $3,000-$15,000. An unauthorized shop can produce the part for a fraction of the OEM price and capture significant margin even at "discount" pricing. The legal risk is real but historically prosecution has lagged the activity.</p>
+
+<p><strong>Defense:</strong></p>
+
+<ul>
+  <li><strong>FAA database verification.</strong> Block 15 certificate verification catches the most common form of this pathway — fabricated FAA certificate numbers. The numbers either don\'t exist or don\'t match the claimed issuing organization.</li>
+  <li><strong>OEM authorization verification.</strong> For PMA parts in particular, the PMA holder is in the FAA database and the PMA scope is defined. A part claiming to be PMA-produced by an organization not actually holding the relevant PMA is unapproved.</li>
+  <li><strong>Physical inspection.</strong> Unauthorized manufacture often (not always) leaves physical indicators — OEM-specific fingerprints in machining patterns, tool marks, surface finish, and stamping that differ from authorized production. Lesson 1.4 covers this in detail.</li>
+</ul>
+
+<h4>Pathway 4 — Documentation fraud</h4>
+
+<p>The part itself is real but the paperwork is forged or altered. Variations include:</p>
+
+<ul>
+  <li><strong>Forged 8130-3 from scratch.</strong> The fraudster fabricates the entire form, including a plausible-looking Block 15 number that may or may not pass database lookup.</li>
+  <li><strong>Re-used 8130-3.</strong> A real 8130-3 from a different part is photocopied or scanned, then matched up with a different physical part that the fraudster has obtained separately. The Block 10 serial number may not match the physical part.</li>
+  <li><strong>Altered 8130-3.</strong> A real 8130-3 is modified — date changed, status changed, or remarks added to claim AD/SB compliance that wasn\'t actually performed.</li>
+  <li><strong>Documentation laundering through broker chains.</strong> A part passes through multiple intermediary brokers, each adding documentation, until the documentation trail obscures the original (unapproved) source.</li>
+</ul>
+
+<p><strong>Why documentation fraud is the easiest form:</strong> producing a convincing-looking paper document is much easier than producing a convincing physical part. A scanner, photo editor, and laser printer are sufficient. The bad actor doesn\'t need machine tools, materials, or aerospace manufacturing expertise.</p>
+
+<p><strong>Why documentation fraud is the most-caught form:</strong> every block of an 8130-3 ties to something independently verifiable. Block 15 ties to the FAA database. Block 4 ties to that certificate. Block 10 ties to the data plate. Block 12 should be consistent with the part\'s history. A forger has to fabricate consistently across many fields and survive cross-reference checks. They rarely do.</p>
+
+<p><strong>Defense:</strong> Lesson 1.3 covers documentation review in comprehensive depth. The summary defenses:</p>
+
+<ul>
+  <li>FAA database verification for Block 15 numbers</li>
+  <li>Cross-reference between Block 4 (organization name) and Block 15 (certificate)</li>
+  <li>Cross-reference between Block 10 (serial) and the physical data plate</li>
+  <li>Originality of Block 14 signature (not a photocopy)</li>
+  <li>Date plausibility (Block 17)</li>
+  <li>Internal consistency of Block 12 remarks</li>
+</ul>
+
+<h4>Pathway 5 — Counterfeit manufacture</h4>
+
+<p>Distinct from manufacture without authorization (Pathway 3), counterfeiting is the deliberate fabrication of a part to look like a legitimate OEM part — same markings, same finish, same packaging — produced by an entity that knows it is misrepresenting the source. Counterfeiting is fraud with intent.</p>
+
+<p>Counterfeit cases in aviation typically target:</p>
+
+<ul>
+  <li><strong>High-value mechanical commodities</strong> — turbine blades, bearings, brackets, fasteners in high-strength alloys</li>
+  <li><strong>Electronic components</strong> — chips, capacitors, connectors. The electronic counterfeit problem grew with offshore manufacturing in the 2000s.</li>
+  <li><strong>Parts with strong OEM markings</strong> — the more recognizable the OEM brand, the more counterfeitable. Genuine-looking OEM marks are the product the counterfeiter sells.</li>
+</ul>
+
+<p><strong>The legal distinction matters because:</strong></p>
+
+<ul>
+  <li>Civil enforcement under FAA regulations applies to unapproved parts generally</li>
+  <li>Criminal enforcement under fraud statutes (18 U.S.C. §1341 mail fraud, §1343 wire fraud, §1957 money laundering) applies when there is intent to deceive</li>
+  <li>DFARS counterfeit-parts clauses (252.246-7007/7008) impose specific obligations on defense contractors and their suppliers</li>
+</ul>
+
+<p>For a TurbineWorks receiving inspector, the practical distinction is academic at the point of receiving — the inspector identifies a SUP and quarantines. The QA Manager investigates. If the investigation finds evidence of deliberate misrepresentation, the matter is referred for criminal investigation. The inspector\'s appropriate output is the SUP flag; the legal classification is downstream.</p>
+
+<p><strong>Defense against counterfeiting:</strong></p>
+
+<ul>
+  <li><strong>Supplier qualification with anti-counterfeit emphasis.</strong> SAE AS5553 (electronics) and AS6174 (broader materiel) define supplier-qualification practices specifically aimed at counterfeit detection. TurbineWorks suppliers should be assessed against these standards.</li>
+  <li><strong>Trusted-supplier preference.</strong> Buying from OEMs and OEM-authorized distributors substantially reduces counterfeit exposure. The further into the broker market TurbineWorks ventures, the higher the counterfeit risk.</li>
+  <li><strong>Physical inspection.</strong> Counterfeit parts often (not always) have subtle physical indicators — markings that don\'t match the OEM\'s style exactly, surface finish that differs, material properties that don\'t pass laboratory verification.</li>
+  <li><strong>Receiving lab capability for high-value items.</strong> Some distributors maintain or contract for metallurgical/dimensional/X-ray inspection capability for high-value parts where the counterfeit risk justifies the cost.</li>
+</ul>
+
+<h4>Pathway 6 — Emerging: cyber-enabled supply chain attacks</h4>
+
+<p>The newest pathway, increasingly relevant. The mechanics:</p>
+
+<ul>
+  <li>A supplier\'s ERP or document-management system is compromised — typically through phishing, ransomware, or credential theft.</li>
+  <li>The attacker manipulates the supplier\'s issued documentation — modifying 8130-3 records, altering serial number databases, or generating fraudulent documents that appear to come from the legitimate supplier.</li>
+  <li>The fraudulent documentation accompanies parts that may be of any origin — diverted scrap, counterfeit, unauthorized manufacture.</li>
+  <li>The supplier may not realize their systems were compromised until weeks or months later, by which time the fraudulent documents have been used to release multiple parts.</li>
+</ul>
+
+<p>This pathway is harder to detect because the documentation may verify cleanly against external databases — the supplier really exists, the certificate is real, the form structure is correct. The fraud lives inside the supplier\'s systems.</p>
+
+<p><strong>Defense (still emerging as an industry practice):</strong></p>
+
+<ul>
+  <li>Out-of-band verification when documentation is high-stakes — phone calls to verify, not just email confirmations</li>
+  <li>Pattern analysis — if a supplier suddenly has unusual volume or unusual part types, investigate</li>
+  <li>Cyber-hygiene requirements in supplier qualification — increasingly common in OEM tier-1 supplier programs</li>
+  <li>Industry information sharing — when one distributor identifies a compromised supplier, the information flows through ASA, ATA, and FAA channels to alert others</li>
+</ul>
+
+<h4>Why aviation is a particularly attractive target for SUP entry</h4>
+
+<p>Several factors combine to make aviation a high-target environment:</p>
+
+<ul>
+  <li><strong>High margins.</strong> Aviation parts trade at multiples over manufacturing cost. The economic incentive for fraud is substantial.</li>
+  <li><strong>Complex documentation.</strong> The 8130-3 system, while comprehensive, depends on verification disciplines that not every buyer in the chain practices rigorously.</li>
+  <li><strong>Long supply chains with many intermediaries.</strong> A part may pass through multiple brokers and distributors before reaching the operator. Each handoff is an opportunity for fraud, and each handoff also provides plausible deniability ("we got it from a reputable broker").</li>
+  <li><strong>Cost pressure on operators.</strong> Airlines and MROs operate under significant cost pressure. The cheapest source that satisfies paperwork requirements often gets the order, and rigorous verification is the cost-cutting target.</li>
+  <li><strong>Aging fleets with declining OEM support.</strong> As aircraft and engines age, OEM parts availability declines and prices rise. The gap is filled by the aftermarket, including brokers willing to source from less-controlled channels.</li>
+</ul>
+
+<h4>Where TurbineWorks fits in the chain</h4>
+
+<p>TurbineWorks is positioned in the middle of the parts supply chain. Upstream are the part sources — OEMs, repair stations, operators releasing parts, brokers consolidating supply. Downstream are the customers — airlines, MROs, OEM-direct programs.</p>
+
+<p>As an ASA-100 accredited distributor, TurbineWorks acts as a verification node. Customers buying from TurbineWorks are paying, in part, for TurbineWorks\' verification work. The customer expects that parts they receive from TurbineWorks have been:</p>
+
+<ul>
+  <li>Sourced from qualified suppliers</li>
+  <li>Documented with verifiable provenance</li>
+  <li>Inspected on receipt</li>
+  <li>Stored under proper conditions</li>
+</ul>
+
+<p>If a SUP reaches a customer through TurbineWorks, TurbineWorks has failed the verification role. This is the reputation risk, the customer-relationship risk, the accreditation risk, and in the worst cases the legal-liability risk. Every receiving-inspection check is, ultimately, the TurbineWorks verification work the customer is paying for.</p>
+
+<h4>The economics of fraud (why this keeps happening)</h4>
+
+<p>Fraud persists because it pays. A scrap-diverted turbine disk might cost the diverter $50 in handling and yield $5,000 in sale price — a 100x return. A counterfeit-manufactured electronic component might cost $5 to produce and sell for $400 — an 80x return. Even with low success rates (most fraud attempts get caught), the economics support continued attempts.</p>
+
+<p>The defense is not zero-fraud — fraud attempts will continue. The defense is making TurbineWorks expensive to attack. A supplier that knows TurbineWorks rigorously verifies documentation, qualifies suppliers, and reports SUP attempts to the FAA will direct their fraud attempts to less rigorous distributors. The market sorts itself: rigorous distributors get clean inventory; lax distributors get the residual fraud risk.</p>
+
+<h4>How the FAA tracks supply chain integrity</h4>
+
+<p>The FAA\'s SUP Program Office maintains aggregated data on:</p>
+
+<ul>
+  <li>SUP reports filed (Form 8120-11)</li>
+  <li>Patterns by supplier — which suppliers are repeatedly named in SUP reports</li>
+  <li>Patterns by part type — which categories show elevated SUP activity</li>
+  <li>Outcomes — which SUP investigations confirmed unapproved status</li>
+</ul>
+
+<p>The aggregated data informs FAA enforcement priorities, accreditation organization oversight, and industry-wide alerts. TurbineWorks\' SUP filings contribute to this data — and TurbineWorks may receive industry alerts based on others\' filings. Reporting is not just compliance; it is participation in the system that defends the broader supply chain.</p>
+
+<h4>Self-check</h4>
+
+<ol>
+  <li>What is scrap diversion and why is it the largest single SUP pathway?</li>
+  <li>How does theft differ from scrap diversion in terms of part conformity?</li>
+  <li>Why does unauthorized manufacture make a part legally unapproved even if the part performs adequately?</li>
+  <li>Why is documentation fraud the easiest SUP form to attempt but also the most-caught?</li>
+  <li>What distinguishes counterfeit manufacture from manufacture without authorization?</li>
+  <li>Why is supplier qualification a defense against multiple pathways at once?</li>
+  <li>What is TurbineWorks\' role in the supply chain that customers are paying for?</li>
+</ol>
 
 <p><em>[TurbineWorks Procedure Reference: insert TurbineWorks approved-supplier list and the procedure for adding a new supplier here.]</em></p>
 HTML
@@ -1012,100 +1210,555 @@ HTML
         ],
         [
             'name'  => 'Lesson 1.4 — Physical Inspection Red Flags',
-            'intro' => '<p>What to look for on the part itself.</p>',
+            'intro' => '<p>The second line of defense after documentation review. What to look for on the part itself: markings, surface finish, material indicators, wear evidence, and packaging. Detailed enough to be operational at a receiving bench.</p>',
             'content' => <<<'HTML'
-<h3>Physical inspection red flags</h3>
-<p>Once the documentation is reviewed, the part itself is examined. A skilled counterfeiter can produce convincing paperwork. The physical part is often harder to fake convincingly.</p>
+<h3>Physical Inspection Red Flags</h3>
 
-<h4>Markings</h4>
-<p>Every OEM has specific marking practices: font, size, position, depth of etch, color of paint-fill. Compare against a known-good reference part.</p>
+<p>Lesson 1.3 covered the paperwork. This lesson covers the part itself. Documentation review catches most SUPs — but not all. Some bad actors have invested in producing convincing documentation; the physical part is where their effort runs into the limits of their manufacturing capability.</p>
+
+<p>This lesson is the operational reference for what to examine on a physical aviation part and what each observation might indicate. By the end of the lesson, an inspector should be able to perform a meaningful physical inspection of an arriving part beyond just visual confirmation that "it looks like a turbine blade."</p>
+
+<h4>Why physical inspection is necessary even after documentation review</h4>
+
+<p>A well-prepared bad actor can produce documentation that survives database lookup, signature verification, and cross-reference. Sometimes the bad actor genuinely has access to a real FAA-certified organization\'s documents — through fraud, theft, or insider access. In those cases the paperwork passes scrutiny entirely, and the physical part is the only remaining check.</p>
+
+<p>Physical inspection also catches a category of SUP that documentation review can\'t: parts that are real OEM parts but are not the part the documentation describes. The part is genuine; the paperwork describes a different part; the bad actor has matched them up to deliver something other than what was ordered.</p>
+
+<p>Finally, physical inspection catches the parts where the bad actor invested in convincing paper but cut corners on the part itself — a fabricated bearing with the right markings but wrong material, a turbine blade machined to wrong dimensions, a connector with the right OEM name but inferior plating.</p>
+
+<h4>Markings — the highest-information inspection target</h4>
+
+<p>Every OEM has a marking signature. The font used for part numbers, the depth of the stamp or etch, the position relative to part features, the color of any paint-fill — all of these are characteristic. A counterfeit can match dimensions and even material, but matching markings requires either the OEM\'s actual stamping equipment or careful study of multiple genuine samples.</p>
+
+<h5>Font matching</h5>
+
+<p>OEMs typically use specific fonts for part-number stamping. Different OEMs use different fonts, and within a single OEM different processes (vibro-engraving, laser etching, electrochemical etching, dot-peen) produce visibly different character forms.</p>
+
+<p><strong>What to compare:</strong></p>
 <ul>
-  <li><strong>Font mismatch.</strong> OEMs use specific fonts for part-number stamping. A counterfeit may use a generic Arial-like font where the OEM uses a specific machinery-engraving font.</li>
-  <li><strong>Position drift.</strong> OEM markings are at consistent locations relative to part features. A counterfeit may have markings shifted by even a few millimeters.</li>
-  <li><strong>Depth differences.</strong> Vibro-engraved markings have a characteristic depth and texture. Laser-etched markings look different. A part that should have been vibro-engraved but is instead laser-etched is suspicious.</li>
-  <li><strong>Re-stamping evidence.</strong> A part that was originally marked one way, then over-stamped or ground down and re-marked, will show telltale grinding marks under the new stamp.</li>
-  <li><strong>Paint-fill color.</strong> OEMs use specific paint-fill colors for part-number stamps. A red-filled stamp where the OEM uses white-filled is a flag.</li>
+  <li>The shape of "0" — round, oval, with or without slash, narrow or wide</li>
+  <li>The shape of "1" — with or without serifs, narrow or wide</li>
+  <li>The shape of "8" — round and balanced, or with one larger loop</li>
+  <li>The angle of slants on "4," "7," "9"</li>
+  <li>Letter forms — particularly "A" (with or without crossbar variation), "G" (with or without spur), "R" (with or without leg)</li>
 </ul>
 
-<h4>Surface finish</h4>
+<p>A part you suspect should be compared against a reference part you know to be genuine. Different OEMs have different signature characters; CFM stamping looks different from Pratt &amp; Whitney stamping, which looks different from Rolls-Royce. With experience you develop pattern recognition; without experience, side-by-side comparison with a known-good reference catches most font mismatches.</p>
+
+<h5>Stamping or etching depth</h5>
+
+<p>Vibro-engraving (oscillating diamond stylus) produces a characteristic depth and texture — moderate depth, slightly rough bottom, visible scribe path. Laser etching produces shallower marks with a different texture — sometimes glossy, sometimes oxidized depending on the laser settings. Electrochemical etching (EChE) produces yet another texture — shallow but with characteristic color (often dark) from the chemical reaction.</p>
+
+<p>Each OEM specifies which marking method to use for which part. A turbine blade that should have been vibro-engraved per OEM spec but appears to be laser-etched is suspicious — possibly counterfeit, possibly re-marked.</p>
+
+<h5>Re-stamping evidence</h5>
+
+<p>One of the most common physical SUP indicators. The bad actor obtained a part with the wrong markings (or unmarked) and stamped over with the desired markings. Signs:</p>
+
 <ul>
-  <li>Machining marks consistent with OEM tooling? Modern CNC machining leaves a recognizable pattern that's hard to replicate.</li>
-  <li>Surface plating uniform? A re-plated part may show plating-thickness variation, edge buildup, or runs.</li>
-  <li>Heat tint colors on areas that should never have been heat-affected? Indicates the part was re-worked.</li>
-  <li>Edges chamfered to OEM spec? Sharp edges where there should be chamfers (or vice versa) indicate non-OEM manufacture.</li>
+  <li>Visible grinding marks <em>under</em> the new stamping — the original mark was ground off before re-stamping</li>
+  <li>Surface finish disturbance around the stamping area</li>
+  <li>Stamping depth inconsistent with the surrounding metal\'s surface — over-stamping leaves a different witness than original factory marking</li>
+  <li>Two layers of stamping at different angles, partially visible</li>
+  <li>Stamping that crosses the original\'s position with characters of different style or depth</li>
 </ul>
 
-<h4>Material</h4>
-<p>For high-value or critical parts, a metallurgical sample can confirm material composition. This is destructive testing and is reserved for confirmed SUP investigation, not routine receiving. The QA Manager authorizes destructive testing.</p>
+<p>If you can see evidence that a part was previously marked differently, the identity of the part — and therefore its life history, conformity, and approval status — is in question.</p>
+
+<h5>Position drift</h5>
+
+<p>OEMs place markings at consistent locations relative to part features. The part number on a CFM56 HPT blade is in a specific spot. Pratt &amp; Whitney has different conventions. A counterfeit may place the markings at approximately the right location but off by a few millimeters or rotated by a few degrees — small enough that the casual observer doesn\'t notice, large enough to compare unfavorably against a reference.</p>
+
+<h5>Paint-fill</h5>
+
+<p>Some OEMs paint-fill stamping for visibility. The color of paint-fill is part of the OEM\'s signature. A part marked with red paint-fill where the OEM uses white is suspicious. The paint-fill itself can be examined — original factory paint-fill is uniform and well-bonded; counterfeit paint-fill is often uneven, bleeding, or showing brush marks.</p>
+
+<h4>Surface finish — manufacturing-fingerprint analysis</h4>
+
+<p>Modern CNC machining leaves distinctive surface patterns. The tool path, the feed rate, the tool geometry — all combine to produce a finish that experienced inspectors recognize. Counterfeit manufacturing using different tooling or different machining parameters produces a visibly different finish.</p>
+
+<h5>Machining marks</h5>
+
+<p>OEM machining produces consistent tool-path patterns. The marks on a turbine blade airfoil have characteristic direction, spacing, and depth based on the OEM\'s manufacturing process. A counterfeit produced on different equipment will have different mark patterns — sometimes obviously different (cross-hatching vs. parallel), sometimes subtly different (mark angle off by 5 degrees).</p>
+
+<h5>Plating</h5>
+
+<p>Many aviation parts are plated — cadmium, zinc, nickel, chromium, others. OEM plating is consistent in thickness, color, and edge characteristics. Re-plated or off-spec plating typically shows:</p>
+
 <ul>
-  <li>Weight off from the expected value? Different alloy or hollow part where it should be solid.</li>
-  <li>Magnetism present on a part that should be non-magnetic (e.g., titanium or austenitic stainless)?</li>
-  <li>Color or sheen of the metal off from a known-good reference?</li>
+  <li>Thickness variation visible at edges</li>
+  <li>Edge buildup or runs from improper plating bath operation</li>
+  <li>Color shift from spec — chromium that\'s too blue, cadmium that\'s too yellow</li>
+  <li>Plating over surface defects that should have been corrected before plating</li>
+  <li>Inadequate adhesion — plating that flakes when stressed</li>
 </ul>
 
-<h4>Packaging</h4>
+<h5>Heat tint</h5>
+
+<p>Heat affects metal color. Areas that have been heated during processing have specific tint patterns. A part claimed to be in "new" or "inspected" condition should not show heat tint on areas that wouldn\'t normally be heat-affected. Heat tint in unexpected locations suggests the part has been re-worked — possibly to repair damage, possibly to alter its identity.</p>
+
+<h5>Edge prep</h5>
+
+<p>OEM parts have specific edge treatments — chamfers, radii, fillets. The dimensions of these features are specified in the OEM drawing. A counterfeit or repaired part may have edges that are sharper or rounder than spec, or that have been blended in ways the OEM drawing doesn\'t authorize.</p>
+
+<h4>Material indicators</h4>
+
+<p>The most authoritative material verification is laboratory analysis — spectroscopy, hardness testing, density measurement. These are not routine receiving-inspection steps; they\'re reserved for confirmed-SUP investigation. But several physical indicators of material discrepancy can be observed at the receiving bench.</p>
+
+<h5>Weight</h5>
+
+<p>Different alloys have different densities. A part that weighs significantly off from the expected value (verifiable against the OEM drawing or against a known-good reference) is suspicious. Variations of 5-10% may indicate material substitution; variations beyond 10% are strong indicators.</p>
+
+<p>For an inspector, the practical procedure: weigh the part on a calibrated scale. Compare against the OEM-published weight or against a reference sample. If off significantly, hold for investigation.</p>
+
+<h5>Magnetism</h5>
+
+<p>Some aerospace alloys are non-magnetic — titanium, austenitic stainless steels (300 series), some nickel-base superalloys. If a part that should be non-magnetic is observably magnetic when checked with a small magnet, the material is probably a substitute. Conversely, ferrous alloys should be magnetic; a "steel" part that doesn\'t pick up to a magnet is also suspicious.</p>
+
+<h5>Color and sheen</h5>
+
+<p>Different alloys have different color and sheen even when polished. Titanium has a characteristic grey-blue tone. Inconel has a darker grey. Aluminum is brighter, lighter. Steel alloys vary. With experience an inspector can identify obvious material substitutions visually. The skill is built by handling many parts of known material.</p>
+
+<h5>Sound</h5>
+
+<p>Different alloys ring differently when tapped lightly. A trained ear can sometimes detect material differences by ringing tone. This isn\'t a primary inspection method, but it can catch hollow or laminated parts that should be solid.</p>
+
+<h4>Specific part categories</h4>
+
+<h5>Turbine and compressor blades</h5>
+
 <ul>
-  <li>OEM packaging used by the supplier? OEMs typically ship in specific packaging — official boxes, anti-static bags, branded foam inserts. Generic packaging is a flag.</li>
-  <li>Packaging shows evidence of being repackaged? Tape lines, glue residue, torn labels under new labels.</li>
-  <li>OEM labels match the part inside? A label for one part on a box containing a different part is a major flag.</li>
+  <li>Airfoil dimensions — check against OEM drawing for chord, thickness, twist</li>
+  <li>Trailing edge — should be sharp and clean; counterfeit blades often have thicker or asymmetric trailing edges</li>
+  <li>Leading edge — should be smooth and free of nicks (unless the part is sold as "as-removed" with documented FOD damage)</li>
+  <li>Root geometry — fir-tree or dovetail root must match the OEM specification exactly; the root holds the blade to the disk under enormous centrifugal load</li>
+  <li>Cooling holes (for cooled blades) — must be present in the correct number and position, free of obstruction</li>
+  <li>Thermal barrier coating (TBC) — color, thickness, adhesion appropriate to OEM spec</li>
 </ul>
 
-<h4>Wear and use signs on a "new" part</h4>
+<h5>Disks (LLPs)</h5>
+
 <ul>
-  <li>Wear marks on a "NEW" part (per Block 11 of the 8130-3) — bearing races showing run-in patterns, fastener threads showing torque marks, blade leading edges showing FOD.</li>
-  <li>Discoloration consistent with use (carbon deposits, oil staining, heat tint from engine operation).</li>
-  <li>Repair marks (weld beads, machining over original surface) on a part claimed as new.</li>
+  <li>Disk geometry — bore, web, rim dimensions per OEM drawing</li>
+  <li>Surface finish on critical fillets — the disk web-to-rim transition is a fatigue-critical area</li>
+  <li>Markings — disks are heavily marked, including part number, serial number, manufacturing date, and material heat number</li>
+  <li>No evidence of repair or re-work — disks generally cannot be repaired; any modification is suspect</li>
+  <li>Inspection records — disks should have NDT records (eddy current, FPI, ultrasonic) at every overhaul</li>
 </ul>
 
-<p><strong>Bottom line:</strong> a SUP investigation may end up requiring metallurgical or dimensional inspection by a qualified lab. The receiving inspector's job is to flag the part for investigation — not to definitively prove unapproved status. When in doubt, quarantine.</p>
+<h5>Bearings</h5>
+
+<ul>
+  <li>Race surfaces — should be smooth and free of pitting, brinelling, or scratches</li>
+  <li>Roller or ball surfaces — same</li>
+  <li>Cage condition — no cracks, no excessive wear</li>
+  <li>Markings — OEM bearings have specific marking on race or cage</li>
+  <li>Packaging — OEM bearings ship in specific protective packaging; aftermarket packaging suggests aftermarket source</li>
+  <li>Preservation oil/grease — should be present, of correct type, not contaminated</li>
+</ul>
+
+<h5>Electronic components and assemblies</h5>
+
+<ul>
+  <li>Marking quality — OEM-marked chips have laser-etched markings; counterfeit chips often have ink markings or poorly-laser-etched markings</li>
+  <li>Surface texture — original semiconductors have characteristic surface texture; refurbished chips often show evidence of cleaning (rougher surface, residue)</li>
+  <li>Lead/pin condition — original leads are uniform; refurbished or repackaged components often have damaged or re-tinned leads</li>
+  <li>Markings position — OEM marks are at standard positions; counterfeits often have markings off-center or askew</li>
+  <li>Date codes — should be plausible for the part\'s claimed production period</li>
+</ul>
+
+<h5>Fasteners</h5>
+
+<ul>
+  <li>Head marking — most aviation fasteners are marked on the head with manufacturer, material spec, and grade</li>
+  <li>Thread quality — threads should be clean, sharp, uniform; rolled threads (most aerospace fasteners) have characteristic appearance</li>
+  <li>Plating uniformity — even coverage including in the thread roots</li>
+  <li>Length and head diameter — measure against OEM spec; counterfeit fasteners are sometimes slightly off-dimension</li>
+</ul>
+
+<h4>Wear and use signs on a part claimed "new"</h4>
+
+<p>Block 11 of the 8130-3 reports the status. A part marked "NEW" should have no signs of installation or use. Indicators of prior use on a "new" part:</p>
+
+<ul>
+  <li>Bearing races showing run-in patterns (slight discoloration in the load-bearing path)</li>
+  <li>Bolt threads showing torque marks (compression on the leading flank of the thread)</li>
+  <li>Blade leading edges showing FOD nicks or smoothing from gas-path wear</li>
+  <li>Carbon deposits on surfaces that would only be carbon-coated from combustion exposure</li>
+  <li>Oil staining on parts that would only contact oil during operation</li>
+  <li>Heat tint from operating temperatures on parts that shouldn\'t have been heated except in service</li>
+  <li>Wear marks from contact with adjacent parts that would only occur during assembled operation</li>
+  <li>Residue from cleaning solvents indicating the part was cleaned to remove evidence of use</li>
+</ul>
+
+<p>A "NEW" part with any of these indicators is misrepresented. The Block 11 status is wrong — either through documentation fraud or through error. Either way, the disposition is at minimum Quarantine pending investigation.</p>
+
+<h4>Packaging examination</h4>
+
+<p>Most OEMs ship in characteristic packaging. The packaging is part of the manufacturing fingerprint:</p>
+
+<ul>
+  <li>OEM-branded boxes with specific printing and graphics</li>
+  <li>Specific foam inserts, molded for the part</li>
+  <li>ESD-safe bags (pink poly, silver shielded) for electronic components</li>
+  <li>Anti-corrosion treatment (oil coating, VCI paper) for ferrous parts</li>
+  <li>Desiccant packs in sealed packages for moisture-sensitive items</li>
+  <li>OEM serial labels with barcodes</li>
+</ul>
+
+<p>Signs that packaging has been tampered with or substituted:</p>
+
+<ul>
+  <li>Tape residue suggesting the box was opened and re-sealed</li>
+  <li>OEM label over a different (covered) label — peel-back may reveal the original</li>
+  <li>Generic packaging where OEM packaging would be expected</li>
+  <li>Foam inserts that don\'t fit the part well (suggesting the foam is from a different part)</li>
+  <li>Preservation that doesn\'t match expectation (wrong oil type, missing desiccant)</li>
+  <li>Label printing that looks home-printed (laser-printed labels on aviation parts are uncommon; OEMs use specific label-printing systems)</li>
+</ul>
+
+<h4>When to escalate to laboratory analysis</h4>
+
+<p>The receiving inspector\'s physical inspection is not the same as a laboratory analysis. The inspector identifies indicators worth investigating; the investigation may require laboratory work. The QA Manager authorizes laboratory analysis when:</p>
+
+<ul>
+  <li>The part is high-value enough to justify the cost of analysis</li>
+  <li>The pattern of indicators is significant enough that confirming or refuting the suspicion changes inventory decisions</li>
+  <li>Other distributors or the FAA need confirmation for a broader investigation</li>
+</ul>
+
+<p>Common laboratory techniques:</p>
+
+<ul>
+  <li><strong>X-ray fluorescence (XRF):</strong> elemental analysis to confirm alloy composition. Non-destructive. Quick.</li>
+  <li><strong>Spectroscopy (optical emission, mass spec):</strong> more detailed elemental analysis. May require sample preparation.</li>
+  <li><strong>Hardness testing:</strong> Rockwell or Brinell hardness as a property of heat treatment.</li>
+  <li><strong>Dimensional inspection:</strong> coordinate measuring machine (CMM) or specialized fixtures verifying dimensions against the OEM drawing.</li>
+  <li><strong>Metallography:</strong> microscopic examination of polished cross-sections to verify microstructure.</li>
+  <li><strong>Non-destructive testing (NDT):</strong> ultrasonic, eddy current, fluorescent penetrant for surface and subsurface flaw detection.</li>
+  <li><strong>Industrial CT scanning:</strong> X-ray computed tomography to visualize internal features without cutting the part.</li>
+</ul>
+
+<p>TurbineWorks may not have all these capabilities in-house. Several commercial laboratories specialize in aerospace materials analysis and can perform these tests on a contract basis.</p>
+
+<h4>The receiving inspector\'s contribution: pattern recognition</h4>
+
+<p>The single most valuable skill in physical receiving inspection is pattern recognition. An inspector who has examined hundreds of CFM56 HPT blades develops an internal model of what a real blade looks like — the marking style, surface finish, edge prep, weight feel. When a counterfeit or substituted blade arrives, the deviation from the internal model is detected even before specific indicators are consciously identified.</p>
+
+<p>Building this skill requires exposure. Inspectors should handle as many genuine parts as possible, photograph them, document their characteristics. Reference samples from known-good sources are valuable training tools. Side-by-side comparison of a suspect part with a reference part of the same type is often the fastest way to identify what specifically is off.</p>
+
+<h4>Self-check</h4>
+
+<ol>
+  <li>Why does physical inspection matter even when documentation review has been completed and the documents verify?</li>
+  <li>Name three specific aspects of OEM markings that can be compared against a reference part.</li>
+  <li>What does "re-stamping evidence" look like? Why is it a strong SUP indicator?</li>
+  <li>How can weight be used as a material-verification check at the receiving bench?</li>
+  <li>What does it mean for a part to be "magnetic when it should not be"?</li>
+  <li>List four indicators that a part claimed "NEW" has actually been in service.</li>
+  <li>When does the QA Manager authorize laboratory analysis of a part?</li>
+  <li>Why is pattern recognition the most important receiving-inspection skill?</li>
+</ol>
+
+<p><strong>Bottom line:</strong> physical inspection complements documentation review. Documentation review catches most SUPs; physical inspection catches the ones where the bad actor invested in convincing paper but cut corners on the part. The receiving inspector\'s job is to identify indicators worthy of investigation — not to declare definitively unapproved or counterfeit. When in doubt, quarantine and let the QA Manager and (where needed) laboratory analysis make the call.</p>
 HTML
         ],
         [
             'name'  => 'Lesson 1.5 — Reporting a Suspected Unapproved Part',
-            'intro' => '<p>The FAA SUP reporting workflow and TurbineWorks internal escalation.</p>',
+            'intro' => '<p>The complete reporting workflow from initial identification through FAA filing, customer notification, criminal referral (when applicable), and corrective action. The process that turns a single SUP catch into supply-chain protection for the entire industry.</p>',
             'content' => <<<'HTML'
 <h3>Reporting a Suspected Unapproved Part</h3>
-<p>Once a part has been quarantined as a SUP, there is a defined reporting workflow. This lesson walks through it.</p>
 
-<h4>Step 1 — Quarantine and preserve</h4>
-<p>Move the part and all associated documentation to the Quarantine area. Tag the part as SUP under investigation. Do not return to shipper, do not destroy the documentation, do not modify the part in any way. Originals are evidence.</p>
+<p>Identifying a SUP at receiving inspection is the start of the process, not the end. Without proper reporting, an SUP catch helps only TurbineWorks — the same supplier may continue selling fraudulent parts to other distributors, the same diverted scrap may continue circulating, the same counterfeit manufacturer may continue producing. The reporting process is what turns a single catch into broader industry protection.</p>
 
-<h4>Step 2 — Internal escalation</h4>
-<p>Notify the <strong>Quality Assurance Manager</strong> in writing the same business day. Include: part number, serial number, supplier, purchase order, the specific red flag(s) observed, photographs. The QA Manager owns the investigation from this point.</p>
+<p>This lesson walks through the complete reporting workflow: who does what, when, in what form, with what records, under what confidentiality constraints. By the end of the lesson, an inspector should understand not just their own role but the full system that their SUP identification triggers.</p>
 
-<h4>Step 3 — Verification with the issuing organization</h4>
-<p>The QA Manager (or their designate) contacts the issuing organization listed in Block 4 of the 8130-3, using contact information found <em>independently</em> (FAA database, not the supplier's shipping documents — those may also be falsified). Confirm: did this organization issue an 8130-3 with this tracking number for this part? If they say no, the SUP is confirmed.</p>
+<h4>Why reporting matters operationally</h4>
 
-<h4>Step 4 — FAA Form 8120-11</h4>
-<p>When a SUP is confirmed (or when there is sufficient evidence to file even before full confirmation), TurbineWorks files <strong>FAA Form 8120-11, Suspected Unapproved Parts Report</strong>. The form is available at <a href="https://www.faa.gov/aircraft/safety/programs/sups/" target="_blank" rel="noopener">faa.gov/aircraft/safety/programs/sups/</a>.</p>
-<p>The form asks for:</p>
+<p>A SUP that TurbineWorks catches and quietly returns to the supplier has done almost nothing for safety. The supplier simply re-routes the part to a less rigorous distributor. The part eventually finds a home in someone\'s inventory and then on someone\'s aircraft. The TurbineWorks catch was effort wasted.</p>
+
+<p>A SUP that TurbineWorks catches and reports through the proper channels has multiple positive effects:</p>
+
 <ul>
-  <li>Reporter information (TurbineWorks contact)</li>
-  <li>Part information (part number, serial number, manufacturer)</li>
-  <li>Documentation accompanying the part</li>
-  <li>Source supplier</li>
-  <li>Description of why the part is suspected</li>
-  <li>Disposition (where the part is now)</li>
+  <li>The FAA SUP Program Office aggregates the report into industry-wide intelligence. Patterns across multiple reports identify problem suppliers, problem part types, and emerging fraud techniques.</li>
+  <li>Other distributors and operators may receive FAA alerts about the supplier or part type, defending the broader industry.</li>
+  <li>The accreditation organization (ASA) may flag the supplier for additional scrutiny in its own oversight work.</li>
+  <li>Criminal investigators (FBI, DOD IG) can build cases against deliberate fraud operations. The SUP report is part of the evidence base.</li>
+  <li>TurbineWorks own corrective-action work strengthens the receiving inspection process, reducing future SUP escape risk.</li>
 </ul>
-<p>The form can be submitted by mail, fax, or email to the FAA Aviation Safety Hotline. The FAA's SUP Program Office investigates from there.</p>
 
-<h4>Step 5 — Customer notification</h4>
-<p>If the SUP was purchased on behalf of a specific customer, that customer must be notified. If the part type matches anything already shipped to other customers, those customers must also be notified so they can investigate their own inventory and (if installed) the affected aircraft.</p>
-<p>This is uncomfortable but mandatory. Hiding a SUP discovery to protect business relationships is itself a serious regulatory violation.</p>
+<p>Reporting is also an ASA-100 obligation. ASA-100 §10 requires documented complaint and non-conformance handling, including external reporting where warranted. An ASA auditor will check whether SUP catches have been properly reported — failure to report is a finding by itself.</p>
 
-<h4>Step 6 — Disposition</h4>
-<p>The SUP remains in quarantine until the FAA's investigation concludes. The FAA may request the physical part as evidence. If returned to TurbineWorks for disposition after investigation, the part is mutilated per <strong>FAA AC 21-38</strong> and the mutilation documented in the records system.</p>
+<h4>Step 1 — Quarantine and Preserve (Immediate)</h4>
 
-<h4>Step 7 — Corrective action</h4>
-<p>Every SUP triggers a corrective-action investigation: how did this supplier get into our supply chain? Should they be removed from the approved-supplier list? Are there other parts from this supplier in inventory that need re-verification? Did our receiving inspection process catch this, or did the part slip through? If it slipped through, what process change is needed?</p>
+<p>This step is performed by the receiving inspector at the moment of SUP identification. It should be done before any other action.</p>
 
-<h4>Confidentiality during investigation</h4>
-<p>SUP investigations are sensitive. The supplier may be a victim themselves (downstream of a fraud), or may be the perpetrator. Discussing the investigation outside QA leadership and the FAA can compromise the case or expose TurbineWorks to defamation claims. Keep it inside the chain.</p>
+<h5>Physical movement</h5>
+
+<p>Move the suspect part and all associated documentation to the designated Quarantine area. The Quarantine area is physically separate from serviceable inventory — it should be marked, ideally locked or otherwise access-controlled, and easily identifiable to anyone walking the warehouse.</p>
+
+<h5>Tagging</h5>
+
+<p>Apply a TurbineWorks Quarantine tag to the part. The tag should record:</p>
+
+<ul>
+  <li>Date of quarantine</li>
+  <li>Receiving inspector name and signature</li>
+  <li>Reason for quarantine (the specific red flag — Block 15 not in database, photocopied signature, serial number mismatch, etc.)</li>
+  <li>Reference to the corresponding receiving inspection record</li>
+  <li>"DO NOT SHIP" or equivalent warning</li>
+</ul>
+
+<h5>Document preservation</h5>
+
+<p>The original physical paperwork that accompanied the part is now evidence. Specifically:</p>
+
+<ul>
+  <li><strong>Do not write on, stamp, or annotate the original documents.</strong> Annotations are alterations of evidence.</li>
+  <li><strong>Do not photocopy the originals and discard them.</strong> The originals must be retained.</li>
+  <li><strong>Do not return the originals to the supplier.</strong> Once returned, you have no evidence.</li>
+  <li>You may photocopy for your internal file, but the originals stay in TurbineWorks custody.</li>
+  <li>Original packaging materials should also be preserved — packaging labels, dunnage labels, shipping documents that came with the package.</li>
+</ul>
+
+<h5>Photographic documentation</h5>
+
+<p>Take photographs of:</p>
+
+<ul>
+  <li>The part as received (multiple angles)</li>
+  <li>The specific markings or features that flagged the suspicion</li>
+  <li>The original documentation (each page)</li>
+  <li>The packaging</li>
+  <li>The shipping label and any external markings</li>
+</ul>
+
+<p>Photographs are evidence and they support the investigation. They\'re also useful if the part is eventually returned to the FAA or to another investigator — they document the as-received condition.</p>
+
+<h4>Step 2 — Internal Escalation (Same Business Day)</h4>
+
+<p>The receiving inspector notifies the Quality Assurance Manager in writing the same business day. "In writing" means email or a formal NCR (Non-Conformance Report) entry — not just a verbal mention in passing. The written notification creates the audit trail.</p>
+
+<p>The notification should include:</p>
+
+<ul>
+  <li>Date and time of receipt and quarantine</li>
+  <li>Part number and serial number</li>
+  <li>Supplier name and the TurbineWorks PO reference</li>
+  <li>Specific red flag(s) observed — be precise: "Block 15 certificate number 5P3R784D not found in FAA av-info.faa.gov database"</li>
+  <li>Photographs (attached or referenced)</li>
+  <li>Reference number for the quarantine and NCR records</li>
+</ul>
+
+<p>The QA Manager owns the investigation from this point forward. The receiving inspector\'s primary role is complete after this notification, although the inspector may be asked for additional observations as the investigation proceeds.</p>
+
+<h4>Step 3 — Verification with the Issuing Organization (QA Manager)</h4>
+
+<p>The QA Manager contacts the organization listed in Block 4 of the 8130-3 to verify the documentation. This contact must use <strong>independently sourced</strong> contact information — not the contact information that came with the shipment. Why? Because if the documentation is fraudulent, the supplier may have provided fake "verification" contact information that goes to a confederate.</p>
+
+<p>Sources of independent contact information:</p>
+
+<ul>
+  <li>FAA av-info.faa.gov database — typically lists the certificate holder\'s registered address and contact</li>
+  <li>OEM customer service directories (for OEM-issued tags)</li>
+  <li>Industry association directories (ASA member directory, others)</li>
+  <li>Direct web search to find the organization\'s official website and contact</li>
+</ul>
+
+<p>The verification question to ask: "Did your organization issue an FAA 8130-3 with tracking number [Block 3] for part number [Block 8], serial number [Block 10], on [Block 17 date]?"</p>
+
+<p>The issuing organization\'s response is determinative:</p>
+
+<ul>
+  <li><strong>Yes, we issued that tag, here are our records:</strong> documentation verifies. The investigation may need to look at other indicators (physical condition, supplier qualification, etc.), but the paperwork is real.</li>
+  <li><strong>No, we did not issue any tag with that tracking number:</strong> the tag is fabricated. SUP is confirmed. The investigation now expands to identify the source of the fabrication.</li>
+  <li><strong>We issued a tag with that tracking number but for a different part:</strong> the tag has been re-used or altered. SUP confirmed. Possibly evidence of broader documentation laundering.</li>
+  <li><strong>We did issue that tag but our records show it was issued for an installation, not a sale:</strong> the part may have been stolen or improperly diverted from a maintenance event. Investigate the chain of custody.</li>
+</ul>
+
+<p>The conversation with the issuing organization may itself yield investigative leads. The organization may have already received other inquiries about the same tag (suggesting a broader pattern), or may be willing to share what they know about the supplier or part.</p>
+
+<h4>Step 4 — FAA Form 8120-11 (QA Manager Files)</h4>
+
+<p>When the investigation has accumulated sufficient evidence — typically after the issuing-organization verification — the QA Manager files FAA Form 8120-11, Suspected Unapproved Parts Notification.</p>
+
+<h5>The form: field by field</h5>
+
+<ul>
+  <li><strong>Reporter information:</strong> name, organization (TurbineWorks), address, phone, email, role</li>
+  <li><strong>Part identification:</strong> part number, serial number, manufacturer name, OEM model the part fits</li>
+  <li><strong>Quantity:</strong> number of suspect parts in the shipment</li>
+  <li><strong>Documentation:</strong> description of the documentation that accompanied the part — 8130-3 tracking number, issuing organization claimed in Block 4, dates</li>
+  <li><strong>Source:</strong> the supplier from which TurbineWorks received the part. Include their address, contact information, and any reference numbers (their packing list, their invoice, etc.)</li>
+  <li><strong>Reasons for suspicion:</strong> the specific indicators that triggered SUP status. Be detailed — "Block 15 certificate number 5P3R784D not found in FAA av-info.faa.gov database; issuing organization claimed in Block 4 (Northeast Aviation Services) contacted via FAA-listed phone and confirmed they did not issue this tag."</li>
+  <li><strong>Current disposition:</strong> "Part in Quarantine at TurbineWorks, Address X, Y, Z. Documentation preserved in original form."</li>
+  <li><strong>Date of receipt and date of notification</strong></li>
+  <li><strong>Signature</strong> of the person filing</li>
+</ul>
+
+<h5>How to submit</h5>
+
+<p>Form 8120-11 can be submitted to the FAA SUP Program Office by:</p>
+
+<ul>
+  <li>Email to the FAA SUP Program Office address (published at <a href="https://www.faa.gov/aircraft/safety/programs/sups/" target="_blank" rel="noopener">faa.gov/aircraft/safety/programs/sups/</a>)</li>
+  <li>Mail to the FAA SUP Program Office address</li>
+  <li>Fax (legacy option, still accepted)</li>
+  <li>The FAA Aviation Safety Hotline for urgent cases</li>
+</ul>
+
+<p>TurbineWorks retains a copy of the filed form, along with all supporting evidence (photographs, the original documentation, the receiving inspection record, the issuing-organization verification correspondence).</p>
+
+<h5>What happens after filing</h5>
+
+<p>The FAA SUP Program Office triages incoming reports based on safety severity and pattern indicators. The Office may:</p>
+
+<ul>
+  <li>Acknowledge receipt and add the report to their database without immediate further action (typical for isolated reports)</li>
+  <li>Contact TurbineWorks for additional information</li>
+  <li>Request that the physical part be made available for FAA inspection or transfer to FAA custody</li>
+  <li>Refer the matter to FAA enforcement for action against the supplier or others in the chain</li>
+  <li>Refer the matter to criminal authorities (FBI, US Attorney) when fraud is indicated</li>
+  <li>Issue an FAA Safety Alert for Operators (SAFO) or similar broader-industry notification if the pattern warrants</li>
+</ul>
+
+<p>TurbineWorks may not learn what happened next. The FAA does not always report back to the reporter. This is normal. The obligation is to file; the FAA disposition is the FAA\'s.</p>
+
+<h4>Step 5 — Customer Notification (When Applicable)</h4>
+
+<p>If the SUP was being procured on behalf of a specific TurbineWorks customer (a back-to-back order rather than stock), the customer must be notified. If the part type or supplier matches anything TurbineWorks has already shipped to other customers, those customers should be notified as well so they can investigate their own inventory.</p>
+
+<h5>Notification content</h5>
+
+<ul>
+  <li>Description of the SUP discovery</li>
+  <li>Part numbers, serial numbers, and shipments potentially affected</li>
+  <li>What TurbineWorks is doing (FAA notification, investigation, corrective action)</li>
+  <li>What the customer should do (inspect their inventory, quarantine pending verification)</li>
+  <li>Contact at TurbineWorks for follow-up questions</li>
+</ul>
+
+<h5>Why this is hard</h5>
+
+<p>Customer notification is uncomfortable. The customer may have already installed the affected part on an aircraft. They may need to remove and replace it. They may need to ground aircraft pending replacement. These are expensive consequences and the customer\'s frustration is directed at TurbineWorks even though TurbineWorks caught the SUP and acted on it.</p>
+
+<p>Hiding a SUP discovery to avoid customer impact is not an option:</p>
+
+<ul>
+  <li>It is a regulatory violation under ASA-100 §10 — affected customers must be notified</li>
+  <li>It exposes TurbineWorks to civil liability if the unreported SUP causes a subsequent incident</li>
+  <li>It exposes TurbineWorks to criminal liability if the failure to notify is deemed willful concealment</li>
+  <li>When the customer eventually discovers the issue (and they will), the loss of trust is far greater than the loss of trust from proactive disclosure</li>
+</ul>
+
+<h5>The right way to handle customer notification</h5>
+
+<ul>
+  <li>The QA Manager (not Sales) leads the customer notification</li>
+  <li>Notification is in writing, with verbal follow-up by phone</li>
+  <li>Tone is factual and matter-of-fact — not apologetic to the point of admitting liability, not defensive to the point of evasion</li>
+  <li>Emphasize what TurbineWorks is doing to investigate and prevent recurrence</li>
+  <li>Offer to assist with the customer\'s investigation — provide records, take their calls promptly, provide expert assistance</li>
+</ul>
+
+<h4>Step 6 — Disposition of the SUP (After Investigation)</h4>
+
+<p>The SUP remains in Quarantine during the investigation. Disposition occurs only after the FAA SUP Program Office\'s investigation concludes or after TurbineWorks has sufficient internal evidence to disposition independently.</p>
+
+<h5>Disposition options</h5>
+
+<ul>
+  <li><strong>Confirmed unapproved:</strong> the part is mutilated per FAA AC 21-38. The mutilation is witnessed by the QA Manager (or designate) and documented. The mutilation record is retained as part of the quality records.</li>
+  <li><strong>FAA requests the part as evidence:</strong> the part is transferred to FAA custody with a receipt. TurbineWorks retains the receipt as evidence of transfer.</li>
+  <li><strong>Suspicion not confirmed:</strong> the part is released from quarantine. The corrective-action record documents why suspicion was raised and why it was ultimately not confirmed. The part may be returned to the supplier (with documentation) or re-inspected for serviceable inventory.</li>
+  <li><strong>Inconclusive:</strong> investigation cannot definitively confirm or refute. The part remains in quarantine or is mutilated as a conservative disposition. Records document the reasoning.</li>
+</ul>
+
+<h4>Step 7 — Corrective Action</h4>
+
+<p>Every SUP triggers a corrective-action investigation focused on TurbineWorks\' own processes:</p>
+
+<ul>
+  <li><strong>How did this supplier enter TurbineWorks\' supply chain?</strong> Was qualification adequate? Was qualification skipped?</li>
+  <li><strong>Should the supplier be removed from the approved-supplier list?</strong> Confirmed SUP from a supplier is typically grounds for removal. Suspected-but-not-confirmed SUP may warrant supplier reassessment.</li>
+  <li><strong>Are there other parts from this supplier in TurbineWorks inventory that need re-verification?</strong> Hold all stock from the supplier pending re-verification of each item.</li>
+  <li><strong>Did the receiving inspection process catch this, or did the part slip through?</strong> If caught: the process worked, document and reinforce. If slipped through: process gap to be closed.</li>
+  <li><strong>What process change prevents recurrence?</strong> Specific procedural change, not just "be more careful." Examples: require pre-receipt FAA database check for all new suppliers; add second-inspector review for parts above threshold value; require photographic documentation of every receiving inspection.</li>
+  <li><strong>How is the change implemented and verified?</strong> Procedure revision, training delivered, audit confirms effectiveness.</li>
+</ul>
+
+<p>Corrective action is documented in the QMS, reviewed by the QA Manager, and eventually closed when effectiveness is verified. The corrective-action file becomes part of the quality records reviewed at the next ASA-100 audit.</p>
+
+<h4>Confidentiality During Investigation</h4>
+
+<p>SUP investigations are sensitive for multiple reasons:</p>
+
+<ul>
+  <li>The supplier may turn out to be a victim (downstream of fraud upstream from them). Publicly identifying them as a "SUP source" could be defamation.</li>
+  <li>The supplier may be the perpetrator. Public disclosure could compromise FBI investigation or allow the perpetrator to destroy evidence.</li>
+  <li>The customer relationship is sensitive. The customer being notified about a SUP wants discretion.</li>
+  <li>Other distributors who may have received parts from the same supplier need to be informed through proper FAA channels, not through informal industry gossip.</li>
+</ul>
+
+<p>Practical rules:</p>
+
+<ul>
+  <li>Discuss the investigation only within QA leadership and with the FAA / law enforcement as the chain develops</li>
+  <li>Do not post about the investigation on social media or industry forums</li>
+  <li>Do not name the supplier in casual industry conversation</li>
+  <li>Do not discuss the customer notification with anyone outside the relationship</li>
+  <li>If asked by other distributors whether you\'ve heard anything about supplier X, refer them to the FAA SUP Program Office</li>
+</ul>
 
 <h4>Recordkeeping</h4>
-<p>SUP reports, FAA filings, supplier correspondence, mutilation records — all are retained as part of the quality records per ASA-100 §8. Auditors will review SUP handling history at every audit.</p>
 
-<p><em>[TurbineWorks Procedure Reference: insert TurbineWorks SUP-handling SOP and the designated QA contact for FAA filings here.]</em></p>
+<p>SUP files include:</p>
+
+<ul>
+  <li>The original receiving inspection record</li>
+  <li>The quarantine tag (or copy of it)</li>
+  <li>Photographs of the part, documentation, and packaging as received</li>
+  <li>The original 8130-3 and accompanying documents (in physical form)</li>
+  <li>Internal escalation correspondence (email, NCR entry)</li>
+  <li>Verification correspondence with the issuing organization</li>
+  <li>The FAA Form 8120-11 (filed copy)</li>
+  <li>Customer notification correspondence</li>
+  <li>Investigation findings and disposition</li>
+  <li>Corrective action record and effectiveness verification</li>
+  <li>Mutilation record (if part was destroyed)</li>
+  <li>FAA correspondence (if any)</li>
+</ul>
+
+<p>SUP files are retained for the standard records-retention period (typically 7+ years for ASA-100), often longer because SUP files may become evidence in future enforcement or criminal proceedings. Some distributors retain SUP files permanently.</p>
+
+<h4>Real industry examples</h4>
+
+<p>(The following are composite examples illustrating typical SUP-reporting outcomes. Specific details abstracted for confidentiality.)</p>
+
+<h5>Example 1 — Verified, FAA enforcement</h5>
+<p>A distributor received bearings from a new supplier at 60% of typical market price. Block 15 verified in the FAA database but Block 4 organization, when contacted, confirmed they had not issued the tag with the indicated tracking number — their actual recently-issued tag bearing that number was for a completely different part. The supplier was a documentation-fraud operation that had stolen the certificate number from another organization\'s public records. The FAA pursued enforcement against the supplier, who eventually had their (limited) FAA approvals revoked and was referred for criminal prosecution.</p>
+
+<h5>Example 2 — Verified, broader industry alert</h5>
+<p>A distributor received turbine blades whose markings showed re-stamping evidence. Investigation confirmed the blades had been scrapped at an MRO 18 months earlier, mutilation had been improperly performed (data plate removed but blade itself intact), and the blades had been diverted by an employee. The FAA investigation expanded when reports came in from three other distributors who had received blades from the same scrapyard intermediary. An industry alert was issued. The intermediary was prosecuted; the MRO restructured its mutilation procedures.</p>
+
+<h5>Example 3 — Suspicion not confirmed</h5>
+<p>A distributor flagged an 8130-3 because Block 17 dated the tag 14 months before the shipment date. Investigation revealed a legitimate explanation — the part had been in long-term sealed storage at an aircraft retirement facility, had not been re-tagged because no work had been performed on it in the intervening period, and the storage facility had records confirming the chain of custody. The part was released from quarantine after the investigation. The receiving inspector\'s flag was appropriate; the investigation cleared it.</p>
+
+<h4>Self-check</h4>
+
+<ol>
+  <li>What is the very first thing to do when you identify a SUP?</li>
+  <li>Why must the original documentation NOT be returned to the supplier or annotated?</li>
+  <li>What information should be included in the same-business-day notification to the QA Manager?</li>
+  <li>Why must the issuing-organization verification use independently sourced contact information?</li>
+  <li>Name three pieces of information FAA Form 8120-11 requires.</li>
+  <li>When and how must customers be notified?</li>
+  <li>What are the four possible dispositions of a SUP after investigation?</li>
+  <li>Why is confidentiality during SUP investigation important?</li>
+  <li>What corrective-action questions does every SUP discovery raise about TurbineWorks\' own processes?</li>
+</ol>
+
+<p><em>[TurbineWorks Procedure Reference: insert TurbineWorks SUP-handling SOP and the designated QA contact for FAA filings here. Also insert the customer-notification template letter and the corrective-action workflow reference.]</em></p>
 HTML
         ],
         [
