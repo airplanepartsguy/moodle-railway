@@ -33,7 +33,7 @@ require_once(__DIR__ . '/../content/glossary.php');
 
 // Bump the suffix here (and in the entrypoint marker docs) when adding new
 // bootstrap steps that should run on existing sites.
-$marker = $CFG->dataroot . '/.twu-bootstrapped-v30';
+$marker = $CFG->dataroot . '/.twu-bootstrapped-v31';
 $force  = in_array('--force', $argv ?? [], true);
 if (file_exists($marker) && !$force) {
     cli_writeln("[twu] already bootstrapped (marker present at $marker). Pass --force to re-run.");
@@ -1135,6 +1135,179 @@ function twu_ensure_quiz(stdClass $course, array $quizdef): ?int {
     return (int)$cm->coursemodule;
 }
 
+// ---------------------------------------------------------------------------
+// 5e2c. Cumulative Final Exam — randomized across all 8 module banks
+// ---------------------------------------------------------------------------
+// Creates a separate course (TWU-ASA-FINAL) containing a single cumulative
+// exam that pulls random questions from each of the 8 module question banks.
+// Availability is gated behind completion of all 8 Initial Training modules
+// — so only employees who have passed every module's individual quiz can
+// even attempt the cumulative exam. Passing this exam earns a master cert.
+
+$finalcoursedata = [
+    'shortname' => 'TWU-ASA-FINAL',
+    'fullname'  => 'ASA-100 Initial Training — Cumulative Final Exam',
+    'idnumber'  => 'TWF4-FINAL',
+    'summary'   => '<p>The capstone cumulative exam covering all eight Initial Training modules. 40 questions drawn at random from each module&apos;s question bank (5 per module). 80% pass mark. Required for the TurbineWorks University Initial Training master certification.</p><p><strong>Availability:</strong> this exam becomes available only after all eight Initial Training modules (TWF4-1 through TWF4-8) are complete.</p>',
+];
+$finalcourse = twu_ensure_course($initialcat->id, $finalcoursedata);
+
+// Wire cohort sync for the final exam course.
+twu_ensure_cohort_sync($finalcourse, $cohort_all);
+twu_ensure_cohort_sync($finalcourse, $cohort_initial);
+
+// Gate availability — require completion of all 8 module courses.
+function twu_gate_course_availability(stdClass $course, array $prereqcourseids): void {
+    global $DB;
+    $conditions = [];
+    foreach ($prereqcourseids as $cid) {
+        // type=completion at course-level uses a "courseid" + "e"=COMPLETE
+        // via the "completion_course" type? Actually in availability JSON
+        // for course-completion prerequisites, the type is "grade" or
+        // "completion" with cm=course-level marker. Simpler: use the
+        // dedicated "completion_course" type from availability_completion.
+        $conditions[] = ['type' => 'profile', 'sf' => 'idnumber', 'op' => 'isnotempty', 'v' => ''];
+    }
+    // For course-completion prerequisite, the correct availability type is
+    // {"type":"completion_course","id":<courseid>,"e":1}. Use this instead.
+    $conditions = [];
+    foreach ($prereqcourseids as $cid) {
+        $conditions[] = ['type' => 'completion_course', 'id' => (int)$cid, 'e' => 1];
+    }
+    $availability = json_encode([
+        'op' => '&', 'c' => $conditions, 'showc' => array_fill(0, count($conditions), true),
+    ]);
+    $existing = $DB->get_field('course', 'idnumber', ['id' => $course->id]); // sanity
+    $DB->set_field('course', 'visible', 1, ['id' => $course->id]);
+    // Course-level availability lives on the course's own course_modules row
+    // for the course itself? Actually for course-level availability, Moodle
+    // 4.x uses the course's enrolment access plus the "availability" field
+    // on the course itself isn't standard — instead each section/module
+    // can have availability. For a whole-course gate, the cleaner mechanism
+    // is to set the cohort enrol's availability or use the course's enrol_self
+    // settings — but our case is cohort sync.
+    //
+    // The simplest gate that works: set the course's category "Visible"
+    // status doesn't help. Instead we apply the availability condition
+    // to each section of the course (section 0 with course_modules), and
+    // also note in the description that it depends on module completion.
+    //
+    // Practical implementation: set availability on the section-0 record
+    // of the final exam course so its contents (including the quiz) are
+    // restricted.
+    $sec0 = $DB->get_record('course_sections', ['course' => $course->id, 'section' => 0]);
+    if ($sec0) {
+        $DB->set_field('course_sections', 'availability', $availability, ['id' => $sec0->id]);
+    }
+}
+
+twu_gate_course_availability($finalcourse, array_map(fn($c) => $c->id, $createdcourses));
+
+// Build the cumulative exam definition. Pull 5 random questions from each
+// of the 8 module question categories. The quiz module supports random
+// questions via quiz_add_random_questions().
+require_once($CFG->dirroot . '/mod/quiz/locallib.php');
+
+function twu_ensure_cumulative_exam(stdClass $course, array $modulecourses): ?int {
+    global $DB, $CFG;
+    $name = 'Cumulative Final Exam — ASA-100 Initial Training';
+
+    $existing = $DB->get_record_sql(
+        "SELECT cm.id, q.id AS quizid
+           FROM {course_modules} cm
+           JOIN {modules} m ON m.id = cm.module AND m.name = 'quiz'
+           JOIN {quiz} q ON q.id = cm.instance
+          WHERE cm.course = :courseid AND q.name = :name",
+        ['courseid' => $course->id, 'name' => $name]
+    );
+    if ($existing) {
+        cli_writeln("[twu]   cumulative exam exists: $name (cmid={$existing->id})");
+        return (int)$existing->quizid;
+    }
+
+    // Random question slots: 5 from each of 8 module question categories = 40 total.
+    $totalq = 40;
+
+    $moduleinfo = (object)[
+        'modulename'          => 'quiz',
+        'course'              => $course->id,
+        'section'             => 0,
+        'visible'             => 1,
+        'visibleoncoursepage' => 1,
+        'name'                => $name,
+        'intro'               => '<p>40 questions drawn at random from the 8 Initial Training module question banks (5 per module). Pass mark: 80% (32/40). Up to 3 attempts. Deferred feedback — full review after each attempt.</p><p>This is the capstone assessment for the TurbineWorks University Initial Training program. Passing earns the master certification.</p>',
+        'introformat'         => FORMAT_HTML,
+        'timeopen'            => 0,
+        'timeclose'           => 0,
+        'timelimit'           => 60 * 60, // 60 minutes
+        'overduehandling'     => 'autosubmit',
+        'graceperiod'         => 0,
+        'preferredbehaviour'  => 'deferredfeedback',
+        'attempts'            => 3,
+        'attemptonlast'       => 0,
+        'grademethod'         => QUIZ_GRADEHIGHEST,
+        'questionsperpage'    => 1,
+        'navmethod'           => 'free',
+        'shuffleanswers'      => 1,
+        'sumgrades'           => $totalq,
+        'grade'               => 100,
+        'gradepass'           => 80,
+        'decimalpoints'       => 2,
+        'questiondecimalpoints' => -1,
+        'showuserpicture'     => 0,
+        'showblocks'          => 0,
+        'reviewattempt'       => 0x10000 + 0x01000 + 0x00100 + 0x00010 + 0x00001,
+        'reviewcorrectness'   => 0x10000 + 0x01000,
+        'reviewmarks'         => 0x10000 + 0x01000,
+        'reviewspecificfeedback' => 0x10000 + 0x01000,
+        'reviewgeneralfeedback'  => 0x10000 + 0x01000,
+        'reviewrightanswer'   => 0x10000,
+        'reviewoverallfeedback' => 0x10000 + 0x01000,
+        'completion'          => COMPLETION_TRACKING_AUTOMATIC,
+        'completionview'      => 0,
+        'completionpassgrade' => 1,
+        'completionattemptsexhausted' => 0,
+    ];
+
+    try {
+        $cm = add_moduleinfo($moduleinfo, $course);
+    } catch (Throwable $e) {
+        cli_writeln("[twu]   could not create cumulative exam: " . $e->getMessage());
+        return null;
+    }
+    $quiz = $DB->get_record('quiz', ['id' => $cm->instance], '*', MUST_EXIST);
+
+    // For each module course, find its question category and add 5 random
+    // questions to the cumulative exam.
+    $added = 0;
+    foreach ($modulecourses as $modcourse) {
+        $coursecontext = context_course::instance($modcourse->id);
+        $qcat = $DB->get_record_sql(
+            "SELECT id FROM {question_categories}
+              WHERE contextid = :ctx AND name LIKE :name
+              ORDER BY id ASC LIMIT 1",
+            ['ctx' => $coursecontext->id, 'name' => '%Knowledge Check%']
+        );
+        if (!$qcat) {
+            cli_writeln("[twu]   no question category for course id={$modcourse->id}; skipping");
+            continue;
+        }
+        try {
+            quiz_add_random_questions($quiz, 0, $qcat->id, 5, false);
+            $added += 5;
+        } catch (Throwable $e) {
+            cli_writeln("[twu]   could not add 5 random questions from category {$qcat->id}: " . $e->getMessage());
+        }
+    }
+
+    cli_writeln("[twu]   created cumulative exam: $name (cmid={$cm->coursemodule}, $added random slots)");
+    return (int)$cm->instance;
+}
+
+// Add the final exam quiz AFTER per-module quizzes have been created (their
+// question categories must exist first). We defer this call until after the
+// per-module quiz loop completes.
+
 $allquizzes = local_twu_get_quizzes();
 foreach ($createdcourses as $idnumber => $course) {
     if (!isset($allquizzes[$idnumber])) {
@@ -1143,6 +1316,236 @@ foreach ($createdcourses as $idnumber => $course) {
     cli_writeln("[twu] seeding quiz for $idnumber");
     twu_ensure_quiz($course, $allquizzes[$idnumber]);
 }
+
+// Now create the cumulative final exam — question categories exist as of
+// the per-module quiz creation above.
+cli_writeln("[twu] creating cumulative final exam in TWF4-FINAL");
+twu_ensure_cumulative_exam($finalcourse, $createdcourses);
+
+// Issue a master cert on the final exam course.
+twu_ensure_customcert($finalcourse);
+
+// ---------------------------------------------------------------------------
+// 5e2b. Practical Assignments — competency assessment (online text response)
+// ---------------------------------------------------------------------------
+// One practical assignment per Initial Training module. Trainee submits a
+// 200-500 word written response to a real operational scenario; QA Manager
+// grades. Adds competency-assessment evidence beyond multiple-choice quiz.
+function twu_ensure_assignment(stdClass $course, array $def): ?int {
+    global $DB, $CFG;
+    require_once($CFG->dirroot . '/mod/assign/locallib.php');
+
+    $existing = $DB->get_record_sql(
+        "SELECT cm.id, a.id AS assignid
+           FROM {course_modules} cm
+           JOIN {modules} m ON m.id = cm.module AND m.name = 'assign'
+           JOIN {assign} a ON a.id = cm.instance
+          WHERE cm.course = :courseid AND a.name = :name",
+        ['courseid' => $course->id, 'name' => $def['name']]
+    );
+    if ($existing) {
+        cli_writeln("[twu]   assignment exists: {$def['name']} (cmid={$existing->id})");
+        return (int)$existing->id;
+    }
+
+    $moduleinfo = (object)[
+        'modulename'                                  => 'assign',
+        'course'                                      => $course->id,
+        'section'                                     => 0,
+        'visible'                                     => 1,
+        'visibleoncoursepage'                         => 1,
+        'name'                                        => $def['name'],
+        'intro'                                       => $def['intro'],
+        'introformat'                                 => FORMAT_HTML,
+        'alwaysshowdescription'                       => 1,
+        'submissiondrafts'                            => 0,
+        'requiresubmissionstatement'                  => 0,
+        'sendnotifications'                           => 0,
+        'sendlatenotifications'                       => 0,
+        'sendstudentnotifications'                    => 1,
+        'duedate'                                     => 0,
+        'cutoffdate'                                  => 0,
+        'gradingduedate'                              => 0,
+        'allowsubmissionsfromdate'                    => 0,
+        'grade'                                       => 100,
+        'gradecat'                                    => 0,
+        'gradepass'                                   => 70,
+        'teamsubmission'                              => 0,
+        'requireallteammemberssubmit'                 => 0,
+        'teamsubmissiongroupingid'                    => 0,
+        'blindmarking'                                => 0,
+        'attemptreopenmethod'                         => 'untilpass',
+        'maxattempts'                                 => -1,
+        'markingworkflow'                             => 0,
+        'markingallocation'                           => 0,
+        'preventsubmissionnotingroup'                 => 0,
+        // Online text submission only (no file upload required).
+        'assignsubmission_onlinetext_enabled'         => 1,
+        'assignsubmission_onlinetext_wordlimit_enabled' => 1,
+        'assignsubmission_onlinetext_wordlimit'       => 800,
+        'assignsubmission_file_enabled'               => 0,
+        'assignsubmission_comments_enabled'           => 0,
+        // Feedback by QA Manager via comments.
+        'assignfeedback_comments_enabled'             => 1,
+        'assignfeedback_file_enabled'                 => 0,
+        'assignfeedback_offline_enabled'              => 0,
+        'completion'                                  => COMPLETION_TRACKING_AUTOMATIC,
+        'completionview'                              => 0,
+        'completionusegrade'                          => 1,
+        'completionpassgrade'                         => 1,
+    ];
+
+    try {
+        $cm = add_moduleinfo($moduleinfo, $course);
+        cli_writeln("[twu]   created assignment: {$def['name']} (cmid={$cm->coursemodule})");
+        return (int)$cm->coursemodule;
+    } catch (Throwable $e) {
+        cli_writeln("[twu]   could not create assignment '{$def['name']}': " . $e->getMessage());
+        return null;
+    }
+}
+
+$assignments = [
+    'TWF4-1' => [
+        'name' => 'Practical: Photocopied 8130-3 Decision Process',
+        'intro' => '<h4>Scenario</h4>
+<p>You are at receiving inspection. A part arrives from a supplier you have not used before. The supplier&apos;s box contains a photocopied FAA Form 8130-3 with a stamp that says &ldquo;TRUE COPY&rdquo; in red ink. The part itself is in its OEM packaging. Block 15 (certificate number) on the 8130-3 looks unfamiliar.</p>
+
+<h4>Your task</h4>
+<p>In 300–500 words, walk through your decision process step by step. Specifically address:</p>
+<ol>
+  <li>What is the first thing you do when you see the photocopy?</li>
+  <li>How do you verify whether the &ldquo;TRUE COPY&rdquo; stamp is legitimate?</li>
+  <li>What independent verification do you perform on Block 15 (certificate number)?</li>
+  <li>Under what circumstances would you accept the part into serviceable inventory?</li>
+  <li>Under what circumstances would you initiate a SUP (Suspected Unapproved Part) procedure?</li>
+  <li>What records do you create regardless of the outcome?</li>
+</ol>
+<p>Your answer will be reviewed by the QA Manager. Pass mark: 70%. Demonstrating careful, sequential thinking matters more than reaching the &ldquo;right&rdquo; conclusion — there are multiple correct paths depending on what the verification turns up.</p>',
+    ],
+    'TWF4-2' => [
+        'name' => 'Practical: Damaged Carton Receiving Inspection',
+        'intro' => '<h4>Scenario</h4>
+<p>A shipment arrives at TurbineWorks. The outer carton has visible crush damage on one side. The bill of lading shows the contents include a high-value FADEC unit destined for a customer order shipping next week. The carrier driver is waiting for your signature.</p>
+
+<h4>Your task</h4>
+<p>In 300–500 words, document the full receiving inspection sequence for this shipment. Address:</p>
+<ol>
+  <li>Do you sign for the shipment? Under what conditions? What annotations do you make on the carrier paperwork?</li>
+  <li>Before opening the box, what photographs and records do you create?</li>
+  <li>When you open the box, what do you check first about the FADEC&apos;s ESD-safe inner packaging?</li>
+  <li>If the inner packaging looks fine but the carton is damaged, do you accept the FADEC into serviceable inventory? What\'s your reasoning?</li>
+  <li>What communication do you initiate with the supplier? With the carrier? Within what timeframe?</li>
+  <li>What disposition options exist if the FADEC may have been damaged in transit?</li>
+</ol>
+<p>QA Manager review. Pass mark: 70%.</p>',
+    ],
+    'TWF4-3' => [
+        'name' => 'Practical: Map ASA-100 Section 6 to Operational Reality',
+        'intro' => '<h4>Scenario</h4>
+<p>An ASA inspector visits TurbineWorks and asks: "Show me how you satisfy ASA-100 Section 6 (Receiving Inspection) in your daily operations. Walk me through one part from arrival to inventory."</p>
+
+<h4>Your task</h4>
+<p>In 300–500 words, describe one specific receiving scenario (you choose: a fan blade, an HMU, a fuel nozzle set, or another part type) and walk through how each of the ASA-100 Section 6 requirements is implemented in your daily work. Address:</p>
+<ol>
+  <li>Visual inspection — what specifically you check</li>
+  <li>Documentation verification — which records, in what order</li>
+  <li>Traceability confirmation — how you establish back-to-birth status</li>
+  <li>Disposition — accepted to serviceable, quarantined, or rejected, and the record trail</li>
+  <li>Where each step ties to a specific section of the TurbineWorks QAM</li>
+</ol>
+<p>You may reference the TurbineWorks QAM (use your best understanding of what it contains; if you are unsure of a specific section, note that as something to verify). QA Manager review.</p>',
+    ],
+    'TWF4-4' => [
+        'name' => 'Practical: FOD Walk-Through Risk Assessment',
+        'intro' => '<h4>Scenario</h4>
+<p>You walk the TurbineWorks warehouse for a FOD risk assessment. You find three areas of concern.</p>
+
+<h4>Your task</h4>
+<p>In 300–500 words, identify three specific FOD risks you observe (or could realistically observe) in the warehouse. For each:</p>
+<ol>
+  <li>Describe the risk specifically (what could enter inventory and what damage it could cause)</li>
+  <li>Identify which parts in inventory are most affected (e.g., engine-flow-path parts vs structural parts)</li>
+  <li>Propose a corrective action — what would you change about workflow, layout, or training?</li>
+  <li>Estimate the cost vs benefit of the change</li>
+</ol>
+<p>You may use real or hypothetical examples. Be specific — &ldquo;keep the warehouse cleaner&rdquo; is not adequate; &ldquo;establish a FOD walk-down checklist for the receiving bench at end of each shift&rdquo; is. QA Manager review.</p>',
+    ],
+    'TWF4-5' => [
+        'name' => 'Practical: Reconstruct an LLP&apos;s Back-to-Birth Records',
+        'intro' => '<h4>Scenario</h4>
+<p>A customer requests proof of back-to-birth records for a CFM56-7B HPT disk. You retrieve the records package from TurbineWorks inventory and find: original FAA 8130-3 from manufacture, two subsequent 8130-3s from intermediate operators, a partial shop visit log from one MRO, and a current 8130-3 from the last operator. The cycle count math does not quite add up — there is a 200-cycle discrepancy between the engine logs and the LLP records.</p>
+
+<h4>Your task</h4>
+<p>In 300–500 words, walk through your decision process:</p>
+<ol>
+  <li>What does the 200-cycle discrepancy potentially indicate?</li>
+  <li>What sources of additional records would you pursue to resolve it?</li>
+  <li>Can you ship the disk as-is to the customer with a note about the discrepancy? Why or why not?</li>
+  <li>If the discrepancy cannot be resolved, what dispositions are available?</li>
+  <li>What records do you create about the investigation and the final disposition?</li>
+</ol>
+<p>QA Manager review.</p>',
+    ],
+    'TWF4-6' => [
+        'name' => 'Practical: Trace an AC 00-56 Requirement to Daily Operations',
+        'intro' => '<h4>Scenario</h4>
+<p>You are explaining the regulatory framework to a new employee. They ask: "Where does our daily receiving inspection procedure come from? Who decided we have to do it this way?"</p>
+
+<h4>Your task</h4>
+<p>In 300–500 words, trace one specific operational practice (receiving inspection of an LLP, mutilation of a scrap part, hazmat shipping documentation, or another practice you choose) through the regulatory hierarchy. Show:</p>
+<ol>
+  <li>Which FAA regulation or AC sets the framework (e.g., AC 00-56)</li>
+  <li>Which industry standard interprets the framework (e.g., ASA-100)</li>
+  <li>Which TurbineWorks QAM section implements the standard</li>
+  <li>Which specific SOP describes the daily procedure</li>
+  <li>How a TurbineWorks employee learns to do it correctly</li>
+</ol>
+<p>The point is to show the flow-down from federal regulation to daily work. QA Manager review.</p>',
+    ],
+    'TWF4-7' => [
+        'name' => 'Practical: Disposition After an ESD Handling Incident',
+        'intro' => '<h4>Scenario</h4>
+<p>A new employee, not yet fully trained on ESD, removes an ESD-sensitive engine sensor from its packaging at a standard workbench (not in the EPA) and handles it for approximately 5 minutes while taking photographs for the customer. The employee was not wearing a wrist strap or foot grounders. The sensor visually appears undamaged and works correctly on a quick test. The customer is expecting it next week.</p>
+
+<h4>Your task</h4>
+<p>In 300–500 words, walk through your disposition decision:</p>
+<ol>
+  <li>What is the immediate risk to the sensor?</li>
+  <li>Why does &ldquo;it works correctly on the quick test&rdquo; not eliminate the risk?</li>
+  <li>What disposition options exist? (Ship as-is with disclosure, return to OEM for evaluation, scrap, or other?)</li>
+  <li>How would you weigh customer relationship impact against ESD-risk-of-shipment?</li>
+  <li>What incident records do you create regardless of disposition?</li>
+  <li>What follow-up actions for the employee and the procedure?</li>
+</ol>
+<p>QA Manager review.</p>',
+    ],
+    'TWF4-8' => [
+        'name' => 'Practical: Oxygen Generator Receiving With Missing Documentation',
+        'intro' => '<h4>Scenario</h4>
+<p>A shipment arrives at TurbineWorks. The supplier&apos;s packing slip lists &ldquo;oxygen mask drop assembly, P/N XYZ-123, quantity 2&rdquo;. You open the outer carton and find what appears to be two passenger oxygen masks with chemical oxygen generator canisters attached. The shipment includes no hazmat documentation. The supplier&apos;s packing slip is the only paperwork in the box.</p>
+
+<h4>Your task</h4>
+<p>In 300–500 words, walk through your full response:</p>
+<ol>
+  <li>What is the regulatory status of a chemical oxygen generator? What UN number and hazard class would apply?</li>
+  <li>What hazmat documentation should have accompanied this shipment?</li>
+  <li>What is your immediate physical handling response when you realize what is in the box? What do you NOT do?</li>
+  <li>Where do you quarantine the shipment, and what marking do you apply?</li>
+  <li>What supplier communication do you initiate, and within what timeframe?</li>
+  <li>What incident record do you create — does this rise to the level of a supplier quality finding, an FAA SUP, or other regulatory reporting?</li>
+  <li>Why is this scenario particularly serious from a flight-safety perspective? (Reference: ValuJet 592)</li>
+</ol>
+<p>QA Manager review. Pass mark: 70%.</p>',
+    ],
+];
+
+foreach ($createdcourses as $idnumber => $course) {
+    if (isset($assignments[$idnumber])) {
+        twu_ensure_assignment($course, $assignments[$idnumber]);
+    }
+}
+cli_writeln("[twu] practical assignments seeded in " . count(array_intersect_key($createdcourses, $assignments)) . " modules");
 
 // ---------------------------------------------------------------------------
 // 5e3. Custom Certificate — auto-issued PDF on Initial Training course completion
@@ -2201,9 +2604,11 @@ function twu_ensure_course_completion_criteria(stdClass $course): int {
     return $added;
 }
 
-// Apply to every course we created in this bootstrap.
+// Apply to every course we created in this bootstrap, including the final
+// exam course.
 $alltargetcourses = array_merge(
     array_values($createdcourses),
+    [$finalcourse],
     array_values($enginecourses),
     array_values($opscourses)
 );
@@ -2272,7 +2677,9 @@ function twu_ensure_cert_availability(stdClass $course): void {
 foreach ($createdcourses as $idnumber => $course) {
     twu_ensure_cert_availability($course);
 }
-cli_writeln("[twu] certificate availability: gated behind completion of all lessons + quiz in " . count($createdcourses) . " Initial Training courses");
+// Gate the master cert on the final exam course too.
+twu_ensure_cert_availability($finalcourse);
+cli_writeln("[twu] certificate availability: gated behind completion of all lessons + quiz in " . (count($createdcourses) + 1) . " Initial Training courses");
 
 // ---------------------------------------------------------------------------
 // 6e. Welcome HTML blocks on each Initial Training course page
