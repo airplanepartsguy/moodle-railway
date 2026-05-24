@@ -15,6 +15,24 @@ mkdir -p /var/www/moodledata
 chown -R www-data:www-data /var/www/moodledata
 chmod -R 0775 /var/www/moodledata
 
+# Moodle config / muc / localcache purge.
+# Moodle caches $CFG to disk in moodledata/muc; direct SQL writes to mdl_config
+# don't invalidate it. Bump PURGE_VERSION (or set MOODLE_PURGE_CACHE=1) to force
+# a one-shot wipe on next boot. After the marker is dropped, subsequent boots
+# leave the cache alone (so we don't slow every restart).
+PURGE_VERSION="1"
+PURGE_MARKER="/var/www/moodledata/.railway-purged-v${PURGE_VERSION}"
+if [ ! -f "$PURGE_MARKER" ] || [ "${MOODLE_PURGE_CACHE:-0}" = "1" ]; then
+  echo "[railway-entrypoint] purging Moodle muc/cache/localcache (v${PURGE_VERSION})"
+  rm -rf /var/www/moodledata/muc/* 2>/dev/null || true
+  rm -rf /var/www/moodledata/cache/* 2>/dev/null || true
+  rm -rf /var/www/moodledata/localcache/* 2>/dev/null || true
+  touch "$PURGE_MARKER" 2>/dev/null || true
+  chown www-data:www-data "$PURGE_MARKER" 2>/dev/null || true
+else
+  echo "[railway-entrypoint] cache purge already done (v${PURGE_VERSION}); skipping"
+fi
+
 # Log which MPM module is loaded
 apache2ctl -M 2>/dev/null | grep mpm || true
 
