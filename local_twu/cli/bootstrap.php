@@ -17,12 +17,15 @@ define('CLI_SCRIPT', true);
 
 require(__DIR__ . '/../../../config.php');
 require_once($CFG->dirroot . '/course/lib.php');
+require_once($CFG->dirroot . '/course/modlib.php');
 require_once($CFG->dirroot . '/cohort/lib.php');
 require_once($CFG->libdir . '/clilib.php');
+require_once($CFG->libdir . '/completionlib.php');
+require_once(__DIR__ . '/../content/content.php');
 
 // Bump the suffix here (and in the entrypoint marker docs) when adding new
 // bootstrap steps that should run on existing sites.
-$marker = $CFG->dataroot . '/.twu-bootstrapped-v3';
+$marker = $CFG->dataroot . '/.twu-bootstrapped-v4';
 $force  = in_array('--force', $argv ?? [], true);
 if (file_exists($marker) && !$force) {
     cli_writeln("[twu] already bootstrapped (marker present at $marker). Pass --force to re-run.");
@@ -228,6 +231,71 @@ if (get_config('core', 'enableavailability') != 1) {
 if ((int)get_config('logstore_standard', 'loglifetime') !== 0) {
     set_config('loglifetime', 0, 'logstore_standard');
     cli_writeln("[twu] set logstore loglifetime=0 (never auto-purge — compliance retention)");
+}
+
+// ---------------------------------------------------------------------------
+// 5b. Seed lesson content (Page activities) for courses that have content
+// ---------------------------------------------------------------------------
+function twu_ensure_page_lesson(stdClass $course, int $sectionnum, string $name,
+                                string $intro, string $content): ?int {
+    global $DB;
+
+    // Idempotency: skip if a Page activity with this name already exists in the course.
+    $existing = $DB->get_record_sql(
+        "SELECT cm.id
+           FROM {course_modules} cm
+           JOIN {modules} m ON m.id = cm.module AND m.name = 'page'
+           JOIN {page} p ON p.id = cm.instance
+          WHERE cm.course = :courseid AND p.name = :name",
+        ['courseid' => $course->id, 'name' => $name]
+    );
+    if ($existing) {
+        cli_writeln("[twu]   lesson exists: $name (cmid={$existing->id})");
+        return (int)$existing->id;
+    }
+
+    $moduleinfo = (object)[
+        'modulename'          => 'page',
+        'course'              => $course->id,
+        'section'             => $sectionnum,
+        'visible'             => 1,
+        'visibleoncoursepage' => 1,
+        'name'                => $name,
+        'intro'               => $intro,
+        'introformat'         => FORMAT_HTML,
+        // mod_page's add_instance reads $data->page['text'] / ['format'] (form
+        // convention) and unpacks them into the page DB record's content fields.
+        'page'                => ['text' => $content, 'format' => FORMAT_HTML],
+        'display'             => 5, // PAGE_DISPLAY_OPEN
+        'printheading'        => 1,
+        'printintro'          => 0,
+        'printlastmodified'   => 1,
+        // Mark complete on view — appropriate for read-it-through training pages.
+        'completion'          => COMPLETION_TRACKING_AUTOMATIC,
+        'completionview'      => 1,
+    ];
+
+    try {
+        $cm = add_moduleinfo($moduleinfo, $course);
+        cli_writeln("[twu]   created lesson: $name (cmid={$cm->coursemodule})");
+        return (int)$cm->coursemodule;
+    } catch (Throwable $e) {
+        cli_writeln("[twu]   could not create lesson '$name': " . $e->getMessage());
+        return null;
+    }
+}
+
+$alllessons = local_twu_get_lessons();
+foreach ($createdcourses as $idnumber => $course) {
+    $lessons = $alllessons[$idnumber] ?? [];
+    if (!$lessons) {
+        cli_writeln("[twu] no lessons defined yet for $idnumber; skipping content seed");
+        continue;
+    }
+    cli_writeln("[twu] seeding " . count($lessons) . " lessons in $idnumber");
+    foreach ($lessons as $lesson) {
+        twu_ensure_page_lesson($course, 0, $lesson['name'], $lesson['intro'], $lesson['content']);
+    }
 }
 
 // ---------------------------------------------------------------------------
