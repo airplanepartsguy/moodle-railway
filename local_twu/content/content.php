@@ -4836,148 +4836,666 @@ HTML
         ],
         [
             'name'  => 'Lesson 4.4 — FOD Prevention',
-            'intro' => '<p>Foreign Object Damage: what it is, where it comes from, and how to prevent it.</p>',
+            'intro' => '<p>Foreign Object Damage prevention. NAS 412 framework, the practical disciplines that prevent FOD, tool control, FOD walks, what to do when FOD is suspected. The hardest discipline to maintain consistently and one of the highest-impact failures when it lapses.</p>',
             'content' => <<<'HTML'
 <h3>Foreign Object Damage (FOD) Prevention</h3>
-<p>FOD — Foreign Object Damage — is any damage to a part caused by a foreign object during handling, packaging, or storage. In a turbine engine, a single small nick on a compressor blade leading edge can propagate into a crack and a catastrophic failure. FOD prevention is fundamental to warehouse discipline.</p>
 
-<h4>Where FOD comes from</h4>
-<p>FOD generators in a warehouse environment:</p>
+<p><strong>FOD — Foreign Object Damage</strong> — is any damage to a part caused by a foreign object during handling, packaging, or storage. In aviation, FOD can be catastrophic. A single small nick on a compressor blade leading edge can propagate into a crack and cause in-service failure. A bolt left in a fuel tank during assembly can puncture a tank wall under flight loads. A loose washer in a control linkage can jam the linkage at a critical phase of flight.</p>
+
+<p>FOD prevention is a deliberate, ongoing discipline. It cannot be intermittent — a 99%-effective FOD program is still failing 1% of the time, and that 1% might be a fan blade leading edge or a fuel control inlet. This lesson covers the FOD framework defined by NAS 412 (the National Aerospace Standard for FOD prevention), the practical disciplines that TurbineWorks operates, and what every employee needs to know and do.</p>
+
+<h4>NAS 412 — the aerospace FOD prevention standard</h4>
+
+<p><strong>NAS 412</strong> (National Aerospace Standard 412), maintained by the Aerospace Industries Association (AIA), is the industry-standard reference for FOD prevention programs. It is widely adopted across aerospace manufacturing, maintenance, and distribution. ASA-100 does not formally require NAS 412 compliance but virtually all credible distributor FOD programs implement NAS 412 principles. AS9100/AS9120 customers may explicitly require NAS 412 conformance.</p>
+
+<h5>What NAS 412 establishes</h5>
+
+<p>NAS 412 defines the elements of a credible FOD prevention program. The core elements:</p>
+
+<ol>
+  <li><strong>Documented FOD prevention program.</strong> Written, controlled, periodically reviewed and updated.</li>
+  <li><strong>Designated FOD program manager.</strong> A specific person responsible for program effectiveness (at TurbineWorks, this typically rolls up to the QA Manager).</li>
+  <li><strong>Defined FOD-Critical Areas.</strong> Specific physical zones where FOD prevention discipline is enforced — receiving, storage, packaging, shipping for sensitive part types.</li>
+  <li><strong>Personnel training.</strong> Every employee working in or entering FOD-Critical Areas receives FOD training, with documented training records.</li>
+  <li><strong>Tool control.</strong> Tools used in FOD-Critical Areas are accounted for at start and end of every shift.</li>
+  <li><strong>Hardware control.</strong> Loose hardware (bolts, washers, etc.) used in handling is similarly accounted for.</li>
+  <li><strong>FOD walks.</strong> Routine visual sweeps of FOD-Critical Areas to identify and remove FOD generators.</li>
+  <li><strong>Housekeeping standards.</strong> Cleanliness expectations, debris control, food/beverage prohibition in critical areas.</li>
+  <li><strong>FOD reporting and investigation.</strong> Any FOD event or near-miss is reported and investigated for root cause.</li>
+  <li><strong>Continuous improvement.</strong> The program reviews findings and adjusts procedures, training, and controls.</li>
+</ol>
+
+<p>The TurbineWorks FOD prevention program implements these elements. The QAM should reference NAS 412 and identify how each element is satisfied.</p>
+
+<h4>Sources of FOD in a warehouse environment</h4>
+
+<p>FOD generators come from everywhere. Understanding the categories helps target prevention:</p>
+
+<h5>Tools and equipment</h5>
+
+<p>The single largest source category. Tools that leave a workstation become FOD when they migrate to a part:</p>
+
 <ul>
-  <li>Tools left in or near parts (most common single source)</li>
-  <li>Loose hardware: nuts, washers, fasteners on floor or shelves</li>
-  <li>Packaging debris: cardboard fragments, tape pieces, plastic bag scraps</li>
-  <li>Personal items: pens, jewelry, hardware in pockets</li>
-  <li>Food and beverages: crumbs, spills</li>
-  <li>Building materials: concrete chips, paint flakes, ceiling tile dust</li>
-  <li>Other parts: parts bumping into each other during transport, unprotected critical surfaces</li>
+  <li>Hand tools (screwdrivers, pliers, wrenches) left in or near parts</li>
+  <li>Cutting tools (knives, scissors, deburring tools)</li>
+  <li>Measuring tools (calipers, gauges, scales)</li>
+  <li>Cleaning tools (brushes, cloths, applicators)</li>
+  <li>Marking and tagging tools (pens, stamps, label printers)</li>
 </ul>
 
-<h4>FOD-prone surfaces</h4>
-<p>Some surfaces are more FOD-sensitive than others:</p>
-<ul>
-  <li><strong>Turbine and compressor blade leading edges</strong> — single biggest concern in engine parts</li>
-  <li><strong>Sealing surfaces</strong> — bearing races, O-ring grooves, mating flanges</li>
-  <li><strong>Optical surfaces</strong> — flame detectors, vibration sensors</li>
-  <li><strong>Electrical contacts</strong> — connector pins, terminal blocks</li>
-</ul>
-<p>FOD-sensitive surfaces should be protected during storage: caps on bearing seats, plugs in ports, individual wrapping on blades, edge protectors on rotor disks.</p>
+<p>A torque wrench left inside a part\'s packaging can disappear into the customer shipment. A measuring caliper resting on a part during inspection can fall into a port. A pen in a pocket can drop into an open assembly.</p>
 
-<h4>The FOD-free zone</h4>
-<p>Areas of the warehouse where FOD-sensitive parts are handled are designated FOD-Free Zones. In a FOD-Free Zone:</p>
+<h5>Hardware</h5>
+
+<p>Loose fasteners are perfect FOD — small, hard, often metal:</p>
+
 <ul>
-  <li>No food or beverages</li>
-  <li>No loose tools or hardware on work surfaces</li>
-  <li>Personnel empty pockets before entering, or use pocket organizers</li>
-  <li>Jewelry (rings, watches, bracelets) removed</li>
-  <li>Hair restrained</li>
-  <li>Tools accounted for at start and end of every shift (tool control)</li>
-  <li>FOD walks performed at defined intervals — visually sweep the area for any FOD generators</li>
+  <li>Bolts, nuts, washers, screws — on floors, shelves, in bins where they don\'t belong</li>
+  <li>Cotter pins, lockwire ends, safety wire scraps</li>
+  <li>Spare hardware from kitting operations</li>
+  <li>Damaged or rejected hardware not immediately disposed of</li>
 </ul>
 
-<h4>Tool control</h4>
-<p>Every tool used near aviation parts is accounted for. A torque wrench left inside a part's packaging can disappear into the customer shipment. Tool control practices:</p>
+<h5>Packaging debris</h5>
+
 <ul>
-  <li>Tool shadowboards: outlines showing each tool's storage location, so missing tools are visible at a glance</li>
-  <li>Tool checkout logs: who has which tool and when</li>
-  <li>End-of-shift accountability: every tool returned and verified before shift end</li>
-  <li>Lost-tool reporting: a missing tool triggers a search and an investigation</li>
+  <li>Cardboard fragments from cartons</li>
+  <li>Tape pieces, peeling tape, double-stick residue</li>
+  <li>Plastic bag scraps</li>
+  <li>Foam pieces, especially small chunks of polystyrene</li>
+  <li>Bubble wrap pops and fragments</li>
+  <li>Shrink wrap remnants</li>
+  <li>Banding metal or plastic</li>
+  <li>Paper and labels</li>
 </ul>
 
-<h4>FOD walks</h4>
-<p>A FOD walk is a deliberate visual sweep of an area looking for FOD generators. Performed:</p>
+<h5>Personal items</h5>
+
 <ul>
-  <li>Before opening packaging on a FOD-sensitive part</li>
-  <li>After completing a handling operation</li>
-  <li>At defined intervals (start of shift, after breaks)</li>
-  <li>After any unusual event (dropped item, spilled material)</li>
+  <li>Pens, pencils, markers in pockets</li>
+  <li>Coins and small change</li>
+  <li>Jewelry (rings, bracelets, necklaces, earrings, watches) — can fall off, especially during physical handling</li>
+  <li>Eyeglasses, especially loose nose pads</li>
+  <li>Phone earbuds, especially with detachable tips</li>
+  <li>Buttons, snaps, decorative items on clothing</li>
+  <li>Hair clips, bobby pins</li>
 </ul>
 
-<h4>Damage from FOD</h4>
-<p>FOD damage may be:</p>
-<ul>
-  <li><strong>Obvious</strong> — visible nick, dent, scratch on a critical surface. Part goes to Unserviceable for evaluation.</li>
-  <li><strong>Subtle</strong> — small mark that may or may not be acceptable per OEM repair limits. Requires evaluation by qualified inspection.</li>
-  <li><strong>Latent</strong> — damage that initiates a crack that doesn't manifest until the part is in service.</li>
-</ul>
-<p>Any suspected FOD damage to a part is documented and the part is moved to Unserviceable for evaluation. <em>Do not attempt to "polish out" FOD damage</em> — that is a repair, which only authorized repair stations can perform.</p>
+<h5>Food, beverages, biological</h5>
 
-<h4>Reporting FOD incidents</h4>
-<p>Any FOD incident — even one that didn't damage a part — should be reported. Examples:</p>
 <ul>
-  <li>Found a tool inside a part's packaging during a check (no damage, but the FOD escape was a near-miss)</li>
-  <li>Dropped a part (no visible damage, but inspection required)</li>
+  <li>Food crumbs, wrappers, packaging</li>
+  <li>Beverage spills, ice cubes, straws</li>
+  <li>Hair, dandruff, skin flakes (longer hair restrained; beards may need covers in some operations)</li>
+  <li>Gum, mints, candy wrappers</li>
+</ul>
+
+<h5>Building materials and environmental sources</h5>
+
+<ul>
+  <li>Concrete chips and dust from floor wear</li>
+  <li>Paint flakes from walls or fixtures</li>
+  <li>Ceiling tile dust, especially after HVAC work</li>
+  <li>Insulation fragments</li>
+  <li>Sawdust from any wood being worked nearby</li>
+  <li>Metal shavings or chips from any machining activity</li>
+  <li>Dust accumulation on shelves and equipment</li>
+</ul>
+
+<h5>Other parts</h5>
+
+<ul>
+  <li>Parts bumping into each other during transport</li>
+  <li>Unprotected critical surfaces contacting each other</li>
+  <li>Components shedding scale, plating fragments, or coatings</li>
+  <li>Edges or burrs that scrape adjacent parts</li>
+</ul>
+
+<h4>FOD-sensitive surfaces (what FOD damages)</h4>
+
+<p>Some surfaces on aviation parts are particularly vulnerable to FOD. Understanding these helps prioritize protection:</p>
+
+<h5>Turbine and compressor blade leading edges</h5>
+
+<p>The single biggest concern in engine parts. A nick or dent on a blade leading edge creates a stress concentration. Under operating cyclic loading, the stress concentration can initiate a fatigue crack. The crack propagates over operating cycles until catastrophic blade failure — possibly an uncontained engine failure with severe consequences.</p>
+
+<p>OEM blade-edge inspection limits are tight. A nick a millimeter or two deep may be within blendable limits; a nick a few millimeters may require blade replacement. The cost of a single damaged blade can run tens of thousands of dollars; the cost of an undetected damaged blade installed and run to failure is far higher.</p>
+
+<h5>Sealing surfaces</h5>
+
+<ul>
+  <li>Bearing races — must be smooth for proper rolling element contact</li>
+  <li>O-ring grooves — must be free of nicks that would cut or damage the seal</li>
+  <li>Mating flanges where two parts seal against each other — any surface defect creates a leak path</li>
+  <li>Polished shaft surfaces where seals ride — scratches damage the seal</li>
+</ul>
+
+<h5>Optical and electronic interfaces</h5>
+
+<ul>
+  <li>Flame detectors and other optical sensors — surface debris obscures the sensing element</li>
+  <li>Vibration sensors with optical coupling</li>
+  <li>Connector pins — bent pins from FOD contact prevent mating</li>
+  <li>Terminal blocks — contamination affects conductivity</li>
+</ul>
+
+<h5>High-precision functional surfaces</h5>
+
+<ul>
+  <li>Fuel injector nozzles — internal passages must be free of obstruction</li>
+  <li>Gear teeth — surface damage propagates through the gear under load</li>
+  <li>Servo valves with precision spool fits</li>
+  <li>Bushings and bearings with precise dimensional fits</li>
+</ul>
+
+<h4>FOD-sensitive surfaces are protected during storage</h4>
+
+<p>Standard protections for FOD-sensitive surfaces:</p>
+
+<ul>
+  <li>Caps on bearing seats and shaft ends</li>
+  <li>Plugs in ports (fuel, hydraulic, oil, pneumatic, electrical connector caps)</li>
+  <li>Individual wrapping on blades — typically tissue or specialty cushioning material</li>
+  <li>Edge protectors on rotor disks — molded plastic or foam pieces matching the part geometry</li>
+  <li>Anti-FOD bags for small parts</li>
+  <li>Static-controlled and dust-free packaging for electronics</li>
+</ul>
+
+<p>These protections accompany the part through TurbineWorks custody and ideally accompany the part to the customer. Removing protection prematurely (e.g., during a quick visual inspection) without replacing creates FOD exposure.</p>
+
+<h4>FOD-Critical Areas at TurbineWorks</h4>
+
+<p>NAS 412\'s concept of "FOD-Critical Areas" translates to specific zones at TurbineWorks. These are areas where FOD prevention is actively enforced through discipline rather than just casually expected:</p>
+
+<ul>
+  <li><strong>Receiving inspection area</strong> — where packages are opened and parts physically inspected</li>
+  <li><strong>Serviceable storage</strong> — where accepted parts are held</li>
+  <li><strong>Quarantine</strong> — where parts under investigation are held (FOD here can complicate the investigation)</li>
+  <li><strong>Shipping / packaging area</strong> — where outbound shipments are prepared</li>
+  <li><strong>ESD-controlled areas</strong> — which are also typically FOD-controlled because the same parts that are ESD-sensitive are often FOD-sensitive</li>
+</ul>
+
+<p>FOD-Critical Areas should be marked. Personnel entering should know they are entering a FOD-controlled environment. Visitors are escorted and briefed.</p>
+
+<h4>FOD-Critical Area rules</h4>
+
+<p>In a FOD-Critical Area, certain practices are mandatory:</p>
+
+<ul>
+  <li><strong>No food or beverages.</strong> Including water bottles unless explicitly contained per QAM (some operations allow capped containers on shelves outside immediate work area; others prohibit entirely).</li>
+  <li><strong>No loose tools or hardware on work surfaces.</strong> Tools in use are on a controlled work surface; tools not in use are returned to their designated location (tool shadowboard, tool cabinet).</li>
+  <li><strong>Pocket discipline.</strong> Personnel empty pockets before entering, or use pocket organizers that prevent items from falling out (pockets sewn shut, zippered pockets, etc.). Some operations prohibit certain pocket items entirely.</li>
+  <li><strong>Jewelry restrictions.</strong> Rings, watches, bracelets typically removed. Some operations allow plain wedding bands; others require all jewelry off.</li>
+  <li><strong>Hair restraint.</strong> Long hair tied back. Some operations require hair covers (especially during direct part handling). Beards may need covers in some operations.</li>
+  <li><strong>Clothing constraints.</strong> Loose buttons removed or secured. Decorative items removed. Some operations use FOD-controlled smocks or coveralls.</li>
+  <li><strong>Tool accountability.</strong> Tools used are accounted for at start and end of every shift.</li>
+  <li><strong>FOD walks.</strong> Performed at defined intervals — typically start of shift, after breaks, before opening sensitive parts, after any handling event.</li>
+</ul>
+
+<h4>Tool control — the operational discipline</h4>
+
+<p>Tool control is the single most-developed FOD prevention practice. Every tool used in a FOD-Critical Area is accounted for. The discipline:</p>
+
+<h5>Tool shadowboards</h5>
+
+<p>Tools are stored on a board with outlines showing each tool\'s location. At a glance, you can see which tools are present and which are missing. A missing tool is immediately apparent.</p>
+
+<h5>Tool checkout</h5>
+
+<p>For tools that leave their home location, a checkout log records who has the tool and when it was taken. The log may be physical (sign-out sheet) or electronic (barcode scan, RFID).</p>
+
+<h5>End-of-shift accountability</h5>
+
+<p>At the end of every shift, every tool used during that shift is returned to its home location. The shadowboard or checkout log is reconciled. Missing tools trigger immediate action.</p>
+
+<h5>Lost-tool protocol</h5>
+
+<p>A tool that cannot be accounted for at end of shift initiates a structured response:</p>
+
+<ol>
+  <li>Immediate search of the work area where the tool was last used</li>
+  <li>Search of any parts handled during the shift — could the tool be inside packaging?</li>
+  <li>Search of trash receptacles emptied during the shift</li>
+  <li>Notification to QA Manager and to other personnel who may have been in the area</li>
+  <li>If the tool cannot be located, customer notification for any shipments that left during the period — were any of them potentially compromised?</li>
+  <li>NCR opened; investigation continues until either the tool is found or the investigation concludes the tool is unrecoverable</li>
+</ol>
+
+<p>Lost-tool incidents are rare but consequential. The structured response prevents a missing torque wrench from being discovered inside a customer\'s engine three weeks after shipment.</p>
+
+<h4>FOD walks — the routine sweep</h4>
+
+<p>A FOD walk is a deliberate visual sweep of an area looking for FOD generators. Walks are not casual glances — they\'re a focused activity with a specific purpose and a defined area to cover.</p>
+
+<h5>When FOD walks are performed</h5>
+
+<ul>
+  <li>Start of shift</li>
+  <li>After breaks (when personnel may have brought items back into the area)</li>
+  <li>Before opening packaging on FOD-sensitive parts</li>
+  <li>After completing handling operations</li>
+  <li>After any unusual event — dropped item, spilled material, packaging incident, tool dropped</li>
+  <li>End of shift, as the area is being prepared for the next shift</li>
+</ul>
+
+<h5>FOD walk procedure</h5>
+
+<ol>
+  <li>Walk the area systematically — don\'t miss corners, under shelves, behind equipment</li>
+  <li>Look on horizontal surfaces (floor, shelves, work surfaces) and vertical (walls, fixtures where items might cling)</li>
+  <li>Pick up anything found that doesn\'t belong</li>
+  <li>If a FOD item is found, identify the source — where did it come from?</li>
+  <li>Log significant findings in the FOD walk record</li>
+  <li>If FOD risk to specific parts is identified, those parts go for inspection</li>
+</ol>
+
+<h5>FOD walk records</h5>
+
+<p>The walk is recorded — date, time, area, personnel, findings. Records support audit verification and help identify pattern problems (e.g., the receiving area consistently produces packaging debris on the floor; the packaging procedure should be reviewed).</p>
+
+<h4>Damage from FOD — categories</h4>
+
+<p>FOD damage to parts comes in three categories:</p>
+
+<h5>Obvious damage</h5>
+
+<p>Visible nick, dent, scratch, gouge on a critical surface. Identified during physical inspection. Part goes to Unserviceable for evaluation. Engineering or qualified inspection determines whether the damage is within OEM blendable limits (rare, depending on location) or requires repair / scrap.</p>
+
+<h5>Subtle damage</h5>
+
+<p>A small mark that may or may not be acceptable. Requires evaluation by qualified inspection — possibly dimensional measurement, surface analysis, or comparison against OEM blendable-limit drawings. The TurbineWorks inspector may not have authority to disposition; refers to QA Manager or to a qualified inspection service.</p>
+
+<h5>Latent damage</h5>
+
+<p>Damage that initiates a crack or stress concentration but doesn\'t manifest until the part is in service. The part passes visual inspection. The part is sold. The part is installed. Failure occurs months or years later. This is the most insidious form of FOD damage because there is no detection at the receiving distributor.</p>
+
+<p>The defense against latent FOD damage is to <em>prevent the FOD event entirely</em>. Once FOD has contacted a sensitive surface, latent damage may exist regardless of whether visible damage is observed.</p>
+
+<h4>What you cannot do</h4>
+
+<ul>
+  <li><strong>Do not "polish out" FOD damage.</strong> Polishing is a form of repair. Repair authority is limited to authorized repair stations. Polishing out a nick on a turbine blade leading edge — even if it appears to remove the visible damage — is unapproved repair.</li>
+  <li><strong>Do not "blend out" damage.</strong> Same principle. Blending is engineering-authorized rework within OEM limits, performed by qualified personnel with proper documentation.</li>
+  <li><strong>Do not hide FOD damage.</strong> Repackaging a part without disclosing the discovered FOD is misrepresentation and fraud.</li>
+  <li><strong>Do not assume FOD-handled parts are still serviceable just because they look OK.</strong> Latent damage may exist. The conservative response is to move the part to Unserviceable for evaluation.</li>
+</ul>
+
+<h4>Reporting FOD incidents and near-misses</h4>
+
+<p>Every FOD event — including near-misses — is reported. Examples that warrant reporting:</p>
+
+<ul>
+  <li>Found a tool inside a part\'s packaging during a check (no damage to the part, but the FOD escape was a near-miss)</li>
+  <li>Dropped a part during handling (no visible damage, but inspection required)</li>
   <li>Found loose hardware on a serviceable parts shelf (FOD generator, even if no part was damaged)</li>
+  <li>Spotted that a packaging cap was missing from a stored part (FOD exposure occurred)</li>
+  <li>Discovered debris (paint flakes, dust) on parts during a routine walk</li>
+  <li>FOD walk found a foreign object — even if no immediate damage</li>
 </ul>
-<p>Near-misses are early indicators of process problems. Reporting them lets the system improve before an actual incident.</p>
+
+<h5>Why near-miss reporting matters</h5>
+
+<p>Near-misses are early indicators of system problems. They\'re free information about where the system is weak before it produces an actual failure. Reporting near-misses lets the QA Manager improve procedures, training, or controls before the next event becomes a real defect.</p>
+
+<p>Cultures where near-miss reporting is discouraged (because reporters get blamed) inevitably end up with actual failures that surprise everyone. Cultures where near-miss reporting is encouraged surface problems early and fix them.</p>
+
+<h5>The corrective action loop</h5>
+
+<p>Every FOD incident (including near-misses) opens an NCR. The investigation:</p>
+
+<ul>
+  <li>What happened</li>
+  <li>What could have happened (severity if the near-miss had become a real event)</li>
+  <li>Root cause — why did this happen?</li>
+  <li>Corrective action — what changes prevent recurrence?</li>
+  <li>Verification — is the corrective action effective?</li>
+</ul>
+
+<h4>What the auditor probes</h4>
+
+<ul>
+  <li>"Show me your FOD prevention program documentation."</li>
+  <li>"What\'s your FOD walk schedule? When was the last walk performed?"</li>
+  <li>"Show me a tool checkout log from yesterday."</li>
+  <li>"Has any tool ever been lost? If so, walk me through what happened."</li>
+  <li>"How are FOD-sensitive surfaces protected during storage?"</li>
+  <li>"What\'s in your FOD-Critical Area trash bin right now?"</li>
+  <li>"Talk to a warehouse worker — ask them what they do if they find loose hardware on a shelf."</li>
+  <li>"Show me the last FOD-related NCR. What was the corrective action?"</li>
+</ul>
+
+<h4>References</h4>
+
+<ul>
+  <li><strong>NAS 412</strong> — Aerospace Industries Association FOD Prevention Standard (the primary reference)</li>
+  <li><strong>National Aerospace FOD Prevention, Inc. (NAFPI)</strong> — industry organization promoting FOD awareness</li>
+  <li><strong>ASA-100 §7</strong> — Storage and handling requirements include FOD prevention</li>
+  <li>TurbineWorks QAM Section [TBD] — FOD Prevention Program</li>
+</ul>
+
+<h4>Self-check</h4>
+
+<ol>
+  <li>What is NAS 412 and what 10 elements does it require in a FOD prevention program?</li>
+  <li>Name 7 categories of FOD generators in a warehouse environment.</li>
+  <li>What are the 4 most FOD-sensitive surface types on aviation parts?</li>
+  <li>What 8 rules apply in a FOD-Critical Area?</li>
+  <li>Describe the lost-tool protocol — what 6 steps follow a tool that can\'t be accounted for?</li>
+  <li>When are FOD walks performed (6 trigger events)?</li>
+  <li>What are the 3 categories of FOD damage and which is most insidious?</li>
+  <li>What 4 things should you NOT do when FOD damage is discovered?</li>
+  <li>Why does near-miss reporting matter, and how does culture affect it?</li>
+</ol>
+
+<p><em>[TurbineWorks Procedure Reference: insert TurbineWorks FOD Prevention Program documentation, FOD-Critical Area diagram, tool control procedure, and FOD walk schedule here.]</em></p>
 HTML
         ],
         [
             'name'  => 'Lesson 4.5 — Environmental Controls and Hazmat Storage',
-            'intro' => '<p>Temperature, humidity, ESD, and hazardous materials storage in the warehouse.</p>',
+            'intro' => '<p>Temperature, humidity, ESD, lighting, cleanliness, and hazmat storage in the warehouse. The environmental discipline that keeps inventory in spec across storage periods that may extend for months. Excursion handling when conditions deviate. The interface with Module 7 (ESD) and Module 8 (Hazmat).</p>',
             'content' => <<<'HTML'
-<h3>Environmental Controls</h3>
-<p>Aviation parts have storage requirements that go beyond "keep them clean and dry." Specific environmental controls protect specific part types.</p>
+<h3>Environmental Controls and Hazmat Storage</h3>
+
+<p>Aviation parts have storage requirements that go beyond "keep them clean and dry." Specific part categories require specific environmental conditions, and excursions outside those conditions can damage parts in ways that are invisible until the part fails in service. This lesson covers temperature and humidity controls, ESD areas (interfaces with Module 7), hazmat storage (interfaces with Module 8), lighting, cleanliness, and excursion handling.</p>
+
+<p>The framework principle: every storage area has defined environmental conditions; those conditions are monitored continuously where required; excursions outside spec trigger documented investigation; affected parts are evaluated and dispositioned. This is the discipline that turns a generic warehouse into an ASA-100-compliant storage facility.</p>
 
 <h4>Temperature and humidity</h4>
-<p>General warehouse: typically 60-80 °F (15-27 °C) and 30-60% relative humidity is acceptable for most parts. Specific parts may require tighter control:</p>
+
+<h5>General warehouse conditions</h5>
+
+<p>Typical general-warehouse environmental targets:</p>
+
 <ul>
-  <li>Elastomers and rubber: cool, dark, low-ozone storage. Excursions above 100 °F accelerate aging.</li>
-  <li>Sealants: refrigerated storage often required (32-40 °F / 0-4 °C). Bring to room temperature before use.</li>
-  <li>Adhesives: similar to sealants.</li>
-  <li>Batteries: temperature-controlled storage prevents capacity loss.</li>
-  <li>Moisture-sensitive electronic components: per IPC J-STD-033, may require dry storage or sealed bags with desiccant.</li>
+  <li>Temperature: 60–80°F (15–27°C). Some parts tolerate wider ranges; some require tighter control.</li>
+  <li>Relative humidity: 30–60% RH. Below 30% can cause static accumulation; above 60% can cause corrosion and moisture absorption.</li>
+  <li>Stable conditions preferred over fluctuating. Wide diurnal swings (cold nights, hot days) can accelerate aging more than steady moderate-warm conditions.</li>
 </ul>
-<p>Environmental monitoring: temperature and humidity sensors with logging. Excursions outside spec range trigger an investigation: were any parts affected? Do they need to be re-evaluated?</p>
+
+<h5>Part-category-specific requirements</h5>
+
+<table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse;">
+  <tr style="background:#0d2240; color:#fff;">
+    <th>Part Category</th>
+    <th>Typical Temp Range</th>
+    <th>Typical RH Range</th>
+    <th>Other</th>
+  </tr>
+  <tr>
+    <td>Elastomers (O-rings, seals)</td>
+    <td>40–80°F</td>
+    <td>30–50%</td>
+    <td>Dark, low ozone; avoid &gt;100°F excursions which accelerate aging</td>
+  </tr>
+  <tr>
+    <td>Sealants (PR-1422, AMS-S-8802, etc.)</td>
+    <td>32–40°F (refrigerated)</td>
+    <td>controlled (sealed containers)</td>
+    <td>Bring to room temperature before use; OEM-specified handling</td>
+  </tr>
+  <tr>
+    <td>Aerospace adhesives</td>
+    <td>32–40°F (refrigerated, often)</td>
+    <td>controlled</td>
+    <td>OEM-specified; some require freezer storage (below 0°F)</td>
+  </tr>
+  <tr>
+    <td>Aircraft batteries</td>
+    <td>50–80°F</td>
+    <td>30–60%</td>
+    <td>Some battery chemistries benefit from refrigeration for storage</td>
+  </tr>
+  <tr>
+    <td>Moisture-sensitive electronics</td>
+    <td>60–80°F</td>
+    <td>&lt;60% (often controlled with desiccant)</td>
+    <td>Per IPC J-STD-033; may require dry-cabinet storage</td>
+  </tr>
+  <tr>
+    <td>Hazmat (pyrotechnics, oxidizers)</td>
+    <td>varies by material</td>
+    <td>varies</td>
+    <td>Per 49 CFR; specific separation requirements</td>
+  </tr>
+  <tr>
+    <td>ESD-sensitive electronics</td>
+    <td>60–80°F</td>
+    <td>40–60% (avoid &lt;30%)</td>
+    <td>Per ANSI/ESD S20.20</td>
+  </tr>
+</table>
+
+<p>The actual specifications come from the OEM or the applicable industry standard. The TurbineWorks QAM lists requirements per part category. Pay particular attention when handling parts with refrigerator or freezer requirements — these are easy to overlook if storage isn\'t organized to support them.</p>
+
+<h4>Environmental monitoring</h4>
+
+<p>Storage areas with environmental requirements are monitored with sensors and logging. The monitoring infrastructure typically includes:</p>
+
+<ul>
+  <li><strong>Continuous temperature sensors</strong> in each controlled zone, logging at intervals (typically every 5–15 minutes)</li>
+  <li><strong>Humidity sensors</strong> in zones with humidity requirements</li>
+  <li><strong>Refrigerator/freezer thermometers</strong> for cold storage</li>
+  <li><strong>Calibration</strong> of sensors per defined cadence — typically annually with documented calibration certificate</li>
+  <li><strong>Alerts</strong> when conditions exceed defined thresholds — automated email or notification to QA personnel</li>
+  <li><strong>Backup monitoring</strong> independent of the primary system, in case primary fails</li>
+</ul>
+
+<h5>Records</h5>
+
+<p>Environmental logs are retained as part of quality records (typically 7+ years per ASA-100 §8). The logs show:</p>
+
+<ul>
+  <li>Continuous record of conditions in each monitored zone</li>
+  <li>Any excursions and their duration</li>
+  <li>Investigation records for significant excursions</li>
+  <li>Sensor calibration records</li>
+</ul>
+
+<p>ASA auditors will pull these logs and look at them. Gaps in the log (sensor failures, recording outages) are findings. Excursions documented but not investigated are findings.</p>
+
+<h4>Environmental excursion handling</h4>
+
+<p>An "excursion" is a period when environmental conditions exceeded spec. Excursions happen — HVAC failures, refrigerator malfunctions, fire alarms triggering evacuations during which conditions drifted, water leaks. The question is how the system handles excursions.</p>
+
+<h5>Excursion response procedure</h5>
+
+<ol>
+  <li><strong>Identify the excursion.</strong> Automated alerts or routine log review identify that conditions exceeded spec.</li>
+  <li><strong>Document immediately.</strong> When was the excursion? What zone? What conditions reached? What was the duration?</li>
+  <li><strong>Identify affected parts.</strong> What was in the affected zone during the excursion? The inventory system can produce this list if location tracking is current.</li>
+  <li><strong>Quarantine affected parts pending evaluation.</strong> Don\'t assume the excursion didn\'t affect parts. Move to Quarantine for QA Manager review.</li>
+  <li><strong>QA Manager dispositions.</strong> Depending on the part type, excursion severity, and duration, the QA Manager may:
+    <ul>
+      <li>Release back to serviceable (excursion brief, parts not sensitive to that condition)</li>
+      <li>Re-inspect with enhanced criteria</li>
+      <li>Consult OEM or engineering for guidance on whether parts can be returned to service</li>
+      <li>Reduce effective shelf life (for shelf-life parts) to account for accelerated aging during the excursion</li>
+      <li>Scrap if parts are confirmed damaged or cannot be confidently dispositioned</li>
+    </ul>
+  </li>
+  <li><strong>Open NCR and corrective action.</strong> Why did the excursion happen? What prevents recurrence? Was the alert system effective? Was the response timely?</li>
+  <li><strong>Documentation.</strong> All of the above is recorded. The excursion file is retained as part of quality records.</li>
+</ol>
+
+<h5>Specific excursion types and concerns</h5>
+
+<ul>
+  <li><strong>HVAC failure.</strong> Temperature drifts toward outside ambient. Depending on outside conditions, temperatures can exceed 90°F or drop below 40°F in extended failures. Affected parts: elastomers (heat-aging), batteries, some adhesives, moisture-sensitive items (humidity may also drift).</li>
+  <li><strong>Refrigerator/freezer failure.</strong> Refrigerated sealants and adhesives warm. Effective shelf life is reduced; some manufacturers void warranty on materials that have exceeded temperature limits.</li>
+  <li><strong>Fire or water leak.</strong> Direct physical damage to packaging and possibly parts. Parts may need destruction even if visually intact.</li>
+  <li><strong>Power outage.</strong> Often combines HVAC and refrigerator failures. Duration matters significantly — 2 hours is rarely critical; 24+ hours often is.</li>
+  <li><strong>Door left open.</strong> Smaller-scale but still a documented excursion. Common in shipping/receiving areas where doors are opened frequently and may be left propped.</li>
+</ul>
 
 <h4>ESD-controlled areas</h4>
-<p>See Module 7 (ESD Handling) for the full treatment. Briefly: areas where ESD-sensitive parts are handled must be ANSI/ESD S20.20 compliant — grounded mats, wrist straps, ionizers, ESD-safe flooring, controlled humidity.</p>
 
-<h4>Hazmat storage</h4>
-<p>See Module 8 (Hazmat Identification) for the full regulatory treatment. Hazmat in storage:</p>
+<p>Module 7 covers ESD in depth. For warehouse purposes, the key points:</p>
+
 <ul>
-  <li>Segregated from non-hazmat (and from incompatible hazmat classes)</li>
-  <li>In containers per 49 CFR / IATA DGR specifications</li>
-  <li>Marked and labeled per hazmat regulations</li>
-  <li>Stored per the hazmat's specific requirements (flammables in fire-rated cabinets, oxidizers separated from organics, etc.)</li>
-  <li>SDS (Safety Data Sheet) accessible</li>
-  <li>Spill kit accessible</li>
+  <li>ESD-sensitive parts are stored in ESD-controlled zones — specifically engineered for ESD control per ANSI/ESD S20.20</li>
+  <li>The ESD zone has conductive or dissipative flooring, grounded work surfaces, wrist strap stations, humidity control (typically 40–60% RH; below 30% increases static buildup dramatically)</li>
+  <li>Personnel entering wear appropriate grounding (wrist straps for seated work, foot grounders or ESD-safe shoes for standing)</li>
+  <li>Parts remain in ESD-safe packaging while in storage. Packaging is only opened in the ESD-controlled area with proper grounding in place</li>
+  <li>The ESD zone is verified periodically — flooring resistance, work surface grounding, wrist-strap function, ionizer balance</li>
 </ul>
 
-<h4>Critical environmental excursions</h4>
-<p>If environmental conditions exceed spec for a documented period (HVAC failure, refrigerator failure, fire, water leak, etc.):</p>
+<p>An auditor specifically tests ESD zone integrity. Testing may include:</p>
+
 <ul>
-  <li>Document the excursion: what failed, when, duration, magnitude</li>
-  <li>Identify affected parts: what was in the affected area during the excursion?</li>
-  <li>Quarantine affected parts pending evaluation</li>
-  <li>QA Manager dispositions: which parts can return to service, which need re-inspection, which must be scrapped?</li>
-  <li>Open a corrective-action report</li>
+  <li>Continuity check of grounding points</li>
+  <li>Visual inspection of grounding cords and connections</li>
+  <li>Wrist-strap function test</li>
+  <li>Review of periodic verification records</li>
+  <li>Walking on the ESD floor while wearing grounders to confirm static drains</li>
+</ul>
+
+<h4>Hazmat storage</h4>
+
+<p>Module 8 covers hazmat in regulatory depth. For warehouse purposes:</p>
+
+<h5>Segregation requirements</h5>
+
+<p>Hazmat is segregated from non-hazmat AND segregated by class (incompatible classes apart from each other):</p>
+
+<ul>
+  <li><strong>Flammables (Class 3)</strong> — in fire-rated cabinets, away from ignition sources, away from oxidizers</li>
+  <li><strong>Oxidizers (Class 5.1)</strong> — away from flammables, away from organics, away from combustibles</li>
+  <li><strong>Corrosives (Class 8)</strong> — in containment trays to capture leaks, away from incompatible chemistries</li>
+  <li><strong>Pyrotechnics (Class 1)</strong> — typically in dedicated explosive-storage cabinet or magazine</li>
+  <li><strong>Lithium batteries (Class 9)</strong> — segregated, in fire-resistant containers or dedicated cabinets</li>
+  <li><strong>Compressed gases (Class 2)</strong> — secured against falling, valve protection, segregated by type (flammable from non-flammable from oxidizing)</li>
+</ul>
+
+<h5>Storage container requirements</h5>
+
+<p>Hazmat in storage is in containers that meet 49 CFR / IATA DGR requirements for the material:</p>
+
+<ul>
+  <li>UN-spec packaging for transport-ready hazmat</li>
+  <li>OEM-original containers preferred while parts are in storage</li>
+  <li>Damaged or compromised containers are not acceptable for hazmat storage — must be repackaged or dispositioned</li>
+  <li>Containers labeled per hazmat regulations</li>
+</ul>
+
+<h5>Marking and labeling</h5>
+
+<ul>
+  <li>Hazard class diamond on the container</li>
+  <li>UN number and proper shipping name</li>
+  <li>Packing group indication</li>
+  <li>Cargo Aircraft Only marking if applicable</li>
+  <li>Quantity</li>
+  <li>Lot/batch number for traceability</li>
+</ul>
+
+<h5>SDS accessibility</h5>
+
+<p>Safety Data Sheets (SDS) for every hazmat on-site must be accessible to personnel. Typically maintained in a binder at the storage area entrance and/or electronically accessible via a defined system. SDS access during an emergency (fire, spill) must be possible without delay.</p>
+
+<h5>Spill response</h5>
+
+<p>Spill kits are accessible. Personnel are trained on spill response for the hazmat types stored. The QAM specifies the spill response procedure for each material type.</p>
+
+<h5>Audit attention to hazmat</h5>
+
+<p>ASA auditors and DOT auditors (separate scope) both check hazmat handling. Common audit checks:</p>
+
+<ul>
+  <li>Walk the hazmat storage area — visible segregation by class</li>
+  <li>Pull SDS for a specific material — can you produce it within minutes?</li>
+  <li>Container inspection — UN-spec where required, undamaged, properly labeled</li>
+  <li>Spill kit accessibility</li>
+  <li>Personnel training records — are hazmat handlers current on training?</li>
+  <li>Excursion records — temperature excursions affecting hazmat (some hazmat is temperature-sensitive)</li>
 </ul>
 
 <h4>Lighting</h4>
+
+<p>Storage area lighting matters for both visibility and material protection:</p>
+
 <ul>
-  <li>General warehouse: enough light to perform receiving inspection accurately</li>
-  <li>UV-sensitive parts (some elastomers): protected from direct sunlight and high-UV fluorescent lighting</li>
-  <li>Optical components: protected from contamination during handling (lint-free environment, white glove handling)</li>
+  <li><strong>General warehouse:</strong> sufficient light to read tags, perform receiving inspection, identify part details. Typical target 50–100 foot-candles in work areas.</li>
+  <li><strong>UV-sensitive parts</strong> (elastomers, some plastics, photographic and optical components): protected from direct sunlight and high-UV fluorescent lighting. Some operations use UV-filtered lighting in elastomer storage areas.</li>
+  <li><strong>Optical components</strong> (lenses, mirrors, detector windows): protected from contamination during handling. Lint-free gloves; white-glove protocols for some operations.</li>
+  <li><strong>Emergency lighting:</strong> required by code; supports safe egress during power outages. Not specifically a quality requirement but operationally essential.</li>
 </ul>
 
 <h4>Cleanliness</h4>
+
+<p>Warehouse cleanliness is a quality control practice, not just aesthetics. A clean warehouse:</p>
+
 <ul>
-  <li>Regular housekeeping schedule documented and executed</li>
-  <li>No food, no drinks in storage areas</li>
-  <li>Floors swept and free of FOD generators</li>
+  <li>Reduces FOD risk to parts (Lesson 4.4)</li>
+  <li>Reveals problems faster (a debris-free shelf shows damage or spills immediately)</li>
+  <li>Indicates discipline — a clean facility suggests an organization that takes details seriously, which auditors and customers notice</li>
+  <li>Reduces contamination risk to ESD and moisture-sensitive parts</li>
+</ul>
+
+<h5>Cleanliness practices</h5>
+
+<ul>
+  <li>Regular housekeeping schedule — documented, with assigned personnel</li>
+  <li>No food, no drinks in storage areas (consistent with FOD prevention rules)</li>
+  <li>Floors swept regularly; spills cleaned immediately</li>
   <li>Shelving wiped down to prevent dust buildup on parts</li>
-  <li>Trash removed regularly (don't accumulate cardboard or packaging waste in storage areas)</li>
+  <li>Trash removed regularly — don\'t accumulate cardboard or packaging waste in storage areas</li>
+  <li>Restricted personal items (jewelry, certain pocket items, etc.) for personnel entering controlled areas</li>
 </ul>
 
 <h4>What the auditor checks</h4>
+
+<p>Specific environmental and cleanliness audit activities:</p>
+
 <ul>
-  <li>Walk-through of storage areas: visible cleanliness, organization, segregation</li>
-  <li>Environmental records: temperature/humidity logs reviewed, excursions investigated</li>
-  <li>Hazmat segregation: are flammables, oxidizers, corrosives properly separated?</li>
-  <li>SDS accessibility: can you produce the SDS for any hazmat on-site within minutes?</li>
-  <li>ESD area integrity: testing of grounding, wrist straps</li>
+  <li>Walk-through of storage areas — visible cleanliness, organization, segregation</li>
+  <li>Environmental log review — last 12 months of temperature and humidity data, sensor calibration records</li>
+  <li>Excursion records — were excursions documented? Were affected parts dispositioned? Were corrective actions effective?</li>
+  <li>Hazmat segregation — incompatible classes separated, containers in good condition, SDS accessible, spill kit accessible</li>
+  <li>ESD zone integrity — visible grounding, periodic verification records</li>
+  <li>Lighting adequate — try to read a tag in a corner where lighting is dimmest</li>
+  <li>General cleanliness — random shelf wipe-down test; look for food/beverage residue</li>
 </ul>
+
+<h5>Common audit findings</h5>
+
+<ul>
+  <li>Temperature log shows excursions but no documented investigation</li>
+  <li>Hazmat containers not properly labeled or labels not legible</li>
+  <li>Incompatible hazmat classes stored adjacent to each other</li>
+  <li>SDS for materials on-site cannot be produced within reasonable time</li>
+  <li>ESD zone grounding test fails or no recent verification records</li>
+  <li>Refrigerated sealants stored at room temperature</li>
+  <li>Dust accumulation on parts or shelves</li>
+  <li>Food, beverages, or food residue in controlled storage</li>
+</ul>
+
+<h4>References</h4>
+
+<ul>
+  <li><strong>ASA-100 §7</strong> — Storage and handling general requirements</li>
+  <li><strong>49 CFR Parts 100-185</strong> — DOT Hazmat (deeper coverage in Module 8)</li>
+  <li><strong>IATA DGR</strong> — air shipment hazmat (Module 8)</li>
+  <li><strong>ANSI/ESD S20.20</strong> — ESD control program (Module 7)</li>
+  <li><strong>IPC J-STD-033</strong> — Moisture-sensitive device handling</li>
+  <li><strong>OEM specifications</strong> — authoritative storage requirements per part</li>
+  <li>TurbineWorks QAM Section [TBD] — Environmental controls and hazmat storage procedures</li>
+</ul>
+
+<h4>Self-check</h4>
+
+<ol>
+  <li>What are typical general warehouse temperature and humidity targets?</li>
+  <li>Why do sealants and adhesives typically require refrigerated storage?</li>
+  <li>What 6 elements does environmental monitoring infrastructure include?</li>
+  <li>Describe the 7-step excursion response procedure.</li>
+  <li>Why is hazmat segregated both from non-hazmat AND by class?</li>
+  <li>Name 6 hazmat classes typically stored at distributors and their segregation requirements.</li>
+  <li>Why is SDS accessibility important during an emergency?</li>
+  <li>How is warehouse cleanliness a quality control practice?</li>
+  <li>What 8 common audit findings does this lesson identify?</li>
+</ol>
+
+<p><em>[TurbineWorks Procedure Reference: insert environmental monitoring system details, hazmat storage area diagram, SDS binder location, and spill response procedure here.]</em></p>
 HTML
         ],
         [
