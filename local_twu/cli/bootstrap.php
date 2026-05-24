@@ -25,7 +25,7 @@ require_once(__DIR__ . '/../content/content.php');
 
 // Bump the suffix here (and in the entrypoint marker docs) when adding new
 // bootstrap steps that should run on existing sites.
-$marker = $CFG->dataroot . '/.twu-bootstrapped-v4';
+$marker = $CFG->dataroot . '/.twu-bootstrapped-v5';
 $force  = in_array('--force', $argv ?? [], true);
 if (file_exists($marker) && !$force) {
     cli_writeln("[twu] already bootstrapped (marker present at $marker). Pass --force to re-run.");
@@ -35,7 +35,7 @@ if (file_exists($marker) && !$force) {
 cli_heading('TurbineWorks University bootstrap');
 
 // ---------------------------------------------------------------------------
-// 1. Site name
+// 1. Site name + frontpage identity
 // ---------------------------------------------------------------------------
 if (get_config('core', 'fullname') !== 'TurbineWorks University') {
     set_config('fullname', 'TurbineWorks University');
@@ -44,6 +44,32 @@ if (get_config('core', 'fullname') !== 'TurbineWorks University') {
 } else {
     cli_writeln("[twu] site name already TurbineWorks University; skipping");
 }
+
+// Site summary — appears in the page header description and search engines.
+// Frontpage layout: show course categories (not random courses) so the four
+// categories we create become the primary nav for new visitors.
+$sitesummary = <<<HTML
+<p><strong>TurbineWorks University</strong> is the internal learning platform for <em>TurbineWorks Aircraft Engine Parts &amp; Components</em>, delivering ASA-100 compliance training, recurring 6-month refreshers, and engine-parts-specific technical training.</p>
+<p>If you are a TurbineWorks employee, log in using the credentials provided by your manager. Your training assignments will appear on your dashboard.</p>
+<p>If you are an auditor, customer, or visitor, please contact <a href="mailto:quality@turbineworks.com">quality@turbineworks.com</a> for access to specific training records.</p>
+HTML;
+set_config('summary', $sitesummary);
+set_config('summaryformat', FORMAT_HTML);
+
+// Frontpage layout — what shows on the home page.
+// Format: comma-separated list of element IDs. The constants are:
+//   FRONTPAGENEWS=0  FRONTPAGECOURSELIST=1  FRONTPAGECATEGORYNAMES=2
+//   FRONTPAGECATEGORYCOMBO=4  FRONTPAGEENROLLEDCOURSELIST=5
+//   FRONTPAGEALLCOURSELIST=6  FRONTPAGECOURSESEARCH=7
+//
+// Logged-out visitors see: categories (4) so the four ASA categories
+// dominate the page.
+// Logged-in users see: their enrolled courses (5), then categories (4) for
+// browsing.
+set_config('frontpage', '4,7');
+set_config('frontpageloggedin', '5,4');
+set_config('numsections', 1, 'site');
+cli_writeln("[twu] frontpage layout: categories+search (visitors), enrolled+categories (logged in)");
 
 // ---------------------------------------------------------------------------
 // 2. Category structure
@@ -299,6 +325,45 @@ foreach ($createdcourses as $idnumber => $course) {
 }
 
 // ---------------------------------------------------------------------------
+// 5c. Reference Library courses + lessons (fills the empty Reference category)
+// ---------------------------------------------------------------------------
+foreach (local_twu_get_reference_library() as $coursedata) {
+    $lessons = $coursedata['lessons'] ?? [];
+    unset($coursedata['lessons']);
+    $course = twu_ensure_course($refcat->id, $coursedata);
+    cli_writeln("[twu] seeding " . count($lessons) . " reference pages in {$coursedata['shortname']}");
+    foreach ($lessons as $lesson) {
+        twu_ensure_page_lesson($course, 0, $lesson['name'], $lesson['intro'], $lesson['content']);
+    }
+}
+
+// ---------------------------------------------------------------------------
+// 5d. Engine-Parts Specific courses + lessons
+// ---------------------------------------------------------------------------
+foreach (local_twu_get_engine_parts_courses() as $coursedata) {
+    $lessons = $coursedata['lessons'] ?? [];
+    unset($coursedata['lessons']);
+    $course = twu_ensure_course($enginecat->id, $coursedata);
+    cli_writeln("[twu] seeding " . count($lessons) . " engine-parts lessons in {$coursedata['shortname']}");
+    foreach ($lessons as $lesson) {
+        twu_ensure_page_lesson($course, 0, $lesson['name'], $lesson['intro'], $lesson['content']);
+    }
+}
+
+// ---------------------------------------------------------------------------
+// 5e. Recurring Training skeleton course
+// ---------------------------------------------------------------------------
+foreach (local_twu_get_recurring_courses() as $coursedata) {
+    $lessons = $coursedata['lessons'] ?? [];
+    unset($coursedata['lessons']);
+    $course = twu_ensure_course($recurringcat->id, $coursedata);
+    cli_writeln("[twu] seeding " . count($lessons) . " recurring lessons in {$coursedata['shortname']}");
+    foreach ($lessons as $lesson) {
+        twu_ensure_page_lesson($course, 0, $lesson['name'], $lesson['intro'], $lesson['content']);
+    }
+}
+
+// ---------------------------------------------------------------------------
 // 6. Theme: activate Moove + brand colors + kill conecti.me footer + logo
 // ---------------------------------------------------------------------------
 $themedir = $CFG->dirroot . '/theme/moove';
@@ -381,7 +446,32 @@ CSS;
         }
     }
 
-    // Bust theme caches so the CSS/logo changes apply immediately.
+    // Moove frontpage settings — fills the "Welcome to TurbineWorks University"
+    // hero, About section, and marketing tiles so logged-out visitors see a
+    // real portal, not a stock Moodle homepage with a course list.
+    set_config('headerimg', '', 'theme_moove'); // use site logo, not a separate banner image
+    set_config('bannercontent', '<h1 style="color:#fff;">TurbineWorks University</h1><p style="color:#ffc800; font-size:1.2em;">ASA-100 Compliance &amp; Engine-Parts Technical Training</p>', 'theme_moove');
+    set_config('bannercontentlocation', 'middle', 'theme_moove');
+    set_config('displaymarketingbox', 1, 'theme_moove');
+    set_config('marketingheading', 'What you can do here', 'theme_moove');
+    set_config('marketingcontent', '<p>TurbineWorks University delivers the ASA-100 quality training program required for all employees touching aircraft parts. Browse the categories below to find your assigned training or explore the reference library.</p>', 'theme_moove');
+
+    // 4 marketing tiles → the 4 categories
+    $tiles = [
+        1 => ['icon' => 'fa-graduation-cap', 'heading' => 'ASA-100 Initial Training', 'content' => 'New-hire training across 8 modules: receiving inspection, SUP detection, recordkeeping, hazmat, ESD, and more.'],
+        2 => ['icon' => 'fa-rotate-right',   'heading' => '6-Month Recurring Training',  'content' => 'Refresher training every 6 months for all employees. Auto-enrolled 30 days before your last completion expires.'],
+        3 => ['icon' => 'fa-book',           'heading' => 'Reference Library',           'content' => 'Direct access to FAA Advisory Circulars, ASA-100, ANSI/ESD S20.20, IATA DGR, and other source documents.'],
+        4 => ['icon' => 'fa-gears',          'heading' => 'Engine-Parts Specific',       'content' => 'Deep-dive training on FAA 8130-3 tag inspection, Life Limited Parts tracking, and OEM service bulletins.'],
+    ];
+    foreach ($tiles as $n => $tile) {
+        set_config("marketing{$n}icon",    $tile['icon'],    'theme_moove');
+        set_config("marketing{$n}heading", $tile['heading'], 'theme_moove');
+        set_config("marketing{$n}content", $tile['content'], 'theme_moove');
+        set_config("marketing{$n}url",     $CFG->wwwroot . '/course/index.php', 'theme_moove');
+    }
+    cli_writeln("[twu] configured Moove frontpage: banner, marketing box, 4 category tiles");
+
+    // Bust theme caches so the CSS/logo/frontpage changes apply immediately.
     theme_reset_all_caches();
     cli_writeln("[twu] purged theme caches");
 } else {
