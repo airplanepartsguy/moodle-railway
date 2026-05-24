@@ -9225,204 +9225,850 @@ function local_twu_module_8_lessons(): array {
     return [
         [
             'name'  => 'Lesson 8.1 — The 9 DOT Hazard Classes',
-            'intro' => '<p>The classification framework that determines all subsequent hazmat handling.</p>',
+            'intro' => '<p>The classification framework underlying every hazmat decision — origin, structure, all nine classes with aviation examples, and why misclassification has caused aircraft losses.</p>',
             'content' => <<<'HTML'
-<h3>The 9 DOT Hazard Classes</h3>
-<p>Every hazardous material is classified into one of 9 DOT hazard classes (with subdivisions). The classification drives every aspect of subsequent handling: packaging, labeling, marking, shipping documentation, mode of transport restrictions, and incident response.</p>
+<h3>The 9 DOT Hazard Classes: The Foundation of Hazmat Handling</h3>
+
+<h4>Why classification comes first</h4>
+<p>Every hazmat decision — what packaging to use, what labels to apply, what documentation is required, whether the material may travel by air at all — flows from one initial determination: <strong>what hazard class does this material belong to?</strong> Classification is not a paperwork formality. It is the operational pivot point. Get classification right and the rest of the process can be looked up in regulations. Get it wrong and the entire downstream chain is wrong — wrong packaging that may fail, wrong labels that mislead emergency responders, wrong documentation that conceals the actual risk from the carrier.</p>
+<p>The aviation industry has paid for misclassification with aircraft and lives. The 1996 ValuJet 592 crash in the Everglades killed 110 people; the proximate cause was chemical oxygen generators that were declared as "Empty Aircraft Oxygen Canisters" when they were in fact charged, expired Class 5.1 oxidizers that ignited during flight. UPS Flight 6 in 2010 killed both pilots after lithium battery cargo caught fire and disabled the aircraft. Asiana Airlines Flight 991 in 2011 was lost over the Pacific with two crew killed after a cargo fire that investigators attributed to lithium batteries. Every one of these involved a classification or declaration failure at the shipper level. Classification is where shipper responsibility begins.</p>
+
+<h4>The structure of the system</h4>
+<p>The U.S. Department of Transportation's Pipeline and Hazardous Materials Safety Administration (PHMSA) maintains the hazardous materials regulations at <strong>49 CFR Parts 100–185</strong>. The international air-transport regulations are the ICAO Technical Instructions, implemented commercially through the IATA Dangerous Goods Regulations (DGR). For sea transport: the IMDG Code. For ground in Europe: ADR. All of these systems share the same underlying classification framework — the <strong>nine hazard classes</strong> — adopted from the UN Model Regulations.</p>
+<p>The same hazardous substance has the same class number across all these systems. Lithium-ion batteries are Class 9 whether shipped by truck under 49 CFR, by air under IATA, or by sea under IMDG. The shared classification is what enables multi-modal shipments to move through carrier handoffs without re-evaluating the substance at each interface.</p>
+<p>Within each class, subdivisions (division numbers) provide finer-grained hazard categorization. A Class 2 gas is further classified as 2.1 (flammable), 2.2 (non-flammable non-toxic), or 2.3 (toxic). The division can have significant operational consequence — a 2.3 toxic gas may be banned from passenger aircraft entirely; a 2.2 non-flammable gas may be acceptable in limited quantities.</p>
 
 <h4>Class 1 — Explosives</h4>
-<p>Materials with mass explosion or projection hazard. Subdivided 1.1 through 1.6 by sensitivity and hazard type.</p>
-<p>Aviation examples: aircraft fire extinguisher bottles with explosive cartridges, ejection seat charges, escape slide inflators with pyrotechnic actuators, flares, certain fuses.</p>
+<p>Materials capable of mass explosion, projection, or fragmentation. Class 1 is divided into six divisions by hazard type and sensitivity:</p>
+<ul>
+  <li><strong>1.1</strong> — Mass-explosion hazard (e.g., TNT, dynamite)</li>
+  <li><strong>1.2</strong> — Projection hazard but not mass-explosion</li>
+  <li><strong>1.3</strong> — Fire hazard with minor blast or projection</li>
+  <li><strong>1.4</strong> — Minor explosion hazard largely confined to packaging (most aviation pyrotechnics)</li>
+  <li><strong>1.5</strong> — Very insensitive substances with mass-explosion potential (e.g., blasting agents)</li>
+  <li><strong>1.6</strong> — Extremely insensitive articles</li>
+</ul>
+<p><strong>Aviation examples at TurbineWorks scale:</strong></p>
+<ul>
+  <li>Aircraft fire extinguisher bottles with explosive cartridges (squibs) — Class 1.4S typically</li>
+  <li>Ejection seat charges and ejection sequencing components — military application</li>
+  <li>Escape slide inflators with pyrotechnic actuators — Class 1.4 typically when shipped as parts (UN3268 may apply for the safety device as a whole)</li>
+  <li>Emergency flares carried on aircraft</li>
+  <li>Certain fuses and electrical-mechanical actuators with energetic content</li>
+  <li>Aircraft cartridge starters (older military / general aviation engines)</li>
+</ul>
+<p>Class 1 has the most restrictive transport rules. Most Class 1 items are forbidden on passenger aircraft entirely; only specific divisions and net explosive quantities ride on cargo aircraft. Ground transport is also tightly regulated. Class 1 shipments require specially-trained shippers and may require carrier pre-approval.</p>
 
 <h4>Class 2 — Gases</h4>
-<p>2.1 Flammable gas, 2.2 Non-flammable non-toxic gas, 2.3 Toxic gas.</p>
-<p>Aviation examples: oxygen cylinders (2.2 oxidizer subsidiary), nitrogen accumulators (2.2), fire-extinguishing agents (2.2 or 2.3 depending on agent), fuel-system test gas.</p>
+<p>Substances that are gases at 20 °C and 101.3 kPa, or have a vapor pressure exceeding 300 kPa at 50 °C. Three divisions:</p>
+<ul>
+  <li><strong>2.1</strong> — Flammable gas (e.g., propane, hydrogen, acetylene)</li>
+  <li><strong>2.2</strong> — Non-flammable, non-toxic gas (e.g., nitrogen, helium, oxygen, CO₂)</li>
+  <li><strong>2.3</strong> — Toxic gas (e.g., chlorine, fluorine, hydrogen sulfide)</li>
+</ul>
+<p>Subsidiary risks are common in Class 2. Oxygen is 2.2 with a 5.1 oxidizer subsidiary because it intensifies combustion of other materials. Some refrigerants are 2.2 with corrosive subsidiary if hydrolyzed.</p>
+<p><strong>Aviation examples:</strong></p>
+<ul>
+  <li><strong>Aviation oxygen cylinders</strong> (UN1072 oxygen, compressed; Class 2.2 with 5.1 subsidiary)</li>
+  <li><strong>Nitrogen accumulators</strong> (UN1066 nitrogen, compressed; Class 2.2) — used for hydraulic shock absorbers, emergency hydraulic backup, tire-pressure devices</li>
+  <li><strong>Fire-extinguishing agents</strong> in fire bottles (Halon 1301 / 1211 — UN1956 / UN2037 / others depending on agent; Class 2.2)</li>
+  <li><strong>Fuel system test gas cylinders</strong></li>
+  <li><strong>Helium-pressurized fire-detection loop sensors</strong></li>
+  <li><strong>CO₂ in life jacket inflation cartridges</strong> (small; sometimes exempted by quantity)</li>
+  <li><strong>Halon 1301 vapor</strong> for cargo and engine fire suppression systems</li>
+</ul>
+<p>Pressurized gas cylinders that are unfilled, properly purged, and certified empty may ship as non-hazmat if specific provisions are met. Empty oxygen bottles still containing residual pressure are still hazmat.</p>
 
 <h4>Class 3 — Flammable Liquids</h4>
-<p>Liquids with flash point below 60 °C (140 °F).</p>
-<p>Aviation examples: fuel system test fluids, hydraulic fluids in some categories, solvents, paints, adhesives.</p>
+<p>Liquids with a flash point at or below 60 °C (140 °F) closed-cup. Some liquids with flash point up to 93 °C may be Class 3 by elevated-temperature provision when shipped above their flash point.</p>
+<p>Packing groups in Class 3:</p>
+<ul>
+  <li><strong>PG I</strong> — Flash point below 23 °C, initial boiling point at or below 35 °C (highest danger)</li>
+  <li><strong>PG II</strong> — Flash point below 23 °C, initial boiling point above 35 °C</li>
+  <li><strong>PG III</strong> — Flash point 23–60 °C</li>
+</ul>
+<p><strong>Aviation examples:</strong></p>
+<ul>
+  <li>Aviation fuel samples (UN1863, Class 3, PG II or III depending on type)</li>
+  <li>Fuel system test fluids and calibration fuels</li>
+  <li>Solvents — MEK, acetone, isopropyl alcohol in bulk, methylene chloride (though some solvents shift to Class 6.1)</li>
+  <li>Paints, paint thinners, primers (UN1263 paint or paint-related material; PG I, II, or III depending on flash point)</li>
+  <li>Adhesives with flammable solvent carriers (UN1133 adhesives)</li>
+  <li>Some hydraulic fluids with flammable carriers (most aviation hydraulic fluids are Class 3 or non-hazmat depending on formulation; check the SDS)</li>
+  <li>Avgas (UN1203 gasoline; Class 3, PG II)</li>
+</ul>
+<p>Note: Jet A and Jet A-1 themselves are typically NOT Class 3 because their flash points are above 38 °C (typical), though shipments of warm Jet A or Jet B (wide-cut) may fall under Class 3. The flash point of a specific batch and the temperature at which it ships determine classification. The SDS is authoritative for the specific product.</p>
 
 <h4>Class 4 — Flammable Solids; Spontaneously Combustible; Dangerous When Wet</h4>
-<p>4.1 Flammable solid, 4.2 Spontaneously combustible, 4.3 Dangerous when wet.</p>
-<p>Aviation examples: certain magnesium parts (4.1), certain pyrotechnic compositions (4.1), lithium metal batteries (4.3).</p>
+<p>Three different but related hazards grouped under Class 4:</p>
+<ul>
+  <li><strong>4.1 — Flammable solids</strong> (readily combustible solids, self-reactive substances, polymerizing substances, solid desensitized explosives)</li>
+  <li><strong>4.2 — Spontaneously combustible substances</strong> (pyrophoric or self-heating substances that can ignite without external ignition source)</li>
+  <li><strong>4.3 — Substances which in contact with water emit flammable gases</strong> (e.g., metallic sodium, potassium, calcium carbide)</li>
+</ul>
+<p><strong>Aviation examples:</strong></p>
+<ul>
+  <li>Magnesium parts in some aircraft applications (Class 4.1 if in powder/granular form; massive magnesium structures generally not hazmat)</li>
+  <li>Certain pyrotechnic compositions used in aviation safety devices (Class 4.1)</li>
+  <li>Lithium metal (not battery — bulk metal) — Class 4.3 (rare in aviation distribution context)</li>
+  <li>Some aircraft de-icing chemical solids</li>
+</ul>
+<p>Class 4 is relatively rare in standard aviation parts distribution but should be recognized.</p>
 
 <h4>Class 5 — Oxidizers and Organic Peroxides</h4>
-<p>5.1 Oxidizers, 5.2 Organic peroxides.</p>
-<p>Aviation examples: chemical oxygen generators (5.1), some hydraulic fluids (5.1 in concentrated form).</p>
+<ul>
+  <li><strong>5.1 — Oxidizers</strong> — substances that yield oxygen and increase the combustion of other materials</li>
+  <li><strong>5.2 — Organic peroxides</strong> — thermally unstable substances; may decompose exothermically</li>
+</ul>
+<p><strong>Aviation examples:</strong></p>
+<ul>
+  <li><strong>Chemical oxygen generators</strong> (Class 5.1) — used for passenger oxygen masks. UN3356 Oxygen generator, chemical. The ValuJet 592 cause. Heavily regulated; expired generators must be discharged safely before shipping.</li>
+  <li>Some concentrated hydraulic fluids (Class 5.1 in concentrated form; diluted versions may not be)</li>
+  <li>Hydrogen peroxide solutions used in certain test equipment or cleaning processes</li>
+  <li>Sodium chlorate (used in some oxygen-generator chemistries)</li>
+</ul>
+<p>Chemical oxygen generators are uniquely dangerous because they ignite vigorously when activated, sustaining their own combustion regardless of the surrounding fire-suppression environment. Their classification status (charged vs discharged) materially changes the shipping requirements.</p>
 
 <h4>Class 6 — Toxic and Infectious Substances</h4>
-<p>6.1 Toxic, 6.2 Infectious.</p>
-<p>Aviation examples: certain cleaning agents, fuel additives, paint solvents.</p>
+<ul>
+  <li><strong>6.1 — Toxic substances</strong> — cause death or serious injury by inhalation, ingestion, or skin contact</li>
+  <li><strong>6.2 — Infectious substances</strong> — substances containing pathogens (rare in aviation distribution)</li>
+</ul>
+<p><strong>Aviation examples:</strong></p>
+<ul>
+  <li>Some cleaning agents and solvents (methylene chloride, certain chlorinated solvents)</li>
+  <li>Fuel additives with toxic components</li>
+  <li>Paint solvents with toluene, xylene, or similar aromatic content</li>
+  <li>Certain hydraulic fluids with toxic additives</li>
+  <li>Some preservatives applied to parts during storage (rare)</li>
+</ul>
+<p>Class 6.1 packing groups are determined by toxicity thresholds (LD50 oral/dermal, LC50 inhalation). Check the SDS for the specific substance.</p>
 
 <h4>Class 7 — Radioactive Material</h4>
-<p>Special handling category.</p>
-<p>Aviation examples: thoriated lighting elements (some older instruments), certain calibration sources, some smoke detectors.</p>
+<p>Materials whose specific activity exceeds 70 kBq/kg. A special category with its own regulatory regime — packaging, marking, documentation, and transport rules differ significantly from other classes.</p>
+<p><strong>Aviation examples:</strong></p>
+<ul>
+  <li>Thoriated lighting elements in some older instruments (thorium-232; thoriated cathodes in vacuum tubes)</li>
+  <li>Thoriated magnesium alloys in older aircraft structures (low activity but technically Class 7)</li>
+  <li>Tritium illumination devices (gun sights, some emergency exit signs — older applications)</li>
+  <li>Calibration sources for NDT equipment (americium, cobalt-60, cesium-137 sources)</li>
+  <li>Ionization-type smoke detectors with americium-241 (small, often shipped under "excepted package" provisions)</li>
+  <li>Depleted uranium counterweights in some legacy airframes (rare but real)</li>
+</ul>
+<p>Class 7 has special documentation requirements (transport index, radiation level marking) and is the most heavily regulated for air transport. Below specific activity thresholds (low specific activity, LSA), simplified rules may apply.</p>
 
 <h4>Class 8 — Corrosive Substances</h4>
-<p>Materials that destroy living tissue or corrode metals.</p>
-<p>Aviation examples: aircraft battery acid (lead-acid), some cleaning compounds, etchants.</p>
+<p>Materials that, by chemical action, cause severe damage to skin within 4 hours (PG I), 14 days (PG II/III), or corrode steel/aluminum at greater than 6.25 mm/year.</p>
+<p><strong>Aviation examples:</strong></p>
+<ul>
+  <li>Aircraft battery acid (lead-acid; sulfuric acid solution) — UN2796 Class 8</li>
+  <li>Alkaline battery electrolyte (potassium hydroxide; Class 8)</li>
+  <li>Cleaning compounds (acidic and alkaline both can be Class 8)</li>
+  <li>Etchants for surface preparation (e.g., chromic acid solutions — Class 8 with 6.1 subsidiary)</li>
+  <li>Some paint strippers</li>
+  <li>Mercury (Class 8 specific entry; older avionics with mercury switches)</li>
+</ul>
 
 <h4>Class 9 — Miscellaneous Dangerous Goods</h4>
-<p>Materials that present hazards but don't fit Classes 1-8. Includes elevated-temperature materials, marine pollutants, and — critically for aviation — <strong>lithium batteries</strong>.</p>
-<p>Aviation examples: lithium-ion batteries (UN3480 standalone, UN3481 with equipment), lithium metal batteries (UN3090, UN3091), magnetized materials (large rotors, certain motors).</p>
-
-<h4>Why classification matters</h4>
-<p>The same physical substance may be hazmat or not depending on quantity, concentration, packaging, or transport mode. Lithium-ion batteries are heavily regulated for air transport but less so for ground. A 5 ml bottle of paint thinner may be below regulatory threshold; a 5 liter container is not.</p>
-<p>Mis-classification (saying a Class 9 lithium battery is "not hazmat") is one of the most common — and most dangerous — hazmat errors. Lithium battery fires have caused aircraft losses (UPS Flight 6, Asiana 991).</p>
-
-<h4>How TurbineWorks identifies hazmat</h4>
-<p>Every part received is evaluated for hazmat content. Sources of information:</p>
+<p>Substances and articles that present a hazard during transportation but don't fit Classes 1–8. Includes:</p>
 <ul>
-  <li>Supplier shipping documentation (a properly shipped hazmat item arrives with hazmat documentation)</li>
-  <li>SDS (Safety Data Sheet) for chemical content</li>
-  <li>Part type knowledge (oxygen cylinders are always hazmat)</li>
-  <li>OEM documentation</li>
+  <li><strong>Lithium batteries</strong> — the most operationally significant Class 9 category in aviation:
+    <ul>
+      <li>UN3480 — Lithium-ion batteries (standalone)</li>
+      <li>UN3481 — Lithium-ion batteries packed with equipment or contained in equipment</li>
+      <li>UN3090 — Lithium metal batteries (standalone)</li>
+      <li>UN3091 — Lithium metal batteries packed with equipment or contained in equipment</li>
+    </ul>
+  </li>
+  <li><strong>Magnetized materials</strong> — items with magnetic field exceeding 0.00525 gauss at 4.5m distance</li>
+  <li><strong>Elevated-temperature substances</strong> — substances shipped above 100 °C liquid or 240 °C solid</li>
+  <li><strong>Environmentally hazardous substances</strong> — marine pollutants</li>
+  <li><strong>Dry ice (solid carbon dioxide)</strong> — UN1845 Class 9</li>
+  <li><strong>Asbestos</strong> in certain forms — UN2212/UN2590 Class 9</li>
+  <li><strong>Genetically modified microorganisms</strong></li>
 </ul>
-<p>If hazmat status is unclear, the QA Manager makes the determination. Default to "treat as hazmat" pending clarification — over-handling is inconvenient but safe; under-handling is dangerous.</p>
+<p><strong>Aviation examples:</strong></p>
+<ul>
+  <li>Avionics with backup batteries (lithium content drives Class 9)</li>
+  <li>ELTs and ULBs with lithium primary batteries (lithium metal — UN3090/3091)</li>
+  <li>FADECs with lithium backup batteries</li>
+  <li>Generator rotors with strong magnets (Class 9 magnetized materials)</li>
+  <li>Some types of permanent-magnet motors used in aviation</li>
+  <li>Dry ice used to pack temperature-sensitive parts for shipment</li>
+  <li>Legacy brake assemblies with asbestos friction materials</li>
+</ul>
+<p>Lithium batteries have undergone the most regulatory tightening of any class since 2010. UN3480 standalone lithium-ion is forbidden on passenger aircraft and limited on cargo aircraft (state-of-charge limits, packaging, marking requirements). UN3091 (lithium metal in equipment) has its own provisions that are slightly different. Misclassifying or under-declaring lithium content has been the leading cause of in-flight fire incidents in cargo aviation.</p>
+
+<h4>Subsidiary risks: when one substance has multiple hazards</h4>
+<p>Many substances pose more than one hazard. The classification system handles this with a primary hazard (the main class) and one or more subsidiary risks (additional classes). Example: oxygen cylinders are primarily Class 2.2 (non-flammable gas) but carry a Class 5.1 (oxidizer) subsidiary because they intensify combustion. The package would carry both labels — the diamond for Class 2.2 prominently, and a smaller subsidiary 5.1 label.</p>
+<p>Subsidiary risks affect:</p>
+<ul>
+  <li>Required labels on the package</li>
+  <li>Compatibility rules with other hazmat in the same shipment</li>
+  <li>Storage segregation in the warehouse</li>
+  <li>Emergency response information</li>
+</ul>
+
+<h4>Packing Groups: hazard intensity within a class</h4>
+<p>Within Classes 3, 4, 5, 6, 8, and most of 9, items are further graded by Packing Group:</p>
+<ul>
+  <li><strong>PG I</strong> — High danger; most restrictive packaging requirements</li>
+  <li><strong>PG II</strong> — Medium danger</li>
+  <li><strong>PG III</strong> — Low danger; least restrictive packaging within the class</li>
+</ul>
+<p>Class 1 (explosives), Class 2 (gases), Class 7 (radioactive), and lithium batteries do not use Packing Groups — they have their own division or specific provision structure.</p>
+<p>Packing Group affects: required UN-rated packaging spec, maximum net quantity per package, allowable transport modes, and emergency response classification.</p>
+
+<h4>Why classification can change with quantity, concentration, or state</h4>
+<p>The same physical substance may be hazmat or non-hazmat depending on context. Examples:</p>
+<ul>
+  <li>Small quantities below threshold may be exempted (e.g., a 1 oz bottle of paint with flammable solvent in a "limited quantity" provision)</li>
+  <li>Hydrogen peroxide is non-hazmat at low concentration (3% household), Class 5.1 at moderate (8-20%), Class 5.1 PG I or higher at high concentration (60%+)</li>
+  <li>Activated chemical oxygen generators are Class 5.1; "fully discharged" generators meeting specific test criteria may not be hazmat</li>
+  <li>A lithium-ion battery in a working aircraft computer (in equipment) ships under UN3481 with different provisions than the same battery shipped alone (UN3480)</li>
+  <li>A pressurized cylinder shipped empty (after purging and certification) may not be hazmat</li>
+</ul>
+<p>The shipper cannot guess. The SDS or OEM documentation must support the classification, and the documentation must travel with the shipment.</p>
+
+<h4>Hazmat by mode: ground vs air vs sea</h4>
+<p>The same classification leads to different shipping requirements depending on mode:</p>
+<table border="1" cellpadding="6" cellspacing="0">
+  <tr style="background:#0d2240; color:#fff;">
+    <th>Class</th><th>Ground (49 CFR)</th><th>Air (IATA DGR)</th><th>Sea (IMDG)</th>
+  </tr>
+  <tr><td>Lithium-ion standalone (UN3480)</td><td>Permitted with placards</td><td>Forbidden on passenger aircraft; cargo-only with SOC limit</td><td>Permitted with proper packaging</td></tr>
+  <tr><td>Chemical oxygen generator (UN3356)</td><td>Permitted</td><td>Forbidden on passenger aircraft; cargo-only restricted</td><td>Permitted with proper packaging</td></tr>
+  <tr><td>Class 1.4S Pyrotechnic</td><td>Permitted</td><td>Cargo-only; small qty packaging</td><td>Permitted</td></tr>
+  <tr><td>Magnetized material (Class 9)</td><td>Largely unrestricted</td><td>Restricted by field strength; documentation required</td><td>Largely unrestricted</td></tr>
+</table>
+<p>Air is the most restrictive mode. A shipment that ships fine by truck may be entirely forbidden by air. The shipper must select the mode that the hazmat can legally travel under.</p>
+
+<h4>Hazmat consequences: real cases</h4>
+
+<p><strong>ValuJet Flight 592 — May 11, 1996.</strong> 110 fatalities. Chemical oxygen generators destined for SabreTech maintenance were boxed at SabreTech's Miami facility and shipped on the next ValuJet flight to Atlanta. The shipping label declared the generators as "Empty" — they were not empty, they were expired but charged Class 5.1 oxidizers. The shipping documentation did not reflect Class 5.1 hazmat. Loaded into the forward cargo hold without the protections required for Class 5.1, the generators activated, sustained their own combustion, and ignited adjacent tires and other cargo. The fire could not be controlled. The aircraft crashed into the Florida Everglades within minutes of takeoff. The cause was directly traced to mis-declaration at the shipper. SabreTech personnel were criminally charged.</p>
+
+<p><strong>UPS Flight 6 — September 3, 2010.</strong> 2 fatalities. A Boeing 747-400F operating Dubai to Cologne caught fire in flight, lost control, and crashed near Dubai International Airport. Investigators determined the fire originated in lithium-ion batteries in the cargo. At the time of the incident, lithium-ion cargo provisions were less restrictive than today. The crash, and a subsequent Asiana cargo crash in 2011, drove the substantial tightening of lithium battery air-cargo rules now in effect.</p>
+
+<p><strong>Asiana Airlines Flight 991 — July 28, 2011.</strong> 2 fatalities. A Boeing 747-400F Seoul to Shanghai crashed into the East China Sea after the crew reported a cargo fire. Although the aircraft and most cargo were never recovered, investigators concluded the most likely cause was lithium-ion battery cargo. The crash contributed to the international consensus that lithium-ion cargo posed a uniquely difficult fire risk for aviation.</p>
+
+<h4>How TurbineWorks identifies hazmat at receipt</h4>
+
+<p>Every part arriving at TurbineWorks is evaluated for hazmat content. The decision sources, in order of authority:</p>
+<ol>
+  <li><strong>Supplier shipping documentation.</strong> A properly-prepared hazmat shipment arrives with shipping papers identifying UN number, PSN, class, and packing group. If the supplier shipped it as hazmat, TurbineWorks accepts the classification (and verifies the shipping papers match the part).</li>
+  <li><strong>Safety Data Sheet (SDS).</strong> Chemical content of the part or the materials it contains. Required for any chemical product. The SDS Section 14 covers transport classification.</li>
+  <li><strong>OEM documentation.</strong> Component Maintenance Manuals and shipping instructions for the part. Many parts have OEM-issued shipping notes specifying classification.</li>
+  <li><strong>Part-type knowledge.</strong> Trained receiving personnel know that an ELT contains lithium batteries, an oxygen bottle is Class 2.2, an oxygen generator is Class 5.1. Part-type databases (TurbineWorks part master) flag known-hazmat part numbers.</li>
+  <li><strong>QA Manager review.</strong> When automated identification is unclear, the QA Manager makes the determination. Decision is documented and added to the part master for future receipts.</li>
+</ol>
+
+<p><strong>Default behavior when uncertain:</strong> treat as hazmat pending clarification. Over-handling (treating a non-hazmat as hazmat) is wasted effort but not dangerous. Under-handling (treating hazmat as non-hazmat) is the pathway to incidents like ValuJet. The asymmetric cost favors over-classification when in doubt.</p>
+
+<h4>What happens when hazmat enters the warehouse</h4>
+
+<p>Once classified, a hazmat-bearing part triggers specific warehouse handling:</p>
+<ul>
+  <li><strong>Storage location.</strong> Hazmat is segregated by class. Class 3 flammable liquids in fire-resistant cabinets. Class 8 corrosives in acid-resistant cabinets. Class 2 cylinders in upright chained storage. Class 1 in specially-engineered explosives magazines (where applicable). Class 9 lithium batteries in fire-resistant containers if quantity warrants.</li>
+  <li><strong>Segregation incompatibility.</strong> Some hazmat classes must not be stored adjacent — oxidizers (5.1) away from flammables (3, 4), acids and bases segregated, water-reactives (4.3) away from areas that could flood.</li>
+  <li><strong>Spill and incident response.</strong> The hazmat storage area has spill kits appropriate to the classes stored, eyewash and emergency shower if applicable, and SDS available.</li>
+  <li><strong>Inventory tracking.</strong> Hazmat is tracked in the inventory system with its classification, so shipment selection automatically applies the correct shipping process.</li>
+  <li><strong>Personnel training.</strong> Only hazmat-trained personnel handle the inventory.</li>
+</ul>
+
+<h4>The hazmat employee training requirement</h4>
+
+<p>Federal regulations require every person whose work involves hazmat to receive hazmat training. Specifically:</p>
+<ul>
+  <li><strong>49 CFR §172.704 — DOT hazmat training</strong> — initial training within 90 days of assignment, recurrent every 3 years minimum. Required for any "hazmat employee" — anyone who classifies, packages, marks, labels, ships, transports, or unloads hazmat.</li>
+  <li><strong>IATA DGR — air-shipment training</strong> — initial training before independent function, recurrent every 24 months. Required for personnel preparing or signing for air shipments.</li>
+</ul>
+
+<p>TurbineWorks University's recurring training cadence (6 months) exceeds both regulatory minimums, meaning hazmat training is always current as long as recurring training is current. Records of training are part of the audit-evidence package.</p>
+
+<h4>Why this matters at TurbineWorks</h4>
+
+<p>TurbineWorks distributes aviation engine parts, and engine systems involve many hazmat categories: oxygen and bleed-air systems, fuel systems, fire-suppression systems, electrical systems with lithium batteries, hydraulic systems with potentially flammable fluids, and structures with magnetic generator components. A meaningful fraction of inventory will involve some hazmat classification or hazmat subsystem. Recognizing classification at receiving, applying correct storage, and shipping correctly is daily practice — not an occasional event.</p>
+
+<p>Misclassification has been the proximate cause of multiple commercial aviation fatalities. The penalties for shipper non-compliance are not just regulatory fines; they can be criminal, especially when the consequences include in-flight fires, injuries, or deaths. The classification work done at receiving is the foundation; every downstream control depends on getting it right.</p>
+
+<h4>Self-check questions</h4>
+<ol>
+  <li>What are the nine DOT hazard classes, and what is the basic hazard each addresses?</li>
+  <li>Why are lithium batteries Class 9 rather than Class 4 or 9?</li>
+  <li>What is the difference between a primary hazard class and a subsidiary risk? Give an aviation example.</li>
+  <li>How does Packing Group differ from Class, and which classes do not use Packing Group?</li>
+  <li>What was the proximate cause of the ValuJet 592 crash, and what does it teach about shipper responsibility?</li>
+  <li>Why may the same substance be hazmat for one transport mode but not another?</li>
+  <li>List five aviation examples each of Class 2 and Class 9.</li>
+  <li>What is the regulatory training requirement for DOT hazmat handlers? For IATA DGR air shippers?</li>
+  <li>When TurbineWorks cannot definitively classify a part, what is the default action and why?</li>
+  <li>Why does over-classification cost less than under-classification?</li>
+</ol>
+
+<h4>References</h4>
+<ul>
+  <li><strong>49 CFR Parts 100–185</strong> — DOT Hazardous Materials Regulations. Free at <a href="https://www.ecfr.gov/current/title-49/subtitle-B/chapter-I/subchapter-C" target="_blank" rel="noopener">eCFR</a>.</li>
+  <li><strong>49 CFR §172.101</strong> — Hazardous Materials Table</li>
+  <li><strong>IATA Dangerous Goods Regulations (DGR)</strong> — current annual edition</li>
+  <li><strong>ICAO Technical Instructions</strong> — international air transport baseline</li>
+  <li><strong>IMDG Code</strong> — international maritime transport</li>
+  <li><strong>UN Recommendations on the Transport of Dangerous Goods, Model Regulations</strong> — international foundation document</li>
+  <li>NTSB Aircraft Accident Report — ValuJet 592 (1996)</li>
+  <li>GCAA / FAA reports — UPS Flight 6 (2010) and Asiana Flight 991 (2011)</li>
+</ul>
+
+<p><em>[TurbineWorks Procedure Reference: TurbineWorks Hazmat Identification Procedure within QAM; part-master hazmat designations register; storage area diagram with segregation requirements.]</em></p>
 HTML
         ],
         [
             'name'  => 'Lesson 8.2 — Hidden Hazmat in Aviation Parts',
-            'intro' => '<p>The parts that surprise people: hazmat where you would not expect it.</p>',
+            'intro' => '<p>The parts that surprise people — hazmat concealed in components that look benign. Recognition criteria, by category, with the specific UN numbers and the regulatory traps that have caused real incidents.</p>',
             'content' => <<<'HTML'
-<h3>Hidden Hazmat in Aviation Parts</h3>
-<p>Some hazmat is obvious: oxygen bottles, fire extinguishers, battery acid. Other hazmat is concealed in parts that look benign. Hidden hazmat is one of the largest sources of hazmat violations in the aviation industry.</p>
+<h3>Hidden Hazmat in Aviation Parts: Recognition Beyond the Obvious</h3>
 
-<h4>Lithium batteries</h4>
-<p>The biggest hidden-hazmat category. Lithium batteries are in:</p>
-<ul>
-  <li>Emergency Locator Transmitters (ELTs)</li>
-  <li>Underwater Locator Beacons (ULBs / pingers)</li>
-  <li>Cabin emergency lighting battery packs</li>
-  <li>Some flight data recorders and cockpit voice recorders (battery backup)</li>
-  <li>Engine control unit backup batteries (some FADECs)</li>
-  <li>Wireless sensor systems</li>
-  <li>Avionics with non-volatile memory backup</li>
-  <li>Some IPADs and tablets used in cockpit (in maintenance shipments)</li>
-</ul>
-<p>Any of these arriving at TurbineWorks must be identified and shipped as Class 9 lithium battery (UN3090, UN3091, UN3480, or UN3481 depending on type and installation state). The regulatory threshold and packing requirements have tightened repeatedly since 2010 in response to in-flight fire incidents.</p>
+<h4>Why "hidden" hazmat is the dominant failure mode</h4>
+<p>Obvious hazmat is rarely the source of major incidents. Nobody loads an oxygen bottle onto an aircraft without realizing it is an oxygen bottle. Nobody ships a fire extinguisher and forgets it contains pressurized gas. The labels are large, the shape is recognizable, the safety culture catches it. Where hazmat causes incidents is when it is <em>concealed</em> within a component that looks like something else.</p>
+<p>The pilot in command does not think of an Emergency Locator Transmitter as "lithium battery cargo." The receiving clerk does not think of a generator rotor as "magnetized materials." The shipping coordinator does not think of an old gasket as "asbestos." Yet each of these, when shipped without recognition, is mis-declared hazmat — and the chain of regulatory protections that should have applied is bypassed.</p>
+<p>The U.S. PHMSA's analysis of undeclared hazmat incidents has consistently identified <strong>hidden lithium batteries, hidden oxygen-generating chemicals, hidden inflation devices, and hidden pyrotechnic actuators</strong> as the dominant categories. Most are not malicious. Most are ignorance — the shipper genuinely did not know the part contained hazmat. The shipper's defense ("I didn't know") is not legally adequate; the regulations create an affirmative duty to know. Training and documented identification procedures are the way TurbineWorks discharges that duty.</p>
 
-<h4>Oxygen sources</h4>
-<ul>
-  <li>Crew oxygen bottles</li>
-  <li>Passenger oxygen masks with chemical oxygen generators (Class 5.1)</li>
-  <li>Portable oxygen units</li>
-  <li>Emergency descent oxygen kits</li>
-</ul>
-<p>Chemical oxygen generators (Class 5.1 oxidizer) caused the 1996 ValuJet 592 crash and remain heavily regulated. A used (activated) generator is different hazmat than a new (unactivated) one.</p>
+<h4>Lithium batteries: the largest hidden category</h4>
 
-<h4>Inflatables with pressurized gas</h4>
-<ul>
-  <li>Escape slides (with inflation cylinders)</li>
-  <li>Life vests with CO2 cartridges</li>
-  <li>Life rafts</li>
-  <li>Crash position indicator markers</li>
-</ul>
-<p>The inflation cylinder is Class 2.2 (non-flammable gas). The actuator may include explosive squibs (Class 1.4).</p>
+<p>Lithium battery technology pervades modern aviation. Primary (non-rechargeable) lithium-metal batteries are common in safety devices that must work after years of storage. Secondary (rechargeable) lithium-ion batteries are standard for any electronics needing backup power. The line replaceable unit (LRU) that arrives at receiving may not visibly indicate the battery inside — it is sealed in the unit and only documented inside the maintenance manual.</p>
 
-<h4>Fire protection</h4>
+<p><strong>Categories of aviation parts containing lithium batteries:</strong></p>
 <ul>
-  <li>Cargo bay fire bottles (Halon or replacement agent — Class 2.2)</li>
-  <li>Engine fire bottles (same)</li>
-  <li>APU fire bottles (same)</li>
-  <li>Hand-held fire extinguishers</li>
-  <li>Fire detector loops with helium pressurization (Class 2.2)</li>
+  <li><strong>Emergency Locator Transmitters (ELTs).</strong> Always contain lithium metal (typically Li/SO₂ or Li/MnO₂ primary cells) sized to operate the transmitter for 24-48 hours after activation following a crash. ELT batteries are large by hazmat-shipment standards (often 30+ grams of lithium content total). UN3091 if shipped in the ELT; UN3090 if the battery is shipped separately.</li>
+  <li><strong>Underwater Locator Beacons (ULBs / "pingers").</strong> Attached to flight data recorders and cockpit voice recorders. Lithium primary cells. UN3090/3091.</li>
+  <li><strong>Cabin emergency lighting battery packs.</strong> Lithium-ion (rechargeable) batteries in self-contained emergency lighting units. UN3481.</li>
+  <li><strong>Flight Data Recorders (FDRs) and Cockpit Voice Recorders (CVRs).</strong> Some have internal lithium batteries for memory backup and survival recorder function. UN3481.</li>
+  <li><strong>FADEC backup batteries.</strong> Some FADEC designs include a small lithium battery for non-volatile memory backup or for shutdown sequence preservation. UN3481.</li>
+  <li><strong>Engine condition monitoring units.</strong> Same role — backup for stored data. UN3481.</li>
+  <li><strong>Wireless sensor systems.</strong> Some modern aircraft instrumentation uses battery-powered wireless sensors. UN3091 or UN3481 depending on chemistry.</li>
+  <li><strong>Avionics with non-volatile memory backup.</strong> Any computer with a coin-cell or pack of cells for memory retention.</li>
+  <li><strong>Cockpit Electronic Flight Bag (EFB) tablets and aircraft-installed tablets.</strong> Lithium-ion. UN3481 if shipped in the device.</li>
+  <li><strong>Portable cabin equipment.</strong> Crew flashlights, portable inspection cameras, handheld inspection scopes. UN3091 (primary) or UN3481 (rechargeable).</li>
+  <li><strong>RFID-equipped life-limited parts.</strong> Some modern LLPs carry battery-powered RFID for traceability — micro-batteries, generally below regulatory threshold but classification depends on chemistry and content.</li>
+  <li><strong>Aircraft maintenance tools.</strong> Battery-powered torque wrenches, cordless drills, calibrated test equipment. UN3481.</li>
+  <li><strong>Health and usage monitoring (HUMS) units.</strong> Some helicopter and engine HUMS units have internal batteries. UN3481.</li>
 </ul>
 
-<h4>Pyrotechnics</h4>
+<p><strong>The regulatory framework for lithium batteries.</strong> Each UN number has its own packing instruction in the IATA DGR (PI 965 through PI 970 cover lithium variants). The provisions distinguish:</p>
 <ul>
-  <li>Ejection seat charges (Class 1)</li>
-  <li>Cargo door explosive bolts</li>
-  <li>Engine fire suppression squibs</li>
-  <li>Smoke flares for emergency use</li>
+  <li>Lithium-ion vs lithium metal (different chemistry, different risk)</li>
+  <li>Standalone (in box, not connected to anything) vs packed with equipment vs contained in equipment</li>
+  <li>Watt-hour rating (lithium-ion) or lithium content in grams (lithium metal)</li>
+  <li>Passenger aircraft vs cargo-aircraft-only restrictions</li>
+  <li>State of charge limits for shipment (typically 30% for standalone lithium-ion)</li>
+  <li>Marking and labeling requirements</li>
+  <li>Section II (small batteries below threshold) vs Section IA/IB (larger batteries)</li>
 </ul>
+
+<p>The rules have changed substantially each year for the last decade. A shipper using a 2-year-old reference book will probably ship out of compliance. Current edition only.</p>
+
+<h4>Oxygen sources: the ValuJet 592 lesson</h4>
+
+<p>Onboard oxygen comes from two primary sources: pressurized gas cylinders (Class 2.2 with 5.1 subsidiary) and chemical oxygen generators (Class 5.1). The two systems present different hazmat characteristics, and both have caused incidents through mis-handling.</p>
+
+<p><strong>Oxygen cylinders</strong> are obvious hazmat because they are visibly pressure vessels. Risk areas:</p>
+<ul>
+  <li>Empty / unfilled cylinders that have not been properly purged and certified — may still contain residual oxygen at elevated pressure</li>
+  <li>Cylinders with date-expired hydrostatic tests — must be returned for testing before refill</li>
+  <li>Cylinders with damaged valves or stems — may release content unexpectedly</li>
+</ul>
+
+<p><strong>Chemical oxygen generators</strong> are the more dangerous category because they are not obvious as hazmat. A passenger oxygen mask drop unit looks like a plastic-and-metal mechanical assembly. Inside the canister: a chemical mixture (sodium chlorate plus iron) that, when ignited by a percussion cap or electrical squib, undergoes a strongly exothermic reaction releasing breathable oxygen for the mask flow.</p>
+
+<p>The generator's risk profile:</p>
+<ul>
+  <li>Once activated, it cannot be extinguished — the reaction is self-sustaining</li>
+  <li>The reaction generates significant heat (the canister exterior reaches very high temperature)</li>
+  <li>The released oxygen accelerates any combustion in proximity</li>
+  <li>Pre-activation, the canister is physically robust and the chemistry is stable, but rough handling can trigger inadvertent activation</li>
+  <li>Expired generators (past service life) remain chemically active and dangerous</li>
+</ul>
+
+<p><strong>ValuJet 592 (1996).</strong> SabreTech's Miami facility removed expired oxygen generators from MD-80 aircraft and packed them for return shipment. Each generator should have had its initiator pin installed (a physical safety pin preventing inadvertent activation) and been declared as Class 5.1 hazmat per UN3356. Instead, the generators were boxed without safety pins, declared as "Oxy Canisters — Empty," and loaded into the forward cargo compartment of a ValuJet DC-9. During the flight, a generator activated (likely from physical jostling during loading), ignited, the chemical reaction sustained, oxygen accelerated combustion of adjacent tires and cargo, the cargo compartment fire detection was insufficient, the fire spread to flight controls, and the aircraft crashed into the Everglades. 110 deaths. Direct cause: shipper mis-declaration.</p>
+
+<p>The lesson at TurbineWorks: any oxygen generator arriving at the warehouse is Class 5.1 hazmat with strict shipping requirements regardless of its service status. Activated, deactivated, expired, new — all require Class 5.1 handling until proven otherwise by documented procedures.</p>
+
+<h4>Inflation devices: where Class 2 meets Class 1</h4>
+
+<p>Aircraft safety inflation systems (slides, vests, rafts, drop chutes) combine two hazmat categories: the pressurized inflation gas (Class 2) and the explosive initiator that releases it (Class 1.4).</p>
+
+<p><strong>Escape slides and slide-rafts.</strong> Mounted at exit doors of commercial aircraft. Containing:</p>
+<ul>
+  <li>Compressed gas cylinder (typically nitrogen or nitrogen/CO₂ mixture) — Class 2.2</li>
+  <li>Pyrotechnic actuator (firing pin / squib) — Class 1.4S typically</li>
+  <li>Inflatable slide structure (no hazmat content)</li>
+</ul>
+
+<p>When the slide is treated as a complete safety device (an "article" rather than the sum of its hazmat parts), UN3268 (Safety devices, electrically initiated) may apply. UN3268 is itself Class 9. The specific UN number depends on construction and the regulatory pathway chosen.</p>
+
+<p><strong>Life vests.</strong> Each individual life vest typically contains a small CO₂ cartridge for inflation. Below threshold quantities, individual life vests may travel as non-hazmat. Bulk shipments of life vests may exceed threshold and require Class 2 documentation. Check current edition.</p>
+
+<p><strong>Life rafts.</strong> Similar to escape slides — pressurized gas plus initiator. Class 2 with subsidiary Class 1.4, or UN3268 article classification.</p>
+
+<p><strong>Drop chutes and crash position indicators.</strong> Some military and search-and-rescue applications. Same construction principles.</p>
+
+<p>The recognition challenge: the outer packaging may show only "Life Raft P/N XXX" without any hazmat marking. The hazmat content is internal. Receiving inspection must recognize the part-type and apply hazmat documentation regardless of supplier marking.</p>
+
+<h4>Fire suppression bottles and detection systems</h4>
+
+<p>Aviation fire protection involves multiple hazmat categories:</p>
+
+<p><strong>Fire bottles (engine, APU, cargo, etc.).</strong> Pressurized cylinders of fire-suppressing agent:</p>
+<ul>
+  <li>Halon 1301 (UN2037, Class 2.2) — historical agent, being phased out globally but still in service inventory</li>
+  <li>Halon 1211 (Class 2.2)</li>
+  <li>HFC-227ea (FM-200) — replacement agent</li>
+  <li>Nitrogen with inert gas blends — replacement agents</li>
+  <li>Some bottles use a small CO₂ cartridge to drive the agent</li>
+</ul>
+
+<p>The bottle itself may be pressurized to 600-1000 psi. The discharge initiator is typically an electrically-fired explosive squib (Class 1.4S). The complete bottle assembly is one of the more complex hazmat items in aviation.</p>
+
+<p><strong>Fire detector loops.</strong> Some thermal fire-detection systems use pressurized helium-filled tubing. A break in the tubing releases helium, which is sensed by a pressure switch and triggers the alarm. The intact loop is Class 2.2 (compressed gas). Damaged loops may not be hazmat but the assembly typically remains classified.</p>
+
+<p><strong>Hand-held fire extinguishers</strong> carried on aircraft for cockpit/cabin use. Class 2 with appropriate UN number for the agent.</p>
+
+<h4>Pyrotechnic safety devices</h4>
+
+<p>Various aviation safety systems use small explosive charges (squibs) to initiate actuation:</p>
+<ul>
+  <li>Engine fire suppression squibs (release the fire bottle)</li>
+  <li>Cargo door explosive bolts (some military and emergency aircraft applications)</li>
+  <li>Escape slide initiators</li>
+  <li>Helicopter rotor blade tip cap pyrotechnic anti-icing</li>
+  <li>Ejection seat charges and sequencer pyrotechnics (military)</li>
+  <li>Helicopter helicopter water-impact float deployment</li>
+  <li>Smoke flares carried as emergency signaling devices</li>
+</ul>
+
+<p>Most aviation pyrotechnics are Class 1.4S — the "S" division indicating the article's effects are confined to its packaging. UN3268 (Safety devices, electrically initiated) is the common classification when shipped as a complete article rather than as raw explosive.</p>
+
+<p>Recognition: the shipping documentation from the supplier should declare pyrotechnic content. Visual inspection cannot reliably identify a pyrotechnic actuator inside a closed housing. Part-master entries flag known-pyrotechnic part numbers.</p>
 
 <h4>Magnetized materials</h4>
-<p>Aircraft components with strong permanent magnets — generator rotors, certain motors, magnetic chip detectors. Class 9 if the magnetic field at 4.5m exceeds regulatory threshold (0.00525 gauss).</p>
 
-<h4>Elevated-temperature materials</h4>
-<p>Class 9. Rare for shipped parts but applies if a part is shipped while hot (typically not relevant for distributor operations).</p>
+<p>The Class 9 regulatory threshold for magnetized materials is <strong>0.00525 gauss</strong> measured at 4.5 meters from the package. This is a low threshold — many common aviation parts with permanent magnets meet it.</p>
+
+<p>Categories at TurbineWorks:</p>
+<ul>
+  <li><strong>Generator rotors and stators</strong> — neodymium or samarium-cobalt magnets are common in modern compact generators</li>
+  <li><strong>Brushless DC motors</strong> with permanent-magnet rotors</li>
+  <li><strong>Magnetic chip detectors</strong> — small permanent magnets that catch ferrous wear particles in oil systems</li>
+  <li><strong>Some servovalves</strong> with magnetic position feedback</li>
+  <li><strong>Some sensors</strong> with magnetic components (Hall-effect speed sensors, magnetic flux gates)</li>
+  <li><strong>Magnetic encoders</strong> in actuators</li>
+</ul>
+
+<p>The hazard is not direct injury but interference with aircraft navigation systems (compasses, magnetic flux gates). The reason for the 4.5m threshold is that aircraft compasses are typically distant from cargo bays — but in small aircraft or specific cargo configurations, magnetic cargo can affect navigation.</p>
+
+<p>The control: measure field strength at the regulatory distance. If above threshold, declare as Class 9 magnetized material, package with steel shielding to reduce field, and document. If below threshold, ships as non-hazmat.</p>
 
 <h4>Mercury</h4>
-<p>Some older instruments contain mercury (mercury switches, mercury barometers). Class 8 corrosive (specific entry).</p>
 
-<h4>Asbestos</h4>
-<p>Some legacy brake pads, gaskets, and friction materials contain asbestos. Class 9, with significant additional handling requirements (OSHA, EPA). Modern parts use asbestos-free formulations but legacy parts in distributor inventory may still contain it.</p>
+<p>Mercury is uniquely problematic because even small spills can cause significant aircraft damage — mercury amalgamates with aluminum, severely weakening structural integrity. A spill of mercury on an aircraft can require fuselage cutaway and replacement; in some cases, the aircraft has been declared total loss.</p>
 
-<h4>What this means for receiving inspection</h4>
-<p>The receiving inspector cannot identify hazmat purely by visual inspection of a part. The inspector relies on:</p>
+<p>Aviation parts that may contain mercury:</p>
 <ul>
-  <li>Supplier hazmat documentation (when present)</li>
-  <li>Part-type knowledge (ELTs always have lithium batteries)</li>
-  <li>OEM documentation</li>
-  <li>QA Manager review for unclear cases</li>
+  <li>Older mercury switches (level switches, attitude switches in some legacy systems)</li>
+  <li>Mercury barometers and altimeter calibration equipment</li>
+  <li>Some legacy thermometers</li>
+  <li>Fluorescent lamps with mercury vapor (rare in aviation but possible in maintenance/test equipment)</li>
 </ul>
-<p>When a part arrives without hazmat documentation but its part-type is known to contain hazmat content, this is a hold condition. The supplier must provide the missing hazmat documentation before the part can be accepted into inventory.</p>
+
+<p>UN2809 Mercury, Class 8 corrosive. Packaging must prevent any leakage; mercury permeates many materials over time.</p>
+
+<h4>Asbestos in legacy parts</h4>
+
+<p>Asbestos was used extensively in aviation friction materials, gaskets, and insulation prior to widespread restrictions starting in the late 1970s. Legacy aircraft and legacy parts may still contain asbestos:</p>
+
+<ul>
+  <li>Brake pads and brake assemblies (especially pre-1990 production)</li>
+  <li>Engine and APU gaskets</li>
+  <li>Heat-shielding blankets</li>
+  <li>Fire-wall sealing materials</li>
+  <li>Cabin insulation in older aircraft</li>
+  <li>Friction-lined clutch and starter components</li>
+</ul>
+
+<p>Asbestos shipping under UN2212 or UN2590 is Class 9 with significant additional handling requirements. OSHA regulations on asbestos exposure to workers (29 CFR 1910.1001 and 1926.1101) apply to TurbineWorks employees handling the parts. EPA regulations (40 CFR Part 763) apply to disposal.</p>
+
+<p>The receiving control: parts known to be of vintage that may contain asbestos receive special inspection. Brake assemblies for legacy aircraft applications, in particular, must be checked. Modern asbestos-free replacements are identifiable by part-number changes and OEM documentation.</p>
+
+<h4>Other less-common hidden categories</h4>
+
+<p><strong>Compressed gas in MEMS pressure sensors.</strong> Some modern aircraft pressure sensors use micro-electromechanical systems with internal reference cavities pressurized with specific gases. Generally below threshold, but documented for completeness.</p>
+
+<p><strong>Sealed radioactive sources in NDT equipment.</strong> Industrial NDT equipment (radiography) uses sealed radioactive sources (Cobalt-60, Iridium-192, etc.). Class 7. Highly regulated.</p>
+
+<p><strong>Refrigerants in vapor cycle cooling systems.</strong> Air conditioning units, instrument cooling. Class 2.2 typically. Some legacy refrigerants (R-12, R-22) are restricted by environmental regulations independent of hazmat.</p>
+
+<p><strong>Methane and other gases in fuel cell systems.</strong> Some auxiliary power systems use hydrogen, methane, or other gas. Class 2 with appropriate division.</p>
+
+<p><strong>Polymer films with hazmat substrate.</strong> Some advanced aerospace materials use hazardous catalysts or solvent residues during manufacture. Generally non-hazmat for transport but may have OSHA implications for handlers.</p>
+
+<p><strong>Thoriated lighting.</strong> Older instrument backlighting using thoriated tungsten cathodes (mantle technology). Very low activity, Class 7 but often "exempt material" provisions apply.</p>
+
+<p><strong>Acid-based corrosion inhibitors</strong> applied to parts in long-term storage. Class 8 typically; the SDS for the specific inhibitor is authoritative.</p>
+
+<h4>The receiving recognition workflow</h4>
+
+<p>When a part arrives at TurbineWorks receiving, the inspector cannot rely on visual identification of hazmat. The inspector follows:</p>
+
+<ol>
+  <li><strong>Check supplier hazmat documentation.</strong> A properly-shipped hazmat item arrives with shipping papers declaring hazmat. If shipping papers identify hazmat, accept the classification and verify the part matches.</li>
+  <li><strong>Check the part-master entry.</strong> TurbineWorks maintains a part-number-to-hazmat-classification register based on prior receipts and OEM documentation. If the part-master flags the part as hazmat, treat accordingly.</li>
+  <li><strong>Check the OEM Component Maintenance Manual or shipping instructions.</strong> Some OEMs publish specific shipping requirements.</li>
+  <li><strong>Apply part-type knowledge.</strong> ELTs always have lithium batteries. Oxygen masks always have generators. Fire bottles are always Class 2. The receiving training builds the operator's knowledge of these categories.</li>
+  <li><strong>Escalate to QA Manager for unclear cases.</strong> If the part appears to be hazmat but documentation is missing, or appears to be non-hazmat but knowledge suggests otherwise, the QA Manager makes the determination.</li>
+  <li><strong>Update part-master.</strong> First-time receipts where classification is determined become part of the part-master for future receipts.</li>
+</ol>
+
+<h4>What to do when hazmat documentation is missing</h4>
+
+<p>A common failure: a part is known (by part type or by part-master record) to contain hazmat, but the supplier ships it without hazmat documentation. The supplier may have shipped under a non-hazmat exception that does not actually apply, or the supplier may simply have failed to classify correctly.</p>
+
+<p>TurbineWorks options when this happens:</p>
+<ol>
+  <li><strong>Hold the part.</strong> Do not accept into serviceable inventory. Quarantine.</li>
+  <li><strong>Contact the supplier.</strong> Request the missing hazmat documentation. The supplier may correct and resend.</li>
+  <li><strong>Independent classification.</strong> TurbineWorks QA may classify the part based on OEM documentation, SDS, and part-type knowledge. The classification is documented in TurbineWorks records.</li>
+  <li><strong>Reject and return.</strong> If the supplier cannot or will not provide proper documentation, the shipment may be returned. Document the supplier quality issue.</li>
+  <li><strong>Record the issue.</strong> Supplier quality records reflect the documentation failure. Future deliveries from this supplier may receive additional scrutiny.</li>
+</ol>
+
+<p>Once TurbineWorks classifies the part, all subsequent shipping from TurbineWorks uses the determined classification. The customer downstream sees the correct hazmat documentation.</p>
+
+<h4>The cost of getting hidden hazmat wrong</h4>
+
+<p>Regulatory penalties for hazmat violations are significant:</p>
+<ul>
+  <li>PHMSA civil penalties range from $250 (paperwork) to over $200,000+ (per violation) for serious violations</li>
+  <li>FAA can apply enforcement actions for transport-related violations</li>
+  <li>Criminal penalties apply for knowing or willful violations, especially when injury or death results</li>
+  <li>Carrier-imposed penalties (loss of shipping privileges, freight handling fees, freight inspection fees)</li>
+  <li>Customer impact: a customer downstream that discovers a TurbineWorks-shipped mis-declared part may file a customer complaint and quality finding</li>
+  <li>ASA accreditation impact: hazmat handling violations can affect accreditation status</li>
+</ul>
+
+<p>Worst case: a mis-declared shipment causes an in-flight fire incident. The aviation supply chain investigates back to the shipper. TurbineWorks identified as the source. Criminal liability for the signer of the shipping documents.</p>
+
+<p>The cost of recognition discipline is small (training, careful workflow, part-master maintenance). The cost of failure scales from regulatory fines to criminal exposure to commercial aviation losses.</p>
+
+<h4>Self-check questions</h4>
+
+<ol>
+  <li>Why is "hidden" hazmat the dominant failure mode in aviation hazmat incidents, rather than obvious hazmat?</li>
+  <li>List five aviation parts that contain lithium batteries. For each, indicate whether the battery is lithium-metal (UN3090/3091) or lithium-ion (UN3480/3481).</li>
+  <li>Describe the chemistry of a chemical oxygen generator. Why is an expired generator still hazmat?</li>
+  <li>What was the proximate cause of the ValuJet 592 crash, and what classification failure led to it?</li>
+  <li>Why is the UN3268 (Safety devices, electrically initiated) classification useful for shipping items like escape slide actuators?</li>
+  <li>What is the regulatory threshold for Class 9 magnetized materials, and where is the measurement taken?</li>
+  <li>Why is mercury contamination on an aircraft a particularly severe problem?</li>
+  <li>For a legacy brake assembly received from a pre-1990 supplier, what is the asbestos screening step?</li>
+  <li>Describe the receiving-recognition workflow when a part arrives without hazmat documentation but is known to contain hazmat.</li>
+  <li>What are the regulatory penalties for hazmat violations, and what is the worst-case criminal liability scenario?</li>
+</ol>
+
+<h4>References</h4>
+
+<ul>
+  <li>49 CFR §172.101 — Hazardous Materials Table</li>
+  <li>49 CFR §172.704 — Hazmat training</li>
+  <li>49 CFR §173.185 — Lithium battery provisions</li>
+  <li>IATA DGR Section 4.2 — List of Dangerous Goods (current edition)</li>
+  <li>IATA DGR Section 5 — Packaging</li>
+  <li>FAA SAFO 18016 — Lithium battery transport</li>
+  <li>NTSB Aircraft Accident Report — ValuJet 592 (1996)</li>
+  <li>OSHA 29 CFR 1910.1001 — Asbestos exposure</li>
+  <li>40 CFR Part 763 — EPA asbestos disposal requirements</li>
+</ul>
+
+<p><em>[TurbineWorks Procedure Reference: TurbineWorks hidden-hazmat recognition checklist; part-master hazmat designations register; supplier quality incident log.]</em></p>
 HTML
         ],
         [
             'name'  => 'Lesson 8.3 — UN Identification: Proper Shipping Name, UN Number, Class, Packing Group',
-            'intro' => '<p>The international identification system that travels with every hazmat shipment.</p>',
+            'intro' => '<p>The international hazmat identification system — every element with examples, how to look entries up, the special provisions trap, and the typical errors auditors find.</p>',
             'content' => <<<'HTML'
-<h3>UN Identification System</h3>
-<p>Every hazmat shipment is identified using a UN system that crosses all transport modes (road, rail, sea, air) and most jurisdictions. The four key elements are: UN number, Proper Shipping Name, Hazard Class, Packing Group.</p>
+<h3>The UN Identification System: How Hazmat is Named Internationally</h3>
 
-<h4>UN Number</h4>
-<p>A 4-digit number identifying the specific substance or article. Examples:</p>
+<h4>Why the world needs one system</h4>
+<p>Before the United Nations developed the Model Regulations on the Transport of Dangerous Goods, each country had its own hazmat classification. The U.S. used DOT classes, Europe used ADR codes, sea transport used a separate IMDG system, and air had its own ICAO framework — but they did not agree on identifiers. A shipment moving from a U.S. truck to a German rail to a French aircraft would be re-classified at each handoff, with errors and delays at every interface.</p>
+<p>Since the 1970s, the UN system has been adopted by every major transport mode and most jurisdictions. The same substance has the same UN number whether it ships under 49 CFR, ADR, IMDG, or IATA. Carriers, customs officers, and emergency responders worldwide recognize the same four-digit identifier and apply the same fundamental classification.</p>
+<p>The system has four elements that together identify any hazmat shipment: <strong>UN Number, Proper Shipping Name, Hazard Class (and any subsidiary risks), and Packing Group</strong>. These four travel together on shipping papers, on package marking, and through every step of transport.</p>
+
+<h4>UN Number: the unique numeric identifier</h4>
+
+<p>A four-digit number, prefixed in shipping context with "UN" (e.g., "UN3480"). Assigned by the UN Committee of Experts on the Transport of Dangerous Goods. Identifies a specific substance, mixture, or article in the Model Regulations.</p>
+
+<p><strong>UN numbers are not classes.</strong> The UN number is more specific than the class. UN3480 (lithium-ion batteries) and UN3481 (lithium-ion batteries with equipment) are both Class 9, but they have different shipping requirements. The class tells you the broad category; the UN number tells you the specific substance and the specific regulatory pathway.</p>
+
+<p><strong>Examples relevant to aviation distribution:</strong></p>
+<table border="1" cellpadding="6" cellspacing="0">
+  <tr style="background:#0d2240; color:#fff;">
+    <th>UN Number</th><th>Proper Shipping Name</th><th>Class</th><th>Aviation Context</th>
+  </tr>
+  <tr><td>UN1057</td><td>Lighters / Lighter refills</td><td>2.1</td><td>(rare; cabin items rather than parts)</td></tr>
+  <tr><td>UN1066</td><td>Nitrogen, compressed</td><td>2.2</td><td>Nitrogen accumulators, hydraulic systems</td></tr>
+  <tr><td>UN1072</td><td>Oxygen, compressed</td><td>2.2 (5.1 sub)</td><td>Crew oxygen cylinders</td></tr>
+  <tr><td>UN1133</td><td>Adhesives</td><td>3</td><td>Aircraft adhesives, sealants</td></tr>
+  <tr><td>UN1203</td><td>Gasoline (Motor spirit)</td><td>3</td><td>Avgas samples (rare for distribution)</td></tr>
+  <tr><td>UN1263</td><td>Paint or paint-related material</td><td>3</td><td>Paints, primers, thinners</td></tr>
+  <tr><td>UN1845</td><td>Carbon dioxide, solid (dry ice)</td><td>9</td><td>Refrigerant for shipping temperature-sensitive parts</td></tr>
+  <tr><td>UN1863</td><td>Fuel, aviation, turbine engine</td><td>3</td><td>Jet fuel samples; Jet B</td></tr>
+  <tr><td>UN1956</td><td>Compressed gas, n.o.s.</td><td>2.2</td><td>Some Halon 1301 entries; check label</td></tr>
+  <tr><td>UN2037</td><td>Receptacles, small, containing gas</td><td>2.1 or 2.2</td><td>Some life-vest CO₂ cartridges</td></tr>
+  <tr><td>UN2212</td><td>Asbestos, amphibole (some grades)</td><td>9</td><td>Legacy parts with asbestos content</td></tr>
+  <tr><td>UN2590</td><td>Asbestos, chrysotile</td><td>9</td><td>Legacy parts with asbestos content</td></tr>
+  <tr><td>UN2796</td><td>Sulfuric acid (battery fluid)</td><td>8</td><td>Lead-acid aircraft battery electrolyte</td></tr>
+  <tr><td>UN2809</td><td>Mercury</td><td>8</td><td>Legacy mercury switches and barometers</td></tr>
+  <tr><td>UN3090</td><td>Lithium metal batteries</td><td>9</td><td>ELT/ULB batteries (primary)</td></tr>
+  <tr><td>UN3091</td><td>Lithium metal batteries packed with / in equipment</td><td>9</td><td>ELTs, ULBs, FADECs with internal batteries</td></tr>
+  <tr><td>UN3164</td><td>Articles pressurized pneumatic or hydraulic</td><td>2.2</td><td>Pressurized accumulators, struts</td></tr>
+  <tr><td>UN3268</td><td>Safety devices, electrically initiated</td><td>9</td><td>Escape slide actuators, airbag-style devices</td></tr>
+  <tr><td>UN3356</td><td>Oxygen generator, chemical</td><td>5.1</td><td>Passenger oxygen masks (chemical)</td></tr>
+  <tr><td>UN3480</td><td>Lithium-ion batteries</td><td>9</td><td>Standalone Li-ion batteries</td></tr>
+  <tr><td>UN3481</td><td>Lithium-ion batteries packed with / in equipment</td><td>9</td><td>Avionics, EFB tablets, FDR/CVR units</td></tr>
+  <tr><td>UN3528</td><td>Engine, internal combustion, flammable liquid powered</td><td>3</td><td>Engines containing residual fuel</td></tr>
+</table>
+
+<p><strong>UN3528 is operationally significant for engine distribution:</strong> a complete engine shipped with residual fuel content is hazmat. Most engine OEMs specify draining and purging procedures before shipment to allow shipping under non-hazmat provisions. When a used engine with residual fuel is received without draining, UN3528 applies until the engine is drained per OEM procedure.</p>
+
+<h4>Proper Shipping Name (PSN): the exact regulatory text</h4>
+
+<p>The PSN is the verbatim text describing the substance as listed in the regulations. It is NOT a paraphrase or common name. The PSN appears on:</p>
 <ul>
-  <li>UN1057 — Lighters or lighter refills (Class 2.1)</li>
-  <li>UN1845 — Carbon dioxide, solid (dry ice; Class 9)</li>
-  <li>UN3090 — Lithium metal batteries</li>
-  <li>UN3091 — Lithium metal batteries packed with equipment or contained in equipment</li>
-  <li>UN3480 — Lithium-ion batteries</li>
-  <li>UN3481 — Lithium-ion batteries packed with equipment or contained in equipment</li>
-  <li>UN3164 — Articles pressurized pneumatic or hydraulic (e.g., accumulators)</li>
-  <li>UN3268 — Safety devices, electrically initiated (e.g., escape slide actuators)</li>
-  <li>UN3356 — Oxygen generator, chemical</li>
+  <li>Shipping papers and the Shipper's Declaration for Dangerous Goods</li>
+  <li>Package marking (the text printed on or attached to the package)</li>
+  <li>Customs documentation</li>
+  <li>Emergency response cards (where carriers use them)</li>
 </ul>
-<p>The UN number is the primary identifier. Two substances with similar names but different UN numbers have different regulatory requirements.</p>
 
-<h4>Proper Shipping Name (PSN)</h4>
-<p>The exact text description as listed in the regulations. Cannot be paraphrased. "Lithium-ion batteries" is correct; "Li-ion batteries" or "lithium batteries" is not. The PSN appears on the shipping documentation and on the package.</p>
-<p>Some PSNs include qualifying information in the entry — e.g., "Lithium-ion batteries (including lithium-ion polymer batteries)."</p>
+<p><strong>Examples of correct PSN vs. common name:</strong></p>
+<table border="1" cellpadding="6" cellspacing="0">
+  <tr style="background:#0d2240; color:#fff;">
+    <th>Correct PSN</th><th>Common but Incorrect</th>
+  </tr>
+  <tr><td>Lithium-ion batteries</td><td>"Li-ion batteries", "Lithium batteries"</td></tr>
+  <tr><td>Lithium metal batteries</td><td>"Lithium batteries"</td></tr>
+  <tr><td>Oxygen, compressed</td><td>"Compressed O2", "Aviation oxygen"</td></tr>
+  <tr><td>Safety devices, electrically initiated</td><td>"Safety device", "Slide actuator"</td></tr>
+  <tr><td>Sulfuric acid (battery fluid)</td><td>"Battery acid", "Sulphuric acid solution"</td></tr>
+  <tr><td>Oxygen generator, chemical</td><td>"Oxy generator", "Chemical oxygen canister"</td></tr>
+  <tr><td>Articles pressurized pneumatic or hydraulic (containing non-flammable gas)</td><td>"Pressure accumulator"</td></tr>
+  <tr><td>Engine, internal combustion, flammable liquid powered</td><td>"Used engine with fuel"</td></tr>
+</table>
 
-<h4>Hazard Class</h4>
-<p>The DOT class number (1-9) with subdivision. May have subsidiary risks listed if the material has multiple hazards (e.g., a Class 3 flammable liquid that is also Class 8 corrosive would be "3 (8)").</p>
+<p><strong>Why exact text matters.</strong> Customs officers, carrier hazmat acceptance personnel, and emergency responders search by exact PSN. A paraphrased name may not be recognized, causing rejection at acceptance or delay during transport. In incident response, the PSN routes to specific response protocols — emergency responders looking up "Lithium-ion batteries" find different guidance than "Lithium metal batteries."</p>
+
+<p><strong>Technical names in parentheses.</strong> Some PSNs include a generic name followed by a specific chemical identifier in parentheses. Example: "Flammable liquid, n.o.s. (acetone)." The bracketed name is the technical name and is REQUIRED on the shipping papers for "n.o.s." entries to identify the specific chemical.</p>
+
+<p><strong>n.o.s. — Not Otherwise Specified.</strong> Generic entries cover substances that don't have specific UN entries. The shipper provides the specific identity in parentheses. Common in chemistry-heavy shipments. Less common in aviation parts distribution but possible.</p>
+
+<h4>Hazard Class (and subsidiary risk)</h4>
+
+<p>The DOT class number indicates the primary hazard. Subsidiary risk is noted in parentheses (with class number) immediately after the primary class:</p>
+<ul>
+  <li>"3" — Primary Class 3 only</li>
+  <li>"3 (8)" — Primary Class 3, subsidiary Class 8 (a flammable liquid that is also corrosive)</li>
+  <li>"2.2 (5.1)" — Primary Class 2.2, subsidiary Class 5.1 (e.g., oxygen)</li>
+</ul>
+
+<p>Subsidiary risk affects:</p>
+<ul>
+  <li>Labels required on the package (both primary and subsidiary)</li>
+  <li>Compatibility for combined loading with other hazmat</li>
+  <li>Storage segregation requirements</li>
+  <li>Emergency response procedures</li>
+</ul>
 
 <h4>Packing Group</h4>
-<p>Indicates the degree of hazard within the class:</p>
+
+<p>Packing Group (PG) indicates degree of hazard within the class for Classes 3, 4 (most), 5, 6.1, 8, and most of Class 9:</p>
 <ul>
-  <li>PG I — High danger</li>
-  <li>PG II — Medium danger</li>
-  <li>PG III — Low danger</li>
+  <li><strong>PG I — Great danger.</strong> Most restrictive packaging. UN packagings rated "X" (the highest test rating).</li>
+  <li><strong>PG II — Medium danger.</strong> Packaging rated "Y" or "X."</li>
+  <li><strong>PG III — Minor danger.</strong> Packaging rated "Z" or higher.</li>
 </ul>
-<p>Not all classes use packing groups. Class 1 (explosives), Class 2 (gases), Class 7 (radioactive) do not. Class 9 lithium batteries do not (regulated by specific provisions rather than PG).</p>
 
-<h4>How to look up</h4>
-<p>The authoritative reference is the <strong>49 CFR §172.101 Hazardous Materials Table</strong> for ground/sea/U.S.-domestic, or the <strong>IATA DGR §4.2 List of Dangerous Goods</strong> for air. Both are alphabetical and cross-indexed by UN number.</p>
-<p>Online lookups: <a href="https://www.ecfr.gov/current/title-49/subtitle-B/chapter-I/subchapter-C/part-172/subpart-B" target="_blank" rel="noopener">eCFR Title 49 §172.101</a> (free) or IATA DGR subscription (paid, annual).</p>
+<p><strong>Classes that do NOT use Packing Group:</strong></p>
+<ul>
+  <li>Class 1 — Explosives (uses Compatibility Group letters: A through S)</li>
+  <li>Class 2 — Gases (uses Division 2.1, 2.2, 2.3)</li>
+  <li>Class 7 — Radioactive (uses Transport Index and Activity)</li>
+  <li>Class 9 lithium batteries — regulated by Section IA/IB/II provisions instead of PG</li>
+  <li>Class 4.1 self-reactives, Class 5.2 organic peroxides — use Type A-G classification</li>
+</ul>
 
-<h4>Special provisions</h4>
-<p>Many UN entries have associated "special provisions" — additional requirements or exceptions. Lithium batteries have extensive special provisions covering quantity limits, packaging, marking, documentation. Reading the PSN entry without checking the special provisions is incomplete.</p>
+<p>Packing Group is determined by toxicity (for Class 6.1), flash point (for Class 3), corrosivity (for Class 8), and so on per specific tests. The shipper does not assign PG — the regulations specify the PG for the substance, and the shipper applies it.</p>
+
+<h4>Looking up an entry</h4>
+
+<p>The authoritative reference is one of two tables, depending on transport mode:</p>
+
+<p><strong>For ground / domestic U.S. / surface modes:</strong> the <strong>49 CFR §172.101 Hazardous Materials Table</strong>. Alphabetical by Proper Shipping Name. Lists for each entry: UN number, class, packing group, label codes, special provisions, packaging sections, and quantity limits.</p>
+
+<p><strong>For air shipments:</strong> the <strong>IATA DGR Section 4.2 List of Dangerous Goods</strong>. Alphabetical by PSN, with the same data plus air-specific columns (passenger aircraft and cargo aircraft quantity limits, packing instructions, special provisions, state and operator variations).</p>
+
+<p><strong>For sea shipments:</strong> the <strong>IMDG Code Volume 2</strong> Dangerous Goods List.</p>
+
+<p>Online access:</p>
+<ul>
+  <li>49 CFR §172.101: <a href="https://www.ecfr.gov/current/title-49/subtitle-B/chapter-I/subchapter-C/part-172/subpart-B" target="_blank" rel="noopener">eCFR Title 49 §172.101</a> (free)</li>
+  <li>IATA DGR: <a href="https://www.iata.org/en/publications/dgr/" target="_blank" rel="noopener">iata.org</a> (paid subscription; required annually)</li>
+  <li>IMDG Code: IMO publication (paid)</li>
+</ul>
+
+<h4>Looking up by part-type: a worked example</h4>
+
+<p>Scenario: TurbineWorks receives a sealed FADEC unit. The receiving inspector knows FADECs typically contain a backup lithium battery for memory retention.</p>
+
+<ol>
+  <li>Verify the part has a battery by checking OEM documentation or part-master entry. Confirmed: 1 lithium-ion battery, 18650 cell, approximately 9 Wh per cell.</li>
+  <li>The battery is "contained in equipment" — the FADEC. Therefore the applicable UN is <strong>UN3481</strong> (Lithium-ion batteries packed with equipment or contained in equipment) rather than UN3480 (standalone).</li>
+  <li>Look up UN3481 in the IATA DGR for air shipment.</li>
+  <li>Find: PSN "Lithium-ion batteries packed with equipment" or "Lithium-ion batteries contained in equipment" (two slightly different sub-PSNs — the "contained in" version applies here).</li>
+  <li>Class 9. No Packing Group (lithium battery section).</li>
+  <li>Packing Instruction 967 (for "contained in equipment").</li>
+  <li>Special Provisions A48, A99, A154, A164, A206, A331 (these vary by edition; check current).</li>
+  <li>Cargo aircraft only: No (UN3481 is permitted on passenger aircraft when properly packed under Section II for small batteries, Section IA/IB for larger). Verify the watt-hour content against the Section thresholds.</li>
+  <li>Label: Class 9 Lithium battery label (not the standard Class 9 diamond).</li>
+  <li>Document: Shipper's Declaration for Dangerous Goods (required for UN3481 Section IA/IB; not required for very small batteries under Section II if other marking provisions are met).</li>
+</ol>
+
+<p>The actual shipping documentation reflects all of the above. The package marking matches. The packaging is UN-spec. The DGD is correctly completed. Carrier hazmat acceptance reviews and accepts. Shipment proceeds.</p>
+
+<h4>Special Provisions: the trap</h4>
+
+<p>Almost every UN entry in the tables has associated "Special Provisions" — alphanumeric codes that point to additional requirements, exemptions, or modifications listed elsewhere in the regulations. Special provisions can:</p>
+<ul>
+  <li>Exempt the substance from one or more requirements (e.g., "if quantity is below X, ship as non-hazmat")</li>
+  <li>Require additional documentation, marking, or testing</li>
+  <li>Restrict transport mode</li>
+  <li>Modify packaging requirements</li>
+  <li>Impose quantity limits beyond the standard column entries</li>
+</ul>
+
+<p>Reading only the UN entry without the special provisions is incomplete. The provisions can change which packing instruction applies, whether the shipment can travel by passenger aircraft, what marking is required, and whether the shipment is allowed at all.</p>
+
+<p>Lithium batteries have the most extensive special provisions of any common hazmat — A48, A99, A154, A164, A201, A203, A206, A302, A331, and others depending on configuration and edition. A shipper who looks up the entry and stops there will miss critical requirements.</p>
 
 <h4>Excepted quantities and limited quantities</h4>
-<p>Small quantities of some hazmat may ship under "excepted quantity" or "limited quantity" provisions with reduced requirements. Example: small lithium batteries below specific watt-hour or gram-lithium thresholds may ship under §173.185 with simplified packaging and marking.</p>
-<p>Excepted-quantity shipments still require correct identification — the exception is from packaging and labeling burden, not from classification.</p>
 
-<h4>Documentation</h4>
-<p>Every hazmat shipment requires shipping papers that include:</p>
+<p>The regulations provide reduced requirements for small quantities of certain hazmat. Two main mechanisms:</p>
+
+<p><strong>Limited Quantities (LQ).</strong> Small inner packagings within an outer package, with quantity limits per inner and per package. Reduced packaging requirements, simplified marking ("Limited Quantity" square with diagonal stripes), and no Shipper's Declaration for ground modes. Air shipment under LQ is more restricted.</p>
+
+<p>Example use case: a small bottle of paint thinner (Class 3, PG II) below 1 liter per inner packaging, total under 30 kg gross per outer package, may ship as LQ ground without full hazmat documentation. Useful for small shipments.</p>
+
+<p><strong>Excepted Quantities (EQ).</strong> Very small quantities (e.g., 1 mL or 1 gram per inner depending on PG) in approved packagings with EQ marking. Reduced documentation; sometimes ships as non-hazmat for transport purposes but retains classification on the SDS.</p>
+
+<p>Both LQ and EQ require the shipper to still know the correct UN number, PSN, class, and PG — the exception is from packaging and labeling burden, not from classification responsibility.</p>
+
+<p><strong>Lithium battery "Section II" provisions</strong> work similarly — small lithium batteries below specific thresholds (typically <100 Wh for Li-ion or <2g lithium content for Li-metal) may ship under Section II with simplified requirements.</p>
+
+<h4>Hazmat documentation: what travels with the shipment</h4>
+
+<p>Every hazmat shipment requires shipping papers. Specific requirements vary by mode, but the common elements are:</p>
+<ol>
+  <li><strong>UN number (with "UN" prefix)</strong></li>
+  <li><strong>Proper Shipping Name</strong> (and technical name in parentheses for n.o.s. entries)</li>
+  <li><strong>Hazard Class</strong> (and subsidiary risk in parentheses if any)</li>
+  <li><strong>Packing Group</strong> (where applicable)</li>
+  <li><strong>Total quantity</strong> (net weight, volume, or count depending on substance)</li>
+  <li><strong>Number and type of packages</strong></li>
+  <li><strong>Shipper's name and address</strong></li>
+  <li><strong>Consignee's name and address</strong></li>
+  <li><strong>Emergency response contact</strong> (24/7 reachable phone number for emergency information)</li>
+  <li><strong>Shipper's certification statement and signature</strong></li>
+</ol>
+
+<p>The format varies by mode:</p>
 <ul>
-  <li>Proper Shipping Name</li>
-  <li>UN Number</li>
-  <li>Hazard Class (and subsidiary risk if applicable)</li>
-  <li>Packing Group (where applicable)</li>
-  <li>Total quantity</li>
-  <li>Number and type of packages</li>
-  <li>Shipper's name and address</li>
-  <li>Emergency response contact</li>
-  <li>Shipper's certification statement and signature</li>
+  <li><strong>Ground (49 CFR):</strong> Shipping paper or bill of lading with the hazmat information in a specific format.</li>
+  <li><strong>Air (IATA DGR):</strong> The Shipper's Declaration for Dangerous Goods, a specific form (covered in Lesson 8.5).</li>
+  <li><strong>Sea (IMDG):</strong> Dangerous Goods Declaration on the Bill of Lading.</li>
 </ul>
-<p>Air shipments require the <strong>Shipper's Declaration for Dangerous Goods</strong> (covered in Lesson 8.5).</p>
+
+<h4>Carrier and state variations</h4>
+
+<p>Beyond the baseline regulations, individual carriers and individual states (countries) may impose additional restrictions. The DGR lists these as Operator Variations and State Variations in its appendices.</p>
+
+<p>Example: a U.S. cargo carrier may have its own restriction not allowing certain Class 9 substances even though IATA permits them. The shipment must comply with that operator's variation. If the shipment passes through multiple operators (one for each leg), it must comply with every operator's variations.</p>
+
+<p>State variations affect import/export. A shipment to Brazil must comply with Brazilian variations. A shipment through Singapore must comply with Singapore variations. The DGR appendices list these. Without checking, a shipment can be compliant by IATA baseline but violate a specific state's rules.</p>
+
+<h4>Documentation retention</h4>
+
+<p>Shipping papers must be retained per regulation:</p>
+<ul>
+  <li>49 CFR §172.201(e): shipper retains copy for two years after delivery</li>
+  <li>IATA DGR: shipper retains copy at minimum per applicable regulations</li>
+  <li>For aviation parts under ASA-100: hazmat documentation forms part of the part-shipment record; ASA-100 records retention requirements (typically 7+ years for serialized parts) apply</li>
+</ul>
+
+<p>Hazmat documentation is itself part of the audit-evidence trail. An auditor checking shipment records expects to find hazmat shipping papers for all hazmat shipments, with shipper certification properly signed by trained personnel.</p>
+
+<h4>Common identification errors</h4>
+
+<p>The most frequent UN identification errors observed in industry:</p>
+<ol>
+  <li><strong>Using last year's table.</strong> UN entries and special provisions change annually. Lithium battery provisions especially.</li>
+  <li><strong>Selecting the wrong UN number for "with equipment" vs "contained in equipment" vs "standalone."</strong> The three variants have different rules.</li>
+  <li><strong>Using a common name instead of the exact PSN.</strong> "Li-ion batteries" instead of "Lithium-ion batteries."</li>
+  <li><strong>Missing the subsidiary risk.</strong> Oxygen shipped as "2.2" without the "5.1" subsidiary — emergency responders don't get the oxidizer warning.</li>
+  <li><strong>Missing Packing Group.</strong> Class 3 paint shipped without PG specification — packaging selection is wrong.</li>
+  <li><strong>Wrong technical name for n.o.s. entries.</strong></li>
+  <li><strong>Missing emergency response contact.</strong></li>
+  <li><strong>Quantity exceeding the limit for the chosen packing instruction.</strong></li>
+  <li><strong>Not checking special provisions.</strong></li>
+  <li><strong>Not checking state and operator variations.</strong></li>
+</ol>
+
+<p>Each error has caused real shipment rejections, delays, and (worst case) regulatory enforcement actions.</p>
+
+<h4>Where the UN system meets daily TurbineWorks work</h4>
+
+<p>For an employee working at TurbineWorks, daily encounter with the UN system happens in three places:</p>
+
+<ol>
+  <li><strong>Receiving.</strong> Identifying that a part contains hazmat (by part-master, supplier docs, or part-type knowledge), and verifying the UN number and PSN on the supplier's documentation match the part received.</li>
+  <li><strong>Storage.</strong> Knowing the UN classification of stored items so that storage segregation rules apply correctly (oxidizers away from flammables, acids separate from bases).</li>
+  <li><strong>Shipping.</strong> When TurbineWorks ships a hazmat part outbound, completing shipping papers with correct UN number, PSN, class, PG, and all required additional information.</li>
+</ol>
+
+<p>The skill required is not memorizing every UN entry. The skill is knowing how to look entries up correctly, knowing which special provisions to check, and knowing when to ask the QA Manager for guidance.</p>
+
+<h4>Self-check questions</h4>
+
+<ol>
+  <li>What four elements identify a hazmat shipment in the UN system?</li>
+  <li>What is the difference between UN3480, UN3481, UN3090, and UN3091? Give an aviation example of each.</li>
+  <li>What is the Proper Shipping Name (PSN), and why must the exact text be used rather than a paraphrase?</li>
+  <li>What does subsidiary risk mean, and why does it affect labels and storage segregation?</li>
+  <li>Which hazard classes do not use Packing Group, and how is hazard intensity expressed in those classes instead?</li>
+  <li>What is the authoritative reference for ground hazmat in the U.S.? For air shipment?</li>
+  <li>What are Special Provisions and why is reading the UN entry alone incomplete?</li>
+  <li>What is the difference between Limited Quantity and Excepted Quantity provisions?</li>
+  <li>List five common UN-identification errors and the consequence of each.</li>
+  <li>How long must hazmat shipping papers be retained, and why does ASA-100 retention apply beyond the regulatory minimum?</li>
+</ol>
+
+<h4>References</h4>
+<ul>
+  <li>49 CFR §172.101 — Hazardous Materials Table</li>
+  <li>49 CFR §172.201–202 — Shipping paper requirements</li>
+  <li>IATA DGR Section 4.2 — List of Dangerous Goods (current edition)</li>
+  <li>IATA DGR Section 4.4 — Special Provisions</li>
+  <li>IATA DGR Appendix B — State and Operator Variations</li>
+  <li>UN Model Regulations on the Transport of Dangerous Goods — current revision</li>
+  <li>ICAO Technical Instructions for the Safe Transport of Dangerous Goods by Air</li>
+</ul>
+
+<p><em>[TurbineWorks Procedure Reference: hazmat lookup workflow within QAM; access to current 49 CFR and IATA DGR; emergency response contact and 24/7 phone arrangement.]</em></p>
 HTML
         ],
         [
