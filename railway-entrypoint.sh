@@ -151,5 +151,26 @@ else
   echo "[railway-entrypoint] config.php not found yet; run the web installer, then redeploy to inject the proxy block"
 fi
 
+# Run plugin DB upgrades and the TurbineWorks University bootstrap.
+# Only safe to run once Moodle is installed (config.php exists AND DB is
+# reachable AND tables are in place). The CLI scripts handle their own
+# detection — we just call them and treat failures as non-fatal so a
+# half-installed site doesn't get stuck in a crash loop.
+#
+# Run as www-data so any files created (e.g. cache, marker) get the right
+# ownership and Apache can read them on the next request.
+if [ -f "$CONFIG_PHP" ]; then
+  echo "[railway-entrypoint] running plugin DB upgrade (non-interactive)"
+  runuser -u www-data -- php /var/www/html/admin/cli/upgrade.php --non-interactive 2>&1 \
+    | sed 's/^/[upgrade] /' \
+    | tail -30 || echo "[railway-entrypoint] upgrade.php exited non-zero (non-fatal)"
+
+  echo "[railway-entrypoint] running TurbineWorks University bootstrap"
+  runuser -u www-data -- php /var/www/html/local/twu/cli/bootstrap.php 2>&1 \
+    | sed 's/^/[twu] /' || echo "[railway-entrypoint] twu bootstrap exited non-zero (non-fatal)"
+else
+  echo "[railway-entrypoint] config.php absent; skipping plugin upgrade + twu bootstrap (run web installer first)"
+fi
+
 # Start the original entrypoint + Apache
 exec /usr/local/bin/moodle-docker-php-entrypoint apache2-foreground
