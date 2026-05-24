@@ -17,24 +17,49 @@ chmod -R 0775 /var/www/moodledata
 
 # Persist config.php to the Railway volume.
 # /var/www/html/ is part of the container image, so config.php is wiped on every
-# redeploy. Symlink it to moodledata so it survives. The install wizard's
-# file_put_contents() follows the symlink and creates the target on the volume;
-# on subsequent boots the symlink resolves to the saved file, so Moodle skips
-# the install wizard and uses the existing config.
+# redeploy. We can't symlink it (PHP's __DIR__ resolves through realpath, so
+# install.php would bake in the moodledata path and require_once would look
+# in the wrong place). Instead: copy volume -> html on boot, and run a tiny
+# background loop that mirrors html -> volume after the install wizard writes.
 HTML_CONFIG=/var/www/html/config.php
 VOL_CONFIG=/var/www/moodledata/config.php
-if [ -L "$HTML_CONFIG" ] && [ "$(readlink "$HTML_CONFIG")" = "$VOL_CONFIG" ]; then
-  echo "[railway-entrypoint] config.php symlink already in place"
-else
+
+# Drop any stale symlink left from earlier versions of this entrypoint.
+if [ -L "$HTML_CONFIG" ]; then
   rm -f "$HTML_CONFIG"
-  ln -s "$VOL_CONFIG" "$HTML_CONFIG"
-  chown -h www-data:www-data "$HTML_CONFIG"
-  if [ -f "$VOL_CONFIG" ]; then
-    echo "[railway-entrypoint] symlinked /var/www/html/config.php -> volume (existing config restored)"
-  else
-    echo "[railway-entrypoint] symlinked /var/www/html/config.php -> volume (dangling; install wizard will create target)"
-  fi
 fi
+
+if [ -f "$VOL_CONFIG" ]; then
+  # If a prior boot wrote config.php via the symlink, __DIR__ resolved to the
+  # volume path and require_once now points at /var/www/moodledata/lib/setup.php
+  # which doesn't exist. Patch it in place so Moodle can boot.
+  if grep -qF "__DIR__" "$VOL_CONFIG"; then
+    sed -i "s|__DIR__|'/var/www/html'|g" "$VOL_CONFIG"
+    echo "[railway-entrypoint] patched __DIR__ -> '/var/www/html' in saved config.php"
+  fi
+  cp "$VOL_CONFIG" "$HTML_CONFIG"
+  chown www-data:www-data "$HTML_CONFIG"
+  echo "[railway-entrypoint] restored config.php from volume"
+else
+  echo "[railway-entrypoint] no saved config.php on volume; install wizard will create it"
+fi
+
+# Background sync: mirror /var/www/html/config.php back to the volume whenever
+# it changes (i.e. after the install wizard writes it, or after admin edits).
+# Cheap, runs every 30s, only copies on content difference. Without this the
+# install wizard's freshly-written config.php would be lost on the next redeploy.
+(
+  while true; do
+    sleep 30
+    if [ -f "$HTML_CONFIG" ] && [ ! -L "$HTML_CONFIG" ]; then
+      if [ ! -f "$VOL_CONFIG" ] || ! cmp -s "$HTML_CONFIG" "$VOL_CONFIG"; then
+        cp "$HTML_CONFIG" "$VOL_CONFIG"
+        chown www-data:www-data "$VOL_CONFIG" 2>/dev/null || true
+        echo "[railway-entrypoint] synced config.php -> volume"
+      fi
+    fi
+  done
+) &
 
 # Moodle config / muc / localcache purge.
 # Moodle caches $CFG to disk in moodledata/muc; direct SQL writes to mdl_config
