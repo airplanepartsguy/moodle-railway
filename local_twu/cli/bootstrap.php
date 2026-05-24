@@ -22,7 +22,7 @@ require_once($CFG->libdir . '/clilib.php');
 
 // Bump the suffix here (and in the entrypoint marker docs) when adding new
 // bootstrap steps that should run on existing sites.
-$marker = $CFG->dataroot . '/.twu-bootstrapped-v2';
+$marker = $CFG->dataroot . '/.twu-bootstrapped-v3';
 $force  = in_array('--force', $argv ?? [], true);
 if (file_exists($marker) && !$force) {
     cli_writeln("[twu] already bootstrapped (marker present at $marker). Pass --force to re-run.");
@@ -145,8 +145,38 @@ $initialmodules = [
     ],
 ];
 
+$createdcourses = [];
 foreach ($initialmodules as $mod) {
-    twu_ensure_course($initialcat->id, $mod);
+    $createdcourses[$mod['idnumber']] = twu_ensure_course($initialcat->id, $mod);
+}
+
+// Attach the generated course title cards (or whatever PNG is on disk with
+// that name — replace with photorealistic AI-generated images later by
+// overwriting local_twu/assets/courses/TWF4-X.png in the repo).
+$fs = get_file_storage();
+foreach ($initialmodules as $mod) {
+    $idnumber  = $mod['idnumber'];
+    $course    = $createdcourses[$idnumber];
+    $cardpath  = $CFG->dirroot . "/local/twu/assets/courses/{$idnumber}.png";
+    if (!file_exists($cardpath)) {
+        cli_writeln("[twu] no card image for $idnumber; skipping (expected $cardpath)");
+        continue;
+    }
+    $coursecontext = context_course::instance($course->id);
+    $fs->delete_area_files($coursecontext->id, 'course', 'overviewfiles', 0);
+    try {
+        $fs->create_file_from_pathname([
+            'contextid' => $coursecontext->id,
+            'component' => 'course',
+            'filearea'  => 'overviewfiles',
+            'itemid'    => 0,
+            'filepath'  => '/',
+            'filename'  => "{$idnumber}.png",
+        ], $cardpath);
+        cli_writeln("[twu] attached course card {$idnumber}.png to course id={$course->id}");
+    } catch (Exception $e) {
+        cli_writeln("[twu] could not attach card for $idnumber: " . $e->getMessage());
+    }
 }
 
 // ---------------------------------------------------------------------------
@@ -251,30 +281,36 @@ CSS;
     set_config('customcss', $customcss, 'theme_moove');
     cli_writeln("[twu] injected customcss to hide conecti.me footer block");
 
-    // Upload TurbineWorks logo if we shipped one in the local_twu plugin.
-    $logosrc = $CFG->dirroot . '/local/twu/assets/NewTurbine.png';
-    if (file_exists($logosrc)) {
-        $fs = get_file_storage();
-        $syscontext = context_system::instance();
-        foreach (['logo', 'favicon'] as $filearea) {
-            // Wipe existing files in this filearea so re-runs don't pile up.
-            $fs->delete_area_files($syscontext->id, 'theme_moove', $filearea);
-            try {
-                $fs->create_file_from_pathname([
-                    'contextid' => $syscontext->id,
-                    'component' => 'theme_moove',
-                    'filearea'  => $filearea,
-                    'itemid'    => 0,
-                    'filepath'  => '/',
-                    'filename'  => 'NewTurbine.png',
-                ], $logosrc);
-                cli_writeln("[twu] uploaded NewTurbine.png to theme_moove/$filearea");
-            } catch (Exception $e) {
-                cli_writeln("[twu] could not upload logo to $filearea: " . $e->getMessage());
-            }
+    // Upload the official TurbineWorks logo + favicon into Moove.
+    //   logo.png       — converted from turbineworks.com/assets/img/logos/logo.webp
+    //   favicon.png    — 256x256 square derived from same source
+    $assetbase = $CFG->dirroot . '/local/twu/assets';
+    $fs = get_file_storage();
+    $syscontext = context_system::instance();
+    $logouploads = [
+        'logo'    => ['file' => 'logo.png',    'filename' => 'logo.png'],
+        'favicon' => ['file' => 'favicon.png', 'filename' => 'favicon.png'],
+    ];
+    foreach ($logouploads as $filearea => $info) {
+        $src = $assetbase . '/' . $info['file'];
+        if (!file_exists($src)) {
+            cli_writeln("[twu] no $filearea file at $src; skipping");
+            continue;
         }
-    } else {
-        cli_writeln("[twu] no logo file at $logosrc; skipping upload");
+        $fs->delete_area_files($syscontext->id, 'theme_moove', $filearea);
+        try {
+            $fs->create_file_from_pathname([
+                'contextid' => $syscontext->id,
+                'component' => 'theme_moove',
+                'filearea'  => $filearea,
+                'itemid'    => 0,
+                'filepath'  => '/',
+                'filename'  => $info['filename'],
+            ], $src);
+            cli_writeln("[twu] uploaded {$info['filename']} to theme_moove/$filearea");
+        } catch (Exception $e) {
+            cli_writeln("[twu] could not upload to $filearea: " . $e->getMessage());
+        }
     }
 
     // Bust theme caches so the CSS/logo changes apply immediately.
