@@ -1814,170 +1814,673 @@ function local_twu_module_2_lessons(): array {
     return [
         [
             'name'  => 'Lesson 2.1 — ASA-100 §6 Receiving Inspection Overview',
-            'intro' => '<p>The structure of receiving inspection as defined by ASA-100 §6.</p>',
+            'intro' => '<p>The structure, scope, and significance of receiving inspection. Why ASA-100 §6 is the section auditors scrutinize most, and what it requires.</p>',
             'content' => <<<'HTML'
 <h3>ASA-100 §6 Receiving Inspection</h3>
-<p>Receiving inspection is the single highest-leverage quality control point in a distributor's operation. A part that passes receiving inspection enters inventory and from there can be shipped to a customer. A defect that escapes detection here may never be caught.</p>
 
-<h4>The required sequence</h4>
-<p>ASA-100 §6 requires that incoming parts move through a defined sequence:</p>
+<p>Receiving inspection is the single highest-leverage quality control point in a parts distributor\'s operation. Every part that ever leaves TurbineWorks went through receiving first. Every defect that ever reaches a customer was either created at TurbineWorks (storage damage, mishandling) or escaped detection at receiving. The receiving inspection function is therefore the place where the entire ASA-100 quality system either works or doesn\'t.</p>
+
+<p>This lesson establishes the framework. Subsequent lessons in Module 2 walk through the operational steps in detail. By the end of this lesson you should understand what receiving inspection is supposed to accomplish, who is authorized to perform it, where it happens, what records it creates, and why an ASA auditor focuses here more than almost anywhere else.</p>
+
+<h4>Why receiving inspection matters disproportionately</h4>
+
+<p>Consider the alternatives. If a defect is going to be caught somewhere in the supply chain, where is the best place?</p>
+
+<ul>
+  <li><strong>At the original manufacturer:</strong> the OEM\'s production QC catches manufacturing defects. But OEM QC has no visibility into what happens to the part after it leaves the factory — storage damage, transit damage, fraudulent re-marking, scrap diversion. The OEM\'s scope ends at delivery.</li>
+  <li><strong>At the first downstream buyer (typically the operator):</strong> would catch defects but at significant cost — the part may have already been shipped, the operator now has the disposal burden, the original supplier is harder to hold accountable.</li>
+  <li><strong>At the customer (further downstream):</strong> worst case. The defective part may have already been installed on an aircraft. Removal and replacement is expensive. Investigation has to reach back through multiple intermediaries to identify the source.</li>
+  <li><strong>At TurbineWorks receiving:</strong> the optimal point. Before the part enters inventory, before it touches a customer\'s aircraft, before it complicates downstream operations.</li>
+</ul>
+
+<p>This is why ASA-100 puts so much weight on §6, and why auditors give it disproportionate attention. The receiving inspection is the chokepoint where a distributor either provides value (catching defects before customers see them) or fails to provide value (letting defects pass through).</p>
+
+<h4>What §6 actually requires</h4>
+
+<p>ASA-100 §6 (current revision) establishes the framework. The exact section numbering and wording can shift with revisions, but the substantive requirements are consistent. At minimum, the standard requires:</p>
+
 <ol>
-  <li><strong>Pre-receiving verification</strong> — match shipment to purchase order, verify supplier is on the approved list</li>
-  <li><strong>Documentation review</strong> — 8130-3 (or equivalent), COC, packing list, traceability documents</li>
-  <li><strong>Physical inspection</strong> — quantity count, visual condition, markings, packaging integrity</li>
-  <li><strong>Disposition decision</strong> — accept (move to serviceable inventory), quarantine (under investigation), or reject (return to supplier)</li>
-  <li><strong>Recordkeeping</strong> — receiving inspection record completed and filed</li>
+  <li>A documented receiving inspection procedure</li>
+  <li>Designated personnel authorized to perform receiving inspection</li>
+  <li>A physically segregated receiving area separate from serviceable inventory</li>
+  <li>Documentation verification appropriate to the part type</li>
+  <li>Physical inspection of the part</li>
+  <li>A disposition decision (accept / quarantine / reject) recorded on every receipt</li>
+  <li>Receiving inspection records retained per the records-retention schedule</li>
+  <li>Non-conforming material handling procedure for quarantine and reject dispositions</li>
 </ol>
 
-<h4>Who performs receiving inspection</h4>
-<p>Only employees identified in the QAM as <strong>Receiving Inspectors</strong> may perform receiving inspection. The Receiving Inspector role requires:</p>
+<p>The TurbineWorks QAM implements these requirements with specific procedures, forms, and roles. The auditor evaluates whether the QAM addresses each requirement AND whether actual practice matches the QAM.</p>
+
+<h4>The five-step receiving inspection sequence</h4>
+
+<p>The §6 framework, translated into the operational sequence TurbineWorks performs:</p>
+
+<ol>
+  <li><strong>Pre-receiving verification.</strong> Before opening packaging, confirm the shipment matches a current TurbineWorks Purchase Order, the supplier is on the approved-supplier list, and required documentation is present. This step catches obvious problems — wrong shipment, unapproved supplier, missing paperwork — without disturbing the physical part. Detailed in Lesson 2.2.</li>
+
+  <li><strong>Documentation review.</strong> The 8130-3 (or equivalent), Certificate of Conformance, packing list, material certifications, country-of-origin documentation, and any other required documents are reviewed for completeness, internal consistency, and external verification. The block-by-block walkthrough is in Lesson 2.3.</li>
+
+  <li><strong>Physical inspection.</strong> The actual part is examined — quantity count, visual condition, markings, packaging integrity. Depth of physical inspection depends on the part type and TurbineWorks procedure. Detailed in Lesson 2.4.</li>
+
+  <li><strong>Disposition decision.</strong> Based on documentation review and physical inspection, the inspector decides: Accept (move to serviceable inventory), Quarantine (hold pending investigation), or Reject (return to supplier or destroy). This decision is the inspector\'s authority and cannot be overridden by sales or management. Detailed in Lesson 2.5.</li>
+
+  <li><strong>Recordkeeping.</strong> The receiving inspection record is completed, signed, and filed. The record ties the physical part to the documentation chain and to TurbineWorks\' inventory records. Recordkeeping requirements are detailed in Module 5 but the receiving inspection record is created here.</li>
+</ol>
+
+<p>Each step has its own controls, criteria, and failure modes. Skipping or rushing any step compromises the integrity of the whole receiving inspection.</p>
+
+<h4>Who is authorized — the Receiving Inspector role</h4>
+
+<p>Only employees explicitly designated in the QAM as Receiving Inspectors may perform receiving inspection. This is not interchangeable with other warehouse roles. The designation is formal — the QAM lists the people by name (or by position with an attached current-personnel roster), and each named inspector has a documented qualification path.</p>
+
+<h5>Qualifications</h5>
+
 <ul>
-  <li>Completion of TurbineWorks University ASA-100 Initial Training</li>
-  <li>On-the-job training documented on form TWF-4 (or its digital equivalent)</li>
-  <li>Designation by name in the QAM as a Receiving Inspector</li>
-  <li>Recurring training every 6 months</li>
+  <li>Completion of TurbineWorks University ASA-100 Initial Training (all 8 modules including this Module 2)</li>
+  <li>On-the-job training documented on form TWF-4 (or its digital equivalent in Moodle)</li>
+  <li>Demonstrated competency — typically through a supervised period of receiving inspections, evaluated by the QA Manager before full authorization</li>
+  <li>Recurring training every 6 months per the TurbineWorks training cadence</li>
+  <li>No regulatory or disciplinary issues that would compromise the integrity of the inspector role</li>
 </ul>
 
-<h4>Where receiving inspection happens</h4>
-<p>Receiving inspection occurs in a designated <strong>Receiving area</strong> that is physically separate from serviceable inventory. Parts cannot move from the Receiving area into serviceable storage until the receiving inspection is complete and the disposition is "accept."</p>
+<h5>The independence principle</h5>
 
-<h4>What records must be created</h4>
+<p>Receiving Inspectors have <strong>independent authority</strong> over their accept/quarantine/reject decisions. This is a foundational ASA-100 principle. The inspector\'s decision cannot be overridden by:</p>
+
 <ul>
-  <li>Receiving inspection record (TurbineWorks form referenced in QAM)</li>
-  <li>Copy of the 8130-3 (or equivalent) filed against the part record</li>
-  <li>Copy of the COC if applicable</li>
-  <li>Photographs if any non-conformance is noted</li>
-  <li>Cross-reference to the purchase order and supplier</li>
+  <li>The Sales team because a customer is waiting</li>
+  <li>Operations because schedule pressure is high</li>
+  <li>Senior management because of business pressure</li>
+  <li>The Accountable Manager except to authorize a re-inspection by a different inspector (which is itself an unusual step and must be documented)</li>
 </ul>
 
-<h4>What an auditor checks</h4>
-<p>ASA auditors specifically observe receiving inspection in action during an on-site audit. They may:</p>
+<p>The Quality Assurance Manager can <em>review</em> an inspector\'s quarantine decision and authorize disposition after investigation — but the inspector\'s authority to <em>quarantine</em> in the first place is not overridable. An auditor will probe this in interviews: "Has anyone ever asked you to release a quarantined part without a documented QA Manager disposition?" The expected answer is no.</p>
+
+<h5>What happens if an inspector\'s judgment is found wanting</h5>
+
+<p>If an inspector\'s decisions repeatedly diverge from what the QA Manager believes is correct — too many false alarms, or worse, releases that should have been quarantined — the response is training and process, not pressure. The inspector receives additional training, possibly works under supervision for a period, and may be removed from the Receiving Inspector designation if competency cannot be re-established. The independence principle protects inspectors from pressure but does not protect them from accountability for technical competency.</p>
+
+<h4>Where receiving inspection happens — the physical environment</h4>
+
+<p>The Receiving area is a designated, physically segregated zone:</p>
+
 <ul>
-  <li>Watch a receiving inspection from start to finish without interrupting</li>
-  <li>Ask the inspector what step they are on and why</li>
-  <li>Pull a random part from serviceable inventory and ask to see its receiving inspection record</li>
-  <li>Check that the inspector named on the record is in fact authorized in the QAM</li>
-  <li>Check that the receiving area is physically segregated from serviceable storage</li>
+  <li><strong>Separated from serviceable inventory.</strong> Parts in receiving cannot accidentally drift into serviceable storage. The boundary is clear — marked on the floor, signed, sometimes physically partitioned.</li>
+  <li><strong>Adequate workspace.</strong> Receiving Inspectors need bench space to lay out parts and documentation, lighting to examine markings, and reference materials accessible (IPCs, current OEM service bulletin lists, the FAA database via internet access).</li>
+  <li><strong>Controlled environment if applicable.</strong> If the receiving area handles ESD-sensitive parts, the area is an EPA per Module 7 requirements. If it handles hazmat, the appropriate hazmat controls apply.</li>
+  <li><strong>Access controlled.</strong> Not everyone in the building has the authority to enter the receiving area unaccompanied. Visitors are escorted.</li>
+  <li><strong>FOD-controlled.</strong> Receiving is a FOD-Free Zone with the practices established in Module 4 — tool control, no loose hardware, FOD walks.</li>
 </ul>
 
-<p><em>[TurbineWorks Procedure Reference: insert the TurbineWorks receiving inspection SOP reference and the current form designator here.]</em></p>
+<p>The auditor will walk the receiving area during the on-site audit. The auditor will look for visible signs that the area is in active use as a quality control zone, not just a place where boxes are opened.</p>
+
+<h4>What records are created</h4>
+
+<p>Every receiving inspection generates records. The standard package:</p>
+
+<ul>
+  <li><strong>Receiving Inspection Record</strong> — the form (TurbineWorks-specific, referenced in the QAM) documenting the inspector\'s findings and disposition. Includes inspector name and signature, date, part identification, supplier reference, PO reference, observations, and disposition.</li>
+  <li><strong>Copy of the 8130-3</strong> (or equivalent) filed against the part record. The original physical 8130-3 stays in TurbineWorks records; copies travel with the part as needed.</li>
+  <li><strong>Copy of the COC</strong> if a COC was required by the PO and provided by the supplier.</li>
+  <li><strong>Material certifications</strong> if applicable.</li>
+  <li><strong>Photographs</strong> documenting any non-conformance observed, or for high-value items as a routine "as-received" record.</li>
+  <li><strong>Cross-references</strong> to the supplier qualification record (confirming supplier was approved at time of receipt) and to the PO record (confirming order was authorized).</li>
+</ul>
+
+<p>The receiving inspection record is the primary audit-evidence artifact. When an auditor pulls a random serviceable part and asks "show me this part\'s receiving inspection," this is the record that comes out of the file. If the record is missing, incomplete, or doesn\'t match the part, that is an audit finding.</p>
+
+<h4>What an ASA auditor specifically checks at §6</h4>
+
+<p>ASA auditors have well-developed playbooks for §6. Expected activities during the on-site audit:</p>
+
+<ul>
+  <li><strong>Observation of a real receiving inspection.</strong> The auditor watches a current receipt from start to finish, without interrupting except to ask clarifying questions afterward. The auditor looks at: does the inspector follow the documented procedure? Are required documents reviewed? Is the disposition decision made and recorded?</li>
+  <li><strong>Personnel interview.</strong> The auditor speaks with the Receiving Inspector(s). Questions: Where is your authority documented? What training have you received? Walk me through your last quarantine decision. Has anyone ever pressured you to release a part you wanted to quarantine?</li>
+  <li><strong>Records pull and audit.</strong> The auditor selects parts from serviceable inventory at random and asks to see their complete receiving inspection records. The records must be retrievable within minutes, complete, and signed by an authorized inspector.</li>
+  <li><strong>Verification of inspector authorization.</strong> The inspector named on a record must be currently authorized in the QAM. An inspection signed by someone who is not designated is a finding.</li>
+  <li><strong>Physical segregation check.</strong> The auditor walks the receiving area and confirms it is segregated from serviceable inventory. Comments unprompted on whether the segregation is visible and effective.</li>
+  <li><strong>Approved-supplier list audit.</strong> The auditor reviews recent receipts to confirm parts came only from approved suppliers, or that the QA Manager documented one-time receipt authorization for any exceptions.</li>
+  <li><strong>Non-conformance trail.</strong> The auditor reviews recent quarantine and reject decisions. Were they investigated? Dispositioned properly? Did corrective action follow?</li>
+</ul>
+
+<h4>Common ASA-100 §6 audit findings (industry-wide)</h4>
+
+<p>Recurring findings at distributor audits:</p>
+
+<ul>
+  <li>Inspector named on records is not currently designated in the QAM (the QAM hasn\'t been updated, or the inspector\'s training is expired)</li>
+  <li>Receiving area not physically segregated from serviceable storage (parts mixed)</li>
+  <li>Records incomplete — missing signature, missing date, missing PO reference</li>
+  <li>Parts in serviceable inventory without a corresponding receiving inspection record</li>
+  <li>Approved-supplier list out of date</li>
+  <li>One-time receipt from unapproved supplier without documented QA Manager authorization</li>
+  <li>Quarantine area shared with non-quarantine inventory</li>
+  <li>Inspector observed skipping documentation verification under time pressure</li>
+  <li>Block 15 FAA database verification not part of the procedure (or not actually done)</li>
+</ul>
+
+<p>Avoiding these findings requires the procedure to be in place AND the practice to match. An auditor who finds a deviation between the documented procedure and the observed practice will write a finding even if the practice is technically working.</p>
+
+<h4>The receiving inspection mindset</h4>
+
+<p>A new Receiving Inspector eventually develops an internal mindset for the role. The key elements:</p>
+
+<ul>
+  <li><strong>Default skepticism.</strong> Every shipment is treated as if something might be wrong, until verified. The skepticism isn\'t paranoia — it\'s the appropriate professional disposition for the role.</li>
+  <li><strong>Pattern recognition.</strong> Over time the inspector recognizes what "normal" looks like for each supplier and part type. Deviations from normal warrant attention.</li>
+  <li><strong>Documentation discipline.</strong> Every observation is recorded. Memory is unreliable; records are reliable.</li>
+  <li><strong>Independence.</strong> The inspector\'s job is to apply the standard, not to please anyone. When pressure rises, the standard wins.</li>
+  <li><strong>Continuous learning.</strong> New SUP patterns emerge. New OEM issues affect parts already in inventory. The inspector reads the FAA SUP Program bulletins, follows industry alerts, and stays current.</li>
+</ul>
+
+<h4>Self-check</h4>
+
+<ol>
+  <li>What is the 5-step receiving inspection sequence per ASA-100 §6?</li>
+  <li>Who is authorized to perform receiving inspection at TurbineWorks?</li>
+  <li>What are the qualification requirements for the Receiving Inspector role?</li>
+  <li>What is the "independence principle" and why does it matter?</li>
+  <li>Why must the receiving area be physically segregated from serviceable inventory?</li>
+  <li>What records must be created for every receiving inspection?</li>
+  <li>Name three things an ASA auditor specifically checks at §6 during an on-site audit.</li>
+  <li>Why is receiving inspection considered the "highest-leverage" quality control point in a distributor\'s operation?</li>
+</ol>
+
+<p><em>[TurbineWorks Procedure Reference: insert the TurbineWorks Receiving Inspection SOP reference, the current form designator, and the list of currently-authorized Receiving Inspectors here.]</em></p>
 HTML
         ],
         [
             'name'  => 'Lesson 2.2 — Pre-Receiving Verification',
-            'intro' => '<p>What to check before you even open the box.</p>',
+            'intro' => '<p>Everything that happens before the box is opened. The pre-receiving phase catches obvious problems early — wrong shipment, unapproved supplier, missing paperwork — without disturbing the physical part. Done well, it dramatically reduces the burden on the rest of the receiving inspection.</p>',
             'content' => <<<'HTML'
 <h3>Pre-Receiving Verification</h3>
-<p>Before opening packaging, before examining the part, the receiving inspector performs a pre-receiving check. The point is to catch obvious problems early — wrong shipment, unapproved supplier, missing paperwork — without disturbing the physical part or its packaging.</p>
+
+<p>Receiving inspection has a sequence for a reason. The most efficient inspection catches the easiest problems first. Pre-receiving — everything before the packaging is opened — handles the kind of issue you can identify without disturbing the part: paperwork mismatches, supplier issues, shipment errors. By resolving these first you avoid wasted effort on parts that shouldn\'t have been received in the first place.</p>
+
+<p>This lesson covers the pre-receiving phase in operational detail. Every step has a purpose, every step has failure modes, and skipping any step creates downstream problems.</p>
+
+<h4>Why open packaging is a one-way door</h4>
+
+<p>Opening a sealed package starts a clock. Once open, the part has been touched, the preservation may have been disturbed, the supplier\'s sealed-shipment guarantee is consumed. If you discover at this point that the shipment shouldn\'t have been opened — wrong customer, wrong PO, unapproved supplier — returning the part to the supplier in its original sealed condition is no longer possible. The supplier may resist returns of opened shipments.</p>
+
+<p>Pre-receiving verification is the way to confirm, before opening, that opening is appropriate. Done correctly, pre-receiving either resolves any concern (clear to open) or holds the package unopened until the concern is investigated.</p>
 
 <h4>Step 1 — Identify the shipment</h4>
+
+<p>When a shipment arrives at the receiving dock, the inspector first documents what showed up. This is the receiving phase before the receiving inspection technically begins — it\'s the intake.</p>
+
+<h5>Information captured</h5>
+
 <ul>
-  <li>Carrier and tracking number</li>
-  <li>Shipper name and address (compare to PO supplier)</li>
-  <li>Number of pieces in shipment</li>
-  <li>Visible damage to outer packaging (photograph if present)</li>
+  <li><strong>Carrier and tracking number.</strong> Which carrier delivered, what is their reference number. Useful if there\'s a discrepancy later about what was delivered and when.</li>
+  <li><strong>Shipper name and address (from the shipping label).</strong> This is what the carrier was given. It may or may not match the supplier listed on the TurbineWorks PO.</li>
+  <li><strong>Receiving party (from the shipping label).</strong> Confirms the shipment was actually addressed to TurbineWorks. Mis-addressed shipments occasionally arrive — confirm before assuming you should accept it.</li>
+  <li><strong>Number of pieces / packages in the shipment.</strong> If the PO expected 3 boxes and 2 arrived, that\'s a partial shipment to track.</li>
+  <li><strong>Visible damage to outer packaging.</strong> Photograph any visible damage before proceeding. The damage may have happened in transit, in which case the carrier\'s insurance applies. Or the damage may be the carrier\'s evidence of mishandling — important for any subsequent claim.</li>
+  <li><strong>Date and time of receipt.</strong> Documented on the receipt record.</li>
+  <li><strong>Seal integrity.</strong> If the shipment includes tamper-evident seals or carrier security tape, are they intact? Broken seals on a sealed shipment is a flag — investigate before opening.</li>
 </ul>
 
-<h4>Step 2 — Match to the Purchase Order</h4>
-<p>The shipment must match a current TurbineWorks Purchase Order. An unexpected shipment is treated as a finding — investigate before accepting.</p>
-<ul>
-  <li>PO number on the shipping documentation matches an open TurbineWorks PO?</li>
-  <li>Supplier on the shipping documentation matches the PO supplier?</li>
-  <li>Part numbers on the packing list match what was ordered?</li>
-  <li>Quantities match what was ordered (or a partial shipment that the PO permits)?</li>
-</ul>
-<p>A shipment without a matching PO is held in the Receiving area pending investigation. Common causes: supplier shipped to the wrong customer, supplier shipped against a cancelled PO, paperwork mix-up in the supplier's shipping department. Sometimes it is a legitimate error; sometimes it is suspicious.</p>
+<h5>What happens if damage or seal issues are observed</h5>
 
-<h4>Step 3 — Verify the supplier is approved</h4>
-<p>TurbineWorks maintains an <strong>approved-supplier list</strong>. Parts from any supplier not on the list cannot be accepted into serviceable inventory without the QA Manager's authorization to add the supplier (which requires a supplier qualification process).</p>
-<p>If the shipment is from an unknown or unapproved supplier:</p>
 <ul>
-  <li>Hold the shipment in Receiving</li>
-  <li>Notify the QA Manager</li>
-  <li>Do not begin the document review until the supplier status is resolved</li>
+  <li>Document with photographs before doing anything else</li>
+  <li>Note specifics: which box, what type of damage, what seals are affected</li>
+  <li>Decide whether to refuse the shipment, accept under "received damaged" status, or accept and investigate</li>
+  <li>The decision depends on the part type and the apparent severity — a crushed corner on a fastener carton may be cosmetic; a punctured ESD bag on an electronic component is serious</li>
+  <li>Notify the QA Manager for any non-trivial damage</li>
+  <li>Notify the carrier per the carrier-specific damage claim procedure</li>
+</ul>
+
+<h4>Step 2 — Match the shipment to a Purchase Order</h4>
+
+<p>Every shipment received at TurbineWorks must correspond to a current authorized PO. Unauthorized shipments — parts arriving without a corresponding PO — are not accepted. The shipment is held in receiving while the situation is investigated.</p>
+
+<h5>The PO matching check</h5>
+
+<ul>
+  <li><strong>Does the PO number on the supplier\'s shipping documentation match an open TurbineWorks PO?</strong> The supplier should be referencing the PO number TurbineWorks gave them.</li>
+  <li><strong>Does the supplier on the shipping documents match the PO supplier?</strong> Sometimes a supplier sub-contracts manufacturing to another company; in that case the shipping address may not match the PO supplier. This is an issue worth investigating.</li>
+  <li><strong>Do the part numbers on the packing list match the PO line items?</strong> Each line on the PO has a specific part number with specific quantity. The packing list should match.</li>
+  <li><strong>Do the quantities match?</strong> Full shipment of the PO quantity, or a partial shipment within the PO\'s allowed partial-shipment terms? A quantity higher than the PO is unauthorized — TurbineWorks cannot accept more than ordered.</li>
+</ul>
+
+<h5>Common PO mismatch scenarios</h5>
+
+<ul>
+  <li><strong>Drop-ship error.</strong> The supplier intended this shipment for a different customer and shipped to TurbineWorks by mistake. The supplier\'s system has the right shipping address for both customers but the shipper grabbed the wrong label. Refuse the shipment or coordinate with the supplier for re-routing.</li>
+  <li><strong>Cancelled-PO shipment.</strong> TurbineWorks cancelled a PO but the supplier shipped anyway, either because they didn\'t process the cancellation or because the cancellation came after they\'d already shipped. Hold the shipment and contact the supplier.</li>
+  <li><strong>Over-shipment.</strong> The PO authorized 5 turbine blades; the supplier shipped 7. The excess is not authorized — either return the excess, get a PO amendment, or document the over-shipment for accounting reconciliation. Cannot just put the extras into inventory.</li>
+  <li><strong>Wrong part number.</strong> The packing list and the PO refer to different part numbers. Either the supplier shipped the wrong part, or there\'s a part-number transcription error somewhere. Investigate before opening the package.</li>
+  <li><strong>Different supplier than expected.</strong> The PO was issued to Supplier A but the package arrives from Supplier B. Possibly drop-shipping (Supplier A had their part drop-shipped from Supplier B); possibly the shipping address is correct but Supplier A is unaware. Investigate.</li>
+</ul>
+
+<p>The receiving inspector\'s response to PO mismatch is always: hold and investigate, do not open. Opening commits TurbineWorks to handling the part; investigation may reveal that the part shouldn\'t have been delivered in the first place.</p>
+
+<h4>Step 3 — Verify the supplier is on the approved-supplier list</h4>
+
+<p>TurbineWorks maintains an Approved-Supplier List (ASL). Parts from suppliers on the ASL can be accepted into inventory through the normal receiving process. Parts from suppliers NOT on the ASL cannot be accepted without explicit QA Manager authorization, which typically requires going through the supplier qualification process before any parts from that supplier are accepted.</p>
+
+<h5>What the ASL contains</h5>
+
+<ul>
+  <li>Supplier company name (and any DBA names)</li>
+  <li>Supplier physical address (warehouse / facility)</li>
+  <li>Approval date and last re-evaluation date</li>
+  <li>Approval scope — what categories of parts this supplier is approved for (some suppliers are approved only for specific part types)</li>
+  <li>Specific accreditations the supplier holds (ASA-100, AS9120, FAA certificates, etc.)</li>
+  <li>Performance history — recent quality findings, on-time delivery, customer complaints</li>
+  <li>Owner of the supplier relationship at TurbineWorks (typically the buyer)</li>
+</ul>
+
+<h5>How a supplier gets on the ASL</h5>
+
+<p>Supplier qualification is the QA Manager\'s responsibility (with buyer input). Typical qualification steps:</p>
+
+<ol>
+  <li>Supplier information collection — capabilities, accreditations, references</li>
+  <li>Facility assessment — either an on-site visit (for higher-risk suppliers) or a desk audit of their QMS documentation</li>
+  <li>Reference checks — talk to other distributors or customers about their experience with the supplier</li>
+  <li>Initial test order with enhanced receiving inspection — qualify performance on a small order before opening the relationship to volume</li>
+  <li>Documented qualification decision by the QA Manager, with the supplier added to the ASL</li>
+</ol>
+
+<h5>The "new supplier" scenario at receiving</h5>
+
+<p>If a shipment arrives from a supplier not on the ASL, the receiving inspector\'s response:</p>
+
+<ul>
+  <li>Hold the shipment unopened in Receiving</li>
+  <li>Notify the QA Manager same business day</li>
+  <li>Do not begin documentation review or physical inspection until the supplier status is resolved</li>
+</ul>
+
+<p>The QA Manager may:</p>
+
+<ul>
+  <li>Authorize one-time receipt with enhanced inspection (documented decision)</li>
+  <li>Begin supplier qualification and add to the ASL before accepting the part</li>
+  <li>Refuse the shipment — return to sender without opening</li>
 </ul>
 
 <h4>Step 4 — Documentation completeness check</h4>
-<p>Before opening the box, confirm the shipment includes:</p>
+
+<p>Before opening the package, confirm the required documentation is present. Required documents depend on the part type and the PO terms but typically include:</p>
+
 <ul>
-  <li>Packing list</li>
-  <li>FAA 8130-3 (or EASA Form 1, TCCA Form One — whichever is applicable)</li>
-  <li>Certificate of Conformance if required by PO</li>
-  <li>Test reports / material certifications if required by PO</li>
-  <li>Country-of-origin documentation if required</li>
+  <li><strong>Packing list.</strong> The supplier\'s document listing what was packed, in what quantity, with reference to the PO.</li>
+  <li><strong>FAA 8130-3 (or equivalent — EASA Form 1, TCCA Form One).</strong> For parts requiring airworthiness approval documentation, the tag must accompany the shipment. Note: the tag is sometimes inside the package (for some part types); if you can see through clear packaging that the tag is enclosed, that satisfies the "present" check.</li>
+  <li><strong>Certificate of Conformance (COC).</strong> Required for many raw materials and standard hardware. The PO terms specify when COC is required.</li>
+  <li><strong>Material test reports.</strong> Required for some parts where material conformance matters (turbine disks, fasteners in critical applications). PO terms specify.</li>
+  <li><strong>Country-of-origin documentation.</strong> Required for export compliance and some customer contracts.</li>
+  <li><strong>Hazmat documentation.</strong> Required for any hazmat shipment (Shipper\'s Declaration for Dangerous Goods for air shipments).</li>
+  <li><strong>Other contract-specific documents.</strong> Some customers require specific paperwork that flows down through the PO to the supplier.</li>
 </ul>
-<p>Missing required documentation is a hold condition. The part cannot be accepted until documentation arrives. Document the missing items and notify both the supplier and the QA Manager.</p>
+
+<p>If a required document is missing, the shipment is held pending documentation. The supplier is notified. The QA Manager is notified. The part cannot be accepted into inventory until the missing documents arrive.</p>
+
+<p>An exception: sometimes documentation is shipped separately from the part — by email, by separate courier. If the documentation has been received via the separate channel, the missing-from-package status is acceptable. Record the path through which the documentation arrived.</p>
 
 <h4>Step 5 — Decide whether to open</h4>
-<p>If pre-receiving checks raise no flags, proceed to documentation review and physical inspection. If any flag is raised, the part stays packaged and goes to a hold area until the issue is resolved. Opening the package starts the receiving inspection clock — once opened, the part is in process and must be dispositioned.</p>
 
-<h4>Common pre-receiving issues</h4>
+<p>By this point, the inspector has confirmed (or not) each pre-receiving check:</p>
+
 <ul>
-  <li>Shipment received before PO was issued (drop-ship error)</li>
-  <li>Quantity over-shipped without an updated PO</li>
-  <li>Supplier name on the shipping label doesn't match Block 4 of the 8130-3 (drop-shipping by an unapproved third party)</li>
-  <li>Part shipped from a country not authorized by the PO terms (e.g., export-control violation)</li>
+  <li>Shipment identified and physically intact ☐</li>
+  <li>PO matched to an open authorized PO ☐</li>
+  <li>Supplier verified on the ASL ☐</li>
+  <li>Required documentation present ☐</li>
 </ul>
+
+<p>If every check is satisfied, proceed to opening and the documentation review (Lesson 2.3) and physical inspection (Lesson 2.4).</p>
+
+<p>If any check failed, the shipment stays unopened in the Receiving hold area until the failure is resolved. The QA Manager dispositions any open issues. The shipment may eventually be:</p>
+
+<ul>
+  <li>Cleared to proceed (after documentation arrives, supplier is qualified, PO is corrected)</li>
+  <li>Returned to the supplier (refuse the shipment)</li>
+  <li>Held for further investigation</li>
+</ul>
+
+<h4>Common pre-receiving issues (deep)</h4>
+
+<h5>Shipment received before PO was issued</h5>
+<p>Variation: the buyer ordered verbally, the supplier shipped, the PO was never written. This happens occasionally with rush orders. Procedure: hold the shipment, get a PO issued retroactively, document the PO timing. Repeated occurrences are a procedural finding for the buying group.</p>
+
+<h5>Over-shipment without PO authorization</h5>
+<p>The supplier shipped more than the PO authorized. Possibilities: supplier mistake, supplier intentionally over-shipping (rare but happens), supplier trying to clear excess inventory. Procedure: accept what was authorized; the excess is unauthorized and must be either returned or accepted via PO amendment.</p>
+
+<h5>Drop-shipping by an unapproved third party</h5>
+<p>The PO is to Supplier A. The package arrives from Supplier B because Supplier A sourced the part from B and asked B to drop-ship to TurbineWorks. Supplier B is not on the TurbineWorks ASL. The shipment is in an awkward position: the buyer thinks Supplier A is delivering, but the actual chain of custody runs through B. Procedure: hold, investigate, confirm with Supplier A what happened, evaluate whether to qualify Supplier B or refuse the shipment.</p>
+
+<h5>Country-of-origin issue</h5>
+<p>The PO authorized parts from a specific country (export-control or customer-contract reason). The shipment arrives from a different country. Particularly relevant for ITAR-controlled or sanctioned-country issues. Procedure: hold, notify QA Manager and Export Control function, do not open until resolved. Opening may itself create export-control exposure.</p>
+
+<h5>Tamper-evident seals broken or missing</h5>
+<p>The shipment was supposed to arrive with tamper-evident seals or carrier security tape. The seals are broken or absent. Possibilities: tampering in transit, supplier neglect to apply seals, legitimate inspection by customs en route. Procedure: photograph the condition, hold the shipment, investigate before opening. A broken seal on a shipment of high-value parts is a serious indicator.</p>
+
+<h5>Documentation received separately</h5>
+<p>The shipment arrives without the 8130-3 in the package. The supplier has previously emailed a copy. Acceptable? Sometimes — if the emailed copy is verifiable and the original will follow. Document the path. Some PO terms require the original to be in the package; others allow electronic.</p>
+
+<h4>Why pre-receiving deserves its own discipline</h4>
+
+<p>An inspector might be tempted to skip pre-receiving and just open the package — "I\'ll check the paperwork after I look at the part." This is wrong for several reasons:</p>
+
+<ul>
+  <li>Once opened, returns become harder. The supplier may resist returns of opened shipments.</li>
+  <li>Once opened, the seal-tampering indicator is gone. You can\'t later prove the shipment arrived unsealed if you opened it without recording the seal status.</li>
+  <li>Investigation effort is wasted on parts that shouldn\'t have been accepted in the first place. Better to identify "wrong supplier" before performing a full receiving inspection on the part.</li>
+  <li>The pre-receiving discipline is itself an auditable record. ASA auditors will look at recent receipts and check whether pre-receiving was documented.</li>
+</ul>
+
+<h4>Self-check</h4>
+
+<ol>
+  <li>Why is opening a sealed shipment described as a "one-way door"?</li>
+  <li>What information is captured during Step 1 (shipment identification)?</li>
+  <li>What are five common PO mismatch scenarios?</li>
+  <li>What does the Approved-Supplier List contain, and what is the role of the QA Manager in maintaining it?</li>
+  <li>What is the receiving inspector\'s response to a shipment from a supplier not on the ASL?</li>
+  <li>What documents are typically required to accompany an aviation parts shipment?</li>
+  <li>What does the receiving inspector do if a required document is missing from the package?</li>
+  <li>Why is it wrong to skip pre-receiving and go directly to opening the package?</li>
+</ol>
+
+<p><em>[TurbineWorks Procedure Reference: insert the current TurbineWorks Approved-Supplier List location and access, the PO-matching workflow, and the hold-area location and protocol here.]</em></p>
 HTML
         ],
         [
             'name'  => 'Lesson 2.3 — Documentation Review',
-            'intro' => '<p>What documents you must have and how to verify each one.</p>',
+            'intro' => '<p>The systematic verification workflow for every document accompanying an aviation parts shipment. The single highest-value receiving-inspection skill at TurbineWorks — most SUPs that get caught are caught here.</p>',
             'content' => <<<'HTML'
 <h3>Documentation Review</h3>
-<p>With the shipment open, the receiving inspector reviews the documentation that accompanies each part. <em>Every part has its own document set</em> — multiple parts on a single 8130-3 is generally not acceptable for engine parts (which are typically serialized).</p>
 
-<h4>The FAA 8130-3 (or equivalent)</h4>
-<p>See the dedicated Engine-Parts course "FAA 8130-3 — Block-by-Block Inspection" in the Reference Library category for the full walkthrough. At a minimum, verify:</p>
+<p>With pre-receiving complete and the package opened, the receiving inspector now reviews the documentation accompanying each part. This lesson covers the full verification workflow — what to check on each document type, in what order, against what reference, with what response when something is wrong.</p>
+
+<p>Documentation review is the receiving inspector\'s primary skill. It\'s where most defects are caught. It\'s where the audit trail begins. It\'s the activity an ASA auditor will most carefully observe during an on-site audit. Master this and the rest of receiving inspection becomes secondary.</p>
+
+<p>Module 1 Lesson 1.3 covered <em>red flags</em> — the indicators that something is wrong. This lesson covers the <em>workflow</em> — the operational sequence of checks performed on every shipment. The two are complementary: this lesson tells you what to do; Lesson 1.3 tells you what bad looks like.</p>
+
+<h4>The "one part, one document set" principle</h4>
+
+<p>For serialized engine parts — the bulk of what TurbineWorks handles — each part has its own document set. Specifically, each serialized part has its own 8130-3 (or equivalent). Multiple parts cannot be released on a single 8130-3 when they are serialized — the regulation requires per-part traceability.</p>
+
+<p>For non-serialized items (standard hardware, consumables, raw materials in batches), a single document set may cover the whole lot. The packing list will indicate quantity and the documentation references the lot number.</p>
+
+<p>When you receive a multi-part shipment, the first thing to confirm is that each serialized part has its own documentation, and each lot of non-serialized parts has appropriate batch documentation.</p>
+
+<h4>The FAA 8130-3 — Block-by-block verification</h4>
+
+<p>This is the systematic check performed on every 8130-3 in a shipment. Each block has a specific purpose and a specific verification.</p>
+
+<h5>Block 1 — Approving Civil Aviation Authority / Country</h5>
+<p><strong>Expected:</strong> "FAA / United States" for an FAA-issued tag. Foreign authority equivalent forms (EASA Form 1, TCCA Form One) have different titles.</p>
+<p><strong>Verify:</strong> matches the form type the supplier promised, and is recognized by U.S. bilateral if foreign. Inconsistency suggests the form was constructed from pieces of multiple sources.</p>
+
+<h5>Block 2 — Form Title</h5>
+<p><strong>Expected exactly:</strong> "AUTHORIZED RELEASE CERTIFICATE / FAA Form 8130-3, AIRWORTHINESS APPROVAL TAG"</p>
+<p><strong>Verify:</strong> exact text match. Variations or typos suggest fabrication.</p>
+
+<h5>Block 3 — Form Tracking Number</h5>
+<p><strong>Expected:</strong> unique alphanumeric identifier from the issuing organization. Format consistent within each issuing organization\'s sequence.</p>
+<p><strong>Verify:</strong> field is populated (not blank or placeholder); format is plausible for the issuing organization; not blatantly out-of-sequence with other tags from the same organization.</p>
+
+<h5>Block 4 — Organization Name and Address</h5>
+<p><strong>Expected:</strong> name and address of the FAA-certificated organization issuing the tag.</p>
+<p><strong>Verify:</strong></p>
 <ul>
-  <li>Issuing authority (Block 1) is FAA, or an equivalent authority recognized by bilateral agreement</li>
-  <li>Form is titled "Authorized Release Certificate" (Block 2) — not a different form type</li>
-  <li>Tracking number (Block 3) is present</li>
-  <li>Organization name (Block 4) matches the certificate holder per FAA database lookup of Block 15</li>
-  <li>Description and part number (Blocks 7-8) match the physical part exactly</li>
-  <li>Quantity (Block 9) matches the count</li>
-  <li>Serial number (Block 10) matches the part data plate for serialized parts</li>
-  <li>Status (Block 11) is one of: NEW, INSPECTED/TESTED, REPAIRED, OVERHAULED, MODIFIED</li>
-  <li>Remarks (Block 12) include LLP time/cycle data if the part is life-limited</li>
-  <li>Signature (Block 14) is original or verifiable electronic signature</li>
-  <li>Certificate number (Block 15) is verifiable in the FAA database</li>
-  <li>Date (Block 17) is plausible</li>
-  <li>Right-side installer blocks (18-22) are blank for a part not yet installed</li>
+  <li>Name matches Block 15 certificate-holder name (look up Block 15 in FAA database; compare to Block 4)</li>
+  <li>Address matches the certificate holder\'s registered address per FAA records</li>
+  <li>Address is not a P.O. Box (legitimate organizations have physical facilities)</li>
 </ul>
 
-<h4>EASA Form 1 (European-origin parts)</h4>
-<p>EASA Form 1 is the European Union equivalent of the FAA 8130-3. Under the FAA-EASA bilateral, an EASA Form 1 from an approved organization is accepted for parts. The form structure differs slightly:</p>
+<h5>Block 5 — Work Order / Contract / Invoice Number</h5>
+<p><strong>Expected:</strong> the issuing organization\'s internal reference number for the work this tag documents.</p>
+<p><strong>Verify:</strong> field is populated. The number is the cross-reference to the issuing organization\'s records — if you ever need to contact them to verify the tag, you reference this number.</p>
+
+<h5>Block 6 — Item Number</h5>
+<p><strong>Expected:</strong> sequential item number on a multi-line form. "1" for single-part forms.</p>
+
+<h5>Block 7 — Description</h5>
+<p><strong>Expected:</strong> OEM\'s description of the part (e.g., "TURBINE BLADE, HPT STAGE 1," "BEARING, COMPRESSOR ROTOR").</p>
+<p><strong>Verify:</strong> description matches the physical part; uses the OEM\'s standard terminology; matches the PO description.</p>
+
+<h5>Block 8 — Part Number</h5>
+<p><strong>Expected:</strong> OEM part number including any dash suffix and revision letter.</p>
+<p><strong>Verify:</strong></p>
 <ul>
-  <li>Block 1: Approving Authority (EASA)</li>
-  <li>Block 2: Title (Authorized Release Certificate / EASA Form 1)</li>
-  <li>Blocks 6-8: Item description and part number</li>
-  <li>Block 14: Authorization (the equivalent of FAA Block 14 signature)</li>
+  <li>Matches the part number stamped on the physical part (Lesson 2.4)</li>
+  <li>Matches the part number on the TurbineWorks PO</li>
+  <li>Exists in the current OEM IPC (Illustrated Parts Catalog)</li>
+  <li>Matches Block 8 character-for-character — including any dash suffixes and revision letters</li>
 </ul>
-<p>The same verification principles apply — verify the issuing organization's EASA approval number, check signature originality.</p>
 
-<h4>TCCA Form One (Canadian-origin parts)</h4>
-<p>The Transport Canada Civil Aviation equivalent. Similar structure to EASA Form 1, mutually recognized under FAA-TCCA bilateral. Verify the Canadian Approved Maintenance Organization (AMO) certificate number against TCCA's database.</p>
+<h5>Block 9 — Quantity</h5>
+<p><strong>Expected:</strong> the count of parts the tag covers.</p>
+<p><strong>Verify:</strong> matches the actual count in the shipment.</p>
 
-<h4>Certificate of Conformance (COC)</h4>
-<p>A supplier-issued statement attesting that the part conforms to a specified standard or specification. Not a substitute for the 8130-3 on parts requiring airworthiness approval — but required for many raw materials, standard hardware, and consumables.</p>
-<p>A valid COC includes:</p>
+<h5>Block 10 — Serial Number</h5>
+<p><strong>Expected:</strong> the specific serial number of the part for serialized items.</p>
+<p><strong>Verify:</strong></p>
 <ul>
-  <li>Standard or specification being conformed to (with revision)</li>
-  <li>Part number, serial number or lot number tying the COC to specific items</li>
+  <li>Matches the data plate stamping on the physical part — character by character</li>
+  <li>Fits the OEM\'s known serial-number format (length, character set, structure)</li>
+  <li>Has not been altered on the tag (no whiteout, no over-stamping, no ink color change)</li>
+</ul>
+
+<h5>Block 11 — Status / Work</h5>
+<p><strong>Expected:</strong> one of: NEW / INSPECTED/TESTED / REPAIRED / OVERHAULED / MODIFIED / PROTOTYPE</p>
+<p><strong>Verify:</strong></p>
+<ul>
+  <li>One of the standard status codes (no improvised terms)</li>
+  <li>Consistent with the physical condition of the part (e.g., "NEW" with no signs of use)</li>
+  <li>Consistent with what the supplier represented in their quote and what the PO ordered</li>
+</ul>
+
+<h5>Block 12 — Remarks</h5>
+<p>Most consequential block for engine parts. Free-text field containing critical metadata:</p>
+<ul>
+  <li><strong>For LLPs:</strong> TSN, CSN, life limit, remaining life</li>
+  <li><strong>For overhauled/repaired parts:</strong> shop visit reference, work performed</li>
+  <li><strong>SB / AD compliance:</strong> which SBs have been incorporated, AD compliance status</li>
+  <li><strong>Engine traceability:</strong> source engine if removed from a specific engine</li>
+  <li><strong>Special conditions:</strong> any limitations or notes affecting use of the part</li>
+</ul>
+<p><strong>Verify:</strong></p>
+<ul>
+  <li>LLP data is present for any LLP (a blank Block 12 on an LLP is a serious deficiency)</li>
+  <li>TSN/CSN values are internally consistent (TSO ≤ TSN; values from previous documentation match or properly accumulate)</li>
+  <li>Cited SBs and ADs exist (look them up in the appropriate databases)</li>
+  <li>Engine traceability references make sense (engine serial number format is plausible, engine model matches the part)</li>
+</ul>
+
+<h5>Block 13 — Conformance Statement</h5>
+<p><strong>Expected:</strong> pre-printed conformance text with two checkboxes. Exactly one box checked.</p>
+<p><strong>Verify:</strong> one box and only one box is checked. Neither checked or both checked is a defective form.</p>
+
+<h5>Block 14 — Approving Signature</h5>
+<p><strong>Expected:</strong> original wet-ink signature OR verifiable electronic signature with audit trail.</p>
+<p><strong>Verify:</strong></p>
+<ul>
+  <li>Signature appears original — not photocopied (look for rasterization, uniform ink color, dotted lines)</li>
+  <li>Signature is hand-drawn (not computer-generated)</li>
+  <li>Signature matches the printed name in Block 16</li>
+  <li>For electronic signatures: there is an associated audit trail (timestamp, digital signature certificate, or attestation)</li>
+</ul>
+
+<h5>Block 15 — Authorization / Certificate Number</h5>
+<p>The single most important block for fraud detection.</p>
+<p><strong>Expected:</strong> the FAA certificate number of the issuing organization.</p>
+<p><strong>Verify against FAA database at av-info.faa.gov:</strong></p>
+<ol>
+  <li>Number returns a result in the database</li>
+  <li>The certificate holder name in the database matches Block 4 exactly</li>
+  <li>The location matches Block 4 address</li>
+  <li>The certificate is currently active (not suspended, expired, or revoked)</li>
+  <li>The certificate type matches what is appropriate for issuing this 8130-3 (PMA, Repair Station, Production Approval, etc.)</li>
+</ol>
+<p>This database check is the single most powerful fraud detection step. Skipping it is the single most common §6 audit finding.</p>
+
+<h5>Block 16 — Name of Signer</h5>
+<p><strong>Expected:</strong> printed name of the person signing in Block 14.</p>
+<p><strong>Verify:</strong> matches signature style; is plausible for the issuing organization (an "Inspector" name on a tag from a small one-person shop is suspicious; a "VP of Operations" signature on a routine tag from a large repair station is also suspicious).</p>
+
+<h5>Block 17 — Date</h5>
+<p><strong>Expected:</strong> the date the form was signed.</p>
+<p><strong>Verify:</strong></p>
+<ul>
+  <li>Date is not in the future</li>
+  <li>Date is not unreasonably old (a 14-month-old tag on a freshly-shipped part has a gap to explain)</li>
+  <li>Date is within the certificate\'s active period (not before the certificate was granted, not after it was suspended)</li>
+  <li>Date has not been altered (no whiteout, no over-stamping)</li>
+</ul>
+
+<h5>Blocks 18-22 — Installer Section</h5>
+<p><strong>Expected:</strong> blank on a part not yet installed.</p>
+<p><strong>Verify:</strong> nothing filled in. Anything filled in indicates prior installation on an aircraft — investigate the history.</p>
+
+<h4>EASA Form 1 — Specific differences</h4>
+
+<p>EASA Form 1 is the European Union equivalent. Mutually recognized under FAA-EASA bilateral agreement. Structural differences from FAA 8130-3:</p>
+
+<ul>
+  <li>Block 1 reads "EASA / European Union" (or the specific national authority operating under EASA delegation)</li>
+  <li>Block 2 title is "AUTHORIZED RELEASE CERTIFICATE / EASA Form 1"</li>
+  <li>Blocks 6-8 cover item description and part number (similar but not identical numbering to FAA 8130-3)</li>
+  <li>Block 14 contains the authorization signature</li>
+  <li>The equivalent of FAA Block 15 is the organization\'s EASA approval number — verifiable through the <a href="https://www.easa.europa.eu/" target="_blank" rel="noopener">EASA approved-organization directory</a></li>
+</ul>
+
+<p>The verification principles are the same: verify the certificate number against the appropriate database; check that the certificate holder name matches Block 4 equivalent; confirm signature is original; check date plausibility.</p>
+
+<p>Some EASA-approved organizations are physically located outside the EU under bilateral arrangements. The verification is the same: confirm via EASA database that the organization holds the relevant approval.</p>
+
+<h4>TCCA Form One — Canadian equivalent</h4>
+
+<p>Structure is similar to EASA Form 1 since both follow the bilateral-harmonized format. The certificate number is the Canadian Approved Maintenance Organization (AMO) number, verifiable through Transport Canada\'s online database.</p>
+
+<h4>Certificate of Conformance (COC) verification</h4>
+
+<p>COCs accompany many parts where formal 8130-3 documentation isn\'t required — raw materials, standard hardware, consumables. The COC is supplier-issued, less standardized, but must contain specific elements to be valid.</p>
+
+<h5>Required content</h5>
+
+<ul>
+  <li>Standard or specification the parts conform to — with revision: "conforms to MIL-PRF-XXXXX rev. C," not just "conforms to applicable specifications"</li>
+  <li>Part number identification of the items covered</li>
+  <li>Serial number, lot number, or batch number tying the COC to the specific parts shipped</li>
   <li>Quantity</li>
-  <li>Manufacturer name and address</li>
-  <li>Signed by an authorized representative with name and title</li>
+  <li>Manufacturer or processor name and address (not just a generic letterhead)</li>
+  <li>Signature of an authorized representative with name and title</li>
   <li>Date of issue</li>
 </ul>
 
+<h5>COC red flags</h5>
+
+<ul>
+  <li>No specific standard cited — "complies with industry standards" is meaningless</li>
+  <li>No serial/lot/batch tying — "all parts in this shipment" without identifying which parts</li>
+  <li>Generic letterhead that could be from anyone</li>
+  <li>Signed by someone without an authority title — "Sales Rep" isn\'t the right person to attest conformance</li>
+  <li>Date before the parts were manufactured (internal inconsistency)</li>
+  <li>Photocopied signature or obviously computer-generated</li>
+</ul>
+
 <h4>Material certifications and test reports</h4>
-<p>For raw materials and parts where material conformance matters (turbine disks, fasteners in critical applications), the PO may require a material test report showing chemical composition and mechanical properties. Verify the test report references the correct heat/lot number that ties to the parts in the shipment.</p>
+
+<p>For raw materials and parts where material conformance is critical (turbine disks, structural fasteners), the PO may require a material test report (MTR). The MTR documents the chemical composition and mechanical properties of the heat or lot from which the parts were produced.</p>
+
+<h5>MTR verification</h5>
+
+<ul>
+  <li>References the correct material specification</li>
+  <li>References the heat number, lot number, or melt number that ties to the parts in the shipment</li>
+  <li>Includes the actual measured values for chemistry (percentage of each alloying element) and mechanical properties (tensile strength, yield strength, elongation, hardness)</li>
+  <li>Measurements fall within the specification range</li>
+  <li>Issued by a qualified laboratory (sometimes the OEM\'s own, sometimes an accredited third-party lab)</li>
+  <li>Includes the test date</li>
+</ul>
+
+<p>A test report with values that don\'t meet the specification is a major issue — the material claimed to be on spec wasn\'t. A test report missing key values is incomplete. A test report not tied to the heat/lot of the parts is irrelevant — it documents some other material, not the material in the shipment.</p>
 
 <h4>Country-of-origin documentation</h4>
-<p>Required for U.S. export-control compliance and for some customer contracts. Verify the country of origin matches what the PO authorized.</p>
 
-<h4>What to do with documentation</h4>
-<p>Originals: file against the part record in the document control system. The originals are the audit-evidence chain — they must be retained per the ASA-100 §8 records-retention schedule (Module 5). Copies may be kept with the physical part for warehouse reference.</p>
+<p>For U.S. export compliance and for some customer contracts, country-of-origin documentation is required. This certifies where the part was manufactured (not just where it was last shipped from).</p>
+
+<p>Verify the country of origin matches what the PO authorized. If the PO restricted origin (e.g., "United States or NATO countries only"), parts from other countries cannot be accepted regardless of how good the 8130-3 looks.</p>
+
+<h4>Hazmat documentation (when applicable)</h4>
+
+<p>For hazardous materials, the shipment includes hazmat shipping documentation:</p>
+
+<ul>
+  <li>Shipper\'s Declaration for Dangerous Goods (for air shipments)</li>
+  <li>Hazmat shipping papers (for ground/sea)</li>
+  <li>SDS (Safety Data Sheet) for the hazmat</li>
+</ul>
+
+<p>If hazmat documentation is missing on a shipment containing hazmat, that is a serious finding — not just an internal TurbineWorks problem but a regulatory violation by the shipper. Refuse the shipment until proper documentation arrives. Module 8 covers hazmat in depth.</p>
+
+<h4>Cross-document consistency</h4>
+
+<p>After verifying each document individually, perform cross-document consistency checks:</p>
+
+<ul>
+  <li>Part number on 8130-3 matches packing list matches PO matches the part itself</li>
+  <li>Serial number on 8130-3 matches data plate matches packing list</li>
+  <li>Quantity on 8130-3 matches packing list matches actual count</li>
+  <li>Manufacturer name on 8130-3 matches manufacturer on COC if both are provided</li>
+  <li>Heat/lot number on MTR matches what is referenced on the 8130-3 or COC</li>
+  <li>Country of origin documented and matches PO requirements</li>
+</ul>
+
+<p>Cross-document inconsistencies are a stronger SUP indicator than single-document red flags. A bad actor preparing fraudulent documentation typically focuses on making each document look right individually but may miss the cross-references.</p>
+
+<h4>Documentation review workflow checklist</h4>
+
+<p>The full systematic workflow for documentation review on a typical serialized aviation part:</p>
+
+<ol>
+  <li>Identify all documents accompanying the shipment ☐</li>
+  <li>Confirm each serialized part has its own 8130-3 ☐</li>
+  <li>Block-by-block verification of the 8130-3 ☐</li>
+  <li>Block 15 verified in FAA database ☐</li>
+  <li>Block 4 organization name matches database result ☐</li>
+  <li>Block 14 signature is original (not photocopied) ☐</li>
+  <li>Block 10 serial number matches the physical part ☐</li>
+  <li>Block 12 includes LLP data if applicable ☐</li>
+  <li>Block 17 date is plausible ☐</li>
+  <li>Right-side blocks 18-22 are blank ☐</li>
+  <li>COC verified if required (specific standard cited, parts identified, authorized signer) ☐</li>
+  <li>Material test report verified if required (heat/lot matches; values on spec) ☐</li>
+  <li>Country-of-origin documentation verified if required ☐</li>
+  <li>Hazmat documentation verified if applicable ☐</li>
+  <li>Cross-document consistency confirmed (part number, serial, quantity, manufacturer) ☐</li>
+</ol>
+
+<p>Each unchecked box requires resolution. The inspector either resolves the question (looks up the certificate, contacts the supplier, etc.) or quarantines pending investigation.</p>
+
+<h4>What to do with the documents after review</h4>
+
+<p>Originals: file against the part record in the document control system. The originals are the audit-evidence chain. Module 5 covers records retention in detail. For purposes of receiving inspection, the key principle is: do not alter, annotate, or stamp the original documents. Make copies if you need to mark up something for internal use; the originals stay clean and complete.</p>
+
+<p>Copies: may be kept with the physical part for warehouse reference, but the controlling record is the original in the document control file.</p>
+
+<h4>Self-check</h4>
+
+<ol>
+  <li>What is the "one part, one document set" principle for serialized engine parts?</li>
+  <li>What is the single most important block on an 8130-3 for fraud detection? Why?</li>
+  <li>Where do you verify a Block 15 certificate number?</li>
+  <li>What must be included in Block 12 (Remarks) for a Life Limited Part?</li>
+  <li>Name the 6 required elements of a valid Certificate of Conformance.</li>
+  <li>Why is a Material Test Report that doesn\'t reference the heat/lot number of the parts in the shipment "irrelevant"?</li>
+  <li>What is the difference between a single-document red flag and a cross-document inconsistency?</li>
+  <li>What should you do with the original 8130-3 after documentation review?</li>
+</ol>
+
+<p><em>[TurbineWorks Procedure Reference: insert TurbineWorks document control SOP reference and the location of the document filing system here.]</em></p>
 HTML
         ],
         [
