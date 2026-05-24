@@ -35,7 +35,7 @@ require_once(__DIR__ . '/../content/glossary.php');
 
 // Bump the suffix here (and in the entrypoint marker docs) when adding new
 // bootstrap steps that should run on existing sites.
-$marker = $CFG->dataroot . '/.twu-bootstrapped-v35';
+$marker = $CFG->dataroot . '/.twu-bootstrapped-v36';
 $force  = in_array('--force', $argv ?? [], true);
 if (file_exists($marker) && !$force) {
     cli_writeln("[twu] already bootstrapped (marker present at $marker). Pass --force to re-run.");
@@ -316,18 +316,53 @@ function twu_ensure_role(string $shortname, string $name, string $description,
         cli_writeln("[twu] created role: $name ($shortname, id=$roleid)");
     }
     // Set context levels — where the role can be assigned.
-    set_role_contextlevels($roleid, $contexts);
-    // Apply capabilities (only if not already at this permission level).
+    try {
+        set_role_contextlevels($roleid, $contexts);
+    } catch (Throwable $e) {
+        cli_writeln("[twu]   WARN set_role_contextlevels failed: " . $e->getMessage());
+        twu_reset_db_transaction();
+    }
+    // Apply capabilities. Each in its own try/catch so a single invalid /
+    // renamed capability does not corrupt the DB transaction state or abort
+    // the rest of the role's capability assignments.
+    $assigned = 0;
+    $skipped = 0;
     foreach ($capabilities as $capability => $permission) {
-        $current = $DB->get_record('role_capabilities',
-            ['roleid' => $roleid, 'capability' => $capability,
-             'contextid' => context_system::instance()->id]);
-        if (!$current || (int)$current->permission !== $permission) {
-            assign_capability($capability, $permission, $roleid,
-                context_system::instance()->id, true);
+        try {
+            $current = $DB->get_record('role_capabilities',
+                ['roleid' => $roleid, 'capability' => $capability,
+                 'contextid' => context_system::instance()->id]);
+            if (!$current || (int)$current->permission !== $permission) {
+                assign_capability($capability, $permission, $roleid,
+                    context_system::instance()->id, true);
+            }
+            $assigned++;
+        } catch (Throwable $e) {
+            cli_writeln("[twu]   WARN cap '$capability' for role '$shortname': " . $e->getMessage());
+            twu_reset_db_transaction();
+            $skipped++;
         }
     }
+    if ($skipped > 0) {
+        cli_writeln("[twu]   role $shortname: $assigned capabilities assigned, $skipped skipped (invalid/renamed)");
+    }
     return $roleid;
+}
+
+// Defensively force-rollback any open DB transaction. Moodle's $DB layer
+// can enter an "aborted transaction" state after a caught exception, causing
+// every subsequent write to fail with "Error writing to database". Calling
+// this in every catch block resets state so subsequent sections can write.
+function twu_reset_db_transaction(): void {
+    global $DB;
+    try {
+        if (method_exists($DB, 'is_transaction_started') && $DB->is_transaction_started()) {
+            $DB->force_transaction_rollback();
+        }
+    } catch (Throwable $e2) {
+        // Nothing more we can do; the next write will still fail if state is
+        // unrecoverable, but most often this clears it.
+    }
 }
 
 try {
@@ -448,6 +483,7 @@ twu_ensure_role(
 cli_writeln("[twu] custom roles ensured: QA Manager, Trainer, Auditor");
 } catch (Throwable $e) {
     cli_writeln("[twu] WARN custom-roles section failed: " . $e->getMessage() . " — continuing.");
+    twu_reset_db_transaction();
 }
 
 // ---------------------------------------------------------------------------
@@ -585,6 +621,7 @@ twu_ensure_profile_field([
 cli_writeln("[twu] custom profile fields ensured (9 fields across TurbineWorks Employee Information category)");
 } catch (Throwable $e) {
     cli_writeln("[twu] WARN profile-fields section failed: " . $e->getMessage() . " — continuing.");
+    twu_reset_db_transaction();
 }
 
 // ---------------------------------------------------------------------------
@@ -632,6 +669,7 @@ foreach ($createdcourses as $idnumber => $course) {
 cli_writeln("[twu] cohort sync: Initial Trainees → 8 Initial Training courses");
 } catch (Throwable $e) {
     cli_writeln("[twu] WARN cohort-sync section failed: " . $e->getMessage() . " — continuing.");
+    twu_reset_db_transaction();
 }
 
 // ---------------------------------------------------------------------------
@@ -699,6 +737,7 @@ function twu_ensure_page_lesson(stdClass $course, int $sectionnum, string $name,
         return (int)$cm->coursemodule;
     } catch (Throwable $e) {
         cli_writeln("[twu]   could not create lesson '$name': " . $e->getMessage());
+        twu_reset_db_transaction();
         return null;
     }
 }
@@ -1136,6 +1175,7 @@ function twu_ensure_quiz(stdClass $course, array $quizdef): ?int {
         $cm = add_moduleinfo($moduleinfo, $course);
     } catch (Throwable $e) {
         cli_writeln("[twu]   could not create quiz module: " . $e->getMessage());
+        twu_reset_db_transaction();
         return null;
     }
 
@@ -1287,6 +1327,7 @@ function twu_ensure_cumulative_exam(stdClass $course, array $modulecourses): ?in
         $cm = add_moduleinfo($moduleinfo, $course);
     } catch (Throwable $e) {
         cli_writeln("[twu]   could not create cumulative exam: " . $e->getMessage());
+        twu_reset_db_transaction();
         return null;
     }
     $quiz = $DB->get_record('quiz', ['id' => $cm->instance], '*', MUST_EXIST);
@@ -1385,6 +1426,7 @@ cli_writeln("[twu] final exam section gated behind $gated module quiz completion
 twu_ensure_customcert($finalcourse);
 } catch (Throwable $e) {
     cli_writeln("[twu] WARN cumulative-exam wiring failed: " . $e->getMessage() . " — continuing.");
+    twu_reset_db_transaction();
 }
 
 // ---------------------------------------------------------------------------
@@ -1463,6 +1505,7 @@ function twu_ensure_assignment(stdClass $course, array $def): ?int {
         return (int)$cm->coursemodule;
     } catch (Throwable $e) {
         cli_writeln("[twu]   could not create assignment '{$def['name']}': " . $e->getMessage());
+        twu_reset_db_transaction();
         return null;
     }
 }
@@ -1614,7 +1657,16 @@ cli_writeln("[twu] practical assignments seeded in " . count(array_intersect_key
 // ---------------------------------------------------------------------------
 function twu_ensure_customcert(stdClass $course): ?int {
     global $DB, $CFG;
-    require_once($CFG->dirroot . '/mod/customcert/locallib.php');
+    // mod/customcert v4.x removed locallib.php in favor of namespaced classes.
+    // Only require if the file exists (some intermediate versions still had it).
+    if (file_exists($CFG->dirroot . '/mod/customcert/locallib.php')) {
+        require_once($CFG->dirroot . '/mod/customcert/locallib.php');
+    }
+    // If customcert plugin isn't installed at all, skip cert creation.
+    if (!is_dir($CFG->dirroot . '/mod/customcert')) {
+        cli_writeln("[twu]   customcert plugin not installed; skipping cert for course $course->id");
+        return null;
+    }
 
     $ismaster_pre = (!empty($course->idnumber) && $course->idnumber === 'TWF4-FINAL');
     if ($ismaster_pre) {
@@ -1677,6 +1729,7 @@ function twu_ensure_customcert(stdClass $course): ?int {
         $cm = add_moduleinfo($moduleinfo, $course);
     } catch (Throwable $e) {
         cli_writeln("[twu]   could not create customcert: " . $e->getMessage());
+        twu_reset_db_transaction();
         return null;
     }
 
@@ -1846,6 +1899,7 @@ function twu_ensure_forum(stdClass $course, string $name, string $intro): ?int {
         return (int)$cm->instance; // forum.id, not cm.id — needed by post seeder
     } catch (Throwable $e) {
         cli_writeln("[twu]   could not create forum: " . $e->getMessage());
+        twu_reset_db_transaction();
         return null;
     }
 }
@@ -2097,6 +2151,7 @@ try {
     }
 } catch (Throwable $e) {
     cli_writeln("[twu] WARN engine/ops cohort sync failed: " . $e->getMessage() . " — continuing.");
+    twu_reset_db_transaction();
 }
 
 // ---------------------------------------------------------------------------
@@ -2554,6 +2609,7 @@ twu_ensure_demo_user(
 cli_writeln("[twu] 4 demo template users created (suspended; in role + All Employees cohorts)");
 } catch (Throwable $e) {
     cli_writeln("[twu] WARN demo users section failed: " . $e->getMessage() . " — continuing.");
+    twu_reset_db_transaction();
 }
 
 // ---------------------------------------------------------------------------
@@ -2670,6 +2726,7 @@ foreach ([$semi1, $semi2] as $ts) {
 cli_writeln("[twu] site calendar events ensured (management reviews, hazmat/DGR checks, recurring windows)");
 } catch (Throwable $e) {
     cli_writeln("[twu] WARN site calendar events failed: " . $e->getMessage() . " — continuing.");
+    twu_reset_db_transaction();
 }
 
 // ---------------------------------------------------------------------------
@@ -2769,6 +2826,7 @@ foreach ($alltargetcourses as $course) {
 cli_writeln("[twu] course completion criteria: $totalcriteria activity-criterion rows across " . count($alltargetcourses) . " courses");
 } catch (Throwable $e) {
     cli_writeln("[twu] WARN course completion criteria failed: " . $e->getMessage() . " — continuing.");
+    twu_reset_db_transaction();
 }
 
 // ---------------------------------------------------------------------------
@@ -2836,6 +2894,7 @@ twu_ensure_cert_availability($finalcourse);
 cli_writeln("[twu] certificate availability: gated behind completion of all lessons + quiz in " . (count($createdcourses) + 1) . " Initial Training courses");
 } catch (Throwable $e) {
     cli_writeln("[twu] WARN cert availability gating failed: " . $e->getMessage() . " — continuing.");
+    twu_reset_db_transaction();
 }
 
 // ---------------------------------------------------------------------------
@@ -2950,6 +3009,7 @@ foreach ($createdcourses as $idnumber => $course) {
 cli_writeln("[twu] welcome HTML blocks added to " . count($createdcourses) . " Initial Training courses");
 } catch (Throwable $e) {
     cli_writeln("[twu] WARN welcome blocks failed: " . $e->getMessage() . " — continuing.");
+    twu_reset_db_transaction();
 }
 
 // Rebuild course cache for all touched courses so completion / availability /
@@ -2962,6 +3022,7 @@ foreach ($alltargetcourses as $course) {
 cli_writeln("[twu] rebuilt course cache for " . count($alltargetcourses) . " courses");
 } catch (Throwable $e) {
     cli_writeln("[twu] WARN course cache rebuild failed: " . $e->getMessage() . " — continuing.");
+    twu_reset_db_transaction();
 }
 
 // ---------------------------------------------------------------------------
