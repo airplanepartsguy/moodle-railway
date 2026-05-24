@@ -410,45 +410,220 @@ function local_twu_module_1_lessons(): array {
     return [
         [
             'name'  => 'Lesson 1.1 — Definitions: Unapproved, SUP, and Counterfeit',
-            'intro' => '<p>The three categories of bad parts and why the legal distinctions matter.</p>',
+            'intro' => '<p>The three categories of bad parts and why the legal distinctions matter. Foundational vocabulary for every other lesson in this module — and for every receiving inspection you will ever perform at TurbineWorks.</p>',
             'content' => <<<'HTML'
-<h3>Three categories of bad parts</h3>
-<p>The FAA and ASA-100 distinguish three categories of parts that an accredited distributor must keep out of the supply chain. The distinctions are legally significant — they drive different reporting obligations and different enforcement consequences.</p>
+<h3>The Three Categories of "Bad" Parts</h3>
 
-<h4>Unapproved Part</h4>
-<p>A part that does not conform to an approved type design, OR a part that is not in a condition for safe operation. The FAA definition is in <strong>14 CFR § 21.502</strong> and elaborated in <strong>FAA AC 21-29D</strong>.</p>
-<p>An unapproved part is a definitive finding — the part has been determined, with evidence, not to meet approved design data. Examples:</p>
+<p>Before you can prevent unapproved parts from entering TurbineWorks inventory, you have to know exactly what an unapproved part is — and how it differs from the related but distinct categories of <em>suspected unapproved</em> and <em>counterfeit</em>. These three terms get used interchangeably in everyday conversation. They are not interchangeable in FAA regulation, in ASA-100 procedure, or in court. Using them imprecisely is itself a quality-system finding.</p>
+
+<p>This lesson establishes the precise definitions the FAA uses, the differences in legal consequence, and the practical implications for what a TurbineWorks receiving inspector does when they encounter each category. Every other lesson in Module 1 — and most lessons in Modules 2, 4, and 5 — rests on this vocabulary.</p>
+
+<h4>Why the distinction was created</h4>
+
+<p>The FAA introduced the formal taxonomy of unapproved / suspected unapproved / counterfeit in the 1990s in response to a wave of high-profile incidents:</p>
+
 <ul>
-  <li>A turbine blade made from the wrong alloy (verified by metallurgical analysis)</li>
-  <li>A bearing produced by a non-approved manufacturer with no PMA or TSO authority</li>
-  <li>A part stamped with an OEM part number but with documented dimensional non-conformance</li>
-  <li>A part that was scrapped at an MRO but never mutilated, re-entered service through theft</li>
+  <li><strong>The Partnair Convair 580 crash (1989)</strong>, where investigators found that bogus bolts had been installed in the tail control system, contributing to in-flight breakup. Investigation traced the parts through multiple distributors back to an unauthorized manufacturer.</li>
+  <li><strong>NTSB findings through the 1990s</strong> documenting repeated cases of misrepresented parts entering commercial fleets through the open broker market.</li>
+  <li><strong>The 1995 FAA Suspected Unapproved Parts program</strong>, establishing FAA Form 8120-11 reporting and the SUP investigation framework.</li>
 </ul>
 
-<h4>Suspected Unapproved Part (SUP)</h4>
-<p>A part where there is a <em>reasonable basis</em> to believe it may be unapproved, but where investigation is not yet complete. This is what receiving inspectors are most likely to encounter. The threshold is intentionally low — "reasonable basis," not "confirmed."</p>
-<p>The moment a part becomes "suspected," it must be quarantined and investigated. You do not need certainty to flag a SUP. You need enough to justify suspicion.</p>
-<p>Examples of what triggers SUP status:</p>
+<p>Before the formal taxonomy, "bad part" was the operative term and it covered everything from a part with no paperwork to a deliberately fabricated counterfeit. The categories distinguished them because each requires different actions: a part you suspect needs to be investigated; a part you have confirmed needs to be removed from service; a deliberately misrepresented part triggers fraud-investigation procedures that may involve criminal authorities. Lumping all three together under "bad part" causes practical failures — you either over-react and treat every paperwork question as a federal crime, or you under-react and treat clear fraud as administrative.</p>
+
+<h4>Category 1 — Unapproved Part</h4>
+
+<p><strong>Legal source:</strong> <code>14 CFR §21.502</code> defines unapproved parts. The same regulation is summarized at length in <strong>FAA Advisory Circular 21-29D</strong>, Section 3.</p>
+
+<p>The CFR definition (paraphrased for clarity): an unapproved part is one of the following:</p>
+
+<ol>
+  <li>A part that does not conform to an approved type design, OR</li>
+  <li>A part that is not in a condition for safe operation, OR</li>
+  <li>A part that was not produced under an approved production system (no PMA, TSO, or production certificate authority), AND that does not fit one of the recognized exceptions (e.g., owner-produced parts under 14 CFR §43.13).</li>
+</ol>
+
+<p>"Unapproved" is a <strong>definitive</strong> status. Calling a part unapproved means TurbineWorks (or another party with authority) has reached a conclusion based on evidence. The evidence might be:</p>
+
 <ul>
-  <li>FAA 8130-3 tag with a Block 15 certificate number not found in the FAA's public database</li>
-  <li>Documentation that has been photocopied with no "TRUE COPY" attestation</li>
-  <li>Serial number on the part doesn't match the serial number on the tag</li>
-  <li>Markings on the part appear to have been altered (font mismatch, depth differences)</li>
-  <li>Source supplier is not on the TurbineWorks approved-supplier list</li>
+  <li>Metallurgical analysis showing the part is made from the wrong alloy</li>
+  <li>Dimensional inspection showing the part doesn't match the approved drawing</li>
+  <li>OEM confirmation that the part was not produced by them and the supposed source has no production authority</li>
+  <li>Documentation analysis confirming that the 8130-3 was fabricated and the supposed issuing organization has no record of it</li>
+  <li>FAA SUP investigation conclusion declaring the part unapproved</li>
 </ul>
 
-<h4>Counterfeit Part</h4>
-<p>A part that has been <em>deliberately misrepresented</em> as being something it is not — typically misrepresented as being from an approved source when it is not. Counterfeiting requires intent to deceive. This makes it a distinct legal matter, often crossing into criminal fraud.</p>
-<p>The aerospace counterfeit problem accelerated in the 2000s with the global outsourcing of electronic component manufacturing. The SAE published <strong>AS5553</strong> (electronics) and <strong>AS6174</strong> (broader materiel) in response. ASA auditors increasingly check supplier-qualification programs against these standards.</p>
+<p>Concrete examples of parts that have been confirmed unapproved in real industry cases:</p>
 
-<h4>Why the distinctions matter</h4>
 <ul>
-  <li><strong>Reporting:</strong> SUP triggers FAA Form 8120-11 notification. Counterfeit may additionally trigger FBI/DOD reporting if it touches government contracts.</li>
-  <li><strong>Disposition:</strong> Confirmed unapproved parts must be mutilated per FAA AC 21-38. SUP under investigation must be quarantined but cannot yet be destroyed (preserves evidence).</li>
-  <li><strong>Liability:</strong> Knowingly selling a counterfeit part is fraud. Inadvertently selling an unapproved part is still a serious finding but typically administrative, not criminal.</li>
+  <li><strong>Wrong-alloy turbine blade.</strong> A blade marked with the correct OEM part number and serial number but produced from a substitute alloy with inferior high-temperature properties. Discovered through routine metallurgical sampling at a customer MRO. The part conforms dimensionally but fails the type-design requirement of correct material.</li>
+  <li><strong>Unauthorized manufacturer bearing.</strong> A bearing produced by a job shop with no PMA or TSO authority, marked with the OEM\'s identifying numbers to make it look authorized. The bearing might even meet dimensional spec and might function adequately for many hours — but it was not produced under any FAA-approved production system, so by regulation it cannot be installed on a type-certificated aircraft.</li>
+  <li><strong>Reactivated scrap.</strong> A turbine disk that an operator scrapped because it had reached its cycle limit. The disk should have been mutilated per FAA AC 21-38 so it could never re-enter the supply chain. Instead, someone in the disposal chain diverted it, re-cleaned and re-marked it with a different serial number, and sold it. The part is in a "condition for safe operation" only if you ignore the unknown cycle accumulation — but the documentation trail is fabricated and the part is unapproved.</li>
+  <li><strong>Repair beyond authority.</strong> A blade that an unauthorized facility welded and machined to repair a damaged airfoil. The work was performed outside any OEM-approved repair authority. The part is now a different part than what the OEM designed and certified. Unapproved.</li>
 </ul>
 
-<p><strong>Receiving inspector rule of thumb:</strong> when in doubt, treat as SUP and quarantine. Investigation can always confirm a part is good; an unapproved part that gets into inventory is much harder to find and recall.</p>
+<p>A key point in all of these examples: the part may be <em>physically indistinguishable</em> from an approved part. You cannot determine unapproved status just by looking. The determination is about provenance, conformance, and authority — and it requires evidence to support.</p>
+
+<h4>Category 2 — Suspected Unapproved Part (SUP)</h4>
+
+<p><strong>Legal source:</strong> FAA AC 21-29D defines the SUP investigation framework. SUP status is regulatory shorthand for "we have a reasonable basis to suspect this part may be unapproved, but we have not concluded the investigation."</p>
+
+<p>The threshold for treating a part as a SUP is intentionally low. The standard from AC 21-29D is "reasonable basis to believe." This is not "more likely than not" and certainly not "beyond a reasonable doubt." It is a much lower bar — the standard that ordinary, prudent care would use to flag a part for further investigation.</p>
+
+<p>Why is the threshold so low? Because the cost asymmetry is enormous:</p>
+
+<ul>
+  <li><strong>Cost of flagging a part as SUP that turns out to be fine:</strong> a few days of investigation, a paperwork file, possibly an apologetic note to a supplier. Maybe $500 in process cost. Reversible.</li>
+  <li><strong>Cost of failing to flag a part that turns out to be unapproved:</strong> the part may be installed on a customer\'s aircraft, may cause in-service failure, may injure or kill people, may trigger FAA enforcement action against TurbineWorks, may result in revocation of accreditation. Catastrophic. Possibly irreversible.</li>
+</ul>
+
+<p>The asymmetry justifies a hair-trigger. If you see something that doesn\'t look right, you flag it. The investigation either confirms it as a real problem, or it confirms the part is fine and you release it. Either outcome is acceptable. What is <em>not</em> acceptable is failing to investigate something that warranted suspicion.</p>
+
+<p>The triggers that should put a TurbineWorks receiving inspector into SUP mode include any of the following (this is not exhaustive — anything that strikes you as off justifies the call):</p>
+
+<ul>
+  <li><strong>Documentation that fails the Block 15 lookup test.</strong> Every FAA 8130-3 has a certificate number in Block 15 identifying the issuing organization. The FAA maintains a public database of all certificate holders at <a href="https://av-info.faa.gov/" target="_blank" rel="noopener">av-info.faa.gov</a>. Every legitimate Block 15 number is in that database. A Block 15 number that is not in the database is, in essentially every case, fabricated.</li>
+
+  <li><strong>Documentation with a photocopied signature.</strong> The Block 14 signature on an 8130-3 is supposed to be an original wet-ink signature or a verifiable electronic signature with audit trail. A photocopied signature is almost always evidence that the form has been duplicated or altered. (There are narrow exceptions where a "TRUE COPY" attestation from an authorized custodian explains the photocopy, but in those cases the attestation itself is on the form.)</li>
+
+  <li><strong>Serial number mismatch between the part and the documentation.</strong> Block 10 of the 8130-3 lists the serial number. The part itself has the serial number stamped or etched on a data plate or directly on the part. The two must match exactly — including every character and including any letter prefixes. A single transposed digit is a SUP indicator.</li>
+
+  <li><strong>Markings on the part that appear to have been altered.</strong> Examples: a stamped part number with telltale grinding marks underneath suggesting a previous mark was removed; a stamping font that doesn\'t match the OEM\'s known stamping pattern; characters of inconsistent depth suggesting hand-stamped re-marking over factory-original marking.</li>
+
+  <li><strong>Source supplier not on the TurbineWorks approved-supplier list.</strong> The approved-supplier list is the result of supplier qualification — TurbineWorks has confirmed that this supplier operates a quality system, has procedures for proper documentation, and has a track record. A shipment from an unknown supplier may be perfectly legitimate, or it may be the entry point of a SUP. Either way, the receiving inspection cannot proceed normally until the supplier is qualified or the QA Manager has authorized one-time receipt.</li>
+
+  <li><strong>Pricing that is anomalously low.</strong> If a part type that normally trades at $40,000 is being offered at $12,000, there is a reason. Sometimes it is a legitimate distressed-inventory sale. Sometimes it is the economic signature of a counterfeit or stolen part — the supplier can offer below market because they didn\'t pay market for the inputs. Anomalous pricing alone is not sufficient evidence to declare SUP status, but combined with any other indicator it is a strong signal.</li>
+
+  <li><strong>Documentation that doesn\'t match the part type.</strong> An 8130-3 referencing a fuel-control unit attached to a bearing — clearly the tag was applied to the wrong part, or the tag has been deliberately matched to a different part. Either way, investigate.</li>
+</ul>
+
+<p>What changes when a part is in SUP status:</p>
+
+<ul>
+  <li>The part moves immediately to <strong>Quarantine</strong> — a physically segregated holding area that prevents the part from entering serviceable inventory.</li>
+  <li>The part may NOT be shipped to any customer.</li>
+  <li>The part may NOT be returned to the supplier without QA Manager authorization. Returning a SUP without investigation just transfers the SUP to the next distributor in the chain and conceals the evidence.</li>
+  <li>All accompanying documentation is preserved in its original form. Do not annotate the documents, do not stamp them, do not photocopy and discard the originals. The originals are evidence.</li>
+  <li>The QA Manager is notified the same business day.</li>
+  <li>A Non-Conformance Report is opened in the corrective-action system.</li>
+</ul>
+
+<h4>Category 3 — Counterfeit Part</h4>
+
+<p><strong>Legal source:</strong> There is no single CFR section defining counterfeit aviation parts the way 14 CFR §21.502 defines unapproved parts. The term is used in industry standards (SAE AS5553, SAE AS6174) and in 41 U.S.C. §4109 (counterfeit electronic parts in defense contracts). The distinguishing feature, in every relevant definition, is <strong>deliberate misrepresentation</strong>.</p>
+
+<p>An unapproved part may have entered the supply chain by accident, mistake, or negligence. A counterfeit part requires that someone, somewhere along the chain, deliberately misrepresented the part — usually misrepresented its source as being an approved manufacturer when it was not. Counterfeiting is fraud. It is investigated and prosecuted as fraud by the FBI, DOD inspectors general, and other federal authorities.</p>
+
+<p>Practical implication: in receiving inspection, you may identify a SUP. You investigate. The investigation may conclude:</p>
+
+<ul>
+  <li><strong>"This part is fine, the suspicion was a false alarm."</strong> Part returns to serviceable.</li>
+  <li><strong>"This part is unapproved — the supplier never had authority to produce it."</strong> The part is unapproved. Mutilation per AC 21-38, FAA notification via Form 8120-11.</li>
+  <li><strong>"This part is counterfeit — someone deliberately misrepresented its source."</strong> All of the above PLUS the matter is referred for potential criminal investigation. The FBI may take possession of the part. The supplier may be referred for prosecution. Other affected customers may need urgent notification.</li>
+</ul>
+
+<p>The aerospace counterfeit problem has intensified in two distinct waves:</p>
+
+<ol>
+  <li><strong>Mechanical part counterfeiting (1980s-2000s).</strong> Job shops producing parts to OEM dimensions without authority, then selling them with fabricated documentation through broker chains. Mostly targeted high-value commodity items: bolts, bearings, brackets. The Partnair Convair 580 case is the canonical example.</li>
+  <li><strong>Electronic counterfeit (2000s-present).</strong> The global outsourcing of electronics manufacturing created opportunities for counterfeit chips, capacitors, and assemblies. SAE AS5553 was published in 2009 in direct response. AS6174 followed for broader materiel. DoD has tightened counterfeit-prevention requirements through DFARS clauses 252.246-7007/7008.</li>
+</ol>
+
+<h4>Side-by-side comparison</h4>
+
+<table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse;">
+  <tr style="background:#0d2240; color:#fff;">
+    <th>Dimension</th><th>Unapproved</th><th>SUP</th><th>Counterfeit</th>
+  </tr>
+  <tr>
+    <td>Status</td>
+    <td>Confirmed by evidence</td>
+    <td>Suspected, under investigation</td>
+    <td>Confirmed AND deliberate misrepresentation</td>
+  </tr>
+  <tr>
+    <td>Threshold</td>
+    <td>"Determined" — evidence supports conclusion</td>
+    <td>"Reasonable basis to suspect" — intentionally low</td>
+    <td>"Beyond reasonable doubt" if criminal prosecution</td>
+  </tr>
+  <tr>
+    <td>Disposition</td>
+    <td>Mutilate per AC 21-38</td>
+    <td>Quarantine pending investigation</td>
+    <td>Preserve as evidence; coordinate with FBI/FAA</td>
+  </tr>
+  <tr>
+    <td>FAA reporting</td>
+    <td>Form 8120-11</td>
+    <td>Form 8120-11 when reasonable basis confirmed</td>
+    <td>Form 8120-11 plus criminal referral</td>
+  </tr>
+  <tr>
+    <td>Civil/criminal</td>
+    <td>Typically administrative</td>
+    <td>Typically administrative (pending outcome)</td>
+    <td>Fraud — civil and criminal exposure</td>
+  </tr>
+  <tr>
+    <td>Required intent</td>
+    <td>None — accidental possible</td>
+    <td>None — based on indicators</td>
+    <td>Required — deliberate misrepresentation</td>
+  </tr>
+</table>
+
+<h4>The most common practical question: when should a TurbineWorks inspector use which term?</h4>
+
+<p>The default answer for a receiving inspector is <strong>SUP</strong>. The inspector identifies indicators of possible non-conformance. The inspector does not have the evidence base, the authority, or typically the technical training to declare a part definitively unapproved or counterfeit. That determination requires investigation, often outside expertise, and the QA Manager\'s judgment.</p>
+
+<p>Practical phrasing for the receiving inspector:</p>
+
+<ul>
+  <li><em>What to say:</em> "I\'m flagging this part as SUP because the Block 15 certificate number is not in the FAA database."</li>
+  <li><em>What NOT to say:</em> "This is counterfeit." (Premature determination; counterfeit is a fraud finding that requires evidence of intent.)</li>
+  <li><em>What NOT to say:</em> "This is unapproved." (Premature determination; unapproved status requires investigation conclusion.)</li>
+</ul>
+
+<p>The QA Manager, after investigation, makes the determination of unapproved status. The FAA or law enforcement, after their own investigation, makes the determination of counterfeit. The receiving inspector\'s contribution to the entire workflow is the initial identification of an indicator that justified the SUP flag.</p>
+
+<h4>Common misconceptions corrected</h4>
+
+<dl>
+  <dt><strong>"A part with no 8130-3 is automatically unapproved."</strong></dt>
+  <dd>Not necessarily. Some parts (raw materials, standard hardware, consumables under threshold) don\'t require 8130-3. Some parts may be in transit with the tag arriving separately. Missing documentation is a hold condition, not automatic unapproved status.</dd>
+
+  <dt><strong>"If a part works in service, it must not be unapproved."</strong></dt>
+  <dd>Unapproved status is about conformance to approved design and production authority, not about whether the part happens to function. A counterfeit bearing may run for thousands of hours before failing — it is still unapproved.</dd>
+
+  <dt><strong>"All cheap parts are suspect."</strong></dt>
+  <dd>Anomalously low pricing is one indicator. Some legitimate parts are genuinely cheap: liquidation sales, surplus dispositions, supplier inventory reductions. Price alone is insufficient. Price combined with other indicators is significant.</dd>
+
+  <dt><strong>"Counterfeit only affects electronics."</strong></dt>
+  <dd>Electronics counterfeit gets more news attention because of DFARS focus and high visibility. Mechanical counterfeit has been a persistent industry problem since at least the 1980s. Both happen. Both matter at TurbineWorks.</dd>
+
+  <dt><strong>"If we caught it at receiving, no harm done."</strong></dt>
+  <dd>Catching SUP at receiving is the goal. But the investigation is what closes the loop — identifying the source supplier, removing them from the approved list if confirmed, notifying other distributors who may have received parts from the same source, and reporting to the FAA so the broader supply chain knows.</dd>
+
+  <dt><strong>"The FAA will investigate any SUP we file."</strong></dt>
+  <dd>The FAA prioritizes SUP filings based on safety severity and pattern indicators. A single isolated SUP filing may receive limited FAA attention. A pattern of filings from multiple distributors pointing to the same supplier or part type triggers escalation. Either way, TurbineWorks files. The filing itself is the obligation.</dd>
+</dl>
+
+<h4>Self-check</h4>
+
+<p>Before moving to Lesson 1.2, you should be able to answer the following without referring back:</p>
+
+<ol>
+  <li>What is the precise difference between "unapproved" and "suspected unapproved"? What burden of proof does each require?</li>
+  <li>Which CFR section defines unapproved parts?</li>
+  <li>What makes a part "counterfeit" as distinct from merely "unapproved"?</li>
+  <li>If a Block 15 certificate number doesn\'t appear in the FAA database, what is the correct receiving inspector action?</li>
+  <li>Why is returning a SUP to the supplier without investigation incorrect?</li>
+  <li>What term should the receiving inspector use when flagging a part with suspect documentation: "unapproved," "SUP," or "counterfeit"?</li>
+  <li>Why is the SUP threshold ("reasonable basis to suspect") intentionally low?</li>
+  <li>Name three indicators on an 8130-3 that should trigger SUP status.</li>
+</ol>
+
+<p>If any of those is unclear, re-read the corresponding section above before proceeding. The remaining lessons in Module 1 assume mastery of this vocabulary.</p>
 HTML
         ],
         [
@@ -489,50 +664,350 @@ HTML
         ],
         [
             'name'  => 'Lesson 1.3 — Documentation Red Flags',
-            'intro' => '<p>What to look for on incoming paperwork that should trigger SUP suspicion.</p>',
+            'intro' => '<p>The receiving inspector\'s primary line of defense. Comprehensive walk-through of every red flag that should put you into SUP mode, with database-lookup procedures, scenario walkthroughs, and the complete checklist.</p>',
             'content' => <<<'HTML'
-<h3>Documentation red flags</h3>
-<p>Most SUPs are caught at the documentation review step of receiving inspection, not at the physical inspection. Bad paperwork is easier to spot than a well-counterfeited part.</p>
+<h3>Documentation Red Flags: The Receiving Inspector\'s Primary Defense</h3>
 
-<h4>The 8130-3 itself</h4>
+<p>If you remember nothing else from Module 1, remember this: <strong>most suspected unapproved parts are caught at the documentation review step of receiving inspection, not at the physical inspection.</strong> Bad paperwork is dramatically easier to spot than a well-counterfeited part. The physical part may be machined to OEM dimensions, plated correctly, marked convincingly. The paperwork is where the fraud typically shows.</p>
+
+<p>This lesson is the operational core of Module 1. It walks through every documentation red flag — what to look for, why it matters, and what to do when you see it. By the end of this lesson you should be able to perform documentation review on an arriving shipment and identify which paperwork warrants SUP quarantine.</p>
+
+<h4>Why documentation review catches more SUPs than physical inspection</h4>
+
+<p>Counterfeiting a part physically is hard. The bad actor needs:</p>
+
 <ul>
-  <li><strong>Photocopied signature</strong> in Block 14. Original signatures are required (or authorized electronic signatures with a verifiable digital trail). A grainy photocopy of a signature is a major red flag.</li>
-  <li><strong>Block 15 certificate number not in FAA database.</strong> Look it up at <a href="https://av-info.faa.gov/" target="_blank" rel="noopener">av-info.faa.gov</a>. Every certificate the FAA has issued is searchable. If the certificate number doesn't exist, the tag is invalid.</li>
-  <li><strong>Block 4 organization name doesn't match Block 15 certificate.</strong> The FAA database shows the certificate holder's name. It must match Block 4 exactly.</li>
-  <li><strong>Form Block 3 tracking number missing</strong> or in a format that doesn't match the issuing organization's known sequence.</li>
-  <li><strong>Block 17 date in the future</strong> (obvious error or deliberate manipulation).</li>
-  <li><strong>Block 17 date implausibly old.</strong> A 2-year-old 8130-3 on a fresh shipment suggests the tag was reused from a different transaction.</li>
-  <li><strong>Right-side installer blocks pre-filled.</strong> The right side (Blocks 18-22) is for the installer to complete when installing on an aircraft. If filled in on a part not yet installed, the part was previously installed and removed — investigate why.</li>
-  <li><strong>Whiteout, correction fluid, or visible alteration</strong> on any block.</li>
-  <li><strong>"TRUE COPY" stamps that aren't notarized</strong> or attested by an authorized entity. A copy of an 8130-3 is only acceptable as a true copy when properly attested.</li>
+  <li>A machine shop capable of producing aerospace-grade parts to OEM dimensions</li>
+  <li>Materials of the correct alloy, with documentation supporting the alloy claim</li>
+  <li>Heat treatment, plating, or surface treatment matching OEM spec</li>
+  <li>Stamping and marking equipment matching the OEM\'s style</li>
+  <li>Knowledge of OEM-specific manufacturing fingerprints (toolmarks, edge prep, etc.)</li>
+</ul>
+
+<p>Counterfeiting <em>paperwork</em> is dramatically easier. Anyone with a scanner, a photo editor, and a printer can produce something that <em>looks</em> like an FAA 8130-3. But the paperwork has to survive scrutiny — and every block of a real 8130-3 ties to something independently verifiable. Block 15 ties to the FAA certificate database. Block 4 ties to that certificate. Block 3 ties to the issuing organization\'s internal records. Block 10 ties to the data plate on the actual physical part.</p>
+
+<p>The receiving inspector\'s job is to perform that verification systematically. The bad actor only has to fail one cross-check to be caught.</p>
+
+<h4>FAA 8130-3 — Block-by-block red flags</h4>
+
+<p>An FAA 8130-3 has 22 numbered blocks. Each can contain red-flag indicators. We\'ll walk every block.</p>
+
+<h5>Block 1 — Approving Civil Aviation Authority / Country</h5>
+<p>Should read "FAA / United States" for an FAA-issued tag. Other approved authorities (EASA, TCCA, etc.) issue equivalent forms under bilateral agreement — but those forms have different titles (EASA Form 1, TCCA Form One) and shouldn\'t appear with "FAA / United States" in Block 1.</p>
+<p><strong>Red flag:</strong> Block 1 reads "FAA" but the rest of the form has the layout of an EASA Form 1 or another form type. The form is hybrid — pieced together from multiple sources.</p>
+
+<h5>Block 2 — Form Title</h5>
+<p>Should read exactly: "AUTHORIZED RELEASE CERTIFICATE / FAA Form 8130-3, AIRWORTHINESS APPROVAL TAG"</p>
+<p><strong>Red flag:</strong> Title is reworded, abbreviated, or contains typos. The official text is fixed; any variation is suspicious.</p>
+
+<h5>Block 3 — Form Tracking Number</h5>
+<p>Unique identifier assigned by the issuing organization. Format varies by organization but is consistent within each organization\'s tags.</p>
+<p><strong>Red flags:</strong></p>
+<ul>
+  <li>Block 3 is blank or contains placeholder text ("XXXXX," "TBD")</li>
+  <li>Format obviously inconsistent with the issuing organization\'s known sequence (after you\'ve seen a few of their tags)</li>
+  <li>Block 3 appears to have been altered — characters of inconsistent depth or alignment</li>
+</ul>
+
+<h5>Block 4 — Organization Name and Address</h5>
+<p>The Repair Station, Production Approval Holder, or other approved organization issuing the certificate.</p>
+<p><strong>Red flags:</strong></p>
+<ul>
+  <li>Organization name does not match the certificate holder per FAA database lookup of Block 15</li>
+  <li>Address is a P.O. Box only — most legitimate aviation organizations have a physical facility</li>
+  <li>Address geographic mismatch — the organization\'s known location vs. the address on the tag don\'t agree</li>
+  <li>The organization name is unfamiliar AND the certificate number lookup fails</li>
+</ul>
+
+<h5>Block 5 — Work Order / Contract / Invoice Number</h5>
+<p>Cross-references the issuing organization\'s internal records.</p>
+<p><strong>Red flags:</strong></p>
+<ul>
+  <li>Block 5 is blank when it shouldn\'t be — the issuing organization needs an internal reference</li>
+  <li>Block 5 contains nonsense or placeholder text</li>
+</ul>
+
+<h5>Block 6 — Item Number</h5>
+<p>Sequential number for multi-item forms. For most engine parts this is "1" since serialized parts get one form per part.</p>
+
+<h5>Block 7 — Description</h5>
+<p>The OEM\'s description of the part (e.g., "TURBINE BLADE, HPT STAGE 1").</p>
+<p><strong>Red flags:</strong></p>
+<ul>
+  <li>Description doesn\'t match the actual physical part</li>
+  <li>Description is a generic term where the OEM uses a specific one</li>
+  <li>Description language is awkward or non-native English — sometimes an indicator of foreign counterfeiting attempts</li>
+</ul>
+
+<h5>Block 8 — Part Number</h5>
+<p>OEM part number including any dash suffix and revision letter.</p>
+<p><strong>Red flags:</strong></p>
+<ul>
+  <li>Part number doesn\'t match the part stamping/marking on the physical part</li>
+  <li>Part number doesn\'t exist in the OEM\'s current IPC (verify against current IPC revision)</li>
+  <li>Part number has been altered — characters of inconsistent typography</li>
+</ul>
+
+<h5>Block 9 — Quantity</h5>
+<p>Must match the actual count of parts in the shipment.</p>
+
+<h5>Block 10 — Serial Number</h5>
+<p>For serialized parts, must match the part\'s data plate exactly. Character by character. Including any letter prefixes or suffixes.</p>
+<p><strong>Red flags:</strong></p>
+<ul>
+  <li>Serial number on the form does not match the part\'s data plate</li>
+  <li>The data plate appears to have been removed and replaced (paint disturbance, mounting screw witness marks)</li>
+  <li>Serial number on the form has been altered (whiteout, over-stamping, ink color difference)</li>
+  <li>Serial number doesn\'t fit the OEM\'s known serial-number format (length, character set, structure)</li>
+</ul>
+
+<h5>Block 11 — Status / Work</h5>
+<p>One of: NEW / INSPECTED/TESTED / REPAIRED / OVERHAULED / MODIFIED / PROTOTYPE (for parts in development; rare at TurbineWorks).</p>
+<p><strong>Red flags:</strong></p>
+<ul>
+  <li>"NEW" on a part showing evidence of use (wear marks, oil staining, run-in patterns on bearing races)</li>
+  <li>Block 11 left blank or with non-standard term</li>
+  <li>Multiple boxes checked — should be exactly one</li>
+</ul>
+
+<h5>Block 12 — Remarks</h5>
+<p>Free-text field. Critical content for engine parts: TSN, CSN, LLP remaining life, AD compliance, SB compliance, traceability to source engine.</p>
+<p><strong>Red flags:</strong></p>
+<ul>
+  <li>Block 12 is blank on a serialized LLP — the LLP life data should be here</li>
+  <li>Remarks reference SBs or ADs that don\'t exist (verify against FAA DRS and OEM SB database)</li>
+  <li>Remarks reference incompatible items — claims to have come from a CFM56-7B engine but the part is a CFM56-5B part</li>
+  <li>TSN/CSN values that decrease vs. previous documentation — time accumulates, it doesn\'t decrease</li>
+</ul>
+
+<h5>Block 13 — Conformance Statement</h5>
+<p>Boxed pre-printed text with two checkboxes — one for approved-design conformance, one for non-approved-design.</p>
+<p><strong>Red flags:</strong></p>
+<ul>
+  <li>Neither checkbox is checked</li>
+  <li>Both checkboxes are checked</li>
+  <li>The pre-printed text has been altered</li>
+  <li>The "non-approved design" box is checked without explanation in Block 12 of what design data the part conforms to</li>
+</ul>
+
+<h5>Block 14 — Approving Signature</h5>
+<p>Original wet-ink signature OR verifiable electronic signature with audit trail.</p>
+<p><strong>Red flags (any of these is a quarantine condition by itself):</strong></p>
+<ul>
+  <li><strong>Photocopied signature.</strong> Look for: grainy edges where ink should be sharp; uniform "ink" color where wet ink would have density variation; lines that are dotted from printer rasterization.</li>
+  <li>Signature appears computer-generated (clean curves, no human variation)</li>
+  <li>"Stamped" signature without authorization — many organizations don\'t permit signature stamps</li>
+  <li>Signature doesn\'t match the printed name in Block 16</li>
+  <li>Empty space where signature should be</li>
+</ul>
+
+<h5>Block 15 — Authorization / Certificate Number</h5>
+<p>The single most important block for fraud detection. This is the FAA certificate number of the issuing organization. <strong>Every legitimate certificate number is in the FAA public database.</strong></p>
+
+<p><strong>Database lookup procedure (perform every time a new supplier or unfamiliar tag arrives):</strong></p>
+<ol>
+  <li>Open <a href="https://av-info.faa.gov/" target="_blank" rel="noopener">av-info.faa.gov</a></li>
+  <li>Navigate to the certificate search appropriate to the type — Repair Stations, Production Approvals, Designees, etc.</li>
+  <li>Enter the Block 15 number. The database should return the certificate holder\'s name, type, status, and location.</li>
+  <li>Compare the returned name and location to Block 4 of the 8130-3. They must match.</li>
+  <li>Check the status — active, expired, suspended? Only active certificates can issue valid 8130-3 tags.</li>
+</ol>
+
+<p><strong>Red flags:</strong></p>
+<ul>
+  <li>Block 15 number returns no result in the FAA database</li>
+  <li>Block 15 number is in the database but the name doesn\'t match Block 4</li>
+  <li>Block 15 number is in the database but the certificate is suspended, expired, or revoked</li>
+  <li>Block 15 number format is implausible — letters where there should only be digits, wrong length, etc.</li>
+</ul>
+
+<h5>Block 16 — Name of Signer</h5>
+<p>Printed name of the person signing in Block 14.</p>
+<p><strong>Red flags:</strong></p>
+<ul>
+  <li>Block 16 is blank</li>
+  <li>Block 16 contains only a first name or a nickname</li>
+  <li>The name doesn\'t match the signature style</li>
+</ul>
+
+<h5>Block 17 — Date</h5>
+<p>Date the form was signed.</p>
+<p><strong>Red flags:</strong></p>
+<ul>
+  <li>Date in the future</li>
+  <li>Date implausibly old (an 18-month-old 8130-3 on a "freshly shipped" part — where was the part during that time?)</li>
+  <li>Date that doesn\'t correspond to the issuing organization\'s known operating period (a tag dated 2018 from an organization that wasn\'t certified until 2020)</li>
+  <li>Date that has been altered (the year digit changed, etc.)</li>
+</ul>
+
+<h5>Blocks 18-22 — Installer Section</h5>
+<p>Right side of the form. Completed by the installer when the part is installed on an aircraft. <strong>Should be BLANK on a part not yet installed.</strong></p>
+<p><strong>Red flags:</strong></p>
+<ul>
+  <li>Any of Blocks 18-22 are completed on a part you are receiving as "new" or "unused"</li>
+  <li>Completion of these blocks indicates the part was previously installed and removed. Investigate the history before accepting.</li>
+</ul>
+
+<h5>General form-level red flags (beyond individual blocks)</h5>
+<ul>
+  <li><strong>Whiteout, correction fluid, or visible alteration</strong> on any block. Even a small correction should be a struck-through-with-initials correction, not whiteout.</li>
+  <li><strong>Photocopy passing as original.</strong> A photocopy is only acceptable if it bears a "TRUE COPY" attestation from an authorized custodian — and the attestation itself must be verifiable.</li>
+  <li><strong>Form printed on incorrect paper.</strong> 8130-3 forms come from the FAA on specific paper stock. A form on plain copier paper without a TRUE COPY attestation is suspicious.</li>
+  <li><strong>Misalignment, font mismatch.</strong> The pre-printed form has fixed typography. Hand-filled fields are added in pen or by direct printer. A field that uses a font matching the pre-printed text is suspicious — it suggests the form was reconstructed in software.</li>
+  <li><strong>Multiple parts on one form when each should have its own.</strong> Serialized engine parts typically each get their own 8130-3. Multi-part forms are appropriate for non-serialized batches (e.g., standard hardware).</li>
+</ul>
+
+<h4>EASA Form 1 — Specific red flags</h4>
+
+<p>Most of the same principles apply, with EASA-specific differences:</p>
+
+<ul>
+  <li>Block 1 should read "EASA" (or the specific national authority under EASA delegation)</li>
+  <li>Block 2 title is "AUTHORIZED RELEASE CERTIFICATE / EASA Form 1"</li>
+  <li>The EASA equivalent of Block 15 is the organization\'s approval number — verify against <a href="https://www.easa.europa.eu/" target="_blank" rel="noopener">easa.europa.eu</a> organization directory</li>
+  <li>Some legitimate EASA-approved organizations are in non-EU countries under bilateral agreement — verify they appear in EASA\'s recognized-organization list</li>
+</ul>
+
+<h4>TCCA Form One — Specific red flags</h4>
+
+<ul>
+  <li>Block 1 reads "TCCA / Canada"</li>
+  <li>Block 2 title is "AUTHORIZED RELEASE CERTIFICATE / TCCA Form One"</li>
+  <li>Approval number is the Canadian Approved Maintenance Organization (AMO) number, verifiable through Transport Canada\'s online database</li>
+  <li>Otherwise identical structure to the EASA Form 1, since both follow the bilateral-harmonized format</li>
 </ul>
 
 <h4>Certificate of Conformance (COC) red flags</h4>
+
+<p>COCs are supplier-issued, less standardized than 8130-3 tags. The red flags are different:</p>
+
 <ul>
-  <li>No specific standard cited. A COC should reference the specific standard the part conforms to (e.g., "conforms to MIL-PRF-XXXXX rev. C").</li>
-  <li>No serial number or lot number tying the COC to the specific part.</li>
-  <li>Signed by someone whose authority is not documented (no title, no organization position).</li>
-  <li>Generic letterhead that could be from anyone.</li>
+  <li><strong>No specific standard cited.</strong> A valid COC references the specific standard the part conforms to: "conforms to MIL-PRF-XXXXX rev. C," "manufactured per AMS 5832 rev. F." A COC that just says "conforms to applicable standards" is meaningless.</li>
+  <li><strong>No serial or lot number tying the COC to the specific items.</strong> A COC must identify which physical parts it certifies. "All parts shipped this month" is not adequate.</li>
+  <li><strong>Generic letterhead.</strong> Legitimate suppliers use letterhead with their company name, address, and contact information. A COC on plain paper or generic stationery is suspect.</li>
+  <li><strong>Signed by someone whose authority isn\'t documented.</strong> A name without a title, or a title that doesn\'t imply authority to attest conformance (e.g., "Sales Representative" rather than "Quality Manager"), suggests the COC wasn\'t issued by an authorized person.</li>
+  <li><strong>COC dated before the parts were manufactured.</strong> Internal inconsistency — the COC can\'t pre-date the parts it certifies.</li>
 </ul>
 
 <h4>Packing list and invoice red flags</h4>
+
 <ul>
-  <li>Part number on packing list doesn't match the 8130-3.</li>
-  <li>Shipping origin doesn't match the issuing organization's location.</li>
-  <li>Multiple parts on one 8130-3 when each should have its own tag.</li>
-  <li>Quantity on packing list doesn't match Block 9 of the 8130-3.</li>
+  <li>Part number on packing list doesn\'t match the 8130-3</li>
+  <li>Quantity on packing list doesn\'t match Block 9 of the 8130-3 or the actual count</li>
+  <li>Shipping origin (return address) doesn\'t match the issuing organization\'s known location</li>
+  <li>Packing list and invoice from different companies that don\'t obviously relate to each other</li>
+  <li>Multiple serial numbers listed on packing list but only one 8130-3 in the package</li>
 </ul>
 
-<h4>Supplier red flags</h4>
+<h4>Supplier-level red flags (before opening the shipment)</h4>
+
 <ul>
-  <li>Supplier is new to TurbineWorks and not on the approved-supplier list.</li>
-  <li>Supplier address is a residential or PO-box-only location with no warehouse facility.</li>
-  <li>Supplier offers parts at significantly below market price for the part type and condition.</li>
-  <li>Supplier resists or refuses requests for additional documentation.</li>
+  <li><strong>Supplier is new to TurbineWorks and not on the approved-supplier list.</strong> Even legitimate suppliers go through qualification before TurbineWorks accepts their shipments routinely.</li>
+  <li><strong>Supplier address is a residential or P.O. Box-only location.</strong> Aviation parts brokers operating from a P.O. Box without a physical warehouse facility are a recognized pattern for fraudulent intermediaries.</li>
+  <li><strong>Supplier offers parts at significantly below market price.</strong> The signature of either (a) a legitimate distressed sale or (b) parts the supplier didn\'t pay market for. Investigate which.</li>
+  <li><strong>Supplier resists or refuses requests for additional documentation.</strong> Legitimate suppliers welcome documentation requests. Pushback is itself a red flag.</li>
+  <li><strong>Supplier offers parts that are very hard to find from legitimate sources.</strong> If a part is in genuine short supply, a supplier suddenly having stock should be probed — where did they get it?</li>
+  <li><strong>Supplier has just appeared in the market.</strong> Suppliers with no track record in aviation parts may be entry vehicles for one-time fraud attempts.</li>
 </ul>
 
-<h4>What to do when you spot a red flag</h4>
-<p>Stop the receiving process for that specific part. Move the part and ALL its documentation to the Quarantine area without modification. Notify the QA Manager. Document what you saw and when. Do not return the part or the documentation to the shipper until the investigation is complete — the originals are evidence.</p>
+<h4>Scenario walkthroughs</h4>
+
+<p>Each scenario describes a documentation situation a TurbineWorks inspector might encounter. Read each, decide your action, then check against the analysis.</p>
+
+<h5>Scenario 1</h5>
+<p>An HPT blade arrives. The 8130-3 shows Block 15 certificate number 5P3R784D. You look it up at av-info.faa.gov and the database returns "no records found." Block 4 names a repair station called "Northeast Aviation Services" in Massachusetts. The part itself looks fine.</p>
+
+<p><strong>Your action?</strong></p>
+
+<p><em>Analysis:</em> Quarantine. Block 15 not in FAA database is one of the strongest single SUP indicators. The part looking fine doesn\'t change anything — a counterfeit part may be physically convincing. Notify QA Manager same day. Begin investigation: contact "Northeast Aviation Services" through independently sourced contact information (not from the supplier\'s shipping documents) to verify they issued the tag. If the FAA database has no record of the certificate number, this organization almost certainly does not have FAA authority and the tag is fabricated.</p>
+
+<h5>Scenario 2</h5>
+<p>A turbine disk arrives with an 8130-3 from a well-known OEM repair station. Block 15 verifies in the FAA database, Block 4 matches, signature looks original. But Block 17 dates the form to August 2021 — over four years ago. The part is described as "Newly Overhauled."</p>
+
+<p><strong>Your action?</strong></p>
+
+<p><em>Analysis:</em> Hold and investigate. The tag may be legitimate but the four-year gap between tag issue and current shipment requires explanation. Where was the part during that period? In sealed storage? Re-installed and removed? Damaged? Investigate before accepting. The supplier should be able to provide a chain-of-custody narrative covering the four-year gap.</p>
+
+<h5>Scenario 3</h5>
+<p>A fuel control unit arrives. The 8130-3 looks valid in every block. The part has the OEM\'s name and a serial number. But the OEM mark on the part appears to have been stamped over a previous mark — you can see grinding marks under the new stamping.</p>
+
+<p><strong>Your action?</strong></p>
+
+<p><em>Analysis:</em> Quarantine. Documentation is the front line but it\'s not the only check. The physical evidence of re-stamping suggests the part may have been re-marked to match the documentation — meaning the original identity of the part is now hidden. The 8130-3 may have been issued for one part and the documentation reused with a different part. Investigate the part\'s actual identity through metallurgical / dimensional analysis if needed.</p>
+
+<h5>Scenario 4</h5>
+<p>A small lot of bearings arrives from a supplier you haven\'t bought from before. The supplier is offering them at about 40% below market. They\'ve provided an 8130-3 that verifies cleanly in every block. The COC references the correct OEM specification. Everything looks fine.</p>
+
+<p><strong>Your action?</strong></p>
+
+<p><em>Analysis:</em> Hold pending supplier qualification. Even with clean documentation, a new supplier offering anomalously low pricing is a flag. Two of the recognized SUP-entry patterns are: (1) supplier qualification gap and (2) below-market pricing as economic signature of irregular sourcing. The QA Manager should evaluate the supplier through standard qualification — facility verification, references, history check — before TurbineWorks accepts this shipment. The shipment itself isn\'t necessarily bad, but receiving it without qualification creates audit risk.</p>
+
+<h5>Scenario 5</h5>
+<p>An HPC blade set arrives with an 8130-3 that shows Block 14 with a clearly photocopied signature — the signature has the rasterized edges typical of laser printer output rather than wet ink. Everything else about the form verifies.</p>
+
+<p><strong>Your action?</strong></p>
+
+<p><em>Analysis:</em> Quarantine. The photocopied signature is itself a critical defect. A legitimate 8130-3 has an original signature OR an electronic signature with verifiable audit trail. A photocopy is acceptable only with a TRUE COPY attestation from an authorized custodian — and that attestation has its own signature requirements. Contact the issuing organization (using independently obtained contact info) and ask: did you issue an 8130-3 with this tracking number for this part, and if so, can you confirm the form details? Either they confirm and provide a properly signed copy, or they don\'t — and that tells you what you need to know.</p>
+
+<h4>What NOT to do when you spot a red flag</h4>
+
+<p>This is as important as what to do. The wrong actions can compromise both the investigation and the evidence:</p>
+
+<ul>
+  <li><strong>Don\'t return the part to the supplier without QA Manager authorization.</strong> Returning a SUP just shifts the part to the next distributor in the chain. The original tag is now in the supplier\'s hands and may be re-used.</li>
+  <li><strong>Don\'t correct the documentation.</strong> If you "fix" a typo in the part number to match what you think it should be, you\'ve altered evidence. Even if you\'re right, the alteration is now on the original document.</li>
+  <li><strong>Don\'t photocopy and discard the originals.</strong> The original physical paperwork is evidence. A photocopy in the file is not the same as the original 8130-3.</li>
+  <li><strong>Don\'t accept the supplier\'s verbal explanation alone.</strong> "Oh, sorry about that, we\'ll send a corrected tag" is fine — but the corrected tag is a separate issue. The original suspect tag and the part it accompanied stay in quarantine.</li>
+  <li><strong>Don\'t accept the part because the customer is waiting.</strong> AOG urgency is real but it doesn\'t override the quarantine decision. The receiving inspector\'s authority is not overridable by sales or by customer pressure.</li>
+  <li><strong>Don\'t discuss the SUP investigation publicly.</strong> If it turns out to be a confirmed SUP, supplier relationships and possibly criminal proceedings may follow. Loose talk can compromise both. Keep the investigation inside the QA chain.</li>
+</ul>
+
+<h4>The complete documentation red-flag checklist</h4>
+
+<p>For each incoming shipment of a serialized aviation part:</p>
+
+<ol>
+  <li>Match the 8130-3 to a current TurbineWorks PO ☐</li>
+  <li>Match the 8130-3 part number (Block 8) to the PO part number ☐</li>
+  <li>Match the 8130-3 serial number (Block 10) to the part\'s data plate ☐</li>
+  <li>Match the 8130-3 quantity (Block 9) to the actual count ☐</li>
+  <li>Block 15 certificate number verified in FAA database ☐</li>
+  <li>Block 4 organization name matches the certificate database result ☐</li>
+  <li>Block 4 address matches the database location ☐</li>
+  <li>Certificate is active (not suspended, expired, or revoked) ☐</li>
+  <li>Block 14 signature is original (or properly attested electronic) ☐</li>
+  <li>Block 14 signature is not a photocopy ☐</li>
+  <li>Block 16 printed name matches the signature style ☐</li>
+  <li>Block 17 date is plausible — not future, not unreasonably old ☐</li>
+  <li>Block 17 date is consistent with the certificate\'s active period ☐</li>
+  <li>Block 11 status is one of the standard values ☐</li>
+  <li>Block 12 remarks contain LLP time/cycle data if applicable ☐</li>
+  <li>Block 13 has exactly one box checked ☐</li>
+  <li>Right-side blocks (18-22) are blank ☐</li>
+  <li>No whiteout, correction fluid, or visible alteration ☐</li>
+  <li>Supplier is on the approved-supplier list, or QA Manager has authorized one-time receipt ☐</li>
+  <li>Shipping origin matches Block 4 organization location ☐</li>
+  <li>Packing list part number matches Block 8 ☐</li>
+  <li>If COC required: COC cites specific standard, identifies the parts by serial/lot, signed by authorized person ☐</li>
+  <li>Pricing is plausible for the part type and condition ☐</li>
+</ol>
+
+<p>Any unchecked item warrants either resolution before continuing receiving inspection, or quarantine pending investigation. The threshold is intentionally low. When in doubt, quarantine.</p>
+
+<h4>Self-check</h4>
+
+<ol>
+  <li>What is the single most important block on an 8130-3 for fraud detection? Why?</li>
+  <li>Where do you verify a Block 15 certificate number?</li>
+  <li>Why is a photocopied Block 14 signature a quarantine condition?</li>
+  <li>If Blocks 18-22 (right side) are filled in on a part you are receiving, what does that suggest?</li>
+  <li>What should you do FIRST when you spot a documentation red flag — call the supplier, call the QA Manager, or quarantine the part?</li>
+  <li>Why is "returning the part to the supplier without investigation" the wrong action?</li>
+  <li>Name three supplier-level red flags that should put you on alert before you even open the shipment.</li>
+  <li>What does a COC need to contain to be considered valid?</li>
+</ol>
+
+<p>If any of these are unclear, re-read the relevant section. The next lessons in Module 1 (1.4 physical red flags and 1.5 SUP reporting) build directly on this material.</p>
 HTML
         ],
         [
